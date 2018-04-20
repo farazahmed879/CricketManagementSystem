@@ -1,0 +1,75 @@
+﻿@model CricketApp.Domain.Tournament
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container">
+    <div class="col-sm-4 col-sm-offset-4">
+        <!--      Wizard container        -->
+        <div class="wizard-container">
+
+            <div class="card wizard-card" data-color="purple" id="wizard">
+                <div class="wizard-header">
+                    <h3 class="wizard-title">
+                        Add Tournament
+                    </h3>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form asp-action="Create">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> Tournament Name*</label>
+                                        <input asp-for="TournamentName" class="form-control" />
+                                        <span asp-validation-for="TournamentName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Organizor</label>
+                                        <input asp-for="Organizor" class="form-control" />
+                                        <span asp-validation-for="Organizor" class="text-danger"></span>
+                                    </div>
+                                </div>
+                              
+                                <div class="form-group">
+                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- wizard container -->
+    </div>
+
+</div> <!--  big container -->
+<div class="footer">
+    <div class="container text-center">
+        <div>
+
+            <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            $('#BackBtn').click(function () {
+                window.location = '/Tournament/Index'
+            });
+        });
+    </script>
+}
+@*@section Scripts{
+
+    }*@

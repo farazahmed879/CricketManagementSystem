@@ -1,0 +1,205 @@
+﻿@model PaginatedList<CricketApp.Domain.Team>
+
+@{
+    ViewData["Title"] = "Teams";
+}
+<div class="container">
+    <div class="wizard-container">
+        <div class="card wizard-card">
+            <div class="wizard-header">
+                <h3 class="wizard-title">
+                    Teams
+                </h3>
+            </div>
+
+            <div class="container-fluid">
+
+                @*Filter*@
+
+                <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
+                    <div class="panel-body">
+                        <form class="form-inline" role="form" id="Filters">
+                            <div class="row">
+                                <div class="col-xs-6 col-md-6">
+                                    <div class="form-group label-floating" style="width: 100%;">
+                                        <label class="control-label">Zone</label>
+                                        <input id="Zone" name="zone" type="text" class="form-control" style="width: 100%;">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-md-6">
+                                    <div class="form-group label-floating" style="width: 100%;">
+                                        <label class="control-label">City</label>
+                                        <input id="City" type="text" name="city" class="form-control" style="width: 100%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+
+                                <button type="submit" class="btn btn-primary filter-col">
+                                    <span class="glyphicon glyphicon-record"></span> Search
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+                    Advanced Search
+                </button>
+
+                @*Filter*@
+
+                <a asp-controller="Teams" disabled="disabled" asp-action="Create" class="made-with-mk">
+                    <div class="brand">Add</div>
+                    <div class="made-with"> Create <strong>a new Team</strong></div>
+                    <div class="ripple-container"></div>
+                </a>
+
+                @*<p>
+                        <button id="createBtn" asp-action="Create" class="btn btn-primary">Create New</button>
+
+                    </p>*@
+                <div class="table-responsive">
+                    <table id="TeamTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Team
+                                </th>
+                                <th>
+                                    Place
+                                </th>
+                                <th>
+                                    Zone
+                                </th>
+                                <th>
+                                    City
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Team_Name)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Place)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Zone)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.City)
+                                    </td>
+                                    <td>
+                                        <a class="material-icons" rel="tooltip" title="Players Records" asp-controller="Players" asp-action="AllPlayerStatistics" asp-route-teamId="@item.TeamId">history</a>
+                                        <a class="material-icons" rel="tooltip" title="Players" asp-controller="Players" asp-action="PlayerProfile" asp-route-teamId="@item.TeamId">perm_identity</a>
+                                        <a class="material-icons" rel="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="@item.TeamId">account_balance</a>
+                                        <a class="material-icons btn-disabled" rel="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TeamId">mode_edit</a>
+                                        @*<a class="material-icons" rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.TeamId">details</a>*@
+                                        <a class="material-icons" rel="tooltip" title="Delete" asp-action="Delete" asp-route-id="@item.TeamId">delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @{
+                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                }
+                <nav class="navbar navbar-light bg-light">
+                    <form class="form-inline">
+                        <a asp-action="Index" class="material-icons @prevDisabled"
+                           asp-route-page="@(Model.PageIndex - 1)">
+                            skip_previous
+                        </a>
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.PageIndex + 1)"
+                           class="material-icons @nextDisabled">
+                            skip_next
+                        </a>
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <style>
+        td {
+            text-align: center !important;
+        }
+
+        th {
+            text-align: center !important;
+        }
+
+        .btn-disabled,
+        .btn-disabled[disabled] {
+            opacity: .4;
+            cursor: default !important;
+            pointer-events: none;
+        }
+    </style>
+    <script>
+
+        var responsiveHelper;
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
+        var tableElement = $('#TeamTable');
+
+
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            }
+        });
+
+
+        $(function () {
+            $('#createBtn').click(function () {
+                window.location = '/Teams/Create'
+            });
+        });
+        async function FilterData() {
+            var formElement = document.getElementById("Filters");
+            var formData = new FormData(formElement);
+
+            var zone = formData.get("zone")
+            var city = formData.get("city")
+
+
+            // var header = new Headers();
+            //header.append("content-type");
+
+            const response = await fetch(`/Teams/Index?zone=${zone}&city=${city}`, {
+                credentials: 'same-origin'
+            });
+
+        }
+
+    </script>
+
+}

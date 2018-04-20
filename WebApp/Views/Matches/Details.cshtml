@@ -1,0 +1,101 @@
+﻿@model CricketApp.Domain.Match
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="container">
+    <div class="col-sm-12">
+        <div class="wizard-container">
+            <div class="card wizard-card">
+                <div class="wizard-header">
+                    <h3 class="wizard-title">
+                        Match Details
+                    </h3>
+
+                </div>
+
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        Ground Name
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.GroundName)
+                    </dd>
+                    <dt>
+                        Place
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Place)
+                    </dd>
+                    <dt>
+                        Opponent
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OppponentTeam.Team_Name)
+                    </dd>
+                    <dt>
+                        Date
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DateOfMatch)
+                    </dd>
+                    <dt>
+                        Type
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.MatchOvers)
+                    </dd>
+                    <dt>
+                        Status
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Status)
+                    </dd>
+                    <dt>
+                        Result
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Result)
+                    </dd>
+                    <dt>
+                        Tournament
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Tournament.TournamentName)
+                    </dd>
+                    <dt>
+                        Season
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Season)
+                    </dd>
+                    <dt>
+                        Tournament
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Tournament.TournamentName)
+                    </dd>
+
+                </dl>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MatchId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+@section styles{
+<style>
+
+    dt {
+        text-align: left!important;
+        margin-left: 2em;
+    }
+
+    </style>
+
+}
+

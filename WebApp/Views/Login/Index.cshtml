@@ -1,0 +1,104 @@
+﻿@model IEnumerable<CricketApp.Domain.Login>
+
+<div class="container-fluid">
+    <div class="col-sm-4 col-xs-offset-4">
+        <div class="wizard-container">
+            <div class="card wizard-card">
+
+                <div class="container">
+
+                    <div class="row" id="pwd-container">
+                        <div class="col-md-4">
+                            <section class="login-form">
+                                <form method="post">
+                                    <img src="~/images/cricket_wireless_logo_detail_single_color.png" class="img-responsive" alt="" />
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">User or email</label>
+                                                <input required Id="Email" type="email" class="form-control" />
+                                                <span id="EmailError" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Password</label>
+                                                <input required Id="Password" type="password" class="form-control" />
+                                                <span id="PasswordError" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pwstrength_viewport_progress"></div>
+
+                                    <button type="button" id="SignInBtn" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>
+                                    <div>
+                                        <a asp-controller="Login" asp-action="Create">Create account</a> or <a href="#">reset password</a>
+                                    </div>
+
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        var headers = new Headers();
+        headers.append("content-type", "application/json");
+
+        function validateEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        $(function () {
+            $('#SignInBtn').click((event) => {
+                event.preventDefault();
+                const email = $('#Email').val();
+                const password = $('#Password').val();
+                if (validateEmail(email)) {
+                    fetch(`/Login/IsEmailMatch?email=${email}&password=${password}`, {
+                        method: "GET",
+                        credentials: 'same-origin',
+                        headers: headers
+                    }).then(res => {
+                        const body = res.json().then(data => {
+                            if (data) {
+                                $(function () {
+                                    window.location = '/Home/Index'
+                                });
+                            }
+                            else {
+
+                                document.getElementById("EmailError").innerHTML = "Invalid user or password";
+                                return;
+                            }
+
+                        })
+                    });
+                }
+            });
+        });
+
+
+        $('#Email').blur(function () {
+
+            const email = $('#Email').val();
+            if (!validateEmail(email)) {
+                document.getElementById("EmailError").innerHTML = "Please insert a valid email";
+            }
+            else {
+                document.getElementById("EmailError").innerHTML = "";
+
+            }
+
+            return;
+        });
+    </script>
+}

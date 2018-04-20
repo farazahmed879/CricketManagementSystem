@@ -1,0 +1,130 @@
+﻿@model CricketApp.Domain.Team
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container">
+    <div class="col-sm-12 col-sm-offset-0">
+        <!--      Wizard container        -->
+        <div class="wizard-container">
+            <div class="card wizard-card" data-color="purple" id="wizard">
+                <div class="wizard-header">
+                    <h3 class="wizard-title">
+                        Edit Mode
+                    </h3>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <form asp-action="Edit" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="TeamId" />
+                            <div class="col-md-8" style="margin-top:3em;">
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Team Name*</label>
+                                        <input asp-for="Team_Name" required class="form-control" />
+                                        <span asp-validation-for="Team_Name" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Place</label>
+                                        <input asp-for="Place" class="form-control" />
+                                        <span asp-validation-for="Place" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Zone</label>
+                                        <input asp-for="Zone" type="number" class="form-control" />
+                                        <span asp-validation-for="Zone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">City*</label>
+                                        <input asp-for="City" required class="form-control" />
+                                        <span asp-validation-for="City" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="img-responsive" id="Img" style="background-size:cover"></div>
+                                        </div>
+                                        <div class="col-md-6" style="margin-top:7.7em;">
+                                            <label asp-for="TeamImage" class="btn btn-primary">
+                                                <i class="material-icons">file_upload</i> <input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="container text-center">
+        <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <style>
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 160px;
+            width: 200px;
+            border: 1px solid #bbb;
+        }
+    </style>
+    <script>
+        $(function () {
+            $('#BackBtn').click(function () {
+                window.location = '/Teams/Index'
+            });
+
+
+            function readURL(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        //$('#PlayerImg').attr('src', e.target.result);
+                        const TeamImg = document.getElementById('Img');
+                        TeamImg.style.backgroundImage = "url(" + e.target.result + ")";
+                        TeamImg.style.backgroundPosition = "cover";
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#TeamImage").change(function () {
+                readURL(this);
+            });
+        });
+    </script>
+}

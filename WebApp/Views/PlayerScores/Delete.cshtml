@@ -1,0 +1,81 @@
+﻿@model CricketApp.Domain.PlayerScore
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PlayerScore</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Bat_Runs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Bat_Runs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Bat_Balls)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Bat_Balls)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Strike_Rate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Strike_Rate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HowOut)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HowOut)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Ball_Runs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ball_Runs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Overs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Overs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Wickets)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Wickets)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Stump)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Stump)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Catch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Catch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Enocomy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Enocomy)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="PlayerScoreId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

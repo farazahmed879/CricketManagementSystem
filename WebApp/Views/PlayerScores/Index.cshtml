@@ -1,0 +1,364 @@
+﻿@model IEnumerable<CricketApp.Domain.PlayerScore>
+<div class="container-fluid">
+    <div class="card wizard-card">
+        <div class="form-inline">
+            <div class="wizard-header">
+                <h3 class="wizard-title">
+                    Match Score
+                </h3>
+            </div>
+            <div class="col-sm-2">
+                <p>
+                    <a id="AddBtn" asp-action="Create" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Add</a>
+                </p>
+            </div>
+            <div class="col-sm-2">
+                <p>
+                    <a id="EditBtn" asp-action="Edit" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Edit</a>
+                </p>
+            </div>
+            <div class="col-sm-2">
+                <p>
+                    <a id="AddBtn" asp-action="Delete" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Delete</a>
+                </p>
+            </div>
+        </div>
+        @*<dl class="dl-horizontal">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="control-label">opponent</label>
+                        <input asp-for="@model." class="form-control" />
+                    </div>
+                </div>
+                <dt>
+                    Ground
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.)
+                </dd>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="control-label">Ground</label>
+                        <input asp-for="@model.Match.Ground" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="conrol-label">Date</label>
+                        <input asp-for="@model.Match.DateOf" class="form-control" />
+                    </div>
+                </div>
+            </dl>*@
+        @if (Model != null && Model.Any())
+        {
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            S.No
+                        </th>
+                        <th>
+                            Player Name
+                        </th>
+                        <th>
+                            Runs
+                        </th>
+                        <th>
+                            Balls
+                        </th>
+                        <th>
+                            St. Rate
+                        </th>
+                        <th>
+                            How Out
+                        </th>
+                        <th>
+                            Overs
+                        </th>
+                        <th>
+                            Runs
+                        </th>
+                        <th>
+                            Wickets
+                        </th>
+                        <th>
+                            Econ
+                        </th>
+
+                        <th>
+                            Stump
+                        </th>
+                        <th>
+                            Catch
+                        </th>
+                        <th>
+                            Maiden
+                        </th>
+                        <th>-----Action-----</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Bat_Runs)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Bat_Balls)
+                            </td>
+                            <td>
+                                @{
+
+                                    var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
+
+                                    <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HowOut)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Overs)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ball_Runs)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Wickets)
+                            </td>
+                            <td>
+                                @{
+
+                                    var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
+
+                                    <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
+                                }
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Stump)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Catches)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Maiden)
+                            </td>
+                            <td>
+                                <a class="material-icons" rel="tooltip" id="scoreCard" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)">directions_run</a>
+                                <a class="material-icons" rel="tooltip" id="scoreCard" title="Edit Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="editplayerscore(@item.PlayerScoreId)">mode_edit</a>
+                                <a class="material-icons" rel="tooltip" title="Delete Match" asp-action="Delete" asp-route-playerScoreId="@item.PlayerScoreId">delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        }
+    </div>
+</div>
+<div id="PlayerScoreModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Score</h4>
+            </div>
+
+            <div class="card wizard-card modal-body" data-color="blue" id="wizard">
+
+
+                <div class="wizard-navigation">
+                    <ul>
+                        <li><a href="#batting" data-toggle="tab">Batting</a></li>
+                        <li><a href="#bowling" data-toggle="tab">Bowling</a></li>
+                        <li><a href="#fielding" data-toggle="tab">Fielding</a></li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane" id="batting">
+                        <input type="hidden" id="PlayerScoreId" />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Runs</label>
+                                    <input id="battingRuns" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Balls</label>
+                                    <input id="battingBalls" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">4s</label>
+                                    <input id="fours" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">6s</label>
+                                    <input id="sixes" type="number" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="bowling">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Overs</label>
+                                    <input id="overs" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Runs</label>
+                                    <input id="bowlingRuns" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Wickets</label>
+                                    <input id="wickets" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Maidens</label>
+                                    <input id="maidens" type="number" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="fielding">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Catches</label>
+                                    <input id="catches" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Run Out</label>
+                                    <input id="runOuts" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Stump</label>
+                                    <input id="stumps" type="number" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="wizard-footer">
+                    <div class="pull-right">
+                        <input type='button' class='btn btn-next btn-fill btn-primary btn-wd' value='Next' />
+                        <input id="btnFinish" type="button" class='btn btn-finish btn-fill btn-primary btn-wd' value='Finish' />
+                    </div>
+                    <div class="pull-left">
+                        <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' value='Previous' />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $('#AddBtn').click(function () {
+                window.location = '/PlayerScores/Create'
+            });
+        });
+        $(function () {
+            $('#EditBtn').click(function () {
+                window.location = '/PlayerScores/Edit'
+            });
+        });
+        const postData = async () => {
+            const battingRun = document.getElementById('battingRuns').value;
+            const battingBall = document.getElementById('battingBalls').value;
+            const battingFour = document.getElementById('fours').value;
+            const battingSix = document.getElementById('sixes').value;
+            const bowlingOver = document.getElementById('overs').value;
+            const bowlingRun = document.getElementById('bowlingRuns').value;
+            const bowlingWicket = document.getElementById('wickets').value;
+            const bowlingMaiden = document.getElementById('maidens').value;
+            const fieldingCatch = document.getElementById('catches').value;
+            const fieldingRunOut = document.getElementById('runOuts').value;
+            const fieldingStump = document.getElementById('stumps').value;
+            const params = new URLSearchParams(location.href);
+            const PlayerScoreId = document.getElementById('PlayerScoreId').value;
+            const model = {
+                bat_Runs: Number(battingRun) || 0,
+                bat_Balls: Number(battingBall) || 0,
+                four: Number(battingFour) || 0,
+                six: Number(battingSix) || 0,
+                overs: Number(bowlingOver) || 0,
+                ball_Runs: Number(bowlingRun) || 0,
+                wickets: Number(bowlingWicket) || 0,
+                maiden: Number(bowlingMaiden) || 0,
+                catch: Number(fieldingCatch) || 0,
+                runOut: Number(fieldingRunOut) || 0,
+                stump: Number(fieldingStump) || 0,
+                PlayerScoreId: Number(PlayerScoreId),
+            };
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            const response = await fetch('/PlayerScores/PlayerScoreModal', {
+                method: "POST",
+                body: JSON.stringify(model),
+                credentials: 'same-origin',
+                headers: header
+            });
+
+            if (response.ok) {
+                window.location.reload();
+                return;
+            } else {
+                alert("Error");
+            }
+        };
+
+        $("#btnFinish")
+            .off()
+            .on("click", async () => await postData());
+
+
+
+        function editplayerscore(playerscoreid) {
+            var playerscoreid = playerscoreid
+
+            const response = fetch(`/Teams/Index?playerscoreid=${playerscoreid}`, {
+                credentials: 'same-origin'
+            });
+        }
+
+
+
+        function Player(PlayerScoreId) {
+            document.getElementById("PlayerScoreId").value = PlayerScoreId;
+        }
+
+    </script>
+
+}
