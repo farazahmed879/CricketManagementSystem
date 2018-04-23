@@ -28,7 +28,7 @@ namespace WebApp.Controllers
         // GET: Players
         public async Task<IActionResult> Index(int? teamId, string role, string playerName, int? page)
         {
-            ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");          
+            ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
             int pageSize = 10;
             return View(await PaginatedList<Player>.CreateAsync(
                              _context.Players
@@ -36,7 +36,7 @@ namespace WebApp.Controllers
                            .Where(i => (!teamId.HasValue || i.TeamId == teamId) &&
                                         (string.IsNullOrEmpty(role) || (i.Role == role)) &&
                                         (string.IsNullOrEmpty(playerName) || (i.Player_Name == playerName)))
-                           .Include(i => i.Team),page ?? 1, pageSize));
+                           .Include(i => i.Team), page ?? 1, pageSize));
 
 
         }
@@ -135,12 +135,16 @@ namespace WebApp.Controllers
         // GET: Players/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
             if (id == null)
             {
                 return NotFound();
             }
 
-            var player = await _context.Players.SingleOrDefaultAsync(m => m.PlayerId == id);
+            var player = await _context.Players
+                .AsNoTracking()
+                .Include(i => i.Team)
+                .SingleOrDefaultAsync(m => m.PlayerId == id);
             if (player == null)
             {
                 return NotFound();
@@ -164,6 +168,16 @@ namespace WebApp.Controllers
             {
                 try
                 {
+                    var fokrm = Request.Form;
+                    byte[] fileBytes = null;
+                    if (player.PlayerImage != null)
+                    {
+                        using (var stream = player.PlayerImage.OpenReadStream())
+                        {
+                            fileBytes = ReadStream(stream);
+                        }
+                    }
+                    player.PlayerLogo = fileBytes ?? null;
                     _context.Update(player);
                     await _context.SaveChangesAsync();
                 }
@@ -234,18 +248,18 @@ namespace WebApp.Controllers
                     commandType: CommandType.StoredProcedure);
                 return View(model);
             }
-              catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException)
+            {
+                if (teamId != null)
                 {
-                    if (teamId !=null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
                 }
-           
+                else
+                {
+                    throw;
+                }
+            }
+
         }
 
 

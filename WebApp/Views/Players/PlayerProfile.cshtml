@@ -28,7 +28,7 @@
                     {
                         <div class="dl-horizontal">
                             <div class="col-md-2">
-                                <a asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">
+                                <a asp-controller="Players" rel="tooltip" title="@item.Player_Name" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">
                                     <div class="img-responsive " style="margin-bottom: 2em; background-size:cover" onclick="playerStatistics" id="PlayerImg"></div>
                                 </a>
                             </div>

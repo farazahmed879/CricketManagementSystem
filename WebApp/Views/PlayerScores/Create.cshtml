@@ -66,7 +66,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
-                                        <select asp-for="@Model[i].PlayerId" asp-items="ViewBag.PlayerId" placeholder="--Select Player--">
+                                        <select asp-for="@Model[i].PlayerId" asp-items="ViewBag.PlayerId" placeholder="--Select Player--" class="playerDropDown">
                                             <option value="">--Select Player--</option>
                                         </select>
                                     </div>
@@ -108,6 +108,7 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
+        const globalStates = [];
         $(function () {
             $('#BackBtn').click(function () {
                 window.location = '/PlayerScores/Index'
@@ -115,6 +116,32 @@
         });
         const openModal = (id) => {
             document.getElementById('Modal_PlayerId').value = document.getElementById(`Grid_${id}__PlayerId`).value;
+        };
+
+        $('.playerDropDown')
+            .on('change', (event) => {
+                const element = event.target;
+                if (!element.value)
+                    return;
+                globalStates.push({
+                    value: element.value
+                });
+                removeValues();
+            });
+
+        const removeValues = () => {
+            const elements = $('select.playerDropDown');
+            for (let index = 0; index < elements.length; index++) {
+                const isAdded = _.some(globalStates, {
+                    value: elements[index].value
+                });
+                if (!isAdded) {
+                    for (let globalState of globalStates) {
+                        //elements[index].selectize.removeValues(globalState.value);
+                        $(`#${elements[index].id}`)[0].selectize.removeOption(globalState.value);
+                    }                   
+                }
+            }
         };
 
     </script>

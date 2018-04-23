@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace WebApp.Controllers
 {
-    [Authorize]
+   
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
