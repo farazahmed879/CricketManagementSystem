@@ -4,85 +4,78 @@
     ViewData["Title"] = "Create";
 }
 
-<div class="container">
-    <div class="col-sm-12 col-sm-offset-0">
-        <!--      Wizard container        -->
-        <div class="wizard-container">
-            <div class="card wizard-card">
-                <div class="wizard-header">
-                    <h3 class="wizard-title">
-                        Add New Team
-                    </h3>
+<div class="container-fluid">
+    <div class="wizard-header">
+        <h3 class="wizard-title">
+            Add New Team
+        </h3>
+    </div>
+    <div class="row">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-md-8" style="margin-top:3em;">
+                <div class="col-md-6">
+                    <div class="form-group label-floating">
+                        <label class="control-label">Team Name*</label>
+                        <input asp-for="Team_Name" required class="form-control" />
+                        <span asp-validation-for="Team_Name" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="container-fluid">
-                    <div class="row">
-                        <form asp-action="Create" enctype="multipart/form-data">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="col-md-8" style="margin-top:3em;">
-                                <div class="col-md-6">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Team Name*</label>
-                                        <input asp-for="Team_Name" required class="form-control" />
-                                        <span asp-validation-for="Team_Name" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+                <div class="col-md-6">
 
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Place</label>
-                                        <input asp-for="Place" class="form-control" />
-                                        <span asp-validation-for="Place" class="text-danger"></span>
-                                    </div>
+                    <div class="form-group label-floating">
+                        <label class="control-label">Place</label>
+                        <input asp-for="Place" class="form-control" />
+                        <span asp-validation-for="Place" class="text-danger"></span>
+                    </div>
 
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Zone</label>
-                                        <input asp-for="Zone" type="number" class="form-control" />
-                                        <span asp-validation-for="Zone" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">City*</label>
-                                        <input asp-for="City" required class="form-control" />
-                                        <span asp-validation-for="City" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="img-responsive" id="Img" style="background-size:cover"></div>
-                                        </div>
-                                        <div class="col-md-6" style="margin-top:7.7em;">
-                                            <label asp-for="TeamImage" class="btn btn-primary">
-                                                <i class="material-icons">file_upload</i> <input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="submit" value="Create" class="btn btn-primary" />
-                                </div>
-                            </div>
-                        </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group label-floating">
+                        <label class="control-label">Zone</label>
+                        <input asp-for="Zone" type="number" class="form-control" />
+                        <span asp-validation-for="Zone" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group label-floating">
+                        <label class="control-label">City*</label>
+                        <input asp-for="City" required class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="img-responsive" id="Img" style="background-size:cover"></div>
+                        </div>
+                        <div class="col-md-6" style="margin-top:7.7em;">
+                            <label asp-for="TeamImage" class="btn btn-primary">
+                                <i class="material-icons">file_upload</i> <input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="container text-center">
+            <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
         </div>
     </div>
 </div>
-<div class="footer">
-    <div class="container text-center">
-        <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
-    </div>
-</div>
+
 
 
 

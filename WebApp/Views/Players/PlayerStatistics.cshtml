@@ -5,10 +5,8 @@
 }
 
 <div class="backImage">
-    <!--   Creative Tim Branding   -->
-    <!--   Big container   -->
-    <div class="container">
-        <div class="row">
+
+    <div class="container-fluid">
             <div class="col-sm-8 col-sm-offset-2">
                 <!--      Wizard container        -->
                 <div class="wizard-container">
@@ -129,6 +127,12 @@
                                                     <dd>
                                                         @Html.DisplayFor(model => model.StrikeRate)
                                                     </dd>
+                                                    <dt>
+                                                        Best Score
+                                                    </dt>
+                                                    <dd>
+                                                        @Html.DisplayFor(model => model.BestScore)
+                                                    </dd>
                                                 </dl>
                                             </div>
                                         </div>
@@ -187,6 +191,13 @@
                                                     <dd>
                                                         @Html.DisplayFor(model => model.Economy)
                                                     </dd>
+
+                                                    <dt>
+                                                        Best
+                                                    </dt>
+                                                    <dd>
+                                                        @Html.DisplayFor(model => model.BestBowling)
+                                                    </dd>
                                                 </dl>
                                             </div>
                                         </div>
@@ -238,9 +249,8 @@
                         </form>
                     </div>
                 </div> <!-- wizard container -->
-            </div>
-        </div> <!-- row -->
-    </div> <!--  big container -->
+            </div>  
+    </div>
     <div class="footer">
         <div class="container text-center">
 

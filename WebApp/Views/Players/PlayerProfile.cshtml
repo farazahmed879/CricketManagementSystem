@@ -3,42 +3,36 @@
 @{
     ViewData["Title"] = "List of Players";
 }
-<div class="container">
-    <div class="col-sm-12">
-        <div class="wizard-container">
-            <div class="card wizard-card">
-                <div class="wizard-header">
-                    <h3 class="wizard-title">
-                        All Players
-                    </h3>
+<div class="container-fluid">
+    <div class="wizard-header">
+        <h3 class="wizard-title">
+            All Players
+        </h3>
 
-                </div>
-                <div class="container-fluid">
-                    @*<p>
-                            <button id="AddBtn" asp-action="Create" class="btn btn-primary">Add New</button>
-                        </p>*@
+    </div>
 
-                    <a asp-controller="Players" asp-action="Create" class="made-with-mk">
-                        <div class="brand">Add</div>
-                        <div class="made-with"> Create <strong>a new Player</strong></div>
-                        <div class="ripple-container"></div>
-                    </a>
+    @*<p>
+            <button id="AddBtn" asp-action="Create" class="btn btn-primary">Add New</button>
+        </p>*@
 
-                    @foreach (var item in Model)
-                    {
-                        <div class="dl-horizontal">
-                            <div class="col-md-2">
-                                <a asp-controller="Players" rel="tooltip" title="@item.Player_Name" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">
-                                    <div class="img-responsive " style="margin-bottom: 2em; background-size:cover" onclick="playerStatistics" id="PlayerImg"></div>
-                                </a>
-                            </div>
-                        </div>
-                    }
+    <a asp-controller="Players" asp-action="Create" class="made-with-mk">
+        <div class="brand">Add</div>
+        <div class="made-with"> Create <strong>a new Player</strong></div>
+        <div class="ripple-container"></div>
+    </a>
 
-                </div>
+    @foreach (var item in Model)
+    {
+        <div class="dl-horizontal">
+            <div class="col-md-2">
+                <a asp-controller="Players" rel="tooltip" title="@item.Player_Name" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">
+                    <div class="img-responsive " style="margin-bottom: 2em; background-size:cover" onclick="playerStatistics" id="PlayerImg"></div>
+                </a>
             </div>
         </div>
-    </div>
+    }
+
+
 </div>
 
 @section Scripts{

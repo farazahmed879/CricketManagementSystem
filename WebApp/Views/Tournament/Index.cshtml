@@ -3,84 +3,75 @@
 @{
     ViewData["Title"] = "Teams";
 }
-<div class="container">
-    <div class="col-sm-12">
-        <div class="wizard-container">
-            <div class="card wizard-card">
-                <div class="wizard-header">
-                    <h3 class="wizard-title">
-                        Tournaments
-                    </h3>
-                </div>
-                <div class="container-fluid">
-                    @*<p>
-                            <button id="createBtn" asp-action="Create" class="btn btn-primary">Create New</button>
-                        </p>*@
-                    <a asp-controller="Tournament" asp-action="Create" class="made-with-mk">
-                        <div class="brand">Add</div>
-                        <div class="made-with"> Create <strong>new Tournament</strong></div>
-                        <div class="ripple-container"></div>
-                    </a>
+<div class="container-fluid">
 
 
-                    <table id="TournamentTable" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Tournament
-                                </th>
-                                <th>
-                                    Organizor
-                                </th>
-                                <th>
-                                    ----Actions----
-                                </th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TournamentName)
-
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Organizor)
-
-                                    </td>
-                                    <td>
-                                        <a class="material-icons" rel="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId">account_balance</a>
-                                        <a class="material-icons" rel="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TournamentId">mode_edit</a>
-                                        <a class="material-icons" rel="tooltip" title="Delete" asp-action="Delete" asp-route-id="@item.TournamentId">delete</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-                    @{
-                        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-                        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-                    }
-                    <nav class="navbar navbar-light bg-light">
-                        <form class="form-inline">
-                            <a asp-action="Index" class="material-icons @prevDisabled"
-                               asp-route-page="@(Model.PageIndex - 1)">
-                                skip_previous
-                            </a>
-                            <a asp-action="Index"
-                               asp-route-page="@(Model.PageIndex + 1)"
-                               class="material-icons @nextDisabled">
-                                skip_next
-                            </a>
-                        </form>
-                    </nav>
-                </div>
-            </div>
-        </div>
+    <div class="wizard-header">
+        <h3 class="wizard-title">
+            Tournaments
+        </h3>
     </div>
+    <a asp-controller="Tournament" asp-action="Create" class="made-with-mk">
+        <div class="brand">Add</div>
+        <div class="made-with"> Create <strong>new Tournament</strong></div>
+        <div class="ripple-container"></div>
+    </a>
+
+
+    <table id="TournamentTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Tournament
+                </th>
+                <th>
+                    Organizor
+                </th>
+                <th>
+                    ----Actions----
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TournamentName)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Organizor)
+
+                    </td>
+                    <td>
+                        <a class="material-icons" rel="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId">account_balance</a>
+                        <a class="material-icons" rel="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TournamentId">mode_edit</a>
+                        <a class="material-icons" rel="tooltip" title="Delete" asp-action="Delete" asp-route-id="@item.TournamentId">delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+    <nav class="navbar navbar-light bg-light">
+        <form class="form-inline">
+            <a asp-action="Index" class="material-icons @prevDisabled"
+               asp-route-page="@(Model.PageIndex - 1)">
+                skip_previous
+            </a>
+            <a asp-action="Index"
+               asp-route-page="@(Model.PageIndex + 1)"
+               class="material-icons @nextDisabled">
+                skip_next
+            </a>
+        </form>
+    </nav>
 </div>
 @section Scripts{
     <style>

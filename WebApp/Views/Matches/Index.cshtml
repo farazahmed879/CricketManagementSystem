@@ -3,183 +3,181 @@
 @{
     ViewData["Title"] = "Matches";
 }
-<div class="container">
-    <div class="col-sm-12">
-        <div class="wizard-container">
-            <div class="card wizard-card">
-                <div class="wizard-header">
-                    <h3 class="wizard-title">
-                        List Of Played Matches
-                    </h3>
-                </div>
-                <div class="container-fluid">
-                    @*Filter*@
-
-                    <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
-                        <div class="panel-body">
-                            <form class="form-inline" role="form" id="Filters">
-                                <div class="row">
-                                    <div class="col-xs-6 col-md-3">
-                                        <label>Tournament</label>
-                                        <select id="tournamentId" name="tournamentId" asp-items="ViewBag.TournamentId" placeholder="--Select--">
-                                            <option value="">--Select--</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-6 col-md-3">
-                                        <label>Home Team</label>
-                                        <select id="homeTeamId" name="homeTeamId" asp-items="ViewBag.TeamId" placeholder="--Select--">
-                                            <option value="">--Select--</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-6 col-md-3">
-                                        <label>
-                                            Opponent
-                                        </label>
-                                        <select id="opponentTeamId" name="opponentTeamId" asp-items="ViewBag.TeamId" placeholder="--Select--">
-                                            <option value="">--Select--</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-6 col-md-3">
-                                        <label>Result</label>
-                                        <select id="result" name="result" placeholder="--Select--">
-                                            <option value="">--Select--</option>
-                                            <option>Win</option>
-                                            <option>Loss</option>
-                                            <option>Tie</option>
-                                        </select>
-                                    </div>
-                                    @*<div id="clear"></div>*@
-                                    <div class="col-xs-6 col-md-3">
-                                        <div class="form-group label-floating" style="width: 100%;">
-                                            <label class="control-label">Season</label>
-                                            <input id="season" type="number" name="season" class="form-control" style="width: 100%;">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-6 col-md-3">
-                                        <div class="form-group label-floating" style="width: 100%;">
-                                            <label class="control-label">Type</label>
-                                            <input id="matchOvers" type="number" name="matchOvers" class="form-control" style="width: 100%;">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-6 col-md-3">
-                                        <div class="form-group label-floating" style="width: 100%;">
-                                            <label class="control-label">Ground</label>
-                                            <input id="ground" type="text" name="ground" class="form-control" style="width: 100%;">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <button type="submit" class="btn btn-primary filter-col">
-                                            <span class="glyphicon glyphicon-record"></span> Search
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-                    <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
-                        Advanced Search
-                    </button>
-
-                    @*Filter*@
-                    @*<p>
-                            <button id="AddNewMatchBtn" asp-action="Create" class="btn btn-primary">Add New</button>
-                        </p>*@
-                    <a asp-controller="Matches" asp-action="Create" class="made-with-mk">
-                        <div class="brand">Add</div>
-                        <div class="made-with"> Create <strong>a new Match</strong></div>
-                        <div class="ripple-container"></div>
-                    </a>
-                    <div class="table-responsive">
-                        <table id="MatchTable" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Ground
-                                    </th>
-
-                                    <th>
-                                        Home Team
-                                    </th>
-                                    <th>
-                                        Opponent
-                                    </th>
-                                    <th>
-                                        Date
-                                    </th>
-
-                                    <th>
-                                        Overs
-                                    </th>
-
-                                    <th>
-                                        Result
-                                    </th>
-                                    <th>
-                                        -----Actions-----
-                                    </th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.GroundName)
-                                        </td>
-
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.HomeTeam.Team_Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.OppponentTeam.Team_Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DateOfMatch)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MatchOvers)
-                                        </td>
-
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Result)
-                                        </td>
-
-                                        <td>
-                                            <a class="material-icons" rel="tooltip" title="Score Card" asp-controller="PlayerScores" asp-action="Index" asp-route-teamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId">S</a>
-                                            <a class="material-icons" rel="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId">mode_edit</a>
-                                            <a class="material-icons" rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.MatchId">details</a>
-                                            <a class="material-icons" rel="tooltip" title="Delete Match" asp-action="Delete" asp-route-id="@item.MatchId">delete</a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    @{
-                        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-                        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-                    }
-                    <nav class="navbar navbar-light bg-light">
-                        <form class="form-inline">
-                            <a asp-action="Index" class="material-icons @prevDisabled"
-                               asp-route-page="@(Model.PageIndex - 1)">
-                                skip_previous
-                            </a>
-                            <a asp-action="Index"
-                               asp-route-page="@(Model.PageIndex + 1)"
-                               class="material-icons @nextDisabled">
-                                skip_next
-                            </a>
-                        </form>
-                    </nav>
-                </div>
-            </div>
-        </div>
+<div class="container-fluid">
+    <div class="wizard-header">
+        <h3 class="wizard-title">
+            List Of Played Matches
+        </h3>
     </div>
+    @*Filter*@
+    <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
+        <div class="panel-body">
+            <form class="form-inline" role="form" id="Filters">
+                <div class="row">
+                    <div class="col-xs-6 col-md-3">
+                        <label>Tournament</label>
+                        <select id="tournamentId" name="tournamentId" asp-items="ViewBag.TournamentId" placeholder="--Select--">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <label>Home Team</label>
+                        <select id="homeTeamId" name="homeTeamId" asp-items="ViewBag.TeamId" placeholder="--Select--">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <label>
+                            Opponent
+                        </label>
+                        <select id="opponentTeamId" name="opponentTeamId" asp-items="ViewBag.TeamId" placeholder="--Select--">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <label>Result</label>
+                        <select id="result" name="result" placeholder="--Select--">
+                            <option value="">--Select--</option>
+                            <option>Win</option>
+                            <option>Loss</option>
+                            <option>Tie</option>
+                        </select>
+                    </div>
+                    @*<div id="clear"></div>*@
+                    <div class="col-xs-6 col-md-3">
+                        <div class="form-group label-floating" style="width: 100%;">
+                            <label class="control-label">Season</label>
+                            <input id="season" type="number" name="season" class="form-control" style="width: 100%;">
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-md-3">
+                        <div class="form-group label-floating" style="width: 100%;">
+                            <label class="control-label">Type</label>
+                            <input id="matchOvers" type="number" name="matchOvers" class="form-control" style="width: 100%;">
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-md-3">
+                        <div class="form-group label-floating" style="width: 100%;">
+                            <label class="control-label">Ground</label>
+                            <input id="ground" type="text" name="ground" class="form-control" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <button type="submit" class="btn btn-primary filter-col">
+                            <span class="glyphicon glyphicon-record"></span> Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+        Advanced Search
+    </button>
+
+    @*Filter*@
+    @*<p>
+            <button id="AddNewMatchBtn" asp-action="Create" class="btn btn-primary">Add New</button>
+        </p>*@
+    <a asp-controller="Matches" asp-action="Create" class="made-with-mk">
+        <div class="brand">Add</div>
+        <div class="made-with"> Create <strong>a new Match</strong></div>
+        <div class="ripple-container"></div>
+    </a>
+    <div class="table-responsive">
+        <table id="MatchTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Ground
+                    </th>
+
+                    <th>
+                        Home Team
+                    </th>
+                    <th>
+                        Opponent
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Overs
+                    </th>
+
+                    <th>
+                        Result
+                    </th>
+                    <th>
+                        -----Actions-----
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GroundName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HomeTeam.Team_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OppponentTeam.Team_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfMatch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MatchOvers)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Result)
+                        </td>
+
+                        <td>
+                            <a class="material-icons" rel="tooltip" title="Score Card" asp-controller="PlayerScores" asp-action="Index" asp-route-teamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId">S</a>
+                            <a class="material-icons" rel="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId">mode_edit</a>
+                            <a class="material-icons" rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.MatchId">details</a>
+                            <a class="material-icons" rel="tooltip" title="Delete Match" asp-action="Delete" asp-route-id="@item.MatchId">delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+    <nav class="navbar navbar-light bg-light">
+        <form class="form-inline">
+            <a asp-action="Index" class="material-icons @prevDisabled"
+               asp-route-page="@(Model.PageIndex - 1)">
+                skip_previous
+            </a>
+            <a asp-action="Index"
+               asp-route-page="@(Model.PageIndex + 1)"
+               class="material-icons @nextDisabled">
+                skip_next
+            </a>
+        </form>
+    </nav>
+
 </div>
 
 @section Scripts{
@@ -235,11 +233,11 @@
             });
         }
 
-        //if (window.matchMedia("(min-wdth: 992px)").matches) {
-        //    document.getelementById("clear").classList.add("clearFix");
-        //} else {
-        //    document.getelementById("clear").classList.remove("clearFix");
-        //}
+                        //if (window.matchMedia("(min-wdth: 992px)").matches) {
+                        //    document.getelementById("clear").classList.add("clearFix");
+                        //} else {
+                        //    document.getelementById("clear").classList.remove("clearFix");
+                        //}
     </script>
     <style>
         @@media only screen and (max-width: 768px) {

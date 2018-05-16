@@ -1,26 +1,32 @@
 ﻿@model IEnumerable<CricketApp.Domain.PlayerScore>
 <div class="container-fluid">
-    <div class="card wizard-card">
+    
         <div class="form-inline">
             <div class="wizard-header">
                 <h3 class="wizard-title">
                     Match Score
                 </h3>
             </div>
-            <div class="col-sm-2">
-                <p>
-                    <a id="AddBtn" asp-action="Create" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Add</a>
-                </p>
-            </div>
-            <div class="col-sm-2">
-                <p>
-                    <a id="EditBtn" asp-action="Edit" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Edit</a>
-                </p>
-            </div>
-            <div class="col-sm-2">
-                <p>
-                    <a id="AddBtn" asp-action="Delete" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Delete</a>
-                </p>
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <div class="col-sm-4">
+                        <p>
+                            <a id="AddBtn" asp-action="Create" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Add</a>
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p>
+                            <a id="EditBtn" asp-action="Edit" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Edit</a>
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p>
+                            <a id="AddBtn" asp-action="Delete" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Delete</a>
+                        </p>
+                    </div>
+                </div>
+                
             </div>
         </div>
         @*<dl class="dl-horizontal">
@@ -163,7 +169,7 @@
             </table>
 
         }
-    </div>
+   
 </div>
 <div id="PlayerScoreModal" class="modal fade" role="dialog">
     <div class="modal-dialog">

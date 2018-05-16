@@ -53,6 +53,7 @@ a, a:hover, a:focus {
     align-items: stretch;
 }
 
+
 #sidebar {
     min-width: 250px;
     max-width: 250px;
@@ -60,6 +61,22 @@ a, a:hover, a:focus {
     color: #fff;
     transition: all 0.3s;
 }
+
+
+.hidden-left-side-sideBar {
+    margin-left: -250px;
+}
+
+.hidden-left-side-body {
+    position: relative;
+    width: 100% !important;
+}
+.hidden-left-side-table{
+width: 100% !important;
+} 
+/*table {
+    width: 90% !important;
+}*/
 
 #sidebar.active {
     margin-left: -250px;
@@ -85,10 +102,11 @@ a, a:hover, a:focus {
     font-size: 1.1em;
     display: block;
 }
-#sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
-}
+
+    #sidebar ul li a:hover {
+        color: #7386D5;
+        background: #fff;
+    }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
@@ -108,6 +126,7 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
     font-family: 'Glyphicons Halflings';
     font-size: 0.6em;
 }
+
 a[aria-expanded="true"]::before {
     content: '\e260';
 }
@@ -123,13 +142,13 @@ ul.CTAs {
     padding: 20px;
 }
 
-ul.CTAs a {
-    text-align: center;
-    font-size: 0.9em !important;
-    display: block;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
+    ul.CTAs a {
+        text-align: center;
+        font-size: 0.9em !important;
+        display: block;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
 
 a.download {
     background: #fff;
@@ -147,6 +166,7 @@ a.article, a.article:hover {
     CONTENT STYLE
 ----------------------------------------------------- */
 #content {
+    width: 80%;
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
@@ -159,9 +179,11 @@ a.article, a.article:hover {
     #sidebar {
         margin-left: -250px;
     }
-    #sidebar.active {
-        margin-left: 0;
-    }
+
+        #sidebar.active {
+            margin-left: 0;
+        }
+
     #sidebarCollapse span {
         display: none;
     }

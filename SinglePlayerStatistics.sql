@@ -1,9 +1,9 @@
-﻿Create PROCEDURE [usp_GetMatchStatistics]
+﻿Alter PROCEDURE [usp_GetMatchStatistics]
 @paramPlayerId AS INT
 AS
 BEGIN
 	SELECT *,
-		  CONCAT(data.TotalBallRuns,'/',data.BestBowling) AS 'BallingRuns'
+		  CONCAT(data.TotalBallRuns,'/',data.MostWickets) AS 'BestBowling'
 	FROM
 	(
 		SELECT  count (PlayerScores.MatchId) as 'TotalMatch',
@@ -20,7 +20,7 @@ BEGIN
 				count(case when HowOut = 'Hit Wicket' then 1 else null end) as 'TotalHitWicket',
 				count(case when HowOut = 'LBW' then 1 else null end) as 'TotalLBW',
 				max (Bat_Runs) as 'BestScore',
-				max (Wickets) as 'BestBowling',
+				max (Wickets) as 'MostWickets',		
 				COUNT(CASE WHEN Bat_Runs >= 50 THEN 1 ELSE NULL END) AS 'NumberOf50s',
 				COUNT(CASE WHEN Bat_Runs >= 100 THEN 1 ELSE NULL END) AS 'NumberOf100s',
 				cast(sum (cast (Bat_Runs as float)) *100 / sum (cast (Bat_Balls as float)) as float)  as 'StrikeRate',
@@ -70,4 +70,5 @@ BEGIN
 	) AS data
 END
 
-exec [usp_GetMatchStatistics] 5
+exec [usp_GetMatchStatistics] 1
+

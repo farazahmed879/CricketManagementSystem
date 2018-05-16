@@ -3,17 +3,13 @@
 @{
     ViewData["Title"] = "Teams";
 }
-<div class="container">
-    <div class="wizard-container">
-        <div class="card wizard-card">
+<div class="container-fluid">
+    
             <div class="wizard-header">
                 <h3 class="wizard-title">
                     Teams
                 </h3>
             </div>
-
-            <div class="container-fluid">
-
                 @*Filter*@
 
                 <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
@@ -23,7 +19,7 @@
                                 <div class="col-xs-6 col-md-6">
                                     <div class="form-group label-floating" style="width: 100%;">
                                         <label class="control-label">Zone</label>
-                                        <input id="Zone" name="zone" type="text" class="form-control" style="width: 100%;">
+                                        <input id="Zone" name="zone" type="number" class="form-control" style="width: 100%;">
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-md-6">
@@ -106,6 +102,15 @@
                                         <a class="material-icons" rel="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TeamId">mode_edit</a>
                                         @*<a class="material-icons" rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.TeamId">details</a>*@
                                         <a class="material-icons" rel="tooltip" title="Delete" asp-action="Delete" asp-route-id="@item.TeamId">delete</a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            ...
+                                            <li class="dropdown-submenu">
+                                                <a tabindex="-1" href="#">More options</a>
+                                                <ul class="dropdown-menu">
+                                                    ...
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     </td>
                                 </tr>
                             }
@@ -129,9 +134,7 @@
                         </a>
                     </form>
                 </nav>
-            </div>
-        </div>
-    </div>
+ 
 </div>
 
 @section Scripts{
@@ -183,22 +186,22 @@
                 window.location = '/Teams/Create'
             });
         });
-        async function FilterData() {
-            var formElement = document.getElementById("Filters");
-            var formData = new FormData(formElement);
+        //async function FilterData() {
+        //    var formElement = document.getElementById("Filters");
+        //    var formData = new FormData(formElement);
 
-            var zone = formData.get("zone")
-            var city = formData.get("city")
+        //    var zone = formData.get("zone")
+        //    var city = formData.get("city")
 
 
-            // var header = new Headers();
-            //header.append("content-type");
+        //    // var header = new Headers();
+        //    //header.append("content-type");
 
-            const response = await fetch(`/Teams/Index?zone=${zone}&city=${city}`, {
-                credentials: 'same-origin'
-            });
+        //    const response = await fetch(`/Teams/Index?zone=${zone}&city=${city}`, {
+        //        credentials: 'same-origin'
+        //    });
 
-        }
+        //}
 
     </script>
 

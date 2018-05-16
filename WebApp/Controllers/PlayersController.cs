@@ -26,7 +26,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Players
-        public async Task<IActionResult> Index(int? teamId, string role, string playerName, int? page)
+        public async Task<IActionResult> Index(int? teamId, string role,int? page)
         {
             ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
             int pageSize = 10;
@@ -34,8 +34,8 @@ namespace WebApp.Controllers
                              _context.Players
                            .AsNoTracking()
                            .Where(i => (!teamId.HasValue || i.TeamId == teamId) &&
-                                        (string.IsNullOrEmpty(role) || (i.Role == role)) &&
-                                        (string.IsNullOrEmpty(playerName) || (i.Player_Name == playerName)))
+                                        (string.IsNullOrEmpty(role) || (i.Role == role))
+                                        )
                            .Include(i => i.Team), page ?? 1, pageSize));
 
 
@@ -237,15 +237,32 @@ namespace WebApp.Controllers
             return View(model);
         }
         // GET: AllPlayerStatistics
-        public IActionResult AllPlayerStatistics(int teamId)
+        public IActionResult AllPlayerStatistics(int? teamId,int? season, int? overs, int? position,string status,int? tournamentId,int? opponentTeamId, bool isApi)
         {
+            ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+            ViewBag.Season = new SelectList(_context.Matches.Select(i => i.Season).ToList().Distinct(), "Season");
+            ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
+            ViewBag.TournamentId = new SelectList(_context.Tournaments, "TournamentId", "TournamentName");
             try
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<AllPlayerStatisticsdto>(
                     "[usp_GetAllPlayerStatistics]",
-                    new { paramTeamId = teamId },
+                    new {
+                        paramTeamId = teamId,
+                        paramSeason = season,
+                        paramOvers = overs,
+                        paramPosition = position,
+                        paramStatus = status,
+                        paramTournamentId = tournamentId,
+                        paramOpponentTeamId = opponentTeamId
+                        
+                    },
                     commandType: CommandType.StoredProcedure);
+                if (isApi)
+                {
+                    return Json(model);
+                }
                 return View(model);
             }
             catch (DbUpdateConcurrencyException)
@@ -261,6 +278,8 @@ namespace WebApp.Controllers
             }
 
         }
+
+  
 
 
         private bool PlayerExists(int id)

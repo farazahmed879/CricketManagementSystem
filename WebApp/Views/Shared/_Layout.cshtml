@@ -20,7 +20,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.bootstrap3.min.css" />
         <link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css" />
         <link rel="stylesheet" href="~/css/datatables.responsive.css" />
-        @*<link rel="stylesheet" href="~/css/style.css" />*@
+        <link rel="stylesheet" href="~/css/style.css" />
+        @*<link rel="stylesheet" href="~/lib/choosen/chosen.css" />
+      <link rel="stylesheet" href="~/css/bootstrap-choosen.css"/>*@
         <link rel="stylesheet" href="~/css/site.css" />
 
     </environment>
@@ -39,14 +41,16 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.bootstrap3.min.css" />
         <link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css" />
         <link rel="stylesheet" href="~/css/datatables.responsive.css" />
-        @*<link rel="stylesheet" href="~/css/style.css" />*@
+        <link rel="stylesheet" href="~/css/style.css" />
+        @*<link rel="stylesheet" href="~/lib/choosen/chosen.css" />
+        <link rel="stylesheet" href="~/css/bootstrap-choosen.css" />*@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 
     </environment>
     @RenderSection("styles", false)
 </head>
 <body>
-    @*<div class="wrapper">
+    <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
             <div class="sidebar-header">
@@ -55,80 +59,80 @@
 
             <ul class="list-unstyled components">
                 @*<li>
-                        <a href="#">About</a>
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li><a href="#">Page 1</a></li>
-                            <li><a href="#">Page 2</a></li>
-                            <li><a href="#">Page 3</a></li>
-                        </ul>
-                    </li>
+            <a href="#">About</a>
+            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+            <ul class="collapse list-unstyled" id="pageSubmenu">
+                <li><a href="#">Page 1</a></li>
+                <li><a href="#">Page 2</a></li>
+                <li><a href="#">Page 3</a></li>
+            </ul>
+        </li>*@
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-area="" asp-controller="Teams" asp-action="Index">Team</a></li>
                 <li><a asp-area="" asp-controller="Players" asp-action="Index">Player</a></li>
                 <li><a asp-area="" asp-controller="Matches" asp-action="Index">Match</a></li>
                 <li><a asp-area="" asp-controller="Tournament" asp-action="Index">Tournament</a></li>
+                <li><a asp-area="" asp-controller="Players" asp-action="AllPlayerStatistics">All Records</a></li>
             </ul>
 
             <ul class="list-unstyled CTAs">
-                <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>
-                <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a></li>
-                </ul>
+                @*<li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>*@
+            </ul>
         </nav>
 
         <!-- Page Content Holder -->
         <div id="content">
 
             <nav class="navbar navbar-default">
-                <div class="container-fluid">
 
-                    <div class="navbar-header">
-                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                            <i class="glyphicon glyphicon-align-left"></i>
-                        </button>
-                    </div>
 
+                <div class="navbar-header">
+                    <a id="sidebarCollapse" class="btn btn-info navbar-btn">
+                        <i class="material-icons">list</i>
+                    </a>
                 </div>
+                @*<div class="container-fluid body-content"></div>*@
+
+                @RenderBody()
+
+                <hr />
+                <footer>
+                    <p>&copy; Developed by FriendsBit</p>
+                </footer>
+
+
             </nav>
         </div>
-    </div>*@
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Gulzar CC</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul id="abc" class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Teams" asp-action="Index">Team</a></li>
-                    <li><a asp-area="" asp-controller="Players" asp-action="Index">Player</a></li>
-                    <li><a asp-area="" asp-controller="Matches" asp-action="Index">Match</a></li>
-                    <li><a asp-area="" asp-controller="Tournament" asp-action="Index">Tournament</a></li>
-
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="main-bg-img">
-        <div class="container-fluid body-content">
-
-            @RenderBody()
-
-            <hr />
-            <footer>
-                <p>&copy; 2018 - WebApp</p>
-            </footer>
-        </div>
-
     </div>
+    @*<nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Gulzar CC</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul id="abc" class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Teams" asp-action="Index">Team</a></li>
+                        <li><a asp-area="" asp-controller="Players" asp-action="Index">Player</a></li>
+                        <li><a asp-area="" asp-controller="Matches" asp-action="Index">Match</a></li>
+                        <li><a asp-area="" asp-controller="Tournament" asp-action="Index">Tournament</a></li>
+
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="main-bg-img">
+
+
+        </div>*@
 
     <environment include="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
@@ -143,9 +147,9 @@
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
         <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
         <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>
+        <script src="~/lib/choosen/chosen.jquery.js"></script>
         <script src="~/js/datatables.responsive.js"></script>
-
-        <script src="~/js/site.js" asp-append-version="true"></script>
 
     </environment>
     <environment exclude="Development">
@@ -172,13 +176,18 @@
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
         <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
         <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>
+        <script src="~/lib/choosen/chosen.jquery.js"></script>
         <script src="~/js/datatables.responsive.js"></script>
 
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+
 
 
     </environment>
 
     @RenderSection("Scripts", required: false)
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>

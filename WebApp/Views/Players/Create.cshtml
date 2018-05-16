@@ -3,151 +3,152 @@
 @{
     ViewData["Title"] = "New Player";
 }
-<div class="container">
-    <div class="col-sm-12 col-sm-offset-0">
-        <!--      Wizard container        -->
-        <div class="wizard-container">
-            <div class="card wizard-card">
-                <div class="wizard-header">
-                    <h3 class="wizard-title">
-                        Add New Player
-                    </h3>
+<div class="container-fluid">
+    <div class="wizard-header">
+        <h3 class="wizard-title">
+            Add New Player
+        </h3>
+    </div>
+    <div class="row">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-md-8" style="margin-top:3em;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group label-floating">
+                            <label asp-for="Player_Name" class="control-label">Player Name<span class="text-danger">*</span></label>
+                            <input asp-for="Player_Name" required class="form-control" />
+                            <span asp-validation-for="Player_Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group label-floating">
+                            <label asp-for="Contact" class="control-label">Contact No.</label>
+                            <input asp-for="Contact" id="playerContact" class="form-control" />
+                            <span asp-validation-for="Contact" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="form-group label-floating">
+                                <label asp-for="CNIC" class="control-label">Cnic</label>
+                                <input asp-for="CNIC" id="playerCnic" class="form-control" />
+                                <span asp-validation-for="CNIC" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="container-fluid">
-                    <div class="row">
-                        <form asp-action="Create" enctype="multipart/form-data">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="col-md-8" style="margin-top:3em;">
-                                <div class="col-md-4">
-                                    <div class="form-group label-floating">
-                                        <label asp-for="Player_Name" class="control-label">Player Name*</label>
-                                        <input asp-for="Player_Name" required class="form-control" />
-                                        <span asp-validation-for="Player_Name" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group label-floating">
-                                        <label asp-for="Contact" class="control-label">Contact No.</label>
-                                        <input asp-for="Contact" class="form-control" />
-                                        <span asp-validation-for="Contact" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <div class="form-group label-floating">
-                                            <label asp-for="CNIC" class="control-label">Cnic</label>
-                                            <input asp-for="CNIC" class="form-control" />
-                                            <span asp-validation-for="CNIC" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Role*</label>
-                                    <select asp-for="Role" required placeholder="--Select--">
-                                        <option value="">--Select--</option>
-                                        <option>Batsman</option>
-                                        <option>Bowler</option>
-                                        <option>All-Rounder</option>
-                                        <option>Wicket-Keeper Batsman</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Batting Style</label>
-                                    <select asp-for="BattingStyle" placeholder="--Select--">
-                                        <option value="">--Select--</option>
-                                        <option>Right-hand bat</option>
-                                        <option>Left-hand bat</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Bowling Style</label>
-                                    <select asp-for="BowlingStyle" placeholder="--Select--">
-                                        <option value="">--Select--</option>
-                                        <option>Right-arm fast</option>
-                                        <option>Right-arm fast medium</option>
-                                        <option>Right-arm medium fast</option>
-                                        <option>Left-arm fast</option>
-                                        <option>Left-arm fast medium</option>
-                                        <option>Left-arm medium fast</option>
-                                        <option>Left-arm medium</option>
-                                        <option>Off break (right-arm)</option>
-                                        <option>Leg break (right-arm)</option>
-                                        <option>Slow left-arm orthodox</option>
-                                        <option>Slow left-arm chinaman</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Team*</label>
-                                    <select asp-for="TeamId" asp-items="ViewBag.TeamId" required placeholder="--Select--">
-                                        <option value="">--Select--</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Gender*</label>
-                                    <select asp-for="Gender" required placeholder="--Select--">
-                                        <option value="">--Select--</option>
-                                        <option>Male</option>
-                                        <option>Female</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox">
-                                        <label>
-                                            Guest
-                                            <input type="checkbox" asp-for="IsGuestPlayer" value="true">
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Birth</label>
-                                    <input type="date" asp-for="DOB" class="form-control" />
-                                    <span asp-validation-for="DOB" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="form-group label-floating">
-                                            <label asp-for="Address" class="control-label">St. Address</label>
-                                            <input asp-for="Address" class="form-control" />
-                                            <span asp-validation-for="Address" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="img-responsive" id="PlayerImg" style="background-size:cover"></div>
-                                        </div>
-                                        <div class="col-md-6" style="margin-top:7.7em;">
-                                            <label asp-for="PlayerImage" class="btn btn-primary">
-                                                Upload <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="submit" value="Create" class="btn btn-primary" />
-                                </div>
-                            </div>
-                        </form>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Role<span class="text-danger">*</span></label>
+                        <select asp-for="Role" required placeholder="--Select--">
+                            <option value="">--Select--</option>
+                            <option>Batsman</option>
+                            <option>Bowler</option>
+                            <option>All-Rounder</option>
+                            <option>Wicket-Keeper Batsman</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Batting Style</label>
+                        <select asp-for="BattingStyle" placeholder="--Select--">
+                            <option value="">--Select--</option>
+                            <option>Right-hand bat</option>
+                            <option>Left-hand bat</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Bowling Style</label>
+                        <select asp-for="BowlingStyle" placeholder="--Select--">
+                            <option value="">--Select--</option>
+                            <option>Right-arm fast</option>
+                            <option>Right-arm fast medium</option>
+                            <option>Right-arm medium fast</option>
+                            <option>Left-arm fast</option>
+                            <option>Left-arm fast medium</option>
+                            <option>Left-arm medium fast</option>
+                            <option>Left-arm medium</option>
+                            <option>Off break (right-arm)</option>
+                            <option>Leg break (right-arm)</option>
+                            <option>Slow left-arm orthodox</option>
+                            <option>Slow left-arm chinaman</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Team<span class="text-danger">*</span></label>
+                        <select asp-for="TeamId" asp-items="ViewBag.TeamId" required placeholder="--Select--">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Gender<span class="text-danger">*</span></label>
+                        <select asp-for="Gender" required placeholder="--Select--">
+                            <option value="">--Select--</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4" style="margin-top: 20px">
+                        <div class="checkbox">
+                            <label>
+                                Guest
+                                <input type="checkbox" asp-for="IsGuestPlayer" value="true">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label style="margin-top: 10px">
+                        Birth
+                        <input type="date" asp-for="DOB" class="form-control" />
+                        <span asp-validation-for="DOB" class="text-danger"></span>
+                    </label>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-group label-floating">
+                            <label asp-for="Address" class="control-label">St. Address</label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="img-responsive" id="PlayerImg" style="background-size:cover"></div>
+                        </div>
+                        <div class="col-md-6" style="margin-top:7.7em;">
+                            <label asp-for="PlayerImage" class="btn btn-primary">
+                                Upload <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="container text-center">
+            <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
         </div>
     </div>
 </div>
-<div class="footer">
-    <div class="container text-center">
-        <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
-    </div>
-</div>
+
 
 
 @section Scripts {
@@ -188,6 +189,18 @@
             });
         });
 
+        const phoneNumber = "9999-9999999";
+        const cnic = "99999-9999999-9";
+
+        const teleNumber = document.getElementById("playerContact");
+
+        let telIm = new Inputmask(phoneNumber);
+        telIm.mask(teleNumber);
+
+        const cnicNumber = document.getElementById("playerCnic");
+
+        let cnicIm = new Inputmask(cnic);
+        cnicIm.mask(cnicNumber);
     </script>
 }
 

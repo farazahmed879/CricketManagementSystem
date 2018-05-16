@@ -1,66 +1,162 @@
 ﻿@model CricketApp.Domain.Match
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
+<div class="container-fluid">
+    <div class="wizard-header">
+        <h3 class="wizard-title">
+            Edit Mode
+        </h3>
+    </div>
 
-<h2>Edit</h2>
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<h4>Match</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MatchId" />
-
-            <div class="form-group">
-                <label asp-for="GroundName" class="control-label"></label>
-                <input asp-for="GroundName" class="form-control" />
-                <span asp-validation-for="GroundName" class="text-danger"></span>
+        <div class="col-md-8" style="margin-top:3em;">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="GroundName" class="control-label">Ground Name*</label>
+                        <input asp-for="GroundName" required class="form-control" />
+                        <span asp-validation-for="GroundName" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Place" class="control-label"></label>
-                <input asp-for="Place" class="form-control" />
-                <span asp-validation-for="Place" class="text-danger"></span>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="Place" class="control-label">Place*</label>
+                        <input asp-for="Place" required class="form-control" />
+                        <span asp-validation-for="Place" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Type" class="control-label">Type</label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Result" class="control-label">Result</label>
-                <input asp-for="Result" class="form-control" />
-                <span asp-validation-for="Result" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Type" class="control-label">Type</label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>Opponent</label>
-                <select asp-for="TeamId" class="form-control" asp-items="ViewBag.TeamId"></select>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="DateOfMatch" class="control-label">Date</label>
+                    <input type="date" asp-for="DateOfMatch" required class="form-control" />
+                    <span asp-validation-for="DateOfMatch" class="text-danger"></span>
+                </div>
             </div>
 
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="MatchOvers" class="control-label">Overs*</label>
+                        <input asp-for="MatchOvers" required type="number" class="form-control" />
+                        <span asp-validation-for="MatchOvers" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label>Home Team*</label>
+                <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
+                    <option value="">--Select Team--</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label>Opponent Team*</label>
+                <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label>Status*</label>
+                <select asp-for="Status" required placeholder="--Select--">
+                    <option value="">--Select--</option>
+                    <option>Fiendly</option>
+                    <option>Tournament</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label>Tournament</label>
+                <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" style="display:none;" placeholder="--Select--">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label>Result</label>
+                <select asp-for="Result" required placeholder="--Select--">
+                    <option value="">--Select--</option>
+                    <option>Win</option>
+                    <option>Loss</option>
+                    <option>Tie</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="form-group">
-                <label asp-for="DateOfMatch" class="control-label"></label>
-                <input asp-for="DateOfMatch" class="form-control" />
-                <span asp-validation-for="DateOfMatch" class="text-danger"></span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="img-responsive" id="Img" style="background-size:cover"></div>
+                    </div>
+                    <div class="col-md-6" style="margin-top:7.7em;">
+                        <label asp-for="MatchImage" class="btn btn-primary">
+                            Upload <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
             </div>
-        </form>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<div class="footer">
+    <div class="container text-center">
+        <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
     </div>
 </div>
 
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <style>
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 160px;
+            width: 200px;
+            border: 1px solid #bbb;
+        }
+    </style>
+    <script>
+        $(function () {
+            $('#BackBtn').click(function () {
+                window.location = '/Matches/Index'
+            });
+        });
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    //$('#PlayerImg').attr('src', e.target.result);
+                    const MatchImg = document.getElementById('Img');
+                    MatchImg.style.backgroundImage = "url(" + e.target.result + ")";
+                    MatchImg.style.backgroundPosition = "cover";
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#MatchImage").change(function () {
+            readURL(this);
+        });
+
+
+    </script>
 }

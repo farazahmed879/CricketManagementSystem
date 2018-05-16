@@ -4,126 +4,118 @@
     ViewData["Title"] = "Create";
 }
 
-<div class="container">
-    <div class="col-sm-12">
-        <!--      Wizard container        -->
-        <div class="wizard-container">
-            <div class="card wizard-card">
-                <div class="wizard-header">
-                    <h3 class="wizard-title" style="border: 1px solid #bbb;">
-                        New Match
-                    </h3>
-                </div>
-                <div class="container-fluid">
-                    <form asp-action="Create" enctype="multipart/form-data">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="container-fluid">
+    <div class="wizard-header">
+        <h3 class="wizard-title">
+            New Match
+        </h3>
+    </div>
 
-                        <div class="col-md-8" style="margin-top:3em;">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="form-group label-floating">
-                                        <label asp-for="GroundName" class="control-label">Ground Name*</label>
-                                        <input asp-for="GroundName" required class="form-control" />
-                                        <span asp-validation-for="GroundName" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="form-group label-floating">
-                                        <label asp-for="Place" class="control-label">Place*</label>
-                                        <input asp-for="Place" required class="form-control" />
-                                        <span asp-validation-for="Place" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label asp-for="DateOfMatch" class="control-label">Date</label>
-                                    <input type="date" asp-for="DateOfMatch" required class="form-control" />
-                                    <span asp-validation-for="DateOfMatch" class="text-danger"></span>
-                                </div>
-                            </div>
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="form-group label-floating">
-                                        <label asp-for="MatchOvers" class="control-label">Overs*</label>
-                                        <input asp-for="MatchOvers" required type="number" class="form-control" />
-                                        <span asp-validation-for="MatchOvers" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Home Team*</label>
-                                <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
-                                    <option value="">--Select Team--</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Opponent Team*</label>
-                                <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
-                                    <option value="">--Select--</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Status*</label>
-                                <select asp-for="Status" required placeholder="--Select--">
-                                    <option value="">--Select--</option>
-                                    <option>Fiendly</option>
-                                    <option>Tournament</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Tournament</label>
-                                <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" style="display:none;" placeholder="--Select--">
-                                    <option value="">--Select--</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label>Result</label>
-                                <select asp-for="Result" required placeholder="--Select--">
-                                    <option value="">--Select--</option>
-                                    <option>Win</option>
-                                    <option>Loss</option>
-                                    <option>Tie</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="img-responsive" id="Img" style="background-size:cover"></div>
-                                    </div>
-                                    <div class="col-md-6" style="margin-top:7.7em;">
-                                        <label asp-for="MatchImage" class="btn btn-primary">
-                                            Upload <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="submit" value="Create" class="btn btn-primary" />
-                            </div>
-                        </div>
-                    </form>
-
+        <div class="col-md-10" style="margin-top:3em;">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="GroundName" class="control-label">Ground Name<span class="text-danger">*</span></label>
+                        <input asp-for="GroundName" required class="form-control" />
+                        <span asp-validation-for="GroundName" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="Place" class="control-label">Place<span class="text-danger">*</span></label>
+                        <input asp-for="Place" required class="form-control" />
+                        <span asp-validation-for="Place" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="DateOfMatch" class="control-label">Date</label>
+                    <input type="date" asp-for="DateOfMatch" required class="form-control" />
+                    <span asp-validation-for="DateOfMatch" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="MatchOvers" class="control-label">Overs<span class="text-danger">*</span></label>
+                        <input asp-for="MatchOvers" required type="number" class="form-control" />
+                        <span asp-validation-for="MatchOvers" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label>Home Team<span class="text-danger">*</span></label>
+                <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
+                    <option value="">--Select Team--</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label>Opponent Team<span class="text-danger">*</span></label>
+                <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label>Status<span class="text-danger">*</span></label>
+                <select id="status" placeholder="--Select--">
+                    <option value="select" disabled="disabled" selected="selected">--Select--</option>
+                    <option value="1">Fiendly</option>
+                    <option value="2">Tournament</option>
+                </select>
+            </div>
+            <div id="tourSection" class="col-md-6">
+                <label>Tournament<span class="text-danger">*</span></label>
+                <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" style="display:none;" placeholder="--Select--">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label>Result<span class="text-danger">*</span></label>
+                <select asp-for="Result" required placeholder="--Select--">
+                    <option value="">--Select--</option>
+                    <option>Win</option>
+                    <option>Loss</option>
+                    <option>Tie</option>
+                </select>
+            </div>
         </div>
-    </div>
+        <div class="col-md-2">
+            <div class="form-group" style="margin-top: 100px">
+                <div class="row">
+
+                    <div class="img-responsive" id="Img" style="background-size:cover"></div>
+
+                    <div>
+                        <label asp-for="MatchImage" class="btn btn-primary">
+                            Upload <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+
 </div>
 <div class="footer">
     <div class="container text-center">
         <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
     </div>
 </div>
+
 
 
 @section Scripts {
@@ -145,13 +137,38 @@
             });
         });
 
-        $(document).ready(function () {
+        const change = () => {
+            if ($("#status").val() === "2") {
+                $("#tourSection").show();
+            }
+            else {
 
+                $("#tourSection").hide();
+                document.getElementById("TournamentId").value = "";
+            }
+        }
+        $('#status').on('change', change);
+        change();
 
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    //$('#PlayerImg').attr('src', e.target.result);
+                    const MatchImg = document.getElementById('Img');
+                    MatchImg.style.backgroundImage = "url(" + e.target.result + ")";
+                    MatchImg.style.backgroundPosition = "cover";
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#MatchImage").change(function () {
+            readURL(this);
         });
-
-
-
 
     </script>
 }

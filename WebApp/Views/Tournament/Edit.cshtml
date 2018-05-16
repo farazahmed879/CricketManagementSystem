@@ -3,37 +3,50 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<div class="container-fluid">
+    <div class="wizard-header">
+        <h3 class="wizard-title">
+            Edit Mode
+        </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
 
-<h2>Edit</h2>
-
-<h4>Team</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="TournamentId" />
-            <div class="form-group">
-                <label asp-for="TournamentName" class="control-label"></label>
-                <input asp-for="TournamentName" class="form-control" />
-                <span asp-validation-for="TournamentName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Organizor" class="control-label"></label>
-                <input asp-for="Organizor" class="form-control" />
-                <span asp-validation-for="Organizor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="TournamentId" />
+                <div class="form-group">
+                    <label asp-for="TournamentName" class="control-label"></label>
+                    <input asp-for="TournamentName" class="form-control" />
+                    <span asp-validation-for="TournamentName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Organizor" class="control-label"></label>
+                    <input asp-for="Organizor" class="form-control" />
+                    <span asp-validation-for="Organizor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container text-center">
+            <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(function () {
+            $('#BackBtn').click(function () {
+                window.location = '/Tournament/Index'
+            });
+        });
+    </script>
 }
