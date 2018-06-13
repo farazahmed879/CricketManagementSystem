@@ -124,7 +124,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     bottom: 80px;
     right: 40px;
     border-radius: 30px;
-    background-color: rgba(48, 232, 2, 0.35);
+    background-color: rgba(156, 39, 176, 0.52);
     border: 1px solid rgba(255, 255, 255, 0.15);
     color: #FFFFFF;
     cursor: pointer;
@@ -162,7 +162,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     .made-with-mk .brand {
         position: relative;
         top: 4px;
-        left: -1px;
+        left: -2px;
         letter-spacing: 1px;
         vertical-align: middle;
         font-size: 16px;

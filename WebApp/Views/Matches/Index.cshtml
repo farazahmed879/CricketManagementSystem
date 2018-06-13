@@ -14,12 +14,7 @@
         <div class="panel-body">
             <form class="form-inline" role="form" id="Filters">
                 <div class="row">
-                    <div class="col-xs-6 col-md-3">
-                        <label>Tournament</label>
-                        <select id="tournamentId" name="tournamentId" asp-items="ViewBag.TournamentId" placeholder="--Select--">
-                            <option value="">--Select--</option>
-                        </select>
-                    </div>
+
                     <div class="col-xs-6 col-md-3">
                         <label>Home Team</label>
                         <select id="homeTeamId" name="homeTeamId" asp-items="ViewBag.TeamId" placeholder="--Select--">
@@ -44,24 +39,36 @@
                         </select>
                     </div>
                     @*<div id="clear"></div>*@
+
+                    <div class="col-xs-6 col-md-3">
+                        <label>Type</label>
+                        <select id="type" placeholder="--Select--">
+                            <option value="" disabled="disabled" selected="selected">--Select--</option>
+                            <option value="1">Fiendly</option>
+                            <option value="2">Tournament</option>
+                        </select>
+                    </div>
+                    <div id="tourSection" class="col-xs-6 col-md-3">
+                        <label>Tournament</label>
+                        <select id="tournamentId" name="tournamentId" asp-items="ViewBag.TournamentId" placeholder="--Select--">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+
+                    <div class="col-xs-6 col-md-3">
+                        <div class="form-group label-floating" style="width: 100%;">
+                            <label class="control-label">Overs</label>
+                            <select id="matchOvers" name="matchOvers" asp-items="ViewBag.Overs" placeholder="--Select--">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-xs-6 col-md-3">
                         <div class="form-group label-floating" style="width: 100%;">
                             <label class="control-label">Season</label>
-                            <input id="season" type="number" name="season" class="form-control" style="width: 100%;">
-                        </div>
-                    </div>
-
-                    <div class="col-xs-6 col-md-3">
-                        <div class="form-group label-floating" style="width: 100%;">
-                            <label class="control-label">Type</label>
-                            <input id="matchOvers" type="number" name="matchOvers" class="form-control" style="width: 100%;">
-                        </div>
-                    </div>
-
-                    <div class="col-xs-6 col-md-3">
-                        <div class="form-group label-floating" style="width: 100%;">
-                            <label class="control-label">Ground</label>
-                            <input id="ground" type="text" name="ground" class="form-control" style="width: 100%;">
+                            <select id="season" name="season" asp-items="ViewBag.Season" placeholder="--Select--">
+                                <option value="">--Select--</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -78,10 +85,6 @@
         Advanced Search
     </button>
 
-    @*Filter*@
-    @*<p>
-            <button id="AddNewMatchBtn" asp-action="Create" class="btn btn-primary">Add New</button>
-        </p>*@
     <a asp-controller="Matches" asp-action="Create" class="made-with-mk">
         <div class="brand">Add</div>
         <div class="made-with"> Create <strong>a new Match</strong></div>
@@ -102,7 +105,7 @@
                         Opponent
                     </th>
                     <th>
-                        Status
+                        Type
                     </th>
                     <th>
                         Date
@@ -150,7 +153,8 @@
                         </td>
 
                         <td>
-                            <a class="material-icons" rel="tooltip" title="Score Card" asp-controller="PlayerScores" asp-action="Index" asp-route-teamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId">S</a>
+
+                            <a class="material-icons" rel="tooltip" title="Score Card" asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId">S</a>
                             <a class="material-icons" rel="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId">mode_edit</a>
                             <a class="material-icons" rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.MatchId">details</a>
                             <a class="material-icons" rel="tooltip" title="Delete Match" asp-action="Delete" asp-route-id="@item.MatchId">delete</a>
@@ -182,6 +186,18 @@
 
 @section Scripts{
     <script>
+        const change = () => {
+            if ($("#type").val() === "2") {
+                $("#tourSection").show();
+            }
+            else {
+                $("#tourSection").hide();
+                //  document.getElementById("TournamentId").value = "";
+            }
+        }
+        $('#type').on('change', change);
+        change();
+
         $(function () {
             $('#AddNewMatchBtn').click(function () {
                 window.location = '/Matches/Create'
@@ -217,9 +233,9 @@
 
             var homeTeamId = formData.get("homeTeamId")
             var opponentTeamId = formData.get("homeTeamId")
+            var status = formData.get("type")
             var tournamentId = formData.get("tournamentId")
             var result = formData.get("result")
-            var ground = formData.get("ground")
             var season = formData.get("season")
             var matchOvers = formData.get("matchOvers")
 
@@ -228,16 +244,16 @@
             // var header = new Headers();
             //header.append("content-type");
 
-            const response = await fetch(`/Matches/Index?homeTeamId=${homeTeamId}&opponentTeamId=${opponentTeamId}&tournamentId=${tournamentId}&result=${result}&ground=${ground}&season=${season}&matchOvers=${matchOvers}`, {
+            const response = await fetch(`/Matches/Index?homeTeamId=${homeTeamId}&opponentTeamId=${opponentTeamId}&status=${status}&result=${result}&tournamentId=${tournamentId}&overs=${matchOvers}&season=${season}`, {
                 credentials: 'same-origin'
             });
         }
 
-                        //if (window.matchMedia("(min-wdth: 992px)").matches) {
-                        //    document.getelementById("clear").classList.add("clearFix");
-                        //} else {
-                        //    document.getelementById("clear").classList.remove("clearFix");
-                        //}
+                                    //if (window.matchMedia("(min-wdth: 992px)").matches) {
+                                    //    document.getelementById("clear").classList.add("clearFix");
+                                    //} else {
+                                    //    document.getelementById("clear").classList.remove("clearFix");
+                                    //}
     </script>
     <style>
         @@media only screen and (max-width: 768px) {

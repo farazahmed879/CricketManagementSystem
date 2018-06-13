@@ -1,12 +1,8 @@
 ﻿@model IEnumerable<CricketApp.Domain.Login>
 
 <div class="container-fluid">
-    <div class="col-sm-4 col-xs-offset-4">
-        <div class="wizard-container">
-            <div class="card wizard-card">
-
+    <div class="col-sm-12 col-md-4 col-xs-offset-3">
                 <div class="container">
-
                     <div class="row" id="pwd-container">
                         <div class="col-md-4">
                             <section class="login-form">
@@ -16,7 +12,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <div class="form-group label-floating">
-                                                <label class="control-label">User or email</label>
+                                                <label class="control-label ">User or email</label>
                                                 <input required Id="Email" type="email" class="form-control" />
                                                 <span id="EmailError" class="text-danger"></span>
                                             </div>
@@ -31,11 +27,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="pwstrength_viewport_progress"></div>
+                                   
 
                                     <button type="button" id="SignInBtn" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>
                                     <div>
-                                        <a asp-controller="Login" asp-action="Create">Create account</a> or <a href="#">reset password</a>
+                                        <a asp-controller="Account" asp-action="register">Create account</a> or <a href="#">reset password</a>
                                     </div>
 
                                 </form>
@@ -43,8 +39,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+      
     </div>
 </div>
 @section scripts {
@@ -91,10 +86,12 @@
 
             const email = $('#Email').val();
             if (!validateEmail(email)) {
+                document.getElementById("EmailError").style.color = "#FF0000";
                 document.getElementById("EmailError").innerHTML = "Please insert a valid email";
             }
             else {
-                document.getElementById("EmailError").innerHTML = "";
+                document.getElementById("EmailError").style.color = "#32CD32";
+                document.getElementById("EmailError").innerHTML = "valid";
 
             }
 

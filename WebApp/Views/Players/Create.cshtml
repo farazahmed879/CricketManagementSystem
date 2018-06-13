@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group label-floating">
-                            <label asp-for="Player_Name" class="control-label">Player Name<span class="text-danger">*</span></label>
+                            <label asp-for="Player_Name" class="control-label">Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                             <input asp-for="Player_Name" required class="form-control" />
                             <span asp-validation-for="Player_Name" class="text-danger"></span>
                         </div>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label>Role<span class="text-danger">*</span></label>
+                        <label>Role<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <select asp-for="Role" required placeholder="--Select--">
                             <option value="">--Select--</option>
                             <option>Batsman</option>
@@ -77,13 +77,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label>Team<span class="text-danger">*</span></label>
+                        <label>Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <select asp-for="TeamId" asp-items="ViewBag.TeamId" required placeholder="--Select--">
                             <option value="">--Select--</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label>Gender<span class="text-danger">*</span></label>
+                        <label>Gender<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <select asp-for="Gender" required placeholder="--Select--">
                             <option value="">--Select--</option>
                             <option>Male</option>

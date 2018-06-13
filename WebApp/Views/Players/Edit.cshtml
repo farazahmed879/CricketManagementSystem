@@ -18,7 +18,7 @@
                 <div class="col-md-8" style="margin-top:3em;">
                     <div class="col-md-4">
                         <div class="form-group label-floating">
-                            <label asp-for="Player_Name" class="control-label">Player Name*</label>
+                            <label asp-for="Player_Name" class="control-label">Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                             <input asp-for="Player_Name" required class="form-control" />
                             <span asp-validation-for="Player_Name" class="text-danger"></span>
                         </div>
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label>Role*</label>
+                        <label>Role<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <select asp-for="Role" required placeholder="--Select--">
                             <option value="">--Select--</option>
                             <option>Batsman</option>
@@ -75,24 +75,32 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label>Team*</label>
+                        <label>Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <select asp-for="TeamId" asp-items="ViewBag.TeamId" required placeholder="--Select--">
                             <option value="">--Select--</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label>Gender*</label>
+                        <label>Gender<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <select asp-for="Gender" required placeholder="--Select--">
                             <option value="">--Select--</option>
                             <option>Male</option>
                             <option>Female</option>
                         </select>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="margin-top: 20px">
                         <div class="checkbox">
                             <label>
                                 Guest
                                 <input type="checkbox" asp-for="IsGuestPlayer" value="true">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" style="margin-top: 20px">
+                        <div class="checkbox">
+                            <label>
+                                Deactivate
+                                <input type="checkbox" asp-for="IsDeactivated" value="true">
                             </label>
                         </div>
                     </div>
@@ -116,7 +124,10 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="img-responsive" id="PlayerImg" style="background-size:cover"></div>
+                                @{ 
+                                    var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
+                                <div class="img-responsive" id="PlayerImg" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                                    }
                             </div>
                             <div class="col-md-6" style="margin-top:7.7em;">
                                 <label asp-for="PlayerImage" class="btn btn-primary">

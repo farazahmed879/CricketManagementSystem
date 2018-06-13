@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Login\Create.cshtml" />
+    <Content Remove="Views\Account\Register.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Login\Create.cshtml" />
+    <None Include="Views\Account\Register.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

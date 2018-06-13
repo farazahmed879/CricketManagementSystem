@@ -26,7 +26,11 @@
         <div class="dl-horizontal">
             <div class="col-md-2">
                 <a asp-controller="Players" rel="tooltip" title="@item.Player_Name" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">
-                    <div class="img-responsive " style="margin-bottom: 2em; background-size:cover" onclick="playerStatistics" id="PlayerImg"></div>
+                    @{
+                        var base64 = @item.PlayerLogo == null || !item.PlayerLogo.Any() ? ""  : Convert.ToBase64String(@item.PlayerLogo);
+                        <div class="img-responsive " style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' onclick="playerStatistics" id="PlayerImg">
+                        </div>
+                    }
                 </a>
             </div>
         </div>

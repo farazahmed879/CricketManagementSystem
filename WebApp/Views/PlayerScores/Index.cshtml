@@ -1,176 +1,372 @@
-﻿@model IEnumerable<CricketApp.Domain.PlayerScore>
+﻿@model WebApp.ViewModels.ScoreCarddto
+
+
 <div class="container-fluid">
-    
-        <div class="form-inline">
-            <div class="wizard-header">
-                <h3 class="wizard-title">
-                    Match Score
-                </h3>
-            </div>
-            <div class="row">
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4">
-                    <div class="col-sm-4">
-                        <p>
-                            <a id="AddBtn" asp-action="Create" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Add</a>
-                        </p>
-                    </div>
-                    <div class="col-sm-4">
-                        <p>
-                            <a id="EditBtn" asp-action="Edit" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Edit</a>
-                        </p>
-                    </div>
-                    <div class="col-sm-4">
-                        <p>
-                            <a id="AddBtn" asp-action="Delete" asp-route-teamId="@ViewBag.teamId" asp-route-matchId="@ViewBag.matchId" class="btn btn-primary">Delete</a>
-                        </p>
-                    </div>
+    <div class="row">
+        <div class="wizard-header">
+            <h3 class="wizard-title">
+                Score Card
+            </h3>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-2">
+                    <select asp-items="ViewBag.HomeTeam" disabled="disabled"></select>
                 </div>
-                
+                <div class="col-sm-1">
+                    <p>Vs</p>
+                </div>
+                <div class="col-sm-2">
+                    <select asp-items="ViewBag.OpponentTeam" disabled="disabled"></select>
+                </div>
             </div>
         </div>
-        @*<dl class="dl-horizontal">
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <label class="control-label">opponent</label>
-                        <input asp-for="@model." class="form-control" />
-                    </div>
+        <section>
+            <div class="wizard">
+                <div class="wizard-inner">
+                    <div class="connecting-line"></div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                                <span class="round-tab">
+                                    <i class="glyphicon glyphicon-folder-open"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                                <span class="round-tab">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                                <span class="round-tab">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <dt>
-                    Ground
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.)
-                </dd>
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <label class="control-label">Ground</label>
-                        <input asp-for="@model.Match.Ground" class="form-control" />
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <label class="conrol-label">Date</label>
-                        <input asp-for="@model.Match.DateOf" class="form-control" />
-                    </div>
-                </div>
-            </dl>*@
-        @if (Model != null && Model.Any())
-        {
+                <div class="tab-content">
+                    <div class="tab-pane active" role="tabpanel" id="step1">
+                        <div class="container-fluid">
+                            <div class="form-inline">
+                                @*<div class="row">
+                                        <div class="col-sm-2">
+                                            <select asp-items="ViewBag.HomeTeam" disabled="disabled"></select>
+                                        </div>
+                                    </div>*@
 
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>
-                            S.No
-                        </th>
-                        <th>
-                            Player Name
-                        </th>
-                        <th>
-                            Runs
-                        </th>
-                        <th>
-                            Balls
-                        </th>
-                        <th>
-                            St. Rate
-                        </th>
-                        <th>
-                            How Out
-                        </th>
-                        <th>
-                            Overs
-                        </th>
-                        <th>
-                            Runs
-                        </th>
-                        <th>
-                            Wickets
-                        </th>
-                        <th>
-                            Econ
-                        </th>
+                                @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
+                                {
+                                    <a id="AddBtn" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId" class="made-with-mk">
+                                        <div class="brand">Edit</div>
+                                        <div class="made-with">  <strong>Match Players</strong></div>
+                                        <div class="ripple-container"></div>
+                                    </a>
 
-                        <th>
-                            Stump
-                        </th>
-                        <th>
-                            Catch
-                        </th>
-                        <th>
-                            Maiden
-                        </th>
-                        <th>-----Action-----</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Position)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Player.Player_Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Bat_Runs)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Bat_Balls)
-                            </td>
-                            <td>
-                                @{
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    S.No
+                                                </th>
+                                                <th>
+                                                    Player Name
+                                                </th>
+                                                <th>
+                                                    Runs
+                                                </th>
+                                                <th>
+                                                    Balls
+                                                </th>
+                                                <th>
+                                                    St. Rate
+                                                </th>
+                                                <th>
+                                                    How Out
+                                                </th>
+                                                <th>
+                                                    Overs
+                                                </th>
+                                                <th>
+                                                    Runs
+                                                </th>
+                                                <th>
+                                                    Wickets
+                                                </th>
+                                                <th>
+                                                    Econ
+                                                </th>
 
-                                    var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
+                                                <th>
+                                                    Stump
+                                                </th>
+                                                <th>
+                                                    Catch
+                                                </th>
+                                                <th>
+                                                    Maiden
+                                                </th>
+                                                <th>-----Action-----</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.HomeTeamScoreCard)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Position)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Bat_Runs)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Bat_Balls)
+                                                    </td>
+                                                    <td>
+                                                        @{
 
-                                    <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
+                                                            var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
+
+                                                            <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.HowOut)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Overs)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Ball_Runs)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Wickets)
+                                                    </td>
+                                                    <td>
+                                                        @{
+
+                                                            var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
+
+                                                            <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
+                                                        }
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Stump)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Catches)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Maiden)
+                                                    </td>
+                                                    <td>
+                                                        <a class="material-icons" rel="tooltip" id="scoreCard" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)">directions_run</a>
+                                                        <a class="material-icons" rel="tooltip" id="scoreCard" title="Edit Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="editplayerscore(@item.PlayerScoreId)">mode_edit</a>
+                                                        <a class="material-icons" rel="tooltip" title="Delete Match" asp-action="Delete" asp-route-playerScoreId="@item.PlayerScoreId">delete</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
                                 }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.HowOut)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Overs)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Ball_Runs)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Wickets)
-                            </td>
-                            <td>
-                                @{
+                                else
+                                {
+                                    <a id="AddBtn" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId" class="made-with-mk">
+                                        <div class="brand">Add</div>
+                                        <div class="made-with">  <strong>Match Players</strong></div>
+                                        <div class="ripple-container"></div>
+                                    </a>
+                                    <div class="wizard-header">
+                                        <h3 class="wizard-title">
+                                            Record is not Inserted
+                                        </h3>
+                                    </div>
 
-                                    var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
-
-                                    <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
                                 }
-                            </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Stump)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Catches)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Maiden)
-                            </td>
-                            <td>
-                                <a class="material-icons" rel="tooltip" id="scoreCard" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)">directions_run</a>
-                                <a class="material-icons" rel="tooltip" id="scoreCard" title="Edit Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="editplayerscore(@item.PlayerScoreId)">mode_edit</a>
-                                <a class="material-icons" rel="tooltip" title="Delete Match" asp-action="Delete" asp-route-playerScoreId="@item.PlayerScoreId">delete</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                            </div>
+                        </div>
 
-        }
-   
+                        <ul class="list-inline pull-right">
+                            <li><button type="submit" value="Save" class="btn btn-primary next-step">Save and continue</button></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="step2">
+                        <div class="container-fluid">
+
+                            <div class="form-inline">
+
+
+                                @*<div class="row">
+                                        <div class="col-sm-2">
+                                            <select asp-items="ViewBag.OpponentTeam" disabled="disabled"></select>
+                                        </div>
+                                    </div>*@
+
+                                @if (Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any())
+                                {
+                                    <a id="AddBtn" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId" class="made-with-mk">
+                                        <div class="brand">Edit</div>
+                                        <div class="made-with">  <strong>Match Players</strong></div>
+                                        <div class="ripple-container"></div>
+                                    </a>
+
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    S.No
+                                                </th>
+                                                <th>
+                                                    Player Name
+                                                </th>
+                                                <th>
+                                                    Runs
+                                                </th>
+                                                <th>
+                                                    Balls
+                                                </th>
+                                                <th>
+                                                    St. Rate
+                                                </th>
+                                                <th>
+                                                    How Out
+                                                </th>
+                                                <th>
+                                                    Overs
+                                                </th>
+                                                <th>
+                                                    Runs
+                                                </th>
+                                                <th>
+                                                    Wickets
+                                                </th>
+                                                <th>
+                                                    Econ
+                                                </th>
+
+                                                <th>
+                                                    Stump
+                                                </th>
+                                                <th>
+                                                    Catch
+                                                </th>
+                                                <th>
+                                                    Maiden
+                                                </th>
+                                                <th>-----Action-----</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.OpponentTeamScoreCard)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Position)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Bat_Runs)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Bat_Balls)
+                                                    </td>
+                                                    <td>
+                                                        @{
+
+                                                            var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
+
+                                                            <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.HowOut)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Overs)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Ball_Runs)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Wickets)
+                                                    </td>
+                                                    <td>
+                                                        @{
+
+                                                            var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
+
+                                                            <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
+                                                        }
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Stump)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Catches)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Maiden)
+                                                    </td>
+                                                    <td>
+                                                        <a class="material-icons" rel="tooltip" id="scoreCard" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)">directions_run</a>
+                                                        <a class="material-icons" rel="tooltip" id="scoreCard" title="Edit Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="editplayerscore(@item.PlayerScoreId)">mode_edit</a>
+                                                        <a class="material-icons" rel="tooltip" title="Delete Match" asp-action="Delete" asp-route-playerScoreId="@item.PlayerScoreId">delete</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                }
+                                else
+                                {
+                                    <a id="AddBtn" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId" class="made-with-mk">
+                                        <div class="brand">Add</div>
+                                        <div class="made-with">  <strong>Match Players</strong></div>
+                                        <div class="ripple-container"></div>
+                                    </a>
+                                    <div class="wizard-header">
+                                        <h3 class="wizard-title">
+                                            Record is not Inserted
+                                        </h3>
+                                    </div>
+
+                                }
+
+                            </div>
+                        </div>
+
+                        <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                            <li><button type="submit" value="Save" class="btn btn-primary next-step">Summary</button></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="complete">
+                        <h3>Complete</h3>
+                        <p>You have successfully completed all steps.</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
+
+
 <div id="PlayerScoreModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -363,6 +559,41 @@
 
         function Player(PlayerScoreId) {
             document.getElementById("PlayerScoreId").value = PlayerScoreId;
+        }
+        $(document).ready(function () {
+            //Initialize tooltips
+            $('.nav-tabs > li a[title]').tooltip();
+
+            //Wizard
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+                var $target = $(e.target);
+
+                if ($target.parent().hasClass('disabled')) {
+                    return false;
+                }
+            });
+
+            $(".next-step").click(function (e) {
+
+                var $active = $('.wizard .nav-tabs li.active');
+                $active.next().removeClass('disabled');
+                nextTab($active);
+
+            });
+            $(".prev-step").click(function (e) {
+
+                var $active = $('.wizard .nav-tabs li.active');
+                prevTab($active);
+
+            });
+        });
+
+        function nextTab(elem) {
+            $(elem).next().find('a[data-toggle="tab"]').click();
+        }
+        function prevTab(elem) {
+            $(elem).prev().find('a[data-toggle="tab"]').click();
         }
 
     </script>

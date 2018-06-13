@@ -18,7 +18,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="form-group label-floating">
-                        <label asp-for="GroundName" class="control-label">Ground Name<span class="text-danger">*</span></label>
+                        <label asp-for="GroundName" class="control-label">Ground Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <input asp-for="GroundName" required class="form-control" />
                         <span asp-validation-for="GroundName" class="text-danger"></span>
                     </div>
@@ -27,9 +27,29 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="form-group label-floating">
-                        <label asp-for="Place" class="control-label">Place<span class="text-danger">*</span></label>
+                        <label asp-for="Place" class="control-label">Place<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <input asp-for="Place" required class="form-control" />
                         <span asp-validation-for="Place" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="Season" class="control-label">Season<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <input asp-for="Season" required type="number" class="form-control" />
+                        <span asp-validation-for="Season" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="MatchOvers" class="control-label">Overs<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <input asp-for="MatchOvers" required type="number" class="form-control" />
+                        <span asp-validation-for="MatchOvers" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -40,45 +60,35 @@
                     <span asp-validation-for="DateOfMatch" class="text-danger"></span>
                 </div>
             </div>
-
             <div class="col-md-6">
-                <div class="form-group">
-                    <div class="form-group label-floating">
-                        <label asp-for="MatchOvers" class="control-label">Overs<span class="text-danger">*</span></label>
-                        <input asp-for="MatchOvers" required type="number" class="form-control" />
-                        <span asp-validation-for="MatchOvers" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <label>Home Team<span class="text-danger">*</span></label>
+                <label>Home Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                 <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
                     <option value="">--Select Team--</option>
                 </select>
             </div>
             <div class="col-md-6">
-                <label>Opponent Team<span class="text-danger">*</span></label>
+                <label>Opponent Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                 <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
                     <option value="">--Select--</option>
                 </select>
             </div>
             <div class="col-md-6">
-                <label>Status<span class="text-danger">*</span></label>
-                <select id="status" placeholder="--Select--">
-                    <option value="select" disabled="disabled" selected="selected">--Select--</option>
-                    <option value="1">Fiendly</option>
-                    <option value="2">Tournament</option>
+                <label>Status<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                <select id="status" asp-for="Status" required placeholder="--Select--">
+                    <option value="" disabled="disabled" selected="selected">--Select--</option>
+                    <option value="Fiendly">Fiendly</option>
+                    <option value="Tournament">Tournament</option>
                 </select>
             </div>
             <div id="tourSection" class="col-md-6">
-                <label>Tournament<span class="text-danger">*</span></label>
+                <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                 <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" style="display:none;" placeholder="--Select--">
-                    <option value="">--Select--</option>
+                    <option value="" disabled="disabled">--Select--</option>
                 </select>
             </div>
 
             <div class="col-md-6">
-                <label>Result<span class="text-danger">*</span></label>
+                <label>Result<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i>></label>
                 <select asp-for="Result" required placeholder="--Select--">
                     <option value="">--Select--</option>
                     <option>Win</option>
@@ -138,7 +148,7 @@
         });
 
         const change = () => {
-            if ($("#status").val() === "2") {
+            if ($("#status").val() === "Tournament") {
                 $("#tourSection").show();
             }
             else {

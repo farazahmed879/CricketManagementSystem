@@ -13,11 +13,11 @@
     <form asp-action="Edit" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="col-md-8" style="margin-top:3em;">
+        <div class="col-md-10" style="margin-top:3em;">
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="form-group label-floating">
-                        <label asp-for="GroundName" class="control-label">Ground Name*</label>
+                        <label asp-for="GroundName" class="control-label">Ground Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <input asp-for="GroundName" required class="form-control" />
                         <span asp-validation-for="GroundName" class="text-danger"></span>
                     </div>
@@ -26,9 +26,29 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="form-group label-floating">
-                        <label asp-for="Place" class="control-label">Place*</label>
+                        <label asp-for="Place" class="control-label">Place<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <input asp-for="Place" required class="form-control" />
                         <span asp-validation-for="Place" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="Season" class="control-label">Season<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <input asp-for="Season" required type="number" class="form-control" />
+                        <span asp-validation-for="Season" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="MatchOvers" class="control-label">Overs<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <input asp-for="MatchOvers" required type="number" class="form-control" />
+                        <span asp-validation-for="MatchOvers" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -39,30 +59,20 @@
                     <span asp-validation-for="DateOfMatch" class="text-danger"></span>
                 </div>
             </div>
-
             <div class="col-md-6">
-                <div class="form-group">
-                    <div class="form-group label-floating">
-                        <label asp-for="MatchOvers" class="control-label">Overs*</label>
-                        <input asp-for="MatchOvers" required type="number" class="form-control" />
-                        <span asp-validation-for="MatchOvers" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <label>Home Team*</label>
+                <label>Home Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                 <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
                     <option value="">--Select Team--</option>
                 </select>
             </div>
             <div class="col-md-6">
-                <label>Opponent Team*</label>
+                <label>Opponent Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                 <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
                     <option value="">--Select--</option>
                 </select>
             </div>
             <div class="col-md-6">
-                <label>Status*</label>
+                <label>Status<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                 <select asp-for="Status" required placeholder="--Select--">
                     <option value="">--Select--</option>
                     <option>Fiendly</option>
@@ -77,7 +87,7 @@
             </div>
 
             <div class="col-md-6">
-                <label>Result</label>
+                <label>Result<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                 <select asp-for="Result" required placeholder="--Select--">
                     <option value="">--Select--</option>
                     <option>Win</option>
@@ -86,20 +96,17 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
+        <div class="col-md-2">
+            <div class="form-group" style="margin-top: 100px">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="img-responsive" id="Img" style="background-size:cover"></div>
-                    </div>
-                    <div class="col-md-6" style="margin-top:7.7em;">
-                        <label asp-for="MatchImage" class="btn btn-primary">
-                            Upload <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
-                        </label>
-                    </div>
+                    @{
+                        var base64 = Model.MatchLogo == null || !Model.MatchLogo.Any() ? "" : Convert.ToBase64String(Model.MatchLogo);
+                        <div class="img-responsive" id="Img" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                    }
+                    <label asp-for="MatchImage" class="btn btn-primary">
+                        Upload <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
+                    </label>
                 </div>
-            </div>
-            <div class="form-group">
             </div>
         </div>
         <div class="col-md-6">

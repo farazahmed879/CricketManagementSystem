@@ -21,8 +21,10 @@
         <link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css" />
         <link rel="stylesheet" href="~/css/datatables.responsive.css" />
         <link rel="stylesheet" href="~/css/style.css" />
+        <link href="~/css/boostrap-wizard.css" rel="stylesheet" />
         @*<link rel="stylesheet" href="~/lib/choosen/chosen.css" />
-      <link rel="stylesheet" href="~/css/bootstrap-choosen.css"/>*@
+        <link rel="stylesheet" href="~/css/bootstrap-choosen.css"/>*@
+        <link href="~/css/simple-sidebar.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.css" />
 
     </environment>
@@ -42,6 +44,8 @@
         <link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css" />
         <link rel="stylesheet" href="~/css/datatables.responsive.css" />
         <link rel="stylesheet" href="~/css/style.css" />
+        <link href="~/css/boostrap-wizard.css" rel="stylesheet" />
+        <link href="~/css/simple-sidebar.css" rel="stylesheet" />
         @*<link rel="stylesheet" href="~/lib/choosen/chosen.css" />
         <link rel="stylesheet" href="~/css/bootstrap-choosen.css" />*@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
@@ -50,48 +54,66 @@
     @RenderSection("styles", false)
 </head>
 <body>
-    <div class="wrapper">
-        <!-- Sidebar Holder -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"><h6>Gulzar Cricket Club</h6></a>
+    <div id="wrapper">
+        @*<div class="top-bar">
+            <div class="top-bar-right sp-right20">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <ul class="nav navbar-nav user-nav">
+                            <li><a href="#" onclick="ToggleSideBarLeft()"><i class="zmdi zmdi-menu"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="pull-right">
+                            <ul class="nav navbar-nav navbar-right user-nav">
+                                <li><a href="#"><i class="glyphicon glyphicon-bell"></i></a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello Admin<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <ul class="list-unstyled components">
-                @*<li>
-            <a href="#">About</a>
-            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-            <ul class="collapse list-unstyled" id="pageSubmenu">
-                <li><a href="#">Page 1</a></li>
-                <li><a href="#">Page 2</a></li>
-                <li><a href="#">Page 3</a></li>
-            </ul>
-        </li>*@
-                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        </div>*@
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Score Execs
+                    </a>
+                </li>
+                <li><hr /><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-area="" asp-controller="Teams" asp-action="Index">Team</a></li>
                 <li><a asp-area="" asp-controller="Players" asp-action="Index">Player</a></li>
                 <li><a asp-area="" asp-controller="Matches" asp-action="Index">Match</a></li>
                 <li><a asp-area="" asp-controller="Tournament" asp-action="Index">Tournament</a></li>
                 <li><a asp-area="" asp-controller="Players" asp-action="AllPlayerStatistics">All Records</a></li>
             </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        @*<div id="page-content-wrapper">
+            <div class="container-fluid">
 
-            <ul class="list-unstyled CTAs">
-                @*<li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>*@
-            </ul>
-        </nav>
-
-        <!-- Page Content Holder -->
-        <div id="content">
-
+                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle"><i class="material-icons">list</i></a>
+                @RenderBody()
+            </div>
+        </div>*@
+        <div id="page-content-wrapper">
             <nav class="navbar navbar-default">
-
-
                 <div class="navbar-header">
-                    <a id="sidebarCollapse" class="btn btn-info navbar-btn">
+                    <a id="menu-toggle" class="btn btn-info">
                         <i class="material-icons">list</i>
                     </a>
                 </div>
-                @*<div class="container-fluid body-content"></div>*@
+                <div class="container-fluid body-content"></div>
 
                 @RenderBody()
 
@@ -99,95 +121,121 @@
                 <footer>
                     <p>&copy; Developed by FriendsBit</p>
                 </footer>
-
-
             </nav>
-        </div>
-    </div>
-    @*<nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Gulzar CC</a>
                 </div>
-                <div class="navbar-collapse collapse">
-                    <ul id="abc" class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Teams" asp-action="Index">Team</a></li>
-                        <li><a asp-area="" asp-controller="Players" asp-action="Index">Player</a></li>
-                        <li><a asp-area="" asp-controller="Matches" asp-action="Index">Match</a></li>
-                        <li><a asp-area="" asp-controller="Tournament" asp-action="Index">Tournament</a></li>
-
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
-                    </ul>
+                    <!-- /#page-content-wrapper -->
                 </div>
-            </div>
-        </nav>
-        <div class="main-bg-img">
+                @*<div class="wrapper">
+                    <!-- Sidebar Holder -->
+
+                    @{
+                        <nav id="sidebar">
+                            <div class="sidebar-header">
+                                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"><h6>Gulzar Cricket Club</h6></a>
+                            </div>
+
+                            <ul class="list-unstyled components">
+                                @*<li>
+                                    <a href="#">About</a>
+                                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                                        <li><a href="#">Page 1</a></li>
+                                        <li><a href="#">Page 2</a></li>
+                                        <li><a href="#">Page 3</a></li>
+                                    </ul>
+                                </li>
+
+                </ul>
+
+                <ul class="list-unstyled CTAs">
+                    @*<li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>
+                </ul>
+                </nav>
+                }
 
 
-        </div>*@
-
-    <environment include="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/jquery.bootstrap.js"></script>
-        <script src="~/js/material-bootstrap-wizard.js"></script>
-        <script src="~/js/jquery.validate.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
-        <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
-        <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>
-        <script src="~/lib/choosen/chosen.jquery.js"></script>
-        <script src="~/js/datatables.responsive.js"></script>
-
-    </environment>
-    <environment exclude="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="~/js/jquery.bootstrap.js"></script>
-        <script src="~/js/material-bootstrap-wizard.js"></script>
-        <script src="~/js/jquery.validate.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap-wizard/1.2/jquery.bootstrap.wizard.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
-        <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
-        <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>
-        <script src="~/lib/choosen/chosen.jquery.js"></script>
-        <script src="~/js/datatables.responsive.js"></script>
+                <!-- Page Content Holder -->
+                <div id="content">
+                    <nav class="navbar navbar-default">
+                        <div class="navbar-header">
+                            <a id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                <i class="material-icons">list</i>
+                            </a>
+                        </div>
+                        @*<div class="container-fluid body-content"></div>
 
 
 
+                        <hr />
+                        <footer>
+                            <p>&copy; Developed by FriendsBit</p>
+                        </footer>
+                    </nav>
+                </div>
+                </div>*@
+   
 
-    </environment>
 
-    @RenderSection("Scripts", required: false)
+                <environment include="Development">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
+                    <script src="~/lib/jquery/dist/jquery.js"></script>
+                    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+                    <script src="~/js/jquery.bootstrap.js"></script>
+                    <script src="~/js/material-bootstrap-wizard.js"></script>
+                    <script src="~/js/jquery.validate.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+                    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+                    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+                    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+                    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>
+                    <script src="~/lib/choosen/chosen.jquery.js"></script>
+                    <script src="~/js/datatables.responsive.js"></script>
+                    <script src="~/js/bootstrap.bundle.min.js"></script>
+                </environment>
+                <environment exclude="Development">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
+                    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                            asp-fallback-test="window.jQuery"
+                            crossorigin="anonymous"
+                            integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+                    </script>
+                    <script src="~/js/jquery.bootstrap.js"></script>
+                    <script src="~/js/material-bootstrap-wizard.js"></script>
+                    <script src="~/js/jquery.validate.min.js"></script>
+                    <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                            crossorigin="anonymous"
+                            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+                    </script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap-wizard/1.2/jquery.bootstrap.wizard.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+                    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+                    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+                    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+                    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>
+                    <script src="~/lib/choosen/chosen.jquery.js"></script>
+                    <script src="~/js/datatables.responsive.js"></script>
+                    <script src="~/js/bootstrap.bundle.min.js"></script>
 
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+                </environment>
+
+                @RenderSection("Scripts", required: false)
+
+
+                <script src="~/js/site.js" asp-append-version="true"></script>
+                <script>
+                    $("#menu-toggle").click(function (e) {
+                        e.preventDefault();
+                        $("#wrapper").toggleClass("toggled");
+                    });
+                </script>
 </body>
 </html>

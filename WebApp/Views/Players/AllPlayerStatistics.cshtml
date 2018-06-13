@@ -46,7 +46,7 @@
                         </select>
                     </div>
                     <div class="col-xs-6 col-md-4">
-                        <label>Status</label>
+                        <label>Type</label>
                         <select id="status" placeholder="--Select--">
                             <option value="" disabled="disabled" selected="selected">--Select--</option>
                             <option value="1">Fiendly</option>
@@ -228,7 +228,7 @@
                     var overs = formData.get("overs")
                     var position = formData.get("position")
                     var status = document.getElementById("status").value
-                  //  var status = formData.get("status")
+                    //  var status = formData.get("status")
                     var tournamentId = formData.get("tournamenId")
                     var opponentTeamId = document.getElementById("opponentTeamId").value
                     //var opponentTeamId = formData.get("opponentTeamId")
@@ -238,6 +238,8 @@
                     //
 
                     const response = await fetch(`/players/allplayerstatistics?teamId=${param.get("teamId")}&overs=${overs}&position=${position}&status=${status}&tournamentId=${tournamentId}&opponentTeamId=${opponentTeamId}&isApi=true`, {
+                        method: "POST",
+                        body: JSON.stringify(model),
                         credentials: 'same-origin'
 
                     });
@@ -248,69 +250,69 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-                                                                                <td>
-                                                                                    ${i.playerName}
-                                                                                </td>
-                                                                                <td>
-                                                                                    ${i.totalMatch}
-                                                                                </td>
-                                                                                <td>
-                                                                                      ${i.totalBatRuns}
+                                                                                    <td>
+                                                                                        ${i.playerName}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        ${i.totalMatch}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                          ${i.totalBatRuns}
 
-                                                                                </td>
-                                                                                <td>
-                                                                               ${i.battingAverage}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                   ${i.battingAverage}
 
-                                                                                </td>
-                                                                                <td>
-                                                                                      ${i.strikeRate}
-                                                                                </td>
-                                                                                <td>
-                                                                                      ${i.totalFours}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                          ${i.strikeRate}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                          ${i.totalFours}
 
-                                                                                </td>
-                                                                                <td>
-                                                                                       ${i.totalSixes}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                           ${i.totalSixes}
 
-                                                                                </td>
-                                                                                <td>
-                                                                                         ${i.numberOf50s}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                             ${i.numberOf50s}
 
-                                                                                </td>
-                                                                                <td>
-                                                                                       ${i.numberOf100s}
-                                                                                <td>
-                                                                                     ${i.totalOvers}
-                                                                                </td>
-                                                                                <td>
-                                                                                  ${i.totalWickets}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                           ${i.numberOf100s}
+                                                                                    <td>
+                                                                                         ${i.totalOvers}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                      ${i.totalWickets}
 
-                                                                                </td>
-                                                                                <td>
-                                                                                 ${i.bowlingAvg}
-                                                                                </td>
-                                                                                <td>
-                                                                                   ${i.economy}
-                                                                                </td>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                     ${i.bowlingAvg}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                       ${i.economy}
+                                                                                    </td>
 
-                                                                                <td>
-                                                                             ${i.fiveWickets}
+                                                                                    <td>
+                                                                                 ${i.fiveWickets}
 
-                                                                                </td>
-                                                                                <td>
-                                                                            ${i.totalCatches}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                ${i.totalCatches}
 
-                                                                                </td>
-                                                                                <td>
-                                                                             ${i.totalRunOuts}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                 ${i.totalRunOuts}
 
-                                                                                </td>
+                                                                                    </td>
 
-                                                                                <td>
-                                                                                   ${i.totalStumps}
-                                                                                </td>
+                                                                                    <td>
+                                                                                       ${i.totalStumps}
+                                                                                    </td>
 
-                                                                            `;
+                                                                                `;
                             tbody.appendChild(tr);
                             return tr;
                         });
@@ -324,10 +326,10 @@
                 }
             });
         });
-                                                     //   async function filterdata() {
-                                                     //'
-                                                     //       }
-                                                     //       );
+                                                         //   async function filterdata() {
+                                                         //'
+                                                         //       }
+                                                         //       );
 
     </script>
     <style>

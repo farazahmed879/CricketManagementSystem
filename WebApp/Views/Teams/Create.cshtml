@@ -16,7 +16,7 @@
             <div class="col-md-8" style="margin-top:3em;">
                 <div class="col-md-6">
                     <div class="form-group label-floating">
-                        <label class="control-label">Team Name*</label>
+                        <label class="control-label">Team Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <input asp-for="Team_Name" required class="form-control" />
                         <span asp-validation-for="Team_Name" class="text-danger"></span>
                     </div>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group label-floating">
-                        <label class="control-label">City*</label>
+                        <label class="control-label">City<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                         <input asp-for="City" required class="form-control" />
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>

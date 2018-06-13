@@ -66,7 +66,7 @@ namespace WebApp.Controllers
             {
                 var form = Request.Form;
                 byte[] fileBytes = null;
-                if (team.TeamLogo != null)
+                if (team.TeamImage != null)
                 {
                     using (var stream = team.TeamImage.OpenReadStream())
                     {
@@ -128,7 +128,7 @@ namespace WebApp.Controllers
                 {
                     var form = Request.Form;
                     byte[] fileBytes = null;
-                    if (team.TeamLogo != null)
+                    if (team.TeamImage != null)
                     {
                         using (var stream = team.TeamImage.OpenReadStream())
                         {

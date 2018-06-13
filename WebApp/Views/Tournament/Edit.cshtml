@@ -16,7 +16,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="TournamentId" />
                 <div class="form-group">
-                    <label asp-for="TournamentName" class="control-label"></label>
+                    <label>Tournament Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                     <input asp-for="TournamentName" class="form-control" />
                     <span asp-validation-for="TournamentName" class="text-danger"></span>
                 </div>

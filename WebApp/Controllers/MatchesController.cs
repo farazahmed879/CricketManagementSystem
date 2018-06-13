@@ -23,16 +23,18 @@ namespace WebApp.Controllers
 
         // GET: Matches
         public async Task<IActionResult> Index(int? homeTeamId, int? opponentTeamId,
-                                               int? tournamentId, string result, string ground,
+                                               int? tournamentId, string result, string status,
                                                 int? season, int? overs, int? page)
         {
+            ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+            ViewBag.Season = new SelectList(_context.Matches.Select(i => i.Season).ToList().Distinct(), "Season");
             ViewBag.TournamentId = new SelectList(_context.Tournaments, "TournamentId", "TournamentName");
             ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
             int pageSize = 10;
             return View(await PaginatedList<Match>.CreateAsync(
                  _context.Matches
                 .AsNoTracking()
-                .Where(i => (string.IsNullOrEmpty(result) || i.Result == result) && (string.IsNullOrEmpty(ground) || i.GroundName == ground) &&
+                .Where(i => (string.IsNullOrEmpty(result) || i.Result == result) && (string.IsNullOrEmpty(status) || i.GroundName == status) &&
                             (!homeTeamId.HasValue || i.HomeTeamId == homeTeamId) && (!opponentTeamId.HasValue || i.OppponentTeamId == opponentTeamId) &&
                             (!tournamentId.HasValue || i.TournamentId == tournamentId) && (!season.HasValue || i.Season == season) &&
                             (!overs.HasValue || i.MatchOvers == overs))
@@ -143,6 +145,17 @@ namespace WebApp.Controllers
             {
                 try
                 {
+                    var form = Request.Form;
+                    byte[] fileBytes = null;
+                    if (match.MatchImage != null)
+                    {
+                        using (var stream = match.MatchImage.OpenReadStream())
+                        {
+                            fileBytes = ReadStream(stream);
+
+                        }
+                    }
+                    match.MatchLogo = fileBytes ?? null;
                     _context.Update(match);
                     await _context.SaveChangesAsync();
                 }
