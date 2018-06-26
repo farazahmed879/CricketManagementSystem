@@ -1,4 +1,5 @@
 ﻿
+using CricektApp.Domain;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace CricketApp.Domain
         public Match()
         {
             PlayerScores = new List<PlayerScore>();
+            TeamScores = new List<TeamScore>();
         }
 
         public int MatchId { get; set; }
@@ -41,7 +43,8 @@ namespace CricketApp.Domain
         [NotMapped]
         [Display(Name = "Match Image")]
         public IFormFile MatchImage { get; set; }
-        public List<PlayerScore> PlayerScores { get; set; } 
+        public List<PlayerScore> PlayerScores { get; set; }
+        public List<TeamScore> TeamScores { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using CricektApp.Domain;
 using CricketApp.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -28,6 +29,7 @@ namespace CricketApp.Data
         public DbSet<CricketApp.Domain.PlayerScore> PlayerScores { get; set; }
         public DbSet<CricketApp.Domain.Tournament> Tournaments { get; set; }
         public DbSet<CricketApp.Domain.Login> Login { get; set; }
+        public DbSet<TeamScore> TeamScores { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {            

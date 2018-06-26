@@ -5,132 +5,134 @@
 }
 <div class="container-fluid">
 
-        <div class="wizard-header">
-            <h3 class="wizard-title">
-                Players List
-            </h3>
-        </div>
-        
-            <div id="filter-panel" class="collapse filter-panel">
-                <div class="panel-body">
-                    <form class="form-inline" role="form" id="Filters">
-                        <div class="row">
-                            <div class="col-xs-6 col-md-6">
-                                <label>Team</label>
-                                <select id="teamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--">
-                                    <option value="">--Select--</option>
-                                </select>
-                            </div>
-                            <div class=" col-xs-6 col-md-6">
-                                <label>Role</label>
-                                <select id="role" name="role" placeholder="--Select--">
-                                    <option value="">--Select--</option>
-                                    <option>Batsman</option>
-                                    <option>Bowler</option>
-                                    <option>All-Rounder</option>
-                                    <option>Wicket-Keeper Batsman</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <button type="submit" class="btn btn-primary filter-col">
-                                <span class="glyphicon glyphicon-record"></span> Search
-                            </button>
-                        </div>
-                    </form>
+    <div class="wizard-header">
+        <h3 class="wizard-title">
+            Players List
+        </h3>
+    </div>
+
+    <div id="filter-panel" class="collapse filter-panel">
+        <div class="panel-body">
+            <form class="form-inline" role="form" id="Filters">
+                <div class="row">
+                    <div class="col-xs-6 col-md-6">
+                        <label>Team</label>
+                        <select id="teamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class=" col-xs-6 col-md-6">
+                        <label>Role</label>
+                        <select id="role" name="role" placeholder="--Select--">
+                            <option value="">--Select--</option>
+                            <option>Batsman</option>
+                            <option>Bowler</option>
+                            <option>All-Rounder</option>
+                            <option>Wicket-Keeper Batsman</option>
+                        </select>
+                    </div>
                 </div>
+                <div class="form-group row">
+                    <button type="submit" class="btn btn-primary filter-col">
+                        <span class="glyphicon glyphicon-record"></span> Search
+                    </button>
+                </div>
+            </form>
+        </div>
 
-            </div>
-            <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
-                Advanced Search
-            </button>
+    </div>
+    <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+        Advanced Search
+    </button>
 
-            <a asp-controller="Players" asp-action="Create" class="made-with-mk">
-                <div class="brand">Add</div>
-                <div class="made-with"> Create<strong>a new Player</strong></div>
-                <div class="ripple-container"></div>
-            </a>
-            <div class="table-responsive">
-                <table id="PlayerTable" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>
-                                Player Name
-                            </th>
-                            <th>
-                                Role
-                            </th>
-                            <th>
-                                Bat. Style
-                            </th>
-                            <th>
-                                Bowl. Style
-                            </th>
-                            <th>
-                                Birth
-                            </th>
-                            <th>
-                                Team
-                            </th>
-                            <th>-----Action-----</th>
-                        </tr>
-                    </thead>
-                    <tbody id="myTable">
-                        @foreach (var item in Model)
-                        {
+    <a asp-controller="Players" asp-action="Create" class="made-with-mk">
+        <div class="brand">Add</div>
+        <div class="made-with"> Create<strong>a new Player</strong></div>
+        <div class="ripple-container"></div>
+    </a>
+    <div class="table-responsive">
+        <table id="PlayerTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Player Name
+                    </th>
+                    <th>
+                        Role
+                    </th>
+                    <th>
+                        Bat. Style
+                    </th>
+                    <th>
+                        Bowl. Style
+                    </th>
+                    <th>
+                        Birth
+                    </th>
+                    <th>
+                        Team
+                    </th>
+                    <th>-----Action-----</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                @foreach (var item in Model)
+                {
 
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Player_Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Role)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BattingStyle)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BowlingStyle)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DOB)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Team.Team_Name)
-                                </td>
-                                <td>
-                                    <a class="material-icons md-14" rel="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.PlayerId">mode_edit</a>
-                                    @*<a class="material-icons md-14" rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.PlayerId">details</a>*@
-                                    <a class="material-icons md-14" rel="tooltip" title="Delete" asp-action="Delete" asp-route-id="@item.PlayerId">delete</a>
-                                    <a class="material-icons md-14" rel="tooltip" title="Statistics" asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">history</a>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Player_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BattingStyle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BowlingStyle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Team.Team_Name)
+                        </td>
+                        <td>
+                            <a class="material-icons md-14" rel="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.PlayerId">mode_edit</a>
+                            @*<a class="material-icons md-14" rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.PlayerId">details</a>*@
+                            <a class="material-icons md-14" rel="tooltip" title="Delete" asp-action="Delete" asp-route-id="@item.PlayerId">delete</a>
+                            <a class="material-icons md-14" rel="tooltip" title="Statistics" asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">history</a>
 
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                @{
-                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                        </td>
+                    </tr>
                 }
-                <nav class="navbar navbar-light bg-light">
-                    <form class="form-inline">
-                        <a asp-action="Index" class="material-icons @prevDisabled"
-                           asp-route-page="@(Model.PageIndex - 1)">
-                            skip_previous
-                        </a>
-                        <a asp-action="Index"
-                           asp-route-page="@(Model.PageIndex + 1)"
-                           class="material-icons @nextDisabled">
-                            skip_next
-                        </a>
-                    </form>
-                </nav>
-            </div>
-       
+            </tbody>
+        </table>
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+        <nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
+                <a asp-action="Index" class="material-icons @prevDisabled"
+                   asp-route-page="@(Model.PageIndex - 1)">
+                    skip_previous
+                </a>
+                <a asp-action="Index"
+                   asp-route-page="@(Model.PageIndex + 1)"
+                   class="material-icons @nextDisabled">
+                    skip_next
+                </a>
+            </form>
+        </nav>
+    </div>
+
 </div>
 
 @section Scripts{
+    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script>
         $(document).ready(function () {
             $("#search").on("keyup", function () {
@@ -171,23 +173,23 @@
                 window.location = '/Players/Create'
             });
         });
-                //async function FilterData() {
-                //    var formElement = document.getElementById("Filters");
-                //    var formData = new FormData(formElement);
+                        //async function FilterData() {
+                        //    var formElement = document.getElementById("Filters");
+                        //    var formData = new FormData(formElement);
 
-                //    var teamId = formData.get("teamId")
-                //    var role = formData.get("role")
+                        //    var teamId = formData.get("teamId")
+                        //    var role = formData.get("role")
 
 
 
-                //    // var header = new Headers();
-                //    //header.append("content-type");
+                        //    // var header = new Headers();
+                        //    //header.append("content-type");
 
-                //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
-                //        credentials: 'same-origin'
-                //    });
+                        //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
+                        //        credentials: 'same-origin'
+                        //    });
 
-                //};
+                        //};
 
 
 

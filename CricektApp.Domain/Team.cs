@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CricektApp.Domain;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,8 @@ namespace CricketApp.Domain
             Players = new List<Player>();
             OpponentTeamMatches = new List<Match>();
             HomeTeamMatches = new List<Match>();
+            TeamScores = new List<TeamScore>();
+
         }
 
         public int TeamId { get; set; }
@@ -31,6 +34,7 @@ namespace CricketApp.Domain
         public List<Player> Players { get; set; }
         public List<Match> OpponentTeamMatches { get; set; }
         public List<Match> HomeTeamMatches { get; set; }
+        public List<TeamScore> TeamScores { get; set; }
 
     }
 }

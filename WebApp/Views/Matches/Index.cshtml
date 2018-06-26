@@ -99,10 +99,10 @@
                     </th>
 
                     <th>
-                        Home Team
+                        First Inning
                     </th>
                     <th>
-                        Opponent
+                        Second Inning
                     </th>
                     <th>
                         Type
@@ -134,9 +134,30 @@
 
                         <td>
                             @Html.DisplayFor(modelItem => item.HomeTeam.Team_Name)
+                            @*@if (item.PlayerScores.Any()  &&  item.PlayerScores.Any(i => i.Player.TeamId == item.HomeTeamId))
+                                {
+                                    <span class="badge badge-success">Ready</span>
+
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Pending</span>
+
+                                }*@
+
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.OppponentTeam.Team_Name)
+                            @*@if (item.PlayerScores.Any() && item.PlayerScores.Any(i => i.Player.TeamId == item.OppponentTeamId))
+                                {
+                                    <span class="badge badge-success">Ready</span>
+
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Pending</span>
+
+                                }*@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Status)
@@ -153,11 +174,26 @@
                         </td>
 
                         <td>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="dropdown">
+                                        <button  rel="tooltip" title="More Actions"  id="dropdownMenuButton" data-toggle="dropdown">
+                                            ....
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <span><a class="material-icons" rel="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId">mode_edit</a>Edit</span>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="material-icons" rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.MatchId">details</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="material-icons" rel="tooltip" title="Delete Match" asp-action="Delete" asp-route-id="@item.MatchId">delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <a class="material-icons" rel="tooltip" title="Score Card" asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId">S</a>
+                                </div>
+                            </div>
 
-                            <a class="material-icons" rel="tooltip" title="Score Card" asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId">S</a>
-                            <a class="material-icons" rel="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId">mode_edit</a>
-                            <a class="material-icons" rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.MatchId">details</a>
-                            <a class="material-icons" rel="tooltip" title="Delete Match" asp-action="Delete" asp-route-id="@item.MatchId">delete</a>
                         </td>
                     </tr>
                 }
@@ -185,7 +221,12 @@
 </div>
 
 @section Scripts{
+    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script>
+
+        $('[data-toggle="tooltip"]').tooltip();
+
         const change = () => {
             if ($("#type").val() === "2") {
                 $("#tourSection").show();
@@ -249,11 +290,11 @@
             });
         }
 
-                                    //if (window.matchMedia("(min-wdth: 992px)").matches) {
-                                    //    document.getelementById("clear").classList.add("clearFix");
-                                    //} else {
-                                    //    document.getelementById("clear").classList.remove("clearFix");
-                                    //}
+                                                                                //if (window.matchMedia("(min-wdth: 992px)").matches) {
+                                                                                //    document.getelementById("clear").classList.add("clearFix");
+                                                                                //} else {
+                                                                                //    document.getelementById("clear").classList.remove("clearFix");
+                                                                                //}
     </script>
     <style>
         @@media only screen and (max-width: 768px) {

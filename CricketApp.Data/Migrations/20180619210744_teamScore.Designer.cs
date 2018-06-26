@@ -11,9 +11,10 @@ using System;
 namespace CricketApp.Data.Migrations
 {
     [DbContext(typeof(CricketContext))]
-    partial class CricketContextModelSnapshot : ModelSnapshot
+    [Migration("20180619210744_teamScore")]
+    partial class teamScore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +46,7 @@ namespace CricketApp.Data.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("TeamScores");
+                    b.ToTable("TeamScore");
                 });
 
             modelBuilder.Entity("CricketApp.Domain.Login", b =>

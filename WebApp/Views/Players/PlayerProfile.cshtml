@@ -27,7 +27,7 @@
             <div class="col-md-2">
                 <a asp-controller="Players" rel="tooltip" title="@item.Player_Name" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">
                     @{
-                        var base64 = @item.PlayerLogo == null || !item.PlayerLogo.Any() ? ""  : Convert.ToBase64String(@item.PlayerLogo);
+                        var base64 = @item.PlayerLogo == null || !item.PlayerLogo.Any() ? "" : Convert.ToBase64String(@item.PlayerLogo);
                         <div class="img-responsive " style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' onclick="playerStatistics" id="PlayerImg">
                         </div>
                     }
@@ -40,6 +40,7 @@
 </div>
 
 @section Scripts{
+    <script src="~/js/material-bootstrap-wizard.js"></script>
     <script>
         $(function () {
             $('#AddBtn').click(function () {

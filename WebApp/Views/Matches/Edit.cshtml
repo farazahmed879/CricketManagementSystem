@@ -52,21 +52,15 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="DateOfMatch" class="control-label">Date</label>
-                    <input type="date" asp-for="DateOfMatch" required class="form-control" />
-                    <span asp-validation-for="DateOfMatch" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <label>Home Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                <label>First Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                 <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
                     <option value="">--Select Team--</option>
                 </select>
             </div>
             <div class="col-md-6">
-                <label>Opponent Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                <label>Second Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                 <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
                     <option value="">--Select--</option>
                 </select>
@@ -95,13 +89,21 @@
                     <option>Tie</option>
                 </select>
             </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="DateOfMatch" class="control-label">Date</label>
+                    <input type="date" asp-for="DateOfMatch" required class="form-control" />
+                    <span asp-validation-for="DateOfMatch" class="text-danger"></span>
+                </div>
+            </div>
         </div>
+      
         <div class="col-md-2">
             <div class="form-group" style="margin-top: 100px">
                 <div class="row">
                     @{
-                        var base64 = Model.MatchLogo == null || !Model.MatchLogo.Any() ? "" : Convert.ToBase64String(Model.MatchLogo);
-                        <div class="img-responsive" id="Img" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                    var base64 = Model.MatchLogo == null || !Model.MatchLogo.Any() ? "" : Convert.ToBase64String(Model.MatchLogo);
+                    <div class="img-responsive" id="Img" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
                     }
                     <label asp-for="MatchImage" class="btn btn-primary">
                         Upload <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
@@ -111,7 +113,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </form>
@@ -127,6 +129,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
     <style>
         #Img {
             background-image: url('');

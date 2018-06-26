@@ -13,9 +13,11 @@ namespace WebApp.ViewModels
         {
             HomeTeamScoreCard = new List<MatchSummarydto>();
             OpponentTeamScoreCard = new List<MatchSummarydto>();
+            TeamScoreCard = new List<TeamScoredto>();
         }
 
         public List<MatchSummarydto> HomeTeamScoreCard { get; set; }
         public List<MatchSummarydto> OpponentTeamScoreCard { get; set; }
+        public List<TeamScoredto> TeamScoreCard { get; set; }
     }
 }

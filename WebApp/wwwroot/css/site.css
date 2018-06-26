@@ -23,6 +23,9 @@
 .carousel-inner .item img[src$=".svg"] {
     width: 100%;
 }
+.CustomInput{
+    width: 100px;
+}
 .cursor{
     cursor:pointer;
 }

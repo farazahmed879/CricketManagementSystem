@@ -40,7 +40,8 @@ namespace WebApp.Controllers
                             (!overs.HasValue || i.MatchOvers == overs))
                 .Include(i => i.HomeTeam)
                 .Include(i => i.OppponentTeam)
-                , page ?? 1, pageSize));
+                .Include(i => i.PlayerScores)
+                                  , page ?? 1, pageSize));
 
 
         }

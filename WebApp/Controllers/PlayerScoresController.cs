@@ -23,7 +23,7 @@ namespace WebApp.Controllers
         }
 
         [Route("PlayerScores/Index")]
-        public async Task<IActionResult> Index(int? matchId, int? homeTeamId, int? oppTeamId, int? playerScoreId)
+        public IActionResult Index(int? matchId, int? homeTeamId, int? oppTeamId, int? playerScoreId)
         {
             var scoreDto = new ScoreCarddto();
             ViewBag.matchId = matchId;
@@ -43,6 +43,7 @@ namespace WebApp.Controllers
                 .Where(i => i.Player.TeamId == homeTeamId && i.MatchId == matchId)
                 .Select(i => new MatchSummarydto
                 {
+                    PlayerScoreId = i.PlayerScoreId,
                     PlayerId = i.PlayerId,
                     Position = i.Position,
                     MatchId = i.MatchId,
@@ -72,6 +73,7 @@ namespace WebApp.Controllers
                .Where(i => i.Player.TeamId == oppTeamId && i.MatchId == matchId)
                .Select(i => new MatchSummarydto
                {
+                   PlayerScoreId = i.PlayerScoreId,
                    PlayerId = i.PlayerId,
                    Position = i.Position,
                    MatchId = i.MatchId,
@@ -135,10 +137,18 @@ namespace WebApp.Controllers
             ViewBag.OpponentPlayerId = new SelectList(_context.Players
              .AsNoTracking()
              .Where(i => i.TeamId == oppTeamId), "PlayerId", "Player_Name");
-            var model = new List<MatchScoreDto>(12);
+            var model = new TeamMatchScoredto();
+            for (int i = 0; i < 2; i++)
+
+                model.TeamScore.Add(new TeamScoredto
+                {
+                    MatchId = matchId
+                });
+
+
             for (int i = 0; i < 12; i++)
             {
-                model.Add(new MatchScoreDto
+                model.MatchScore.Add(new MatchScoreDto
                 {
                     MatchId = matchId
                 });
@@ -154,11 +164,12 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Save([FromForm] List<MatchScoreDto> Matchplayers, int teamId)
+        public async Task<IActionResult> Save([FromForm] TeamMatchScoredto Matchplayers, int teamId)
         {
             if (ModelState.IsValid)
             {
-                _context.AddRange(Matchplayers.Select(i => new PlayerScore
+
+                _context.AddRange(Matchplayers.MatchScore.Select(i => new PlayerScore
                 {
                     Position = i.Position,
                     IsPlayedInning = i.IsPlayedInning,
@@ -168,6 +179,33 @@ namespace WebApp.Controllers
                     MatchId = i.MatchId,
                 }
                 ));
+
+                await _context.SaveChangesAsync();
+                return Ok();
+                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> TeamScoreSave([FromForm] TeamMatchScoredto TeamScores)
+        {
+            if (ModelState.IsValid)
+            {
+
+                _context.AddRange(TeamScores.TeamScore.Select(i => new TeamScoredto
+                {
+                    TeamId = i.TeamId,
+                    MatchId = i.MatchId,
+                    TotalScore = i.TotalScore,
+                    Wideballs = i.Wideballs,
+                    NoBalls = i.NoBalls,
+                    Buys = i.Buys,
+                    LegBuys = i.LegBuys
+                }
+                ));
+
                 await _context.SaveChangesAsync();
                 return Ok();
                 // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
@@ -212,37 +250,97 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
         }
-
-        // GET: PlayerScores/Edit/5
-        public async Task<IActionResult> Edit(int? teamId, int? matchId)
+        // GET: PlayerScoresModal/Edit/5
+        [Route("PlayerScores/GetPlayerScoreModal")]
+        public IActionResult GetPlayerScoreModal(int playerScoreId)
         {
+
+            var playerScore = _context.PlayerScores
+              .AsNoTracking()
+              .Where(i => i.PlayerScoreId == playerScoreId)
+              .Select(i => new MatchSummarydto
+              {
+                  Catches = i.Catches,
+                  Ball_Runs = i.Ball_Runs,
+                  Bat_Balls = i.Bat_Balls,
+                  Bat_Runs = i.Bat_Runs,
+                  Four = i.Four,
+                  Maiden = i.Maiden,
+                  Overs = i.Overs,
+                  RunOut = i.RunOut,
+                  Six = i.Six,
+                  Stump = i.Stump,
+                  Wickets = i.Wickets,
+                  PlayerScoreId = i.PlayerScoreId
+              })
+              .ToList();
+
+            return Json(playerScore);
+        }
+        // GET: PlayerScores/Edit/5
+        public IActionResult Edit(int? matchId, int? homeTeamId, int? oppTeamId, int? playerScoreId)
+        {
+
+            var scoreDto = new ScoreCarddto();
             //ViewBag.matchId = matchId;
-            ViewBag.teamId = teamId;
+            ViewBag.OpponentTeam = new SelectList(_context.Teams
+             .AsNoTracking()
+             .Where(i => i.TeamId == oppTeamId), "TeamId", "Team_Name");
 
-            if (teamId != 0 && teamId != null)
-            {
-                ViewBag.PlayerId = new SelectList(_context.Players
+            ViewBag.HomeTeam = new SelectList(_context.Teams
+               .AsNoTracking()
+               .Where(i => i.TeamId == homeTeamId), "TeamId", "Team_Name");
+            ViewBag.HomePlayerId = new SelectList(_context.Players
+                 .AsNoTracking()
+                 .Where(i => i.TeamId == homeTeamId), "PlayerId", "Player_Name");
+
+            ViewBag.OpponentPlayerId = new SelectList(_context.Players
+             .AsNoTracking()
+             .Where(i => i.TeamId == oppTeamId), "PlayerId", "Player_Name");
+
+            scoreDto.HomeTeamScoreCard = _context.PlayerScores
                 .AsNoTracking()
-                .Where(i => i.TeamId == teamId), "PlayerId", "Player_Name");
-            }
-
-            var playerScores = await _context.PlayerScores
-                .Where(m => m.MatchId == matchId)
-                .Select(i => new MatchScoreDto
+                .Where(m => m.MatchId == matchId && m.Player.TeamId == homeTeamId)
+                .Select(i => new MatchSummarydto
                 {
-                    Position = i.Position,
                     IsPlayedInning = i.IsPlayedInning,
                     PlayerId = i.PlayerId,
                     HowOut = i.HowOut,
                     Bowler = i.Bowler,
                     MatchId = i.MatchId
                 })
-                .ToListAsync();
-            if (playerScores == null)
-            {
-                return NotFound();
-            }
-            return View(playerScores);
+                .ToList();
+
+            scoreDto.OpponentTeamScoreCard = _context.PlayerScores
+             .AsNoTracking()
+             .Where(m => m.MatchId == matchId && m.Player.TeamId == oppTeamId)
+             .Select(i => new MatchSummarydto
+             {
+                 IsPlayedInning = i.IsPlayedInning,
+                 PlayerId = i.PlayerId,
+                 HowOut = i.HowOut,
+                 Bowler = i.Bowler,
+                 MatchId = i.MatchId
+             })
+             .ToList();
+
+            scoreDto.TeamScoreCard = _context.TeamScores
+           .AsNoTracking()
+           .Where(m => m.MatchId == matchId && m.TeamId == oppTeamId)
+           .Select(i => new TeamScoredto
+           {
+              TotalScore = i.TotalScore,
+              Buys = i.Buys,
+              LegBuys = i.LegBuys,
+              Wideballs =i.Wideballs,
+              NoBalls = i.NoBalls
+
+           })
+           .ToList();
+
+
+
+            return View(scoreDto);
         }
 
         // POST: PlayerScores/Edit/5
@@ -250,39 +348,25 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(List<MatchScoreDto> Matchplayers, int teamId)
+        public async Task<IActionResult> Edit([FromForm] List<MatchScoreDto> Matchplayers, int teamId)
         {
             if (ModelState.IsValid)
             {
-                try
+                _context.UpdateRange(Matchplayers.Select(i => new PlayerScore
                 {
-                    var matchId = Matchplayers.Select(i => i.MatchId).First();
-                    var playerScores = _context.PlayerScores
-                        .AsNoTracking()
-                        .Where(i => i.MatchId == matchId)
-                        .ToList();
-
-                    foreach (var playerScore in playerScores)
-                    {
-                        var updateModel = Matchplayers.Where(i => i.PlayerId == playerScore.PlayerId).Single();
-                        playerScore.Position = updateModel.Position;
-                        playerScore.IsPlayedInning = updateModel.IsPlayedInning;
-                        playerScore.PlayerId = updateModel.PlayerId;
-                        playerScore.HowOut = updateModel.HowOut;
-                        playerScore.Bowler = updateModel.Bowler;
-                    }
-                    _context.PlayerScores.UpdateRange(playerScores);
-                    await _context.SaveChangesAsync();
+                    Position = i.Position,
+                    IsPlayedInning = i.IsPlayedInning,
+                    PlayerId = i.PlayerId,
+                    HowOut = i.HowOut,
+                    Bowler = i.Bowler,
+                    MatchId = i.MatchId,
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-
-                    throw;
-
-                }
-                return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
+                ));
+                await _context.SaveChangesAsync();
+                return Ok();
+                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }
-            return View();
+            return BadRequest(ModelState);
         }
 
         // GET: PlayerScores/Delete/5
