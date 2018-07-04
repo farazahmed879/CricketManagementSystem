@@ -4,11 +4,7 @@
     ViewData["Title"] = "New Player";
 }
 <div class="container-fluid">
-    <div class="wizard-header">
-        <h3 class="wizard-title">
-            Add New Player
-        </h3>
-    </div>
+
     <div class="row">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -40,8 +36,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label>Role<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="Role" required placeholder="--Select--">
+                        <label>Role<i class="fa fa-asterisk" style="color: red" aria-hidden="true" ></i></label>
+                        <select asp-for="Role" required placeholder="--Select--" class="js-example-basic-single">
                             <option value="">--Select--</option>
                             <option>Batsman</option>
                             <option>Bowler</option>
@@ -51,7 +47,7 @@
                     </div>
                     <div class="col-md-4">
                         <label>Batting Style</label>
-                        <select asp-for="BattingStyle" placeholder="--Select--">
+                        <select asp-for="BattingStyle" placeholder="--Select--" class="js-example-basic-single">
                             <option value="">--Select--</option>
                             <option>Right-hand bat</option>
                             <option>Left-hand bat</option>
@@ -59,7 +55,7 @@
                     </div>
                     <div class="col-md-4">
                         <label>Bowling Style</label>
-                        <select asp-for="BowlingStyle" placeholder="--Select--">
+                        <select asp-for="BowlingStyle" placeholder="--Select--" class="js-example-basic-single">
                             <option value="">--Select--</option>
                             <option>Right-arm fast</option>
                             <option>Right-arm fast medium</option>
@@ -78,13 +74,13 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label>Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="TeamId" asp-items="ViewBag.TeamId" required placeholder="--Select--">
+                        <select asp-for="TeamId" asp-items="ViewBag.TeamId" required  class="js-example-basic-single">
                             <option value="">--Select--</option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label>Gender<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="Gender" required placeholder="--Select--">
+                        <select asp-for="Gender" required placeholder="--Select--" class="js-example-basic-single">
                             <option value="">--Select--</option>
                             <option>Male</option>
                             <option>Female</option>
@@ -153,6 +149,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
     <style>
         #PlayerImg {
@@ -165,6 +163,11 @@
         }
     </style>
     <script>
+        //Select2
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+
         $(function () {
             $('#BackBtn').click(function () {
                 window.location = '/Players/Index'

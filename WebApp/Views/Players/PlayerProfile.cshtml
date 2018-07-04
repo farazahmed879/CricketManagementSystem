@@ -4,43 +4,44 @@
     ViewData["Title"] = "List of Players";
 }
 <div class="container-fluid">
-    <div class="wizard-header">
-        <h3 class="wizard-title">
-            All Players
-        </h3>
 
+
+    <div class="form-group">
+        <a asp-controller="Players" class="btn btn-primary" asp-action="Create">Add</a>
     </div>
 
-    @*<p>
-            <button id="AddBtn" asp-action="Create" class="btn btn-primary">Add New</button>
-        </p>*@
 
-    <a asp-controller="Players" asp-action="Create" class="made-with-mk">
-        <div class="brand">Add</div>
-        <div class="made-with"> Create <strong>a new Player</strong></div>
-        <div class="ripple-container"></div>
-    </a>
-
-    @foreach (var item in Model)
+    @if (Model != null && Model.Any())
     {
-        <div class="dl-horizontal">
-            <div class="col-md-2">
-                <a asp-controller="Players" rel="tooltip" title="@item.Player_Name" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">
-                    @{
-                        var base64 = @item.PlayerLogo == null || !item.PlayerLogo.Any() ? "" : Convert.ToBase64String(@item.PlayerLogo);
-                        <div class="img-responsive " style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' onclick="playerStatistics" id="PlayerImg">
-                        </div>
-                    }
-                </a>
+        @foreach (var item in Model)
+        {
+            <div class="dl-horizontal">
+                <div class="col-md-2">
+                    <a asp-controller="Players" title="@item.Player_Name" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">
+                        @{
+                            var base64 = @item.PlayerLogo == null || !item.PlayerLogo.Any() ? "" : Convert.ToBase64String(@item.PlayerLogo);
+                            <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' onclick="playerStatistics" id="PlayerImg">
+                            </div>
+                        }
+                    </a>
+                </div>
             </div>
+        }
+    }
+    else
+    {
+        <div class="wizard-header">
+            <h3 class="wizard-title">
+                No Player Found
+            </h3>
         </div>
+
     }
 
 
 </div>
 
 @section Scripts{
-    <script src="~/js/material-bootstrap-wizard.js"></script>
     <script>
         $(function () {
             $('#AddBtn').click(function () {

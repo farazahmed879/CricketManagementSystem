@@ -5,11 +5,6 @@
 }
 
 <div class="container-fluid">
-    <div class="wizard-header">
-        <h3 class="wizard-title">
-            Edit Mode
-        </h3>
-    </div>
     <div class="container-fluid">
         <div class="row">
             <form asp-action="Edit" enctype="multipart/form-data">
@@ -40,18 +35,22 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label>Role<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="Role" required placeholder="--Select--">
-                            <option value="">--Select--</option>
-                            <option>Batsman</option>
-                            <option>Bowler</option>
-                            <option>All-Rounder</option>
-                            <option>Wicket-Keeper Batsman</option>
-                        </select>
+                        <div class="col-md-12">
+                            <label>Role<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        </div>
+                        <div class="col-md-12">
+                            <select asp-for="Role" required placeholder="--Select--" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                                <option>Batsman</option>
+                                <option>Bowler</option>
+                                <option>All-Rounder</option>
+                                <option>Wicket-Keeper Batsman</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-md-4">
                         <label>Batting Style</label>
-                        <select asp-for="BattingStyle" placeholder="--Select--">
+                        <select asp-for="BattingStyle" placeholder="--Select--" class="js-example-basic-single">
                             <option value="">--Select--</option>
                             <option>Right-hand bat</option>
                             <option>Left-hand bat</option>
@@ -59,7 +58,7 @@
                     </div>
                     <div class="col-md-4">
                         <label>Bowling Style</label>
-                        <select asp-for="BowlingStyle" placeholder="--Select--">
+                        <select asp-for="BowlingStyle" placeholder="--Select--" class="js-example-basic-single">
                             <option value="">--Select--</option>
                             <option>Right-arm fast</option>
                             <option>Right-arm fast medium</option>
@@ -76,13 +75,13 @@
                     </div>
                     <div class="col-md-4">
                         <label>Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="TeamId" asp-items="ViewBag.TeamId" required placeholder="--Select--">
+                        <select asp-for="TeamId" asp-items="ViewBag.TeamId" required placeholder="--Select--" class="js-example-basic-single">
                             <option value="">--Select--</option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label>Gender<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="Gender" required placeholder="--Select--">
+                        <select asp-for="Gender" required placeholder="--Select--" class="js-example-basic-single">
                             <option value="">--Select--</option>
                             <option>Male</option>
                             <option>Female</option>
@@ -124,10 +123,10 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
-                                @{ 
+                                @{
                                     var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
-                                <div class="img-responsive" id="PlayerImg" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
-                                    }
+                                    <div class="img-responsive" id="PlayerImg" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                                }
                             </div>
                             <div class="col-md-6" style="margin-top:7.7em;">
                                 <label asp-for="PlayerImage" class="btn btn-primary">
@@ -156,7 +155,8 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <style>
         #PlayerImg {
             background-image: url('');
@@ -168,6 +168,11 @@
         }
     </style>
     <script>
+
+        //Select2
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
         $(function () {
             $('#BackBtn').click(function () {
                 window.location = '/Players/Index'

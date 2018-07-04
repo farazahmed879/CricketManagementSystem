@@ -24,6 +24,7 @@ namespace WebApp.Controllers
         // GET: Teams
         public async Task<IActionResult> Index(string zone, string city, int? page)
         {
+            ViewBag.Name = "Team";
             int pageSize = 10;
             return View(await PaginatedList<Team>.CreateAsync(
                 _context.Teams
@@ -52,6 +53,7 @@ namespace WebApp.Controllers
         // GET: Teams/Create
         public IActionResult Create()
         {
+            ViewBag.Name = "Add Team";
             return View();
         }
 
@@ -97,6 +99,8 @@ namespace WebApp.Controllers
         // GET: Teams/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
+            ViewBag.Name = "Edit Team";
             if (id == null)
             {
                 return NotFound();
@@ -173,15 +177,13 @@ namespace WebApp.Controllers
             return View(team);
         }
 
-        // POST: Teams/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [Route("Team/DeleteConfirmed")]
+        public async Task<IActionResult> DeleteConfirmed(int teamId)
         {
-            var team = await _context.Teams.SingleOrDefaultAsync(m => m.TeamId == id);
+            var team = await _context.Teams.SingleOrDefaultAsync(m => m.TeamId == teamId);
             _context.Teams.Remove(team);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Ok();
         }
 
         private bool TeamExists(int id)

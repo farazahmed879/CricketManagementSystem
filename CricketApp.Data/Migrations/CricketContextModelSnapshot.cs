@@ -25,9 +25,9 @@ namespace CricketApp.Data.Migrations
                     b.Property<int>("TeamScoreId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Buys");
+                    b.Property<int>("Byes");
 
-                    b.Property<int>("LegBuys");
+                    b.Property<int>("LegByes");
 
                     b.Property<int>("MatchId");
 
@@ -403,7 +403,7 @@ namespace CricketApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CricketApp.Domain.Team", "Team")
-                        .WithMany()
+                        .WithMany("TeamScores")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

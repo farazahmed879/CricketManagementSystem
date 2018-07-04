@@ -23,6 +23,7 @@ namespace WebApp.Controllers
         // GET: Tournaments
         public async Task<IActionResult> Index(int? page)
         {
+            ViewBag.Name = "Tournaments";
             int pageSize = 10;
             return View(await PaginatedList<Tournament>.CreateAsync(
                 _context.Tournaments, page?? 1, pageSize));
@@ -49,6 +50,7 @@ namespace WebApp.Controllers
         // GET: Tournaments/Create
         public IActionResult Create()
         {
+            ViewBag.Name = "Add Tournament";
             return View();
         }
 
@@ -71,6 +73,7 @@ namespace WebApp.Controllers
         // GET: Tournaments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.Name = "Edit Tournament";
             if (id == null)
             {
                 return NotFound();
@@ -138,14 +141,13 @@ namespace WebApp.Controllers
         }
 
         // POST: Tournaments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [Route("Tournament/DeleteConfirmed")]
+        public async Task<IActionResult> DeleteConfirmed(int tournamentId)
         {
-            var tournament = await _context.Tournaments.SingleOrDefaultAsync(m => m.TournamentId == id);
+            var tournament = await _context.Tournaments.SingleOrDefaultAsync(m => m.TournamentId == tournamentId);
             _context.Tournaments.Remove(tournament);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Ok();
         }
 
         private bool TournamentExists(int id)

@@ -4,11 +4,6 @@
     ViewData["Title"] = "Create";
 }
 <div class="container-fluid">
-    <div class="wizard-header">
-        <h3 class="wizard-title">
-            Edit Mode
-        </h3>
-    </div>
 
     <form asp-action="Edit" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -55,19 +50,19 @@
 
             <div class="col-md-6">
                 <label>First Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
+                <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--" class="js-example-basic-single">
                     <option value="">--Select Team--</option>
                 </select>
             </div>
             <div class="col-md-6">
                 <label>Second Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--">
+                <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--" class="js-example-basic-single">
                     <option value="">--Select--</option>
                 </select>
             </div>
             <div class="col-md-6">
                 <label>Status<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                <select asp-for="Status" required placeholder="--Select--">
+                <select asp-for="Status" required placeholder="--Select--" class="js-example-basic-single">
                     <option value="">--Select--</option>
                     <option>Fiendly</option>
                     <option>Tournament</option>
@@ -75,14 +70,14 @@
             </div>
             <div class="col-md-6">
                 <label>Tournament</label>
-                <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" style="display:none;" placeholder="--Select--">
+                <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" style="display:none;" placeholder="--Select--" class="js-example-basic-single">
                     <option value="">--Select--</option>
                 </select>
             </div>
 
             <div class="col-md-6">
                 <label>Result<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                <select asp-for="Result" required placeholder="--Select--">
+                <select asp-for="Result" required placeholder="--Select--" class="js-example-basic-single">
                     <option value="">--Select--</option>
                     <option>Win</option>
                     <option>Loss</option>
@@ -97,13 +92,13 @@
                 </div>
             </div>
         </div>
-      
+
         <div class="col-md-2">
             <div class="form-group" style="margin-top: 100px">
                 <div class="row">
                     @{
-                    var base64 = Model.MatchLogo == null || !Model.MatchLogo.Any() ? "" : Convert.ToBase64String(Model.MatchLogo);
-                    <div class="img-responsive" id="Img" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                        var base64 = Model.MatchLogo == null || !Model.MatchLogo.Any() ? "" : Convert.ToBase64String(Model.MatchLogo);
+                        <div class="img-responsive" id="Img" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
                     }
                     <label asp-for="MatchImage" class="btn btn-primary">
                         Upload <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
@@ -129,7 +124,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <style>
         #Img {
             background-image: url('');
@@ -141,6 +137,10 @@
         }
     </style>
     <script>
+        //Select2
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
         $(function () {
             $('#BackBtn').click(function () {
                 window.location = '/Matches/Index'

@@ -4,12 +4,6 @@
     ViewData["Title"] = "List of Players";
 }
 <div class="container-fluid">
-    <div class="wizard-header">
-        <h3 class="wizard-title">
-            Records
-        </h3>
-    </div>
-
     <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
         <div class="panel-body">
             <form class="form-inline" role="form" id="Filters">
@@ -80,7 +74,7 @@
     <button id="advSearch" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
         Advanced Search
     </button>
-    <table class="table table-bordered table-striped">
+    <table id="RecordTable" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>
@@ -203,7 +197,33 @@
 </div>
 
 @section Scripts{
+    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script>
+
+        var responsiveHelper;
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
+        var tableElement = $('#RecordTable');
+
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            }
+        });
+
         const change = () => {
             if ($("#status").val() === "2") {
                 $("#tourSection").show();
@@ -250,69 +270,69 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-                                                                                    <td>
-                                                                                        ${i.playerName}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        ${i.totalMatch}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                          ${i.totalBatRuns}
+                                                                                            <td>
+                                                                                                ${i.playerName}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                ${i.totalMatch}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                  ${i.totalBatRuns}
 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                   ${i.battingAverage}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                           ${i.battingAverage}
 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                          ${i.strikeRate}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                          ${i.totalFours}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                  ${i.strikeRate}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                  ${i.totalFours}
 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                           ${i.totalSixes}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                   ${i.totalSixes}
 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                             ${i.numberOf50s}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                     ${i.numberOf50s}
 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                           ${i.numberOf100s}
-                                                                                    <td>
-                                                                                         ${i.totalOvers}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                      ${i.totalWickets}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                   ${i.numberOf100s}
+                                                                                            <td>
+                                                                                                 ${i.totalOvers}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                              ${i.totalWickets}
 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                     ${i.bowlingAvg}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                       ${i.economy}
-                                                                                    </td>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                             ${i.bowlingAvg}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                               ${i.economy}
+                                                                                            </td>
 
-                                                                                    <td>
-                                                                                 ${i.fiveWickets}
+                                                                                            <td>
+                                                                                         ${i.fiveWickets}
 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                ${i.totalCatches}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                        ${i.totalCatches}
 
-                                                                                    </td>
-                                                                                    <td>
-                                                                                 ${i.totalRunOuts}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                         ${i.totalRunOuts}
 
-                                                                                    </td>
+                                                                                            </td>
 
-                                                                                    <td>
-                                                                                       ${i.totalStumps}
-                                                                                    </td>
+                                                                                            <td>
+                                                                                               ${i.totalStumps}
+                                                                                            </td>
 
-                                                                                `;
+                                                                                        `;
                             tbody.appendChild(tr);
                             return tr;
                         });
@@ -326,10 +346,10 @@
                 }
             });
         });
-                                                         //   async function filterdata() {
-                                                         //'
-                                                         //       }
-                                                         //       );
+                                                                 //   async function filterdata() {
+                                                                 //'
+                                                                 //       }
+                                                                 //       );
 
     </script>
     <style>

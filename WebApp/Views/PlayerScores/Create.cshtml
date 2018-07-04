@@ -25,21 +25,21 @@
                         <li role="presentation" class="active">
                             <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="First Inning">
                                 <span class="round-tab">
-                                    <i class="material-icons">accessibility</i>
+                                    <i class="fas fa-globe-americas"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
                             <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Second Inning">
                                 <span class="round-tab">
-                                    <i class="material-icons">accessibility_new</i>
+                                    <i class="fas fa-globe-africa"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
                             <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
                                 <span class="round-tab">
-                                    <i class="material-icons">all_inclusive</i>
+                                    <i class="fas fa-check-circle"></i>
                                 </span>
                             </a>
                         </li>
@@ -49,7 +49,7 @@
                     <div class="tab-pane active" role="tabpanel" id="step1">
                         <div class="container-fluid">
                             <div class="col-sm-2">
-                                <select asp-items="ViewBag.HomeTeam" disabled="disabled"></select>
+                                <select asp-items="ViewBag.HomeTeam" disabled="disabled" class="js-example-basic-single"></select>
                             </div>
                             <hr />
                             <form class="form-inline" role="form" id="HomeTeamData">
@@ -103,12 +103,12 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <select asp-for="@Model.MatchScore[i].PlayerId" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" class="playerDropDown">
-                                                    <option value="">--Select Player--</option>
+                                                <select  asp-for="@Model.MatchScore[i].PlayerId" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--"  class="js-example-basic-single">
+                                                    <option selected disabled value="">--Select Player--</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-2">
-                                                <select asp-for="@Model.MatchScore[i].HowOut" placeholder="--How Out--">
+                                                <select asp-for="@Model.MatchScore[i].HowOut" class="js-example-basic-single" >
                                                     <option value="">--How Out--</option>
                                                     <option>Catch</option>
                                                     <option>Bowled</option>
@@ -121,7 +121,9 @@
                                             </div>
 
                                             <div class="col-sm-4">
-                                                <select asp-for="@Model.MatchScore[i].Bowler" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" class="playerDropDown">
+
+
+                                                <select asp-for="@Model.MatchScore[i].Bowler" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" class="js-example-basic-single">
                                                     <option value="">--Select Bowler--</option>
                                                 </select>
                                             </div>
@@ -129,12 +131,9 @@
                                     }
                                 }
                                 <hr />
-                                @*<div class="form-group">
-                                        <input type="submit" value="Save" class="btn btn-primary" />
-                                    </div>*@
 
                                 <ul class="list-inline pull-right">
-                                    <li><input type="button" id="HomeTeamBtn" value="Save and Continue" class="btn btn-primary next-step" onclick="return HomeTeamData(this.form)"></li>
+                                    <li><input type="button" id="HomeTeamBtn" value="Save and Continue" class="btn btn-primary next-step" onclick="return HomeTeam(this.form)"></li>
                                 </ul>
 
                             </form>
@@ -144,11 +143,11 @@
 
                         <div class="container-fluid">
                             <div class="col-sm-2">
-                                <select asp-items="ViewBag.OpponentTeam" disabled="disabled"></select>
+                                <select asp-items="ViewBag.OpponentTeam" disabled="disabled" class="js-example-basic-single"></select>
                             </div>
 
                             <hr />
-                            <form class="form-inline" role="form" id="OpponentTeam">
+                            <form class="form-inline" role="form" id="OpponentTeamData">
 
                                 <div class="form-inline">
 
@@ -199,12 +198,12 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <select asp-for="@Model.MatchScore[i].PlayerId" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" class="playerDropDown">
+                                                <select asp-for="@Model.MatchScore[i].PlayerId" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" class="js-example-basic-single">
                                                     <option value="">--Select Player--</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-2">
-                                                <select asp-for="@Model.MatchScore[i].HowOut" placeholder="--How Out--">
+                                                <select asp-for="@Model.MatchScore[i].HowOut" class="js-example-basic-single" placeholder="--How Out--">
                                                     <option value="">--How Out--</option>
                                                     <option>Catch</option>
                                                     <option>Bowled</option>
@@ -217,7 +216,7 @@
                                             </div>
 
                                             <div class="col-sm-4">
-                                                <select asp-for="@Model.MatchScore[i].Bowler" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" class="playerDropDown">
+                                                <select asp-for="@Model.MatchScore[i].Bowler" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" class="js-example-basic-single">
                                                     <option value="">--Select Player--</option>
                                                 </select>
                                             </div>
@@ -226,7 +225,7 @@
                                 }
                                 <ul class="list-inline pull-right">
                                     <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
-                                    <li><input type="button" id="OpponentTeamBtn" value="Save and Continue" class="btn btn-primary next-step" onclick="return OpponentTeamData(this.form)"></li>
+                                    <li><input type="button" id="OpponentTeamBtn" value="Save and Continue" class="btn btn-primary next-step" onclick="return OpponentTeam(this.form)"></li>
                                 </ul>
                             </form>
                         </div>
@@ -263,11 +262,11 @@
                                                 if (i < 1)
                                                 {
 
-                                                    <select asp-for="@Model.TeamScore[i].TeamId" asp-items="ViewBag.HomeTeam"  class="playerDropDown"></select>
+                                                    <select asp-for="@Model.TeamScore[i].TeamId" asp-items="ViewBag.HomeTeam" class="js-example-basic-single"></select>
                                                 }
                                                 else
                                                 {
-                                                    <select asp-for="@Model.TeamScore[i].TeamId" asp-items="ViewBag.OpponentTeam"  class="playerDropDown"></select>
+                                                    <select asp-for="@Model.TeamScore[i].TeamId" asp-items="ViewBag.OpponentTeam" class="js-example-basic-single"></select>
                                                 }
 
                                             }
@@ -299,7 +298,7 @@
                                                 <label>Byes</label>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input asp-for="@Model.TeamScore[i].Buys" required style="width: 50px" />
+                                                <input asp-for="@Model.TeamScore[i].Byes" required style="width: 50px" />
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
@@ -307,7 +306,7 @@
                                                 <label>Leg-Byes</label>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input asp-for="@Model.TeamScore[i].LegBuys" required style="width: 50px" />
+                                                <input asp-for="@Model.TeamScore[i].LegByes" required style="width: 50px" />
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
@@ -350,10 +349,16 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap-wizard/1.2/jquery.bootstrap.wizard.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
     <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+
 
         const globalStates = [];
         $(function () {
@@ -366,9 +371,8 @@
         };
 
 
-        function HomeTeamData(form) {
+        function HomeTeam(form) {
             try {
-                const param = new window.URL(window.location.href).searchParams;
                 var formData = $("#HomeTeamData").serialize();
                 $.ajax(`/PLayerScores/Save`, {
                     data: formData,
@@ -376,13 +380,12 @@
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (data) {
-                    if (response.ok) {
+                }).done(function (response) {
+                    if (!response) {
                         alert("Record inserted successfully");
                     }
-                    else {
-                        alert("Record can not inserted");
-                    }
+                }).fail(function () {
+                    alert("Record can not inserted");
                 });
 
 
@@ -392,23 +395,21 @@
 
         }
 
-        function OpponentTeamData(form) {
+        function OpponentTeam(form) {
             try {
-                const param = new window.URL(window.location.href).searchParams;
-                var formData = $("#OpponentTeam").serialize();
+                var formData = $("#OpponentTeamData").serialize();
                 $.ajax(`/PLayerScores/Save`, {
                     data: formData,
                     headers: {
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (data) {
-                    if (response.ok) {
+                }).done(function (response) {
+                    if (!response) {
                         alert("Record inserted successfully");
                     }
-                    else {
-                        alert("Record can not inserted");
-                    }
+                }).fail(function () {
+                    alert("Record can not be inserted");
                 });
 
             } catch (ex) {
@@ -418,7 +419,6 @@
         }
         function TeamScoreData(form) {
             try {
-                const param = new window.URL(window.location.href).searchParams;
                 var formData = $("#MatchSummary").serialize();
                 $.ajax(`/PLayerScores/TeamScoreSave`, {
                     data: formData,
@@ -426,14 +426,13 @@
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (data) {
-                    if (response.ok) {
+                }).done(function (response) {
+                    if (!response) {
                         alert("Record inserted successfully");
                     }
-                    else {
-                        alert("Record can not inserted");
-                    }
-                });
+                    }).fail(function () {
+                        alert("Record can not be inserted");
+                    });
 
             } catch (ex) {
                 console.error(ex);
@@ -475,32 +474,33 @@
         function prevTab(elem) {
             $(elem).prev().find('a[data-toggle="tab"]').click();
         }
-                                                                                                                                                                                                                                              //$('.playerDropDown')
-                                                                                                                                                                                                                                            //    .on('change', (event) => {
-                                                                                                                                                                                                                                            //        const element = event.target;
-                                                                                                                                                                                                                                            //        if (!element.value)
-                                                                                                                                                                                                                                            //            return;
-                                                                                                                                                                                                                                            //        globalStates.push({
-                                                                                                                                                                                                                                            //            value: element.value
-                                                                                                                                                                                                                                            //        });
-                                                                                                                                                                                                                                            //        removeValues();
-                                                                                                                                                                                                                                            //    });
+                                                               //$('.playerDropDown')
+                                                    //.on('change', (event) => {
+                                                    //    const element = event.target;
+                                                    //    if (!element.value)
+                                                    //        return;
+                                                    //    globalStates.push({
+                                                    //        value: element.value
+                                                    //    });
+                                                    //    removeValues();
+                                                    //});
 
-                                                                                                                                                                                                                                            //const removeValues = () => {
-                                                                                                                                                                                                                                            //    const elements = $('select.playerDropDown');
-                                                                                                                                                                                                                                            //    for (let index = 0; index < elements.length; index++) {
-                                                                                                                                                                                                                                            //        const isAdded = _.some(globalStates, {
-                                                                                                                                                                                                                                            //            value: elements[index].value
-                                                                                                                                                                                                                                            //        });
-                                                                                                                                                                                                                                            //        if (!isAdded) {
-                                                                                                                                                                                                                                            //            for (let globalState of globalStates) {
-                                                                                                                                                                                                                                            //                //elements[index].selectize.removeValues(globalState.value);
-                                                                                                                                                                                                                                            //                $(`#${elements[index].id}`)[0].selectize.removeOption(globalState.value);
-                                                                                                                                                                                                                                            //            }
-                                                                                                                                                                                                                                            //        }
-                                                                                                                                                                                                                                            //    }
-                                                                                                                                                                                                                                            //};
-                                                                                                                                                                                                                                            //Wizard JS
+                                                    //const removeValues = () => {
+                                                    //    const elements = $('select.playerDropDown');
+                                                    //    for (let index = 0; index < elements.length; index++) {
+                                                    //        const isAdded = _.some(globalStates, {
+                                                    //            value: elements[index].value
+                                                    //        });
+                                                    //        if (!isAdded) {
+                                                    //            for (let globalState of globalStates) {
+                                                    //                //elements[index].selectize.removeValues(globalState.value);
+                                                    //                $(`#${elements[index].id}`)[0].selectize.removeOption(globalState.value);
+                                                    //            }
+                                                    //        }
+                                                    //    }
+                                                    //};
+
+
 
     </script>
 }

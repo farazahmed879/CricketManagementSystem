@@ -28,6 +28,7 @@ namespace WebApp.Controllers
         // GET: Players
         public async Task<IActionResult> Index(int? teamId, string role,int? page)
         {
+            ViewBag.Name = "Players";
             ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
             int pageSize = 10;
             return View(await PaginatedList<Player>.CreateAsync(
@@ -45,6 +46,7 @@ namespace WebApp.Controllers
         // GET: PlayerProfile
         public async Task<IActionResult> PlayerProfile(int? teamId)
         {
+            ViewBag.Name = "Players Profile";
             if (teamId != 0 && teamId != null)
             {
                 return View(await _context.Players
@@ -64,6 +66,7 @@ namespace WebApp.Controllers
         // GET: Players/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.Name = "Match Detail";
             if (id == null)
             {
                 return NotFound();
@@ -216,21 +219,20 @@ namespace WebApp.Controllers
         }
 
         // POST: Players/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [Route("Players/DeleteConfirmed")]
+        public async Task<IActionResult> DeleteConfirmed(int playerId)
         {
-            var player = await _context.Players.SingleOrDefaultAsync(m => m.PlayerId == id);
+            var player = await _context.Players.SingleOrDefaultAsync(m => m.PlayerId == playerId);
             _context.Players.Remove(player);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Ok();
         }
         // GET: PlayerStatistics
         public IActionResult PlayerStatistics(int playerId)
         {
             var connection = _context.Database.GetDbConnection();
             var model = connection.QuerySingle<PlayerStatisticsdto>(
-                "[usp_GetMatchStatistics]",
+                "[usp_GetSinglePlayerStatistics]",
                 new { paramPlayerId = playerId },
                 commandType: CommandType.StoredProcedure);
 
@@ -239,6 +241,7 @@ namespace WebApp.Controllers
         // GET: AllPlayerStatistics
         public IActionResult AllPlayerStatistics(int? teamId,int? season, int? overs, int? position,string status,int? tournamentId,int? opponentTeamId, bool isApi)
         {
+            ViewBag.Name = "Players Records";
             ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
             ViewBag.Season = new SelectList(_context.Matches.Select(i => i.Season).ToList().Distinct(), "Season");
             ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");

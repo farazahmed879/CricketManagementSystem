@@ -3,22 +3,29 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="wizard-header">
-            <h3 class="wizard-title">
-                Score Card
-            </h3>
-        </div>
+        @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any() || Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any() || Model.TeamScoreCard != null && Model.TeamScoreCard.Any())
+        {
+            <div class="form-group">
+                <a class="btn btn-primary" button="button" asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Edit</a>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <a class="btn btn-primary" button="button" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Add</a>
+            </div>
+        }
 
         <div class="row">
             <div class="col-sm-12">
                 <div class="col-sm-2">
-                    <select asp-items="ViewBag.HomeTeam" disabled="disabled"></select>
+                    <select asp-items="ViewBag.HomeTeam" disabled="disabled" class="js-example-basic-single"></select>
                 </div>
                 <div class="col-sm-1">
                     <p>Vs</p>
                 </div>
                 <div class="col-sm-2">
-                    <select asp-items="ViewBag.OpponentTeam" disabled="disabled"></select>
+                    <select asp-items="ViewBag.OpponentTeam" disabled="disabled" class="js-example-basic-single"></select>
                 </div>
             </div>
         </div>
@@ -28,23 +35,23 @@
                     <div class="connecting-line"></div>
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="First Inning">
-                                <span class="round-tab">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
+                            <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab">
+                                <span class="round-tab" data-toggle="tooltip" title="First Inning">
+                                    <i class="fas fa-globe-americas"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
-                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Second Inning">
-                                <span class="round-tab">
-                                    <i class="glyphicon glyphicon-pencil"></i>
+                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab">
+                                <span class="round-tab" data-toggle="tooltip" title="Second Inning">
+                                    <i class="fas fa-globe-africa"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
-                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Match Summary">
-                                <span class="round-tab">
-                                    <i class="glyphicon glyphicon-ok"></i>
+                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab">
+                                <span class="round-tab" data-toggle="tooltip" title="Match Summary">
+                                    <i class="fas fa-check-circle"></i>
                                 </span>
                             </a>
                         </li>
@@ -54,19 +61,14 @@
                     <div class="tab-pane active" role="tabpanel" id="step1">
                         <div class="container-fluid">
                             <div class="form-inline">
-                                @*<div class="row">
-                                        <div class="col-sm-2">
-                                            <select asp-items="ViewBag.HomeTeam" disabled="disabled"></select>
-                                        </div>
-                                    </div>*@
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <select asp-items="ViewBag.HomeTeam" disabled="disabled" class="js-example-basic-single"></select>
+                                    </div>
+                                </div>
 
                                 @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
                                 {
-                                    <a id="AddBtn" asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId" class="made-with-mk">
-                                        <div class="brand">Edit</div>
-                                        <div class="made-with">  <strong>Match Players</strong></div>
-                                        <div class="ripple-container"></div>
-                                    </a>
 
                                     <table class="table table-bordered table-striped">
                                         <thead>
@@ -169,7 +171,7 @@
                                                         @Html.DisplayFor(modelItem => item.Maiden)
                                                     </td>
                                                     <td>
-                                                        <a class="material-icons" rel="tooltip" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)">directions_run</a>
+                                                        <a data-placement="top" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i class="fas fa-walking"></i></a>
                                                     </td>
                                                 </tr>
                                             }
@@ -179,11 +181,6 @@
                                 }
                                 else
                                 {
-                                    <a id="AddBtn" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId" class="made-with-mk">
-                                        <div class="brand">Add</div>
-                                        <div class="made-with">  <strong>Match Players</strong></div>
-                                        <div class="ripple-container"></div>
-                                    </a>
                                     <div class="wizard-header">
                                         <h3 class="wizard-title">
                                             Record is not Inserted
@@ -202,13 +199,13 @@
                     <div class="tab-pane" role="tabpanel" id="step2">
                         <div class="container-fluid">
                             <div class="form-inline">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <select asp-items="ViewBag.OpponentTeam" disabled="disabled" class="js-example-basic-single"></select>
+                                    </div>
+                                </div>
                                 @if (Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any())
                                 {
-                                    <a id="EditBtn" asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId" class="made-with-mk">
-                                        <div class="brand">Edit</div>
-                                        <div class="made-with">  <strong>Match Players</strong></div>
-                                        <div class="ripple-container"></div>
-                                    </a>
 
                                     <table class="table table-bordered table-striped">
                                         <thead>
@@ -311,7 +308,7 @@
                                                         @Html.DisplayFor(modelItem => item.Maiden)
                                                     </td>
                                                     <td>
-                                                        <a class="material-icons" rel="tooltip" id="scoreCard" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)">directions_run</a>
+                                                        <a data-placement="top" id="scoreCard" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal"></a>
                                                     </td>
                                                 </tr>
                                             }
@@ -321,11 +318,6 @@
                                 }
                                 else
                                 {
-                                    <a id="AddBtn" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId" class="made-with-mk">
-                                        <div class="brand">Add</div>
-                                        <div class="made-with"><strong>Match Players</strong></div>
-                                        <div class="ripple-container"></div>
-                                    </a>
                                     <div class="wizard-header">
                                         <h3 class="wizard-title">
                                             Record is not Inserted
@@ -343,8 +335,83 @@
                         </ul>
                     </div>
                     <div class="tab-pane" role="tabpanel" id="complete">
-                        <h3>Complete</h3>
-                        <p>You have successfully completed all steps.</p>
+                        @if (Model.TeamScoreCard != null && Model.TeamScoreCard.Any())
+                        {
+
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Team Name
+                                        </th>
+                                        <th>
+                                            Total Score
+                                        </th>
+                                        <th>
+                                            Given Extras
+                                        </th>
+                                        <th>
+                                            Wide Balls
+                                        </th>
+                                        <th>
+                                            No Balls
+                                        </th>
+                                        <th>
+                                            Byes
+                                        </th>
+                                        <th>
+                                            Leg Byes
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.TeamScoreCard)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Team.Team_Name)
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TotalScore)
+                                            </td>
+                                            <td>
+                                                @{
+
+                                                    var TotalExtras = item.Wideballs + item.NoBalls + item.Byes + item.LegByes;
+
+                                                    <span>@(TotalExtras)</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Wideballs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NoBalls)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Byes)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LegByes)
+                                            </td>
+
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        }
+                        else
+                        {
+                            <div class="wizard-header">
+                                <h3 class="wizard-title">
+                                    Record is not Inserted
+                                </h3>
+                            </div>
+
+                        }
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -352,127 +419,138 @@
         </section>
     </div>
 </div>
-
-
 <div id="PlayerScoreModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Score</h4>
             </div>
+            <div class="modal-body">
+                <div id="rootwizard">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <div class="container">
+                                <ul>
+                                    <li><a href="#batting" data-toggle="tab">Batting</a></li>
+                                    <li><a href="#bowlling" data-toggle="tab">Bowling</a></li>
+                                    <li><a href="#fielding" data-toggle="tab">Fielding</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="batting">
+                            <input type="hidden" id="PlayerScoreId" />
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Runs</label>
+                                        <input id="battingRuns" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Balls</label>
+                                        <input id="battingBalls" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">4s</label>
+                                        <input id="fours" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">6s</label>
+                                        <input id="sixes" type="number" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="bowlling">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Overs</label>
+                                        <input id="overs" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Runs</label>
+                                        <input id="bowlingRuns" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Wickets</label>
+                                        <input id="wickets" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Maidens</label>
+                                        <input id="maidens" type="number" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="fielding">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Catches</label>
+                                        <input id="catches" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Run Out</label>
+                                        <input id="runOuts" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Stump</label>
+                                        <input id="stumps" type="number" class="form-control">
+                                    </div>
+                                </div>
 
-            <div class="card wizard-card modal-body" data-color="blue" id="wizard">
+                            </div>
+                        </div>
 
-
-                <div class="wizard-navigation">
-                    <ul>
-                        <li><a href="#batting" data-toggle="tab">Batting</a></li>
-                        <li><a href="#bowling" data-toggle="tab">Bowling</a></li>
-                        <li><a href="#fielding" data-toggle="tab">Fielding</a></li>
+                    </div>
+                    <ul class="pager wizard">
+                        <li class="previous"><a href="#">Previous</a></li>
+                        <li class="next"><a href="#">Next</a></li>
                     </ul>
+                    <input id="btnFinish" type='button' class='btn btn-previous btn-fill btn-primary btn-wd' data-dismiss="modal" value='Finish' />
                 </div>
-                <div class="tab-content">
-                    <div class="tab-pane" id="batting">
-                        <input type="hidden" id="PlayerScoreId" />
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Runs</label>
-                                    <input id="battingRuns" type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Balls</label>
-                                    <input id="battingBalls" type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">4s</label>
-                                    <input id="fours" type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">6s</label>
-                                    <input id="sixes" type="number" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="bowling">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Overs</label>
-                                    <input id="overs" type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Runs</label>
-                                    <input id="bowlingRuns" type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Wickets</label>
-                                    <input id="wickets" type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Maidens</label>
-                                    <input id="maidens" type="number" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="fielding">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Catches</label>
-                                    <input id="catches" type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Run Out</label>
-                                    <input id="runOuts" type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Stump</label>
-                                    <input id="stumps" type="number" class="form-control">
-                                </div>
-                            </div>
 
-                        </div>
-                    </div>
-                </div>
-                <div class="wizard-footer">
-                    <div class="pull-right">
-                        <input type='button' class='btn btn-next btn-fill btn-primary btn-wd' value='Next' />
-                        <input id="btnFinish" type="button" class='btn btn-finish btn-fill btn-primary btn-wd' value='Finish' />
-                    </div>
-                    <div class="pull-left">
-                        <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' value='Previous' />
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+
             </div>
+
         </div>
     </div>
 </div>
+
+
 @section Scripts{
-    <script src="~/js/material-bootstrap-wizard.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+
     <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+
+        $(document).ready(function () {
+            $('#rootwizard').bootstrapWizard();
+        });
+
         $(function () {
             $('#AddBtn').click(function () {
                 window.location = '/PlayerScores/Create'
@@ -566,7 +644,7 @@
                                 document.getElementById("bowlingRuns").value = json[0].ball_Runs;
                                 document.getElementById("wickets").value = json[0].wickets;
                                 document.getElementById("maidens").value = json[0].maiden;
-                                document.getElementById("catches").value = json[0].catch;
+                                document.getElementById("catches").value = json[0].catches;
                                 document.getElementById("runOuts").value = json[0].runOut;
                                 document.getElementById("stumps").value = json[0].stump;
                                 document.getElementById("PlayerScoreId").value = json[0].playerScoreId;
@@ -581,42 +659,6 @@
                 .catch(err => {
                     console.error(err);
                 });
-        }
-
-        $(document).ready(function () {
-            //Initialize tooltips
-            $('.nav-tabs > li a[title]').tooltip();
-
-            //Wizard
-            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-
-                var $target = $(e.target);
-
-                if ($target.parent().hasClass('disabled')) {
-                    return false;
-                }
-            });
-
-            $(".next-step").click(function (e) {
-
-                var $active = $('.wizard .nav-tabs li.active');
-                $active.next().removeClass('disabled');
-                nextTab($active);
-
-            });
-            $(".prev-step").click(function (e) {
-
-                var $active = $('.wizard .nav-tabs li.active');
-                prevTab($active);
-
-            });
-        });
-
-        function nextTab(elem) {
-            $(elem).next().find('a[data-toggle="tab"]').click();
-        }
-        function prevTab(elem) {
-            $(elem).prev().find('a[data-toggle="tab"]').click();
         }
 
     </script>

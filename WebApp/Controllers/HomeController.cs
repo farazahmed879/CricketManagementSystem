@@ -12,6 +12,8 @@ namespace WebApp.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+
+        [Route("Home/Index")]
         public IActionResult Index()
         {
             return View();

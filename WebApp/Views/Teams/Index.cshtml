@@ -5,24 +5,10 @@
 }
 <div class="container-fluid">
 
-    <div class="wizard-header">
-        <h3 class="wizard-title">
-            Teams
-        </h3>
+    <div class="form-group">
+        <a asp-controller="Teams" class="btn btn-primary" asp-action="Create">Add</a>
     </div>
-
-    @*Filter*@
-
-    <a asp-controller="Teams" disabled="disabled" asp-action="Create" class="made-with-mk">
-        <div class="brand">Add</div>
-        <div class="made-with"> Create <strong>a new Team</strong></div>
-        <div class="ripple-container"></div>
-    </a>
-
-    @*<p>
-            <button id="createBtn" asp-action="Create" class="btn btn-primary">Create New</button>
-
-        </p>*@
+   
     <div class="table-responsive">
         <table id="TeamTable" class="table table-bordered table-striped">
             <thead>
@@ -63,21 +49,34 @@
                             @Html.DisplayFor(modelItem => item.City)
                         </td>
                         <td>
-                            <a class="material-icons" rel="tooltip" title="Players Records" asp-controller="Players" asp-action="AllPlayerStatistics" asp-route-teamId="@item.TeamId">history</a>
-                            <a class="material-icons" rel="tooltip" title="Players" asp-controller="Players" asp-action="PlayerProfile" asp-route-teamId="@item.TeamId">perm_identity</a>
-                            <a class="material-icons" rel="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="@item.TeamId">account_balance</a>
-                            <a class="material-icons" rel="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TeamId">mode_edit</a>
+
+                            <div class="col-md-12">
+
+                                <div data-placement="top" data-toggle="tooltip" title="More Actions" class="dropdown">
+                                    <a id="dropdownMenuButton" data-toggle="dropdown">
+                                        <i class="fas fa-ellipsis-h"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a data-placement="top" data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TeamId"><i class="fas fa-edit">Edit</i></a>
+                                        @*<div class="dropdown-divider"></div>
+                                            <a rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.MatchId"><i class="fas fa-info-circle">Detail</i></a>*@
+                                        <div class="dropdown-divider"></div>
+                                        <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.TeamId)" class="fas fa-trash-alt">Delete</i></a>
+                                        <div class="dropdown-divider"></div>
+                                        <a data-placement="top" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayerProfile" asp-route-teamId="@item.TeamId"><i class="fas fa-users">Players</i></a>
+                                        <div class="dropdown-divider"></div>
+                                        <a data-placement="top" data-toggle="tooltip" title="Players Records" asp-controller="Players" asp-action="AllPlayerStatistics" asp-route-teamId="@item.TeamId"><i class="fas fa-chart-line">Players Records</i></a>
+                                        <div class="dropdown-divider"></div>
+                                        <a data-placement="top" data-toggle="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="fab fa-accusoft">Team Matches</i></a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
                             @*<a class="material-icons" rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.TeamId">details</a>*@
-                            <a class="material-icons" rel="tooltip" title="Delete" asp-action="Delete" asp-route-id="@item.TeamId">delete</a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                ...
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">More options</a>
-                                    <ul class="dropdown-menu">
-                                        ...
-                                    </ul>
-                                </li>
-                            </ul>
                         </td>
                     </tr>
                 }
@@ -90,20 +89,43 @@
     }
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a asp-action="Index" class="material-icons @prevDisabled"
+            <a asp-action="Index" class="@prevDisabled"
                asp-route-page="@(Model.PageIndex - 1)">
-                skip_previous
+                <i style="font-size:30px" class="far fa-hand-point-left"></i>
             </a>
             <a asp-action="Index"
                asp-route-page="@(Model.PageIndex + 1)"
-               class="material-icons @nextDisabled">
-                skip_next
+               class="@nextDisabled">
+                <i style="font-size:30px" class="far fa-hand-point-right"></i>
             </a>
         </form>
     </nav>
 
 </div>
+<div id="DeleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <input type="hidden" id="TeamId" />
+                <h3>Are you sure you want to delete this?</h3>
+
+                <div class="wizard-footer">
+                    <div class="pull-right">
+
+                    </div>
+                    <div class="pull-left">
+                        <input type='button' class='btn btn-previous btn-fill btn-primary btn-wd' data-dismiss="modal" value='Cancel' />
+                        <input id="deleteBtn" type="button" class='btn btn-finish btn-fill btn-primary btn-wd' data-dismiss="modal" value='Delete' />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 @section Scripts{
     <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
@@ -116,12 +138,12 @@
             text-align: center !important;
         }
 
-        .btn-disabled,
+        /*.btn-disabled,
         .btn-disabled[disabled] {
             opacity: .4;
             cursor: default !important;
             pointer-events: none;
-        }
+        }*/
     </style>
     <script>
 
@@ -131,7 +153,6 @@
             phone: 480
         };
         var tableElement = $('#TeamTable');
-
 
         tableElement.dataTable({
             autoWidth: false,
@@ -149,28 +170,60 @@
             }
         });
 
+        function Delete(TeamId) {
+            document.getElementById("TeamId").value = TeamId;
+        }
+
+        $("#deleteBtn")
+            .off()
+            .on("click", async () => await DeleteData());
+
+        const DeleteData = async () => {
+            const teamId = document.getElementById('TeamId').value;
+            const model = {
+                teamId: Number(teamId),
+            };
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            const response = await fetch(`/Team/DeleteConfirmed?teamId=${teamId}`, {
+                method: "POST",
+                body: JSON.stringify(model),
+                credentials: 'same-origin',
+                headers: header
+            });
+
+            if (response.ok) {
+                window.location.reload();
+                return;
+            } else {
+                alert("Record is not deleted");
+            }
+        };
+
+
 
         $(function () {
             $('#createBtn').click(function () {
                 window.location = '/Teams/Create'
             });
         });
-            //async function FilterData() {
-            //    var formElement = document.getElementById("Filters");
-            //    var formData = new FormData(formElement);
+                                                                        //async function FilterData() {
+                                                                        //    var formElement = document.getElementById("Filters");
+                                                                        //    var formData = new FormData(formElement);
 
-            //    var zone = formData.get("zone")
-            //    var city = formData.get("city")
+                                                                        //    var zone = formData.get("zone")
+                                                                        //    var city = formData.get("city")
 
 
-            //    // var header = new Headers();
-            //    //header.append("content-type");
+                                                                        //    // var header = new Headers();
+                                                                        //    //header.append("content-type");
 
-            //    const response = await fetch(`/Teams/Index?zone=${zone}&city=${city}`, {
-            //        credentials: 'same-origin'
-            //    });
+                                                                        //    const response = await fetch(`/Teams/Index?zone=${zone}&city=${city}`, {
+                                                                        //        credentials: 'same-origin'
+                                                                        //    });
 
-            //}
+                                                                        //}
 
     </script>
 

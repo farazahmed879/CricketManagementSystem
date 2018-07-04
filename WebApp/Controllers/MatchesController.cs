@@ -26,6 +26,7 @@ namespace WebApp.Controllers
                                                int? tournamentId, string result, string status,
                                                 int? season, int? overs, int? page)
         {
+            ViewBag.Name = "Match";
             ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
             ViewBag.Season = new SelectList(_context.Matches.Select(i => i.Season).ToList().Distinct(), "Season");
             ViewBag.TournamentId = new SelectList(_context.Tournaments, "TournamentId", "TournamentName");
@@ -45,10 +46,16 @@ namespace WebApp.Controllers
 
 
         }
+        public IActionResult HomeIndex()
+        {
+           
+            return View();
+        }
 
         // GET: Matches/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.Name = "Match Detail";
             if (id == null)
             {
                 return NotFound();
@@ -195,14 +202,13 @@ namespace WebApp.Controllers
         }
 
         // POST: Matches/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [Route("Matches/DeleteConfirmed")]
+        public async Task<IActionResult> DeleteConfirmed(int matchId)
         {
-            var match = await _context.Matches.SingleOrDefaultAsync(m => m.MatchId == id);
+            var match = await _context.Matches.SingleOrDefaultAsync(m => m.MatchId == matchId);
             _context.Matches.Remove(match);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Ok();
         }
 
         private bool MatchExists(int id)

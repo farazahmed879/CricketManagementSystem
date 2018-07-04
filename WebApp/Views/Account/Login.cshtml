@@ -1,45 +1,54 @@
 ﻿@model IEnumerable<CricketApp.Domain.Login>
+@{
+    Layout = "_LoginLayout";
+}
 
 <div class="container-fluid">
     <div class="col-sm-12 col-md-4 col-xs-offset-3">
-                <div class="container">
-                    <div class="row" id="pwd-container">
-                        <div class="col-md-4">
-                            <section class="login-form">
-                                <form method="post">
-                                    <img src="~/images/cricket_wireless_logo_detail_single_color.png" class="img-responsive" alt="" />
+        <div class="container">
+            <div class="row" id="pwd-container">
+                @*<div class="col-md-2">
+                        <a asp-controller="Account" asp-action="register">Create account</a> or <a href="#">reset password</a>
+                    </div>*@
+                <div class="col-md-5 col-lg-offset-1">
+                    <section class="login-form">
+                        <form method="post">
+                            <img src="~/images/cricket_wireless_logo_detail_single_color.png" class="img-responsive" alt="" />
 
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label ">User or email</label>
-                                                <input required Id="Email" type="email" class="form-control" />
-                                                <span id="EmailError" class="text-danger"></span>
-                                            </div>
-                                        </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label ">User or email</label>
+                                        <input required Id="Email" type="email" class="form-control" />
+                                        <span id="EmailError" class="text-danger"></span>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Password</label>
-                                                <input required Id="Password" type="password" class="form-control" />
-                                                <span id="PasswordError" class="text-danger"></span>
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Password</label>
+                                        <input required Id="Password" type="password" class="form-control" />
+                                        <span id="PasswordError" class="text-danger"></span>
                                     </div>
-                                   
+                                </div>
+                            </div>
 
-                                    <button type="button" id="SignInBtn" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>
-                                    <div>
-                                        <a asp-controller="Account" asp-action="register">Create account</a> or <a href="#">reset password</a>
-                                    </div>
 
-                                </form>
-                            </section>
-                        </div>
-                    </div>
+                            <button type="button" id="SignInBtn" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>
+                            <div>
+                                <a asp-controller="Account" asp-action="register">Create account</a> or <a href="#">reset password</a>
+                            </div>
+                            <div>
+                                <a asp-controller="Matches" asp-action="HomeIndex">Continue as a Guest</a>
+                            </div>
+
+                        </form>
+                    </section>
                 </div>
-      
+            </div>
+        </div>
+
     </div>
 </div>
 @section scripts {
@@ -51,6 +60,7 @@
             var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(email).toLowerCase());
         }
+
 
         $(function () {
             $('#SignInBtn').click((event) => {

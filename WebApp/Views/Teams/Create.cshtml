@@ -5,11 +5,6 @@
 }
 
 <div class="container-fluid">
-    <div class="wizard-header">
-        <h3 class="wizard-title">
-            Add New Team
-        </h3>
-    </div>
     <div class="row">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -53,7 +48,7 @@
                         </div>
                         <div class="col-md-6" style="margin-top:7.7em;">
                             <label asp-for="TeamImage" class="btn btn-primary">
-                                <i class="material-icons">file_upload</i> <input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
+                                <i class="far fa-image"> Upload</i><input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
                             </label>
                         </div>
                     </div>
