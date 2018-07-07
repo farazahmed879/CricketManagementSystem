@@ -38,8 +38,9 @@
                     </td>
                     <td>
                         <a data-toggle="tooltip" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TournamentId"><i class="fas fa-edit"></i></a>
-                        <a  data-placement="top" title="Delete" data-toggle="tooltip"  ><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(@item.TournamentId)"></i></a>
+                        <a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(@item.TournamentId)"></i></a>
                         <a data-toggle="tooltip" data-placement="top" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId"><i class="fab fa-accusoft">Matches</i></a>
+                        <a data-toggle="tooltip" data-placement="top" title="Add Matches" asp-controller="Matches" asp-action="Create" asp-route-tournamentId="@item.TournamentId"><i class="fas fa-plus-square">Add Matches</i></a>
                     </td>
                 </tr>
             }

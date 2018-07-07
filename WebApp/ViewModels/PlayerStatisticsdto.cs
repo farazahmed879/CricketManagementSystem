@@ -43,7 +43,7 @@ namespace WebApp.ViewModels
         public int TotalRunOut { get; set; }
         public int TotalHitWicket { get; set; }
         public int TotalLBW { get; set; }
-        public int PlayerImage { get; set; }
+        public byte[] PlayerImage { get; set; }
         public string BestBowling { get; set; }
         public int BestScore { get; set; }
         public int MostWickets { get; set; }

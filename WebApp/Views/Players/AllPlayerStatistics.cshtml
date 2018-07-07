@@ -77,7 +77,7 @@
     <table id="RecordTable" class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>
+                <th style="width: 100%">
                     Name
                 </th>
                 <th>
@@ -136,7 +136,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+                    <td style="width: 100%">
                         @Html.DisplayFor(modelItem => item.PlayerName)
                     </td>
                     <td>
@@ -270,7 +270,7 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-                                                                                            <td>
+                                                                                            <td style="width: 100%">
                                                                                                 ${i.playerName}
                                                                                             </td>
                                                                                             <td>

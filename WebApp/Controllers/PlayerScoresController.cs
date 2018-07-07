@@ -26,19 +26,24 @@ namespace WebApp.Controllers
         [Route("PlayerScores/Index")]
         public IActionResult Index(int? matchId, int? homeTeamId, int? oppTeamId, int? playerScoreId)
         {
-            ViewBag.Name = "Match Players";
+            ViewBag.Name = "Score Card";
             var scoreDto = new ScoreCarddto();
             ViewBag.matchId = matchId;
             ViewBag.homeTeamId = homeTeamId;
             ViewBag.oppTeamId = oppTeamId;
 
-            ViewBag.OpponentTeam = new SelectList(_context.Teams
+            ViewBag.OpponentTeam = _context.Teams
                 .AsNoTracking()
-                .Where(i => i.TeamId == oppTeamId), "TeamId", "Team_Name");
+                .Where(i => i.TeamId == oppTeamId)
+                .Select(i => i.Team_Name)
+                .Single();
+           
 
-            ViewBag.HomeTeam = new SelectList(_context.Teams
+            ViewBag.HomeTeam = _context.Teams
                .AsNoTracking()
-               .Where(i => i.TeamId == homeTeamId), "TeamId", "Team_Name");
+               .Where(i => i.TeamId == homeTeamId)
+               .Select(i => i.Team_Name)
+               .Single();
 
             scoreDto.HomeTeamScoreCard = _context.PlayerScores
                 .AsNoTracking()
@@ -105,11 +110,11 @@ namespace WebApp.Controllers
                 .Select(i => new TeamScoredto
                 {
                     TeamId = i.TeamId,
-                    TotalScore =i.TotalScore,
-                    Wideballs =i.Wideballs,
-                    NoBalls=i.NoBalls,
-                    Byes =i.Byes,
-                    LegByes=i.LegByes
+                    TotalScore = i.TotalScore,
+                    Wideballs = i.Wideballs,
+                    NoBalls = i.NoBalls,
+                    Byes = i.Byes,
+                    LegByes = i.LegByes
 
 
                 }).ToList();
@@ -141,13 +146,18 @@ namespace WebApp.Controllers
         public IActionResult Create(int homeTeamId, int oppTeamId, int matchId)
         {
             ViewBag.Name = "Add Match Players";
-            ViewBag.OpponentTeam = new SelectList(_context.Teams
-               .AsNoTracking()
-               .Where(i => i.TeamId == oppTeamId), "TeamId", "Team_Name");
+            ViewBag.OpponentTeam = _context.Teams
+                 .AsNoTracking()
+                 .Where(i => i.TeamId == oppTeamId)
+                 .Select(i => i.Team_Name)
+                 .Single();
 
-            ViewBag.HomeTeam = new SelectList(_context.Teams
+
+            ViewBag.HomeTeam = _context.Teams
                .AsNoTracking()
-               .Where(i => i.TeamId == homeTeamId), "TeamId", "Team_Name");
+               .Where(i => i.TeamId == homeTeamId)
+               .Select(i => i.Team_Name)
+               .Single();
 
             ViewBag.HomePlayerId = new SelectList(_context.Players
                 .AsNoTracking()
@@ -232,13 +242,13 @@ namespace WebApp.Controllers
             return BadRequest(ModelState);
         }
 
-        public async Task <IActionResult> UpdateTeamScore([FromForm] TeamMatchScoredto TeamScores)
+        public async Task<IActionResult> UpdateTeamScore([FromForm] TeamMatchScoredto TeamScores)
         {
             if (ModelState.IsValid)
             {
                 _context.UpdateRange(TeamScores.TeamScore.Select(i => new TeamScore
                 {
-                    TeamScoreId =i.TeamScoreId,
+                    TeamScoreId = i.TeamScoreId,
                     TeamId = i.TeamId,
                     MatchId = i.MatchId,
                     TotalScore = i.TotalScore,
@@ -360,7 +370,7 @@ namespace WebApp.Controllers
             if (matchId.HasValue)
                 for (var index = 0; index < 12; index++)
                 {
-                    if(scoreDto.HomeTeamScoreCard.Count == index)
+                    if (scoreDto.HomeTeamScoreCard.Count == index)
                     {
                         scoreDto.HomeTeamScoreCard.Add(new MatchSummarydto
                         {
@@ -395,6 +405,8 @@ namespace WebApp.Controllers
                     }
                 }
 
+
+
             scoreDto.TeamScoreCard = _context.TeamScores
            .AsNoTracking()
            .Where(m => m.MatchId == matchId)
@@ -405,7 +417,8 @@ namespace WebApp.Controllers
                Byes = i.Byes,
                LegByes = i.LegByes,
                Wideballs = i.Wideballs,
-               NoBalls = i.NoBalls
+               NoBalls = i.NoBalls,
+               MatchId = i.MatchId
 
            })
            .ToList();
@@ -424,6 +437,7 @@ namespace WebApp.Controllers
 
 
 
+
             return View(scoreDto);
         }
 
@@ -436,7 +450,7 @@ namespace WebApp.Controllers
             {
                 _context.UpdateRange(Matchplayers.MatchScore.Select(i => new PlayerScore
                 {
-                    PlayerScoreId =i.PlayerScoreId,
+                    PlayerScoreId = i.PlayerScoreId,
                     Position = i.Position,
                     IsPlayedInning = i.IsPlayedInning,
                     PlayerId = i.PlayerId,

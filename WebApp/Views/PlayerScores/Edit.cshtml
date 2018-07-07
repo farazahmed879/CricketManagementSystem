@@ -49,7 +49,7 @@
                     <div class="tab-pane active" role="tabpanel" id="step1">
                         <div class="container-fluid">
                             <div class="col-sm-2">
-                                <select asp-items="ViewBag.HomeTeam" disabled="disabled" class="js-example-basic-single"></select>
+                                <select asp-items="ViewBag.HomeTeam" disabled="disabled" style="width: 100%" class="js-example-basic-single"></select>
                             </div>
                             <hr />
                             <form class="form-inline" role="form" id="HomeTeamData">
@@ -104,12 +104,12 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <select asp-for="@Model.HomeTeamScoreCard[i].PlayerId" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" class="js-example-basic-single">
+                                                <select asp-for="@Model.HomeTeamScoreCard[i].PlayerId" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
                                                     <option value="">--Select Player--</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-2">
-                                                <select asp-for="@Model.HomeTeamScoreCard[i].HowOut" placeholder="--How Out--" class="js-example-basic-single">
+                                                <select asp-for="@Model.HomeTeamScoreCard[i].HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
                                                     <option value="">--How Out--</option>
                                                     <option>Catch</option>
                                                     <option>Bowled</option>
@@ -122,7 +122,7 @@
                                             </div>
 
                                             <div class="col-sm-4">
-                                                <select asp-for="@Model.HomeTeamScoreCard[i].Bowler" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" class="js-example-basic-single">
+                                                <select asp-for="@Model.HomeTeamScoreCard[i].Bowler" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
                                                     <option value="">--Select Bowler--</option>
                                                 </select>
                                             </div>
@@ -198,12 +198,12 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <select asp-for="@Model.OpponentTeamScoreCard[i].PlayerId" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" class="js-example-basic-single">
+                                                <select asp-for="@Model.OpponentTeamScoreCard[i].PlayerId" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
                                                     <option value="">--Select Player--</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-2">
-                                                <select asp-for="@Model.OpponentTeamScoreCard[i].HowOut" placeholder="--How Out--" class="js-example-basic-single">
+                                                <select asp-for="@Model.OpponentTeamScoreCard[i].HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
                                                     <option value="">--How Out--</option>
                                                     <option>Catch</option>
                                                     <option>Bowled</option>
@@ -216,7 +216,7 @@
                                             </div>
 
                                             <div class="col-sm-4">
-                                                <select asp-for="@Model.OpponentTeamScoreCard[i].Bowler" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" class="js-example-basic-single">
+                                                <select asp-for="@Model.OpponentTeamScoreCard[i].Bowler" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
                                                     <option value="">--Select Player--</option>
                                                 </select>
                                             </div>
@@ -263,11 +263,11 @@
                                                 if (i < 1)
                                                 {
 
-                                                    <select asp-for="@Model.TeamScoreCard[i].TeamId" asp-items="ViewBag.HomeTeam" disabled="disabled" class="js-example-basic-single"></select>
+                                                    <select asp-for="@Model.TeamScoreCard[i].TeamId" asp-items="ViewBag.HomeTeam" style="width: 100%" disabled="disabled" class="js-example-basic-single"></select>
                                                 }
                                                 else
                                                 {
-                                                    <select asp-for="@Model.TeamScoreCard[i].TeamId" asp-items="ViewBag.OpponentTeam" disabled="disabled" class="js-example-basic-single"></select>
+                                                    <select asp-for="@Model.TeamScoreCard[i].TeamId" asp-items="ViewBag.OpponentTeam" style="width: 100%" disabled="disabled" class="js-example-basic-single"></select>
                                                 }
 
                                             }
@@ -445,13 +445,13 @@
 
         }
 
-        function TeamScoreData(form) {
+        function TeamScoreData() {
             try {
                 var formData = $("#MatchSummary").serializeArray();
                 var model = {
                     teamScore: []
                 };
-                for (let index = 0; index < 12; index++) {
+                for (let index = 0; index < 2; index++) {
                     const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
                     var teamScore = {};
                     for (let i = 0; i < currentModel.length; i++) {
@@ -460,7 +460,7 @@
                     }
                     model.teamScore.push(teamScore);
                 }
-
+                console.log(model);
                 $.ajax(`/PLayerScores/UpdateTeamScore`, {
                     data: formData,
                     headers: {

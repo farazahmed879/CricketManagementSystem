@@ -42,6 +42,7 @@ namespace WebApp.Controllers
                 .Include(i => i.HomeTeam)
                 .Include(i => i.OppponentTeam)
                 .Include(i => i.PlayerScores)
+                .ThenInclude(i => i.Player.Team)
                                   , page ?? 1, pageSize));
 
 
@@ -72,11 +73,21 @@ namespace WebApp.Controllers
         }
 
         // GET: Matches/Create
-        public IActionResult Create()
+        public IActionResult Create(int? tournamentId)
         {
-            var ground = new SelectList(new[] { "Ground A", "Ground B" });
+            ViewBag.Name = "Add Match";
             ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
-            ViewBag.TournamentId = new SelectList(_context.Tournaments, "TournamentId", "TournamentName");
+            if(tournamentId != null)
+            {
+                ViewBag.IsTournament = true;
+                ViewBag.TournamentId = new SelectList(_context.Tournaments
+                .AsNoTracking()
+                .Where(i => i.TournamentId == tournamentId), "TournamentId", "TournamentName");
+            }
+            else
+            {
+                ViewBag.TournamentId = new SelectList(_context.Tournaments, "TournamentId", "TournamentName");
+            }
             return View();
         }
 
@@ -128,7 +139,9 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Name = "Edit Match";
             ViewData["TeamId"] = new SelectList(_context.Teams, "TeamId", "Team_Name");
+            ViewBag.TournamentId = new SelectList(_context.Tournaments, "TournamentId", "TournamentName");
             var match = await _context.Matches.SingleOrDefaultAsync(m => m.MatchId == id);
             if (match == null)
             {
@@ -142,7 +155,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MatchId,GroundName,Place,Type,Result,DateOfMatch,TeamId")] Match match)
+        public async Task<IActionResult> Edit(int id, Match match)
         {
             if (id != match.MatchId)
             {

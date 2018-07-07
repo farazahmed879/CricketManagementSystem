@@ -83,10 +83,21 @@ namespace WebApp.Controllers
         }
 
         // GET: Players/Create
-        public IActionResult Create()
+        public IActionResult Create(int? teamId)
         {
-
-            ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
+            ViewBag.Name = "Add Player";
+            if (teamId != null)
+            {
+                ViewBag.HasTeamId = true;
+                ViewBag.TeamId = new SelectList(_context.Teams
+                    .AsNoTracking()
+                    .Where(i => i.TeamId == teamId), "TeamId", "Team_Name");
+            }
+            else
+            {
+                ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
+            }
+            
             return View();
         }
 

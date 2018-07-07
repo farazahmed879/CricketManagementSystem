@@ -7,7 +7,7 @@
 
     <form asp-action="Edit" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+        <input type="hidden" asp-for="MatchId" />
         <div class="col-md-10" style="margin-top:3em;">
             <div class="col-md-6">
                 <div class="form-group">
@@ -50,39 +50,39 @@
 
             <div class="col-md-6">
                 <label>First Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--" class="js-example-basic-single">
+                <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" style="width: 100%" placeholder="--Select Team--" class="js-example-basic-single">
                     <option value="">--Select Team--</option>
                 </select>
             </div>
             <div class="col-md-6">
                 <label>Second Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--" class="js-example-basic-single">
+                <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" style="width: 100%" placeholder="--Select Team--" class="js-example-basic-single">
                     <option value="">--Select--</option>
                 </select>
             </div>
             <div class="col-md-6">
                 <label>Status<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                <select asp-for="Status" required placeholder="--Select--" class="js-example-basic-single">
-                    <option value="">--Select--</option>
-                    <option>Fiendly</option>
-                    <option>Tournament</option>
+                <select id="status" asp-for="Status" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                    <option value="" disabled="disabled" selected="selected">--Select--</option>
+                    <option value="Fiendly">Fiendly</option>
+                    <option value="Tournament">Tournament</option>
                 </select>
             </div>
-            <div class="col-md-6">
-                <label>Tournament</label>
-                <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" style="display:none;" placeholder="--Select--" class="js-example-basic-single">
-                    <option value="">--Select--</option>
+            <div id="tourSection" class="col-md-6">
+                <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
+                    <option value="" disabled="disabled">--Select--</option>
                 </select>
             </div>
 
             <div class="col-md-6">
-                <label>Result<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                <select asp-for="Result" required placeholder="--Select--" class="js-example-basic-single">
-                    <option value="">--Select--</option>
-                    <option>Win</option>
-                    <option>Loss</option>
-                    <option>Tie</option>
-                </select>
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="Result" class="control-label">Result<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <input asp-for="Result" required type="text" class="form-control" />
+                        <span asp-validation-for="Result" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
@@ -97,8 +97,8 @@
             <div class="form-group" style="margin-top: 100px">
                 <div class="row">
                     @{
-                        var base64 = Model.MatchLogo == null || !Model.MatchLogo.Any() ? "" : Convert.ToBase64String(Model.MatchLogo);
-                        <div class="img-responsive" id="Img" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                    var base64 = Model.MatchLogo == null || !Model.MatchLogo.Any() ? "" : Convert.ToBase64String(Model.MatchLogo);
+                    <div class="img-responsive" id="Img" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
                     }
                     <label asp-for="MatchImage" class="btn btn-primary">
                         Upload <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
@@ -162,6 +162,20 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        const change = () => {
+            if ($("#status").val() === "Tournament") {
+                $("#tourSection").show();
+            }
+            else {
+
+                $("#tourSection").hide();
+                document.getElementById("TournamentId").value = "";
+            }
+        }
+
+        $('#status').on('change', change);
+        change();
 
         $("#MatchImage").change(function () {
             readURL(this);

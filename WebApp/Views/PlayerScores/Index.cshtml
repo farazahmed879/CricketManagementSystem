@@ -3,338 +3,291 @@
 
 <div class="container-fluid">
     <div class="row">
-        @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any() || Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any() || Model.TeamScoreCard != null && Model.TeamScoreCard.Any())
-        {
-            <div class="form-group">
-                <a class="btn btn-primary" button="button" asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Edit</a>
-            </div>
-        }
-        else
-        {
-            <div class="form-group">
-                <a class="btn btn-primary" button="button" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Add</a>
-            </div>
-        }
-
         <div class="row">
             <div class="col-sm-12">
                 <div class="col-sm-2">
-                    <select asp-items="ViewBag.HomeTeam" disabled="disabled" class="js-example-basic-single"></select>
+                    <label style="width: 100%" disabled="disabled">@ViewBag.HomeTeam</label>
                 </div>
                 <div class="col-sm-1">
                     <p>Vs</p>
                 </div>
                 <div class="col-sm-2">
-                    <select asp-items="ViewBag.OpponentTeam" disabled="disabled" class="js-example-basic-single"></select>
+                    <label style="width: 100%" disabled="disabled">@ViewBag.OpponentTeam</label>
                 </div>
             </div>
         </div>
-        <section>
-            <div class="wizard">
-                <div class="wizard-inner">
-                    <div class="connecting-line"></div>
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab">
-                                <span class="round-tab" data-toggle="tooltip" title="First Inning">
-                                    <i class="fas fa-globe-americas"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab">
-                                <span class="round-tab" data-toggle="tooltip" title="Second Inning">
-                                    <i class="fas fa-globe-africa"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab">
-                                <span class="round-tab" data-toggle="tooltip" title="Match Summary">
-                                    <i class="fas fa-check-circle"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+        @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any() || Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any() || Model.TeamScoreCard != null && Model.TeamScoreCard.Any())
+        {
+            <div class="form-group">
+                <a class="btn btn-primary" style="width: 100%" button="button" asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Edit</a>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <a class="btn btn-primary" style="width: 100%" button="button" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Add</a>
+            </div>
+        }
+
+
+        <div class="col-md-12">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li><a style="width: 100%" href="#tab_1" data-toggle="tab"><h3 class="fas fa-flag-checkered">@ViewBag.HomeTeam</h3></a></li>
+                    <li><a href="#tab_2" style="width: 100%" data-toggle="tab"><h3 class="far fa-flag">@ViewBag.OpponentTeam</h3></a></li>
+                    <li><a href="#tab_3" style="width: 100%" data-toggle="tab"><h3 class="fas fa-check">Match Summary</h3></a></li>
+                </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" role="tabpanel" id="step1">
-                        <div class="container-fluid">
-                            <div class="form-inline">
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <select asp-items="ViewBag.HomeTeam" disabled="disabled" class="js-example-basic-single"></select>
-                                    </div>
-                                </div>
+                    <div class="tab-pane active" id="tab_1">
+                        @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
+                        {
 
-                                @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
-                                {
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            S.No
+                                        </th>
+                                        <th>
+                                            Player Name
+                                        </th>
+                                        <th>
+                                            Runs
+                                        </th>
+                                        <th>
+                                            Balls
+                                        </th>
+                                        <th>
+                                            St. Rate
+                                        </th>
+                                        <th>
+                                            How Out
+                                        </th>
+                                        <th>
+                                            Overs
+                                        </th>
+                                        <th>
+                                            Runs
+                                        </th>
+                                        <th>
+                                            Wickets
+                                        </th>
+                                        <th>
+                                            Econ
+                                        </th>
 
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    S.No
-                                                </th>
-                                                <th>
-                                                    Player Name
-                                                </th>
-                                                <th>
-                                                    Runs
-                                                </th>
-                                                <th>
-                                                    Balls
-                                                </th>
-                                                <th>
-                                                    St. Rate
-                                                </th>
-                                                <th>
-                                                    How Out
-                                                </th>
-                                                <th>
-                                                    Overs
-                                                </th>
-                                                <th>
-                                                    Runs
-                                                </th>
-                                                <th>
-                                                    Wickets
-                                                </th>
-                                                <th>
-                                                    Econ
-                                                </th>
+                                        <th>
+                                            Stump
+                                        </th>
+                                        <th>
+                                            Catch
+                                        </th>
+                                        <th>
+                                            Maiden
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.HomeTeamScoreCard)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Position)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Bat_Runs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Bat_Balls)
+                                            </td>
+                                            <td>
+                                                @{
 
-                                                <th>
-                                                    Stump
-                                                </th>
-                                                <th>
-                                                    Catch
-                                                </th>
-                                                <th>
-                                                    Maiden
-                                                </th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.HomeTeamScoreCard)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Position)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Player.Player_Name)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Bat_Runs)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Bat_Balls)
-                                                    </td>
-                                                    <td>
-                                                        @{
+                                                    var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
 
-                                                            var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
+                                                    <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HowOut)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Overs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Ball_Runs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Wickets)
+                                            </td>
+                                            <td>
+                                                @{
 
-                                                            <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.HowOut)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Overs)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Ball_Runs)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Wickets)
-                                                    </td>
-                                                    <td>
-                                                        @{
+                                                    var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
 
-                                                            var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
+                                                    <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
+                                                }
+                                            </td>
 
-                                                            <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
-                                                        }
-                                                    </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Stump)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Catches)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Maiden)
+                                            </td>
+                                            <td>
+                                                <a data-placement="top" style="cursor: pointer" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i class="fas fa-walking"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
 
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Stump)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Catches)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Maiden)
-                                                    </td>
-                                                    <td>
-                                                        <a data-placement="top" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i class="fas fa-walking"></i></a>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-
-                                }
-                                else
-                                {
-                                    <div class="wizard-header">
-                                        <h3 class="wizard-title">
-                                            Record is not Inserted
-                                        </h3>
-                                    </div>
-
-                                }
-
+                        }
+                        else
+                        {
+                            <div class="wizard-header">
+                                <h3 class="wizard-title">
+                                    <i class="far fa-frown"> Record is not Inserted</i>
+                                </h3>
                             </div>
-                        </div>
 
-                        <ul class="list-inline pull-right">
-                            <li><button type="submit" value="Save" class="btn btn-primary next-step">Next</button></li>
-                        </ul>
+                        }
                     </div>
-                    <div class="tab-pane" role="tabpanel" id="step2">
-                        <div class="container-fluid">
-                            <div class="form-inline">
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <select asp-items="ViewBag.OpponentTeam" disabled="disabled" class="js-example-basic-single"></select>
-                                    </div>
-                                </div>
-                                @if (Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any())
-                                {
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_2">
+                        @if (Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any())
+                        {
 
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    S.No
-                                                </th>
-                                                <th>
-                                                    Player Name
-                                                </th>
-                                                <th>
-                                                    Runs
-                                                </th>
-                                                <th>
-                                                    Balls
-                                                </th>
-                                                <th>
-                                                    St. Rate
-                                                </th>
-                                                <th>
-                                                    How Out
-                                                </th>
-                                                <th>
-                                                    Overs
-                                                </th>
-                                                <th>
-                                                    Runs
-                                                </th>
-                                                <th>
-                                                    Wickets
-                                                </th>
-                                                <th>
-                                                    Econ
-                                                </th>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            S.No
+                                        </th>
+                                        <th>
+                                            Player Name
+                                        </th>
+                                        <th>
+                                            Runs
+                                        </th>
+                                        <th>
+                                            Balls
+                                        </th>
+                                        <th>
+                                            St. Rate
+                                        </th>
+                                        <th>
+                                            How Out
+                                        </th>
+                                        <th>
+                                            Overs
+                                        </th>
+                                        <th>
+                                            Runs
+                                        </th>
+                                        <th>
+                                            Wickets
+                                        </th>
+                                        <th>
+                                            Econ
+                                        </th>
 
-                                                <th>
-                                                    Stump
-                                                </th>
-                                                <th>
-                                                    Catch
-                                                </th>
-                                                <th>
-                                                    Maiden
-                                                </th>
-                                                <th>-----Action-----</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.OpponentTeamScoreCard)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Position)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Player.Player_Name)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Bat_Runs)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Bat_Balls)
-                                                    </td>
-                                                    <td>
-                                                        @{
+                                        <th>
+                                            Stump
+                                        </th>
+                                        <th>
+                                            Catch
+                                        </th>
+                                        <th>
+                                            Maiden
+                                        </th>
+                                        <th>-----Action-----</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OpponentTeamScoreCard)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Position)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Bat_Runs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Bat_Balls)
+                                            </td>
+                                            <td>
+                                                @{
 
-                                                            var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
+                                                    var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
 
-                                                            <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.HowOut)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Overs)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Ball_Runs)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Wickets)
-                                                    </td>
-                                                    <td>
-                                                        @{
+                                                    <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HowOut)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Overs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Ball_Runs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Wickets)
+                                            </td>
+                                            <td>
+                                                @{
 
-                                                            var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
+                                                    var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
 
-                                                            <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
-                                                        }
-                                                    </td>
+                                                    <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
+                                                }
+                                            </td>
 
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Stump)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Catches)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Maiden)
-                                                    </td>
-                                                    <td>
-                                                        <a data-placement="top" id="scoreCard" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal"></a>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Stump)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Catches)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Maiden)
+                                            </td>
+                                            <td>
+                                                <a data-placement="top" style="cursor: pointer" id="scoreCard" title="Add Player Score" data-toggle="modal" onclick="Player(@item.PlayerScoreId)" data-target="#PlayerScoreModal"><i class="fas fa-walking"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
 
-                                }
-                                else
-                                {
-                                    <div class="wizard-header">
-                                        <h3 class="wizard-title">
-                                            Record is not Inserted
-                                        </h3>
-                                    </div>
-
-                                }
-
+                        }
+                        else
+                        {
+                            <div class="wizard-header">
+                                <h3 class="wizard-title">
+                                    <i class="far fa-frown"> Record is not Inserted</i>
+                                </h3>
                             </div>
-                        </div>
 
-                        <ul class="list-inline pull-right">
-                            <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                            <li><button type="submit" value="Save" class="btn btn-primary next-step">Summary</button></li>
-                        </ul>
+                        }
                     </div>
-                    <div class="tab-pane" role="tabpanel" id="complete">
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_3">
                         @if (Model.TeamScoreCard != null && Model.TeamScoreCard.Any())
                         {
 
@@ -407,16 +360,18 @@
                         {
                             <div class="wizard-header">
                                 <h3 class="wizard-title">
-                                    Record is not Inserted
+                                    <i class="far fa-frown"> Record is not Inserted</i>
                                 </h3>
                             </div>
 
                         }
                     </div>
-                    <div class="clearfix"></div>
+                    <!-- /.tab-pane -->
                 </div>
+                <!-- /.tab-content -->
             </div>
-        </section>
+            <!-- nav-tabs-custom -->
+        </div>
     </div>
 </div>
 <div id="PlayerScoreModal" class="modal fade" role="dialog">
@@ -538,9 +493,11 @@
 
 
 @section Scripts{
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-
 
     <script>
         $(document).ready(function () {
