@@ -9,6 +9,7 @@ using CricketApp.Data;
 using CricketApp.Domain;
 using System.IO;
 using WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
@@ -22,14 +23,44 @@ namespace WebApp.Controllers
         }
 
         // GET: Teams
+
         public async Task<IActionResult> Index(string zone, string city, int? page)
         {
+
+            ViewBag.ClubUsers = new SelectList(_context.UserRole
+               .AsNoTracking()
+               .Where(i => i.RoleId == 2)
+               .Select(i => new
+               {
+                   i.User.UserName,
+                   i.UserId
+               }), "UserId", "UserName");
+
             ViewBag.Name = "Team";
             int pageSize = 10;
             return View(await PaginatedList<Team>.CreateAsync(
                 _context.Teams
                 .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone) && (string.IsNullOrEmpty(city) || i.City == city))
                 , page ?? 1, pageSize));
+        }
+
+        public async Task<IActionResult> RoleManagement(int? page)
+        {
+
+            ViewBag.ClubUsers = new SelectList(_context.UserRole
+               .AsNoTracking()
+               .Where(i => i.RoleId == 2)
+               .Select(i => new
+               {
+                   i.User.UserName,
+                   i.UserId
+               }), "UserId", "UserName");
+
+            ViewBag.Name = "Role Management";
+            int pageSize = 10;
+            return View(await PaginatedList<Team>.CreateAsync(
+                _context.Teams
+                 , page ?? 1, pageSize));
         }
 
         // GET: Teams/Details/5
@@ -51,6 +82,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Teams/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewBag.Name = "Add Team";
@@ -97,6 +129,7 @@ namespace WebApp.Controllers
             }
         }
         // GET: Teams/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
 
@@ -119,6 +152,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, Team team)
         {
             if (id != team.TeamId)
@@ -178,6 +212,7 @@ namespace WebApp.Controllers
         }
 
         [Route("Team/DeleteConfirmed")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int teamId)
         {
             var team = await _context.Teams.SingleOrDefaultAsync(m => m.TeamId == teamId);

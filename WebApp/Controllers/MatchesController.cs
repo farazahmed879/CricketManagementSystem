@@ -9,9 +9,11 @@ using CricketApp.Data;
 using CricketApp.Domain;
 using System.IO;
 using WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    
     public class MatchesController : Controller
     {
         private readonly CricketContext _context;
@@ -22,8 +24,9 @@ namespace WebApp.Controllers
         }
 
         // GET: Matches
-        public async Task<IActionResult> Index(int? homeTeamId, int? opponentTeamId,
-                                               int? tournamentId, string result, string status,
+     
+        public async Task<IActionResult> Index(int? homeTeamId, int? opponentTeamId, int? teamId, int? matchTypeId,
+                                               int? tournamentId,
                                                 int? season, int? overs, int? page)
         {
             ViewBag.Name = "Match";
@@ -31,15 +34,18 @@ namespace WebApp.Controllers
             ViewBag.Season = new SelectList(_context.Matches.Select(i => i.Season).ToList().Distinct(), "Season");
             ViewBag.TournamentId = new SelectList(_context.Tournaments, "TournamentId", "TournamentName");
             ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
+            ViewBag.MatchTypeId = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
             int pageSize = 10;
             return View(await PaginatedList<Match>.CreateAsync(
                  _context.Matches
                 .AsNoTracking()
-                .Where(i => (string.IsNullOrEmpty(result) || i.Result == result) && (string.IsNullOrEmpty(status) || i.GroundName == status) &&
+                .Where(i => (!teamId.HasValue || i.HomeTeamId == teamId && i.OppponentTeamId == teamId) || (!matchTypeId.HasValue || i.MatchTypeId == matchTypeId) &&
                             (!homeTeamId.HasValue || i.HomeTeamId == homeTeamId) && (!opponentTeamId.HasValue || i.OppponentTeamId == opponentTeamId) &&
                             (!tournamentId.HasValue || i.TournamentId == tournamentId) && (!season.HasValue || i.Season == season) &&
                             (!overs.HasValue || i.MatchOvers == overs))
                 .Include(i => i.HomeTeam)
+                .Include(i => i.TeamScores)
+                .Include(i => i.MatchType)
                 .Include(i => i.OppponentTeam)
                 .Include(i => i.PlayerScores)
                 .ThenInclude(i => i.Player.Team)
@@ -47,11 +53,7 @@ namespace WebApp.Controllers
 
 
         }
-        public IActionResult HomeIndex()
-        {
-           
-            return View();
-        }
+       
 
         // GET: Matches/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -73,21 +75,25 @@ namespace WebApp.Controllers
         }
 
         // GET: Matches/Create
+        [Authorize(Roles = "Admin,ClubUser")]
         public IActionResult Create(int? tournamentId)
         {
             ViewBag.Name = "Add Match";
             ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
-            if(tournamentId != null)
+            
+            if (tournamentId != null)
             {
                 ViewBag.IsTournament = true;
                 ViewBag.TournamentId = new SelectList(_context.Tournaments
                 .AsNoTracking()
-                .Where(i => i.TournamentId == tournamentId), "TournamentId", "TournamentName");
+                .Where(i => i.TournamentId == tournamentId), "TournamentId", "TournamentName", tournamentId);
+                ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName", 1);
             }
             else
             {
-                ViewBag.TournamentId = new SelectList(_context.Tournaments, "TournamentId", "TournamentName");
+                ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName", 2);
             }
+          
             return View();
         }
 
@@ -96,6 +102,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,ClubUser")]
         public async Task<IActionResult> Create(Match match)
         {
             if (ModelState.IsValid)
@@ -133,6 +140,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Matches/Edit/5
+        [Authorize(Roles = "Admin , ClubUser")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -155,6 +163,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin , ClubUser")]
         public async Task<IActionResult> Edit(int id, Match match)
         {
             if (id != match.MatchId)
@@ -197,6 +206,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Matches/Delete/5
+        [Authorize(Roles = "Admin , ClubUser")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -216,6 +226,7 @@ namespace WebApp.Controllers
 
         // POST: Matches/Delete/5
         [Route("Matches/DeleteConfirmed")]
+        [Authorize(Roles = "Admin , ClubUser")]
         public async Task<IActionResult> DeleteConfirmed(int matchId)
         {
             var match = await _context.Matches.SingleOrDefaultAsync(m => m.MatchId == matchId);

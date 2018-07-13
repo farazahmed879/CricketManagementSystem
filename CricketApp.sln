@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CricketApp.Data", "CricketApp.Data\CricketApp.Data.csproj", "{22967C5B-FDFC-4333-A9BA-4CCEAC421C67}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CricektApp.Domain", "CricektApp.Domain\CricektApp.Domain.csproj", "{E1E68B25-69ED-4793-9A19-17BACF69CAB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CricketApp.Domain", "CricektApp.Domain\CricketApp.Domain.csproj", "{E1E68B25-69ED-4793-9A19-17BACF69CAB1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SomeUI", "SomeUI\SomeUI.csproj", "{E2BDAACF-8012-46A3-954B-20FB686CF4F5}"
 EndProject

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CricektApp.Domain
+namespace CricketApp.Domain
 {
     public class TeamScore
     {

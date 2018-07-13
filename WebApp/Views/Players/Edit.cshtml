@@ -1,16 +1,15 @@
 ﻿@model CricketApp.Domain.Player
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Player";
 }
-
 <div class="container-fluid">
-    <div class="container-fluid">
-        <div class="row">
-            <form asp-action="Edit" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="PlayerId" />
-                <div class="col-md-8" style="margin-top:3em;">
+    <div class="row">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PlayerId" />
+            <div class="col-md-8">
+                <div class="row">
                     <div class="col-md-4">
                         <div class="form-group label-floating">
                             <label asp-for="Player_Name" class="control-label">Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
@@ -34,23 +33,21 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
-                        <div class="col-md-12">
-                            <label>Role<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        </div>
-                        <div class="col-md-12">
-                            <select asp-for="Role" required placeholder="--Select--" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                                <option>Batsman</option>
-                                <option>Bowler</option>
-                                <option>All-Rounder</option>
-                                <option>Wicket-Keeper Batsman</option>
-                            </select>
-                        </div>
+                        <label>Role</label>
+                        <select asp-for="Role" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                            <option value="">--Select--</option>
+                            <option>Batsman</option>
+                            <option>Bowler</option>
+                            <option>All-Rounder</option>
+                            <option>Wicket-Keeper Batsman</option>
+                        </select>
                     </div>
                     <div class="col-md-4">
                         <label>Batting Style</label>
-                        <select asp-for="BattingStyle" placeholder="--Select--" class="js-example-basic-single">
+                        <select asp-for="BattingStyle" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                             <option value="">--Select--</option>
                             <option>Right-hand bat</option>
                             <option>Left-hand bat</option>
@@ -58,7 +55,7 @@
                     </div>
                     <div class="col-md-4">
                         <label>Bowling Style</label>
-                        <select asp-for="BowlingStyle" placeholder="--Select--" class="js-example-basic-single">
+                        <select asp-for="BowlingStyle" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                             <option value="">--Select--</option>
                             <option>Right-arm fast</option>
                             <option>Right-arm fast medium</option>
@@ -73,42 +70,37 @@
                             <option>Slow left-arm chinaman</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                </div>
+                <div class="row">
+                    <div class="col-md-4" style="margin-top: 20px">
                         <label>Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="TeamId" asp-items="ViewBag.TeamId" required placeholder="--Select--" class="js-example-basic-single">
+                        <select asp-for="TeamId" asp-items="ViewBag.TeamId" style="width: 100%" required placeholder="--Select--" class="js-example-basic-single">
                             <option value="">--Select--</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="margin-top: 20px">
                         <label>Gender<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="Gender" required placeholder="--Select--" class="js-example-basic-single">
+                        <select asp-for="Gender" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                             <option value="">--Select--</option>
-                            <option>Male</option>
+                            <option selected>Male</option>
                             <option>Female</option>
                         </select>
                     </div>
-                    <div class="col-sm-4" style="margin-top: 20px">
-                        <div class="checkbox">
-                            <label>
-                                Guest
-                                <input type="checkbox" asp-for="IsGuestPlayer" value="true">
-                            </label>
+                    <div class="col-md-4" style="margin-top: 20px">
+                        <div class="form-group">
+                            <label>Date of birth</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" asp-for="DOB" class="form-control pull-right" id="datepicker">
+                            </div>
+                            <!-- /.input group -->
                         </div>
                     </div>
-                    <div class="col-sm-4" style="margin-top: 20px">
-                        <div class="checkbox">
-                            <label>
-                                Deactivate
-                                <input type="checkbox" asp-for="IsDeactivated" value="true">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Birth</label>
-                        <input type="date" asp-for="DOB" class="form-control" />
-                        <span asp-validation-for="DOB" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-12">
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
                         <div class="form-group">
                             <div class="form-group label-floating">
                                 <label asp-for="Address" class="control-label">St. Address</label>
@@ -117,46 +109,61 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                @{
-                                    var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
-                                    <div class="img-responsive" id="PlayerImg" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
-                                }
-                            </div>
-                            <div class="col-md-6" style="margin-top:7.7em;">
-                                <label asp-for="PlayerImage" class="btn btn-primary">
-                                    Upload <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
-                                </label>
-                            </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>
+                                Guest
+                                <input type="checkbox" asp-for="IsGuestPlayer" value="true" class="flat-red">
+                            </label>
                         </div>
                     </div>
-
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>
+                                Deactivate
+                                <input type="checkbox" asp-for="IsDeactivated" value="true" class="flat-red">
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @{
+                                var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
+                                <div class="img-responsive" id="PlayerImg" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                            }
+                            <label asp-for="PlayerImage" class="btn btn-primary">
+                                <i class="far fa-images"> Upload</i> <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
     </div>
-
     <div class="footer">
         <div class="container text-center">
             <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
         </div>
     </div>
-
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <link rel="stylesheet" href="~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
+    <script src="~/plugins/iCheck/icheck.min.js"></script>
     <style>
         #PlayerImg {
             background-image: url('');
@@ -169,10 +176,28 @@
     </style>
     <script>
 
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
+            });
+        });
+
         //Select2
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
         });
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        })
+
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        })
+
         $(function () {
             $('#BackBtn').click(function () {
                 window.location = '/Players/Index'

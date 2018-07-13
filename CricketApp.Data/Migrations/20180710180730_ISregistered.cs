@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace CricketApp.Data.Migrations
 {
-    public partial class addcolumnDeactivated : Migration
+    public partial class ISregistered : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "IsDeactivated",
-                table: "Players",
+                name: "IsRegistered",
+                table: "Teams",
                 nullable: false,
                 defaultValue: false);
         }
@@ -18,8 +18,8 @@ namespace CricketApp.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsDeactivated",
-                table: "Players");
+                name: "IsRegistered",
+                table: "Teams");
         }
     }
 }

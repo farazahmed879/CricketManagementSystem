@@ -1,5 +1,4 @@
 ﻿
-using CricektApp.Domain;
 using CricketApp.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -12,7 +11,7 @@ using System.Text;
 
 namespace CricketApp.Data
 {
-    public class CricketContext : IdentityDbContext<Login, IdentityRole<int>, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
+    public class CricketContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public CricketContext(DbContextOptions<CricketContext> options)
             : base(options)
@@ -27,9 +26,18 @@ namespace CricketApp.Data
         public DbSet<CricketApp.Domain.Player> Players { get; set; }
         public DbSet<CricketApp.Domain.Match> Matches { get; set; }
         public DbSet<CricketApp.Domain.PlayerScore> PlayerScores { get; set; }
-        public DbSet<CricketApp.Domain.Tournament> Tournaments { get; set; }
-        public DbSet<CricketApp.Domain.Login> Login { get; set; }
+        public DbSet<CricketApp.Domain.Tournament> Tournaments { get; set; }   
         public DbSet<TeamScore> TeamScores { get; set; }
+        public DbSet<FallOfWicket> FallOFWickets { get; set; }
+        public DbSet<MatchType> MatchType { get; set; }
+        public DbSet<IdentityUser<int>> User { get; set; }
+        public DbSet<IdentityRole<int>> Role { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
+        public DbSet<HowOut> HowOut { get; set; }
+        public DbSet<BattingStyle> BattingStyle { get; set; }
+        public DbSet<BowlingStyle> BowlingStyle { get; set; }
+        public DbSet<PlayerRole> PlayerRole { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {            
@@ -74,6 +82,20 @@ namespace CricketApp.Data
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
             });
+
+            modelBuilder.Entity<Team>(entity =>
+            {
+                entity.HasIndex(i => i.ClubUserId)
+                    .IsUnique()
+                    .HasFilter("ClubUserId is not null");
+            });
+
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+                //entity.HasOne(i => i.User)
+                
+            });
+
 
             //modelBuilder.Entity<IdentityUserLogin<int>>(entity =>
             //{

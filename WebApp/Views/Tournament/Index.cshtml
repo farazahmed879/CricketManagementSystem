@@ -1,14 +1,14 @@
 ﻿@model PaginatedList<CricketApp.Domain.Tournament>
 
 @{
-    ViewData["Title"] = "Teams";
+    ViewData["Title"] = "Tournaments";
 }
 
 <div class="container-fluid">
     <div class="form-group">
         <a asp-controller="Tournament" class="btn btn-primary" asp-action="Create">Add</a>
     </div>
-    
+
     <table id="TournamentTable" class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -17,6 +17,9 @@
                 </th>
                 <th>
                     Organizor
+                </th>
+                <th>
+                    Starting Date
                 </th>
                 <th>
                     ----Actions----
@@ -37,10 +40,25 @@
 
                     </td>
                     <td>
-                        <a data-toggle="tooltip" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TournamentId"><i class="fas fa-edit"></i></a>
-                        <a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(@item.TournamentId)"></i></a>
-                        <a data-toggle="tooltip" data-placement="top" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId"><i class="fab fa-accusoft">Matches</i></a>
-                        <a data-toggle="tooltip" data-placement="top" title="Add Matches" asp-controller="Matches" asp-action="Create" asp-route-tournamentId="@item.TournamentId"><i class="fas fa-plus-square">Add Matches</i></a>
+                        @Html.DisplayFor(modelItem => item.StartingDate)
+
+                    </td>
+                    <td>
+
+                        <div class="btn-group">
+
+                            <a asp-controller="Matches" asp-action="Create" asp-route-tournamentId="@item.TournamentId" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Add Match">Add Match</a>
+
+                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a data-toggle="tooltip" class="btn btn-default" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TournamentId"><i class="fas fa-edit">Edit</i></a></li>
+                                <li> <a data-placement="top" class="btn btn-default" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(@item.TournamentId)">Delete</i></a></li>
+                                <li> <a asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId" class="btn btn-default" data-placement="top" data-toggle="tooltip" title="Matches">Matches</a></li>
+                            </ul>
+                        </div>
+
                     </td>
                 </tr>
             }
@@ -53,7 +71,7 @@
     }
 
     <nav class="navbar navbar-light bg-light">
-        
+
         <form class="form-inline">
             <a asp-action="Index" class="@prevDisabled"
                asp-route-page="@(Model.PageIndex - 1)">
@@ -93,7 +111,8 @@
 </div>
 @section Scripts{
     <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
-    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>k
+    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+   
     <style>
         td {
             text-align: center !important;

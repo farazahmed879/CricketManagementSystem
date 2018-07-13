@@ -10,10 +10,11 @@ using CricketApp.Domain;
 using WebApp.ViewModels;
 using Dapper;
 using System.Data;
-using CricektApp.Domain;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+
     public class PlayerScoresController : Controller
     {
         private readonly CricketContext _context;
@@ -61,7 +62,7 @@ namespace WebApp.Controllers
                     Bat_Balls = i.Bat_Balls,
                     Bat_Runs = i.Bat_Runs,
                     Four = i.Four,
-                    HowOut = i.HowOut,
+                    HowOutId = i.HowOutId,
                     Maiden = i.Maiden,
                     Overs = i.Overs,
                     RunOut = i.RunOut,
@@ -91,7 +92,7 @@ namespace WebApp.Controllers
                    Bat_Balls = i.Bat_Balls,
                    Bat_Runs = i.Bat_Runs,
                    Four = i.Four,
-                   HowOut = i.HowOut,
+                   HowOutId = i.HowOutId,
                    Maiden = i.Maiden,
                    Overs = i.Overs,
                    RunOut = i.RunOut,
@@ -143,9 +144,11 @@ namespace WebApp.Controllers
         }
 
         // GET: PlayerScores/Create
+        [Authorize(Roles = "Admin , ClubUser")]
         public IActionResult Create(int homeTeamId, int oppTeamId, int matchId)
         {
             ViewBag.Name = "Add Match Players";
+            ViewBag.HowOut = new SelectList(_context.HowOut, "HowOutId", "Name");
             ViewBag.OpponentTeam = _context.Teams
                  .AsNoTracking()
                  .Where(i => i.TeamId == oppTeamId)
@@ -193,6 +196,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin , ClubUser")]
         public async Task<IActionResult> Save([FromForm] TeamMatchScoredto Matchplayers, int teamId)
         {
             if (ModelState.IsValid)
@@ -203,7 +207,7 @@ namespace WebApp.Controllers
                     Position = i.Position,
                     IsPlayedInning = i.IsPlayedInning,
                     PlayerId = i.PlayerId,
-                    HowOut = i.HowOut,
+                    HowOutId = i.HowOutId,
                     Bowler = i.Bowler,
                     MatchId = i.MatchId,
                 }
@@ -218,6 +222,7 @@ namespace WebApp.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin , ClubUser")]
         public async Task<IActionResult> TeamScoreSave([FromForm] TeamMatchScoredto TeamScores)
         {
             if (ModelState.IsValid)
@@ -241,7 +246,7 @@ namespace WebApp.Controllers
             }
             return BadRequest(ModelState);
         }
-
+        [Authorize(Roles = "Admin , ClubUser")]
         public async Task<IActionResult> UpdateTeamScore([FromForm] TeamMatchScoredto TeamScores)
         {
             if (ModelState.IsValid)
@@ -270,6 +275,7 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [Route("PlayerScores/PlayerScoreModal")]
+        [Authorize(Roles = "Admin , ClubUser")]
         public async Task<IActionResult> PlayerScoreModal([FromBody]MatchScoreDto playerScores)
         {
             try
@@ -307,6 +313,7 @@ namespace WebApp.Controllers
         }
         // GET: PlayerScoresModal/Edit/5
         [Route("PlayerScores/GetPlayerScoreModal")]
+        [Authorize(Roles = "Admin , ClubUser")]
         public IActionResult GetPlayerScoreModal(int playerScoreId)
         {
 
@@ -333,9 +340,11 @@ namespace WebApp.Controllers
             return Json(playerScore);
         }
         // GET: PlayerScores/Edit/5
+        [Authorize(Roles = "Admin , ClubUser")]
         public IActionResult Edit(int? matchId, int? homeTeamId, int? oppTeamId, int? playerScoreId)
         {
             ViewBag.Name = "Edit Match Players";
+            ViewBag.HowOut = new SelectList(_context.HowOut, "HowOutId", "Name");
             var scoreDto = new ScoreCarddto();
             //ViewBag.matchId = matchId;
             ViewBag.OpponentTeam = new SelectList(_context.Teams
@@ -361,7 +370,7 @@ namespace WebApp.Controllers
                     PlayerScoreId = i.PlayerScoreId,
                     IsPlayedInning = i.IsPlayedInning,
                     PlayerId = i.PlayerId,
-                    HowOut = i.HowOut,
+                    HowOutId = i.HowOutId,
                     Bowler = i.Bowler,
                     MatchId = i.MatchId
                 })
@@ -387,7 +396,7 @@ namespace WebApp.Controllers
                  PlayerScoreId = i.PlayerScoreId,
                  IsPlayedInning = i.IsPlayedInning,
                  PlayerId = i.PlayerId,
-                 HowOut = i.HowOut,
+                 HowOutId = i.HowOutId,
                  Bowler = i.Bowler,
                  MatchId = i.MatchId
              })
@@ -444,6 +453,7 @@ namespace WebApp.Controllers
         // POST: PlayerScores/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin , ClubUser")]
         public async Task<IActionResult> Edit([FromForm] TeamMatchScoredto Matchplayers, int teamId)
         {
             if (ModelState.IsValid)
@@ -454,7 +464,7 @@ namespace WebApp.Controllers
                     Position = i.Position,
                     IsPlayedInning = i.IsPlayedInning,
                     PlayerId = i.PlayerId,
-                    HowOut = i.HowOut,
+                    HowOutId = i.HowOutId,
                     Bowler = i.Bowler,
                     MatchId = i.MatchId,
                 }
@@ -495,41 +505,6 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
         // Add: PlayerScores/AddBating/
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddBat(int playerId, int matchId, MatchScoreDto playerScore)
-        {
-            if (playerId != playerScore.PlayerId && matchId != playerScore.MatchId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.PlayerScores.Where(i => i.PlayerId == playerId && i.MatchId == matchId);
-                    _context.Update(playerScore);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PlayerScoreExists(playerScore.PlayerScoreId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(playerScore);
-        }
-
-
 
         private bool PlayerScoreExists(int id)
         {

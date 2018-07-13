@@ -11,14 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CricektApp.Domain\CricektApp.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1"></DotNetCliToolReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CricketApp\Domain\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CricektApp.Domain\CricketApp.Domain.csproj" />
   </ItemGroup>
 
 </Project>

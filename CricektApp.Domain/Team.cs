@@ -1,5 +1,5 @@
-﻿using CricektApp.Domain;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,6 +16,7 @@ namespace CricketApp.Domain
             OpponentTeamMatches = new List<Match>();
             HomeTeamMatches = new List<Match>();
             TeamScores = new List<TeamScore>();
+            FallOfWickets = new List<FallOfWicket>();
 
         }
 
@@ -24,6 +25,7 @@ namespace CricketApp.Domain
         public string Team_Name { get; set; }
         public string Place { get; set; }
         public string Zone { get; set; }
+        public bool IsRegistered { get; set; }
         [Required]
         public string City { get; set; }
         [Column(TypeName = "varbinary(max)")]
@@ -35,6 +37,9 @@ namespace CricketApp.Domain
         public List<Match> OpponentTeamMatches { get; set; }
         public List<Match> HomeTeamMatches { get; set; }
         public List<TeamScore> TeamScores { get; set; }
+        public List<FallOfWicket> FallOfWickets { get; set; }
+        public IdentityUser<int> ClubUser { get; set; }
+        public int? ClubUserId { get; set; }
 
     }
 }

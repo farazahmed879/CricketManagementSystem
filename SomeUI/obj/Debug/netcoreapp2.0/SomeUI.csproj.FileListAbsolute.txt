@@ -7,11 +7,11 @@ D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\SomeUI.runtimeconfi
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\SomeUI.runtimeconfig.dev.json
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\SomeUI.dll
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\SomeUI.pdb
-D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\CricektApp.Domain.dll
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\CricketApp.Data.dll
-D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\CricektApp.Domain.pdb
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\CricketApp.Data.pdb
 D:\Dot Net MVC App\CricketApp\SomeUI\obj\Debug\netcoreapp2.0\SomeUI.dll
 D:\Dot Net MVC App\CricketApp\SomeUI\obj\Debug\netcoreapp2.0\SomeUI.pdb
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\WebApp.dll
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\WebApp.pdb
+D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\CricketApp.Domain.dll
+D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\CricketApp.Domain.pdb

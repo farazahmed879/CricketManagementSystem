@@ -1,5 +1,4 @@
 ﻿
-using CricektApp.Domain;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -28,7 +27,6 @@ namespace CricketApp.Domain
         public string Result { get; set; }
         public int? Season { get; set; }
         [Required]
-        public string Status { get; set; }
         public int? TournamentId { get; set; }
         public DateTime? DateOfMatch { get; set; }
         [Required]
@@ -45,6 +43,9 @@ namespace CricketApp.Domain
         public IFormFile MatchImage { get; set; }
         public List<PlayerScore> PlayerScores { get; set; }
         public List<TeamScore> TeamScores { get; set; }
+        public int UserId { get; set; }
+        public MatchType MatchType { get; set;}
+        public int MatchTypeId { get; set; }
 
     }
 }

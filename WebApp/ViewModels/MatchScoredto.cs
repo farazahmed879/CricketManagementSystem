@@ -10,13 +10,13 @@ namespace WebApp.ViewModels
     public class MatchScoreDto
     {
         public int PlayerScoreId { get; set; }
-        public int PlayerId { get; set; }
+        public int? PlayerId { get; set; }
         public int Position { get; set; }
         public int MatchId { get; set; }
         public string Bowler { get; set; }
         public int Bat_Runs { get; set; }
         public int Bat_Balls { get; set; }
-        public string HowOut { get; set; }
+        public int? HowOutId { get; set; }
         public int Ball_Runs { get; set; }
         public int Four { get; set; }
         public int Six { get; set; }

@@ -9,7 +9,7 @@ D:\Dot Net MVC App\CricketApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.AssemblyInfo
 D:\Dot Net MVC App\CricketApp\WebApp\bin\Debug\netcoreapp2.0\WebApp.pdb
 D:\Dot Net MVC App\CricketApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.dll
 D:\Dot Net MVC App\CricketApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.pdb
-D:\Dot Net MVC App\CricketApp\WebApp\bin\Debug\netcoreapp2.0\CricektApp.Domain.dll
 D:\Dot Net MVC App\CricketApp\WebApp\bin\Debug\netcoreapp2.0\CricketApp.Data.dll
-D:\Dot Net MVC App\CricketApp\WebApp\bin\Debug\netcoreapp2.0\CricektApp.Domain.pdb
 D:\Dot Net MVC App\CricketApp\WebApp\bin\Debug\netcoreapp2.0\CricketApp.Data.pdb
+D:\Dot Net MVC App\CricketApp\WebApp\bin\Debug\netcoreapp2.0\CricketApp.Domain.dll
+D:\Dot Net MVC App\CricketApp\WebApp\bin\Debug\netcoreapp2.0\CricketApp.Domain.pdb

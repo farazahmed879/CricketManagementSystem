@@ -1077,7 +1077,7 @@
           "ref/netstandard1.3/System.Threading.Tasks.dll": {}
         }
       },
-      "CricektApp.Domain/1.0.0": {
+      "CricketApp.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -1085,10 +1085,10 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.0.2"
         },
         "compile": {
-          "bin/placeholder/CricektApp.Domain.dll": {}
+          "bin/placeholder/CricketApp.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/CricektApp.Domain.dll": {}
+          "bin/placeholder/CricketApp.Domain.dll": {}
         }
       }
     }
@@ -3660,15 +3660,15 @@
         "system.threading.tasks.nuspec"
       ]
     },
-    "CricektApp.Domain/1.0.0": {
+    "CricketApp.Domain/1.0.0": {
       "type": "project",
-      "path": "../CricektApp.Domain/CricektApp.Domain.csproj",
-      "msbuildProject": "../CricektApp.Domain/CricektApp.Domain.csproj"
+      "path": "../CricektApp.Domain/CricketApp.Domain.csproj",
+      "msbuildProject": "../CricektApp.Domain/CricketApp.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "CricektApp.Domain >= 1.0.0",
+      "CricketApp.Domain >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 2.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 2.0.1",
       "Microsoft.Extensions.Logging.Console >= 2.0.0",
@@ -3681,6 +3681,9 @@
   },
   "project": {
     "version": "1.0.0",
+    "restoreSettings": {
+      "hideWarningsAndErrors": true
+    },
     "restore": {
       "projectUniqueName": "D:\\Dot Net MVC App\\CricketApp\\CricketApp.Data\\CricketApp.Data.csproj",
       "projectName": "CricketApp.Data",
@@ -3705,8 +3708,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricektApp.Domain.csproj": {
-              "projectPath": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricektApp.Domain.csproj"
+            "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricketApp.Domain.csproj": {
+              "projectPath": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricketApp.Domain.csproj"
             }
           }
         }

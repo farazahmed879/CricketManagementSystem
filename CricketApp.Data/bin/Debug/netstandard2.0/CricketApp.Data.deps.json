@@ -9,7 +9,7 @@
     ".NETStandard,Version=v2.0/": {
       "CricketApp.Data/1.0.0": {
         "dependencies": {
-          "CricektApp.Domain": "1.0.0",
+          "CricketApp.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore.Design": "2.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.0.1",
           "Microsoft.Extensions.Logging.Console": "2.0.0",
@@ -709,13 +709,13 @@
           "System.Runtime": "4.3.0"
         }
       },
-      "CricektApp.Domain/1.0.0": {
+      "CricketApp.Domain/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Identity": "2.0.2",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.0.2"
         },
         "runtime": {
-          "CricektApp.Domain.dll": {}
+          "CricketApp.Domain.dll": {}
         }
       }
     }
@@ -1300,7 +1300,7 @@
       "path": "system.threading.tasks/4.3.0",
       "hashPath": "system.threading.tasks.4.3.0.nupkg.sha512"
     },
-    "CricektApp.Domain/1.0.0": {
+    "CricketApp.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

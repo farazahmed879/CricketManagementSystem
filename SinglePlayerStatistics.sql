@@ -1,5 +1,6 @@
-﻿Alter PROCEDURE [usp_GetMatchStatistics]
-@paramPlayerId AS INT
+﻿Create PROCEDURE [usp_GetSinglePlayerStatistics]
+@paramPlayerId AS INT,
+@paramOvers AS INT
 AS
 BEGIN
 	SELECT *,
@@ -52,12 +53,14 @@ BEGIN
 				Players.BowlingStyle As 'BowlingStyle',
 				Players.BattingStyle As 'BattingStyle',			
 				Teams.Team_Name As 'TeamName',
-				Players.PlayerLogo As 'PlayerImage'
+				Players.PlayerLogo As 'PlayerImage',
+				Matches.MatchOvers As 'MatchOvers'
 		
 		FROM PlayerScores
 		Inner join Players ON PlayerScores.PlayerId = Players.PlayerId
 		Inner join Teams ON Players.TeamId = Teams.TeamId
-		WHERE PlayerScores.PlayerId = @paramPlayerId
+		Inner join Matches ON PlayerScores.MatchId = Matches.MatchId
+		WHERE PlayerScores.PlayerId = @paramPlayerId And (@paramOvers IS NUll OR Matches.MatchOvers = @paramOvers)
 		GROUP BY PlayerScores.PlayerId,
 				 Players.Player_Name,
 				 Players.Role,
@@ -66,9 +69,10 @@ BEGIN
 				 Players.TeamId,			 
 				 Teams.Team_Name,
 				 Players.PlayerLogo,
-				 Players.MatchId
+				 Matches.MatchOvers
 	) AS data
 END
 
-exec [usp_GetMatchStatistics] 1
+exec [usp_GetSinglePlayerStatistics] 1
 
+drop procedure usp_GetSinglePlayerStatistics

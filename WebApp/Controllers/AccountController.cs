@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CricketApp.Data;
 using CricketApp.Domain;
 using IdentityDemo.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
@@ -8,36 +10,40 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace WebApp.Controllers
 {
-   
+
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<Login> _userManager;
-        private readonly SignInManager<Login> _signInManager;
+        private readonly CricketContext _context;
+        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly SignInManager<IdentityUser<int>> _signInManager;
         //private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
         public AccountController(
-            UserManager<Login> userManager,
-            SignInManager<Login> signInManager,
-           // IEmailSender emailSender,
+            UserManager<IdentityUser<int>> userManager,
+            SignInManager<IdentityUser<int>> signInManager,
+            CricketContext cricketContext,
+            // IEmailSender emailSender,
             ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-           // _emailSender = emailSender;
+            // _emailSender = emailSender;
             _logger = logger;
+            _context = cricketContext;
         }
 
         [TempData]
         public string ErrorMessage { get; set; }
 
         [HttpGet]
-        [AllowAnonymous]       
+        [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
@@ -204,6 +210,8 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
+
+            ViewBag.RoleName = new SelectList(_context.Role,"Name");
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -216,18 +224,22 @@ namespace WebApp.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new Login { UserName = model.Email, Email = model.Email };
+                var user = new IdentityUser<int> { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                   // var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    // var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
+
+                    await _userManager.AddToRoleAsync(user, model.RoleName);
+                    //var users = await _userManager.GetUserAsync(HttpContext.User);
+                    //users.Id;
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
@@ -453,6 +465,16 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
+        }
+
+    
+
+        [HttpGet]
+        public IActionResult IsEmailAvailable(string email)
+        {
+            return Json(_context.User
+                .AsNoTracking()
+                .Any(i => i.Email == email));
         }
 
         #endregion

@@ -8,12 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using CricketApp.Data;
 using CricketApp.Domain;
 using WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebApp.Controllers
 {
+    
     public class TournamentController : Controller
     {
         private readonly CricketContext _context;
+        private readonly UserManager<IdentityUser<int>> _userManager;
 
         public TournamentController(CricketContext context)
         {
@@ -21,6 +25,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Tournaments
+        
         public async Task<IActionResult> Index(int? page)
         {
             ViewBag.Name = "Tournaments";
@@ -48,6 +53,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Tournaments/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewBag.Name = "Add Tournament";
@@ -55,14 +61,15 @@ namespace WebApp.Controllers
         }
 
         // POST: Tournaments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(Tournament tournament)
         {
             if (ModelState.IsValid)
             {
+                //var users = await _userManager.GetUserAsync(HttpContext.User);
+                //tournament.UserId = users.Id;
                 _context.Add(tournament);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -71,6 +78,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Tournaments/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             ViewBag.Name = "Edit Tournament";
@@ -92,6 +100,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, Tournament tournament)
         {
             if (id != tournament.TournamentId)
@@ -123,6 +132,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Tournaments/Delete/5
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,6 +152,7 @@ namespace WebApp.Controllers
 
         // POST: Tournaments/Delete/5
         [Route("Tournament/DeleteConfirmed")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int tournamentId)
         {
             var tournament = await _context.Tournaments.SingleOrDefaultAsync(m => m.TournamentId == tournamentId);

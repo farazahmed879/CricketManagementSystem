@@ -1,7 +1,7 @@
 ﻿@model PaginatedList<CricketApp.Domain.Player>
 
 @{
-    ViewData["Title"] = "List of Players";
+    ViewData["Title"] = "Players";
 }
 <div class="container-fluid">
     <div class="form-group">
@@ -100,29 +100,16 @@
                             @Html.DisplayFor(modelItem => item.Team.Team_Name)
                         </td>
                         <td>
-                            <div class="col-md-12">
-                                <div class="col-md-4">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" title="More Actions" id="dropdownMenuButton">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.PlayerId"><i class="fas fa-edit">Edit</i></a>
-                                            @*<div class="dropdown-divider"></div>
-                                                <a rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.MatchId"><i class="fas fa-info-circle">Detail</i></a>*@
-                                            <div class="dropdown-divider"></div>
-                                            <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" onclick="Delete(@item.PlayerId)">Delete</i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div data-toggle="tooltip" data-placement="top" title="Player Statistics" class="col-md-4">
-                                    <a asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId"><i class="fa fa-pie-chart">Player Statistics</i></a>
-                                </div>
+                            <div class="btn-group">
+                                <a data-placement="top" class="btn btn-primary" data-toggle="tooltip" title="Player Statistics" asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId"><i class="fa fa-pie-chart">Statistics</i></a>
+                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a data-toggle="tooltip" class="btn btn-default" title="Edit Mode" asp-action="Edit" asp-route-id="@item.PlayerId"><i class="fas fa-edit">Edit</i></a></li>
+                                    <li><a data-placement="top" class="btn btn-default" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" onclick="Delete(@item.PlayerId)">Delete</i></a></li>
+                                </ul>
                             </div>
-
-                            @*<a class="material-icons md-14" rel="tooltip" title="Details" asp-action="Details" asp-route-id="@item.PlayerId">details</a>*@
-
-
 
                         </td>
                     </tr>
@@ -250,23 +237,23 @@
                 alert("Record is not deleted");
             }
         };
-                                                        //async function FilterData() {
-                                                        //    var formElement = document.getElementById("Filters");
-                                                        //    var formData = new FormData(formElement);
+                                                                    //async function FilterData() {
+                                                                    //    var formElement = document.getElementById("Filters");
+                                                                    //    var formData = new FormData(formElement);
 
-                                                        //    var teamId = formData.get("teamId")
-                                                        //    var role = formData.get("role")
+                                                                    //    var teamId = formData.get("teamId")
+                                                                    //    var role = formData.get("role")
 
 
 
-                                                        //    // var header = new Headers();
-                                                        //    //header.append("content-type");
+                                                                    //    // var header = new Headers();
+                                                                    //    //header.append("content-type");
 
-                                                        //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
-                                                        //        credentials: 'same-origin'
-                                                        //    });
+                                                                    //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
+                                                                    //        credentials: 'same-origin'
+                                                                    //    });
 
-                                                        //};
+                                                                    //};
 
 
 

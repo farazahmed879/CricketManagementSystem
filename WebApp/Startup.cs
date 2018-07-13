@@ -27,7 +27,7 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("CricketAppConnection");
-            services.AddIdentity<Login, IdentityRole<int>>()
+            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
                .AddEntityFrameworkStores<CricketContext>()
                .AddDefaultTokenProviders();
 

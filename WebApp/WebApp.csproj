@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CricektApp.Domain\CricektApp.Domain.csproj" />
+    <ProjectReference Include="..\CricektApp.Domain\CricketApp.Domain.csproj" />
     <ProjectReference Include="..\CricketApp.Data\CricketApp.Data.csproj" />
   </ItemGroup>
 

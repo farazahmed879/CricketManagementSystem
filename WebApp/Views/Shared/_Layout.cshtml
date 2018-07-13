@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Score Management System</title>
+    <title>@ViewData["Title"] Score Exec</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -67,7 +67,7 @@
     <div class="wrapper fixed">
         <header class="main-header">
             <!-- Logo -->
-            <a href="/Matches/HomeIndex" class="logo">
+            <a href="/Home/Index" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>A</b>LT</span>
                 <!-- logo for regular state and mobile devices -->
@@ -101,10 +101,10 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        <a asp-controller="Teams" asp-action="RoleManagement" class="btn btn-default btn-flat">Role Management</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a asp-controller="Account" asp-action="Logout" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -167,7 +167,7 @@
                         <a asp-controller="Matches" asp-action="Index">
                             <i class="fa fa-th"></i> <span>Matches</span>
                             <span class="pull-right-container">
-                                <small class="label pull-right bg-green">new</small>
+                                <small class="label  bg-green">new</small>
                             </span>
                         </a>
                     </li>
@@ -187,6 +187,14 @@
                             </span>
                         </a>
                     </li>
+                    @*<li>
+                        <a asp-controller="Teams" asp-action="Index">
+                            <i class="fa fa-pie-chart"></i> <span>Role Management</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-green">new</small>
+                            </span>
+                        </a>
+                    </li>*@
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-pie-chart"></i>

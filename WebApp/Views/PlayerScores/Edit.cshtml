@@ -354,6 +354,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap-wizard/1.2/jquery.bootstrap.wizard.min.js"></script>
+    <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
+    <script src="~/plugins/iCheck/icheck.min.js"></script>
     <script>
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
@@ -362,6 +364,14 @@
         $(function () {
             $('#BackBtn').click(function () {
                 window.location = '/Matches/Index'
+            });
+        });
+
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
             });
         });
         const openModal = (id) => {

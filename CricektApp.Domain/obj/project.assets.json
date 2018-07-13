@@ -3348,9 +3348,9 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricektApp.Domain.csproj",
-      "projectName": "CricektApp.Domain",
-      "projectPath": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricektApp.Domain.csproj",
+      "projectUniqueName": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricketApp.Domain.csproj",
+      "projectName": "CricketApp.Domain",
+      "projectPath": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricketApp.Domain.csproj",
       "packagesPath": "C:\\Users\\Faraz\\.nuget\\packages\\",
       "outputPath": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\obj\\",
       "projectStyle": "PackageReference",

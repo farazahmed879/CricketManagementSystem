@@ -11,8 +11,8 @@ using System;
 namespace CricketApp.Data.Migrations
 {
     [DbContext(typeof(CricketContext))]
-    [Migration("20180619211217_teamScore1")]
-    partial class teamScore1
+    [Migration("20180712130900_IsNullPLayerScore")]
+    partial class IsNullPLayerScore
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,100 +21,42 @@ namespace CricketApp.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CricektApp.Domain.TeamScore", b =>
+            modelBuilder.Entity("CricketApp.Domain.FallOfWicket", b =>
                 {
-                    b.Property<int>("TeamScoreId")
+                    b.Property<int>("FallOfWicketId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Buys");
+                    b.Property<int>("Eight");
 
-                    b.Property<int>("LegBuys");
+                    b.Property<int>("Fifth");
+
+                    b.Property<int>("First");
+
+                    b.Property<int>("Fourth");
 
                     b.Property<int>("MatchId");
 
-                    b.Property<int>("NoBalls");
+                    b.Property<int>("Ninth");
+
+                    b.Property<int>("Second");
+
+                    b.Property<int>("Seventh");
+
+                    b.Property<int>("Sixth");
 
                     b.Property<int>("TeamId");
 
-                    b.Property<int>("TotalScore");
+                    b.Property<int>("Tenth");
 
-                    b.Property<int>("Wideballs");
+                    b.Property<int>("Third");
 
-                    b.HasKey("TeamScoreId");
+                    b.HasKey("FallOfWicketId");
 
                     b.HasIndex("MatchId");
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("TeamScores");
-                });
-
-            modelBuilder.Entity("CricketApp.Domain.Login", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired();
-
-                    b.Property<string>("LastName")
-                        .IsRequired();
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("MiddleName");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Password")
-                        .IsRequired();
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("contact")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("FallOFWickets");
                 });
 
             modelBuilder.Entity("CricketApp.Domain.Match", b =>
@@ -134,6 +76,8 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int>("MatchOvers");
 
+                    b.Property<int>("MatchTypeId");
+
                     b.Property<int>("OppponentTeamId");
 
                     b.Property<string>("Place")
@@ -144,20 +88,34 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int?>("Season");
 
-                    b.Property<string>("Status")
+                    b.Property<int?>("TournamentId")
                         .IsRequired();
 
-                    b.Property<int?>("TournamentId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("MatchId");
 
                     b.HasIndex("HomeTeamId");
+
+                    b.HasIndex("MatchTypeId");
 
                     b.HasIndex("OppponentTeamId");
 
                     b.HasIndex("TournamentId");
 
                     b.ToTable("Matches");
+                });
+
+            modelBuilder.Entity("CricketApp.Domain.MatchType", b =>
+                {
+                    b.Property<int>("MatchTypeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MatchTypeName");
+
+                    b.HasKey("MatchTypeId");
+
+                    b.ToTable("MatchType");
                 });
 
             modelBuilder.Entity("CricketApp.Domain.Player", b =>
@@ -184,8 +142,6 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<bool>("IsGuestPlayer");
 
-                    b.Property<int>("MatchId");
-
                     b.Property<byte[]>("PlayerLogo")
                         .HasColumnType("varbinary(max)");
 
@@ -197,6 +153,8 @@ namespace CricketApp.Data.Migrations
                     b.Property<string>("Status");
 
                     b.Property<int>("TeamId");
+
+                    b.Property<int>("UserId");
 
                     b.HasKey("PlayerId");
 
@@ -232,7 +190,7 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int?>("Overs");
 
-                    b.Property<int>("PlayerId");
+                    b.Property<int?>("PlayerId");
 
                     b.Property<int>("Position");
 
@@ -261,6 +219,10 @@ namespace CricketApp.Data.Migrations
                     b.Property<string>("City")
                         .IsRequired();
 
+                    b.Property<int?>("ClubUserId");
+
+                    b.Property<bool>("IsRegistered");
+
                     b.Property<string>("Place");
 
                     b.Property<byte[]>("TeamLogo")
@@ -273,7 +235,39 @@ namespace CricketApp.Data.Migrations
 
                     b.HasKey("TeamId");
 
+                    b.HasIndex("ClubUserId")
+                        .IsUnique()
+                        .HasFilter("ClubUserId is not null");
+
                     b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("CricketApp.Domain.TeamScore", b =>
+                {
+                    b.Property<int>("TeamScoreId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Byes");
+
+                    b.Property<int>("LegByes");
+
+                    b.Property<int>("MatchId");
+
+                    b.Property<int>("NoBalls");
+
+                    b.Property<int>("TeamId");
+
+                    b.Property<int>("TotalScore");
+
+                    b.Property<int>("Wideballs");
+
+                    b.HasKey("TeamScoreId");
+
+                    b.HasIndex("MatchId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("TeamScores");
                 });
 
             modelBuilder.Entity("CricketApp.Domain.Tournament", b =>
@@ -283,12 +277,41 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<string>("Organizor");
 
+                    b.Property<DateTime>("StartingDate");
+
+                    b.Property<int?>("TenantUserId");
+
                     b.Property<string>("TournamentName")
                         .IsRequired();
 
+                    b.Property<int>("UserId");
+
                     b.HasKey("TournamentId");
 
+                    b.HasIndex("TenantUserId");
+
                     b.ToTable("Tournaments");
+                });
+
+            modelBuilder.Entity("CricketApp.Domain.UserRole", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("RoleId");
+
+                    b.Property<int?>("RoleId1");
+
+                    b.Property<int?>("UserId1");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId1");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("AspNetUserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -333,6 +356,57 @@ namespace CricketApp.Data.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -368,19 +442,6 @@ namespace CricketApp.Data.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("RoleId");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.Property<int>("UserId");
@@ -396,15 +457,15 @@ namespace CricketApp.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("CricektApp.Domain.TeamScore", b =>
+            modelBuilder.Entity("CricketApp.Domain.FallOfWicket", b =>
                 {
                     b.HasOne("CricketApp.Domain.Match", "Match")
-                        .WithMany("TeamScores")
+                        .WithMany()
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CricketApp.Domain.Team", "Team")
-                        .WithMany()
+                        .WithMany("FallOfWickets")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -416,6 +477,11 @@ namespace CricketApp.Data.Migrations
                         .HasForeignKey("HomeTeamId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("CricketApp.Domain.MatchType", "MatchType")
+                        .WithMany("Matches")
+                        .HasForeignKey("MatchTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("CricketApp.Domain.Team", "OppponentTeam")
                         .WithMany("OpponentTeamMatches")
                         .HasForeignKey("OppponentTeamId")
@@ -423,7 +489,8 @@ namespace CricketApp.Data.Migrations
 
                     b.HasOne("CricketApp.Domain.Tournament", "Tournament")
                         .WithMany("Matches")
-                        .HasForeignKey("TournamentId");
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CricketApp.Domain.Player", b =>
@@ -443,8 +510,55 @@ namespace CricketApp.Data.Migrations
 
                     b.HasOne("CricketApp.Domain.Player", "Player")
                         .WithMany()
-                        .HasForeignKey("PlayerId")
+                        .HasForeignKey("PlayerId");
+                });
+
+            modelBuilder.Entity("CricketApp.Domain.Team", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "ClubUser")
+                        .WithMany()
+                        .HasForeignKey("ClubUserId");
+                });
+
+            modelBuilder.Entity("CricketApp.Domain.TeamScore", b =>
+                {
+                    b.HasOne("CricketApp.Domain.Match", "Match")
+                        .WithMany("TeamScores")
+                        .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CricketApp.Domain.Team", "Team")
+                        .WithMany("TeamScores")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CricketApp.Domain.Tournament", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "TenantUser")
+                        .WithMany()
+                        .HasForeignKey("TenantUserId");
+                });
+
+            modelBuilder.Entity("CricketApp.Domain.UserRole", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId1");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -457,7 +571,7 @@ namespace CricketApp.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("CricketApp.Domain.Login")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -465,20 +579,7 @@ namespace CricketApp.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("CricketApp.Domain.Login")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("CricketApp.Domain.Login")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -486,7 +587,7 @@ namespace CricketApp.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("CricketApp.Domain.Login")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

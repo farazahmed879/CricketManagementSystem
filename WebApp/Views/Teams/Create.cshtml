@@ -1,14 +1,14 @@
 ﻿@model CricketApp.Domain.Team
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add Team";
 }
 
 <div class="container-fluid">
     <div class="row">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="col-md-8" style="margin-top:3em;">
+            <div class="col-md-8">
                 <div class="col-md-6">
                     <div class="form-group label-floating">
                         <label class="control-label">Team Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
@@ -39,21 +39,26 @@
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" asp-for="IsRegistered" value="true" class="flat-red">
+                            IsRegistered
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="img-responsive" id="Img" style="background-size:cover"></div>
-                        </div>
-                        <div class="col-md-6" style="margin-top:7.7em;">
+                            <div class="img-responsive" id="Img" style="background-size:cover; margin-bottom: 1em;"></div>
+
                             <label asp-for="TeamImage" class="btn btn-primary">
-                                <i class="far fa-image"> Upload</i><input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
+                                <i class="far fa-images"> Upload</i><input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
                             </label>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
                 </div>
             </div>
             <div class="col-md-6">
@@ -77,6 +82,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link rel="stylesheet" href="../../plugins/iCheck/square/Blue.css">
+    <script src="../../plugins/iCheck/icheck.min.js"></script>
     <style>
         #Img {
             background-image: url('');
@@ -88,6 +95,14 @@
         }
     </style>
     <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
+            });
+        });
+
         $(function () {
             $('#BackBtn').click(function () {
                 window.location = '/Teams/Index'

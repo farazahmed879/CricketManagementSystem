@@ -24,8 +24,8 @@
       "WebApp/1.0.0": {
         "dependencies": {
           "Bootstrap.v3.Datetimepicker.CSS": "4.17.45",
-          "CricektApp.Domain": "1.0.0",
           "CricketApp.Data": "1.0.0",
+          "CricketApp.Domain": "1.0.0",
           "Dapper": "1.50.4",
           "Microsoft.AspNetCore.All": "2.0.5",
           "Microsoft.AspNetCore.Authentication.Cookies": "2.0.3",
@@ -4139,21 +4139,9 @@
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
       },
-      "CricektApp.Domain/1.0.0": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Identity": "2.0.2",
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.0.2"
-        },
-        "runtime": {
-          "CricektApp.Domain.dll": {}
-        },
-        "compile": {
-          "CricektApp.Domain.dll": {}
-        }
-      },
       "CricketApp.Data/1.0.0": {
         "dependencies": {
-          "CricektApp.Domain": "1.0.0",
+          "CricketApp.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.0.1",
           "Microsoft.Extensions.Logging.Console": "2.0.0"
         },
@@ -4162,6 +4150,18 @@
         },
         "compile": {
           "CricketApp.Data.dll": {}
+        }
+      },
+      "CricketApp.Domain/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity": "2.0.2",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.0.2"
+        },
+        "runtime": {
+          "CricketApp.Domain.dll": {}
+        },
+        "compile": {
+          "CricketApp.Domain.dll": {}
         }
       },
       "Microsoft.NETCore.App/2.0.0": {
@@ -6539,12 +6539,12 @@
       "path": "windowsazure.storage/8.1.4",
       "hashPath": "windowsazure.storage.8.1.4.nupkg.sha512"
     },
-    "CricektApp.Domain/1.0.0": {
+    "CricketApp.Data/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "CricketApp.Data/1.0.0": {
+    "CricketApp.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

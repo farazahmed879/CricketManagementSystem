@@ -5120,25 +5120,11 @@
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
       },
-      "CricektApp.Domain/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Microsoft.AspNetCore.Identity": "2.0.2",
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.0.2"
-        },
-        "compile": {
-          "bin/placeholder/CricektApp.Domain.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/CricektApp.Domain.dll": {}
-        }
-      },
       "CricketApp.Data/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "CricektApp.Domain": "1.0.0",
+          "CricketApp.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.0.1",
           "Microsoft.Extensions.Logging.Console": "2.0.0"
         },
@@ -5149,13 +5135,27 @@
           "bin/placeholder/CricketApp.Data.dll": {}
         }
       },
+      "CricketApp.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity": "2.0.2",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.0.2"
+        },
+        "compile": {
+          "bin/placeholder/CricketApp.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CricketApp.Domain.dll": {}
+        }
+      },
       "WebApp/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.0",
         "dependencies": {
           "Bootstrap.v3.Datetimepicker.CSS": "4.17.45",
-          "CricektApp.Domain": "1.0.0",
           "CricketApp.Data": "1.0.0",
+          "CricketApp.Domain": "1.0.0",
           "Dapper": "1.50.4",
           "Microsoft.AspNetCore.All": "2.0.5",
           "Microsoft.AspNetCore.Authentication.Cookies": "2.0.3",
@@ -13397,15 +13397,15 @@
         "windowsazure.storage.nuspec"
       ]
     },
-    "CricektApp.Domain/1.0.0": {
-      "type": "project",
-      "path": "../CricektApp.Domain/CricektApp.Domain.csproj",
-      "msbuildProject": "../CricektApp.Domain/CricektApp.Domain.csproj"
-    },
     "CricketApp.Data/1.0.0": {
       "type": "project",
       "path": "../CricketApp.Data/CricketApp.Data.csproj",
       "msbuildProject": "../CricketApp.Data/CricketApp.Data.csproj"
+    },
+    "CricketApp.Domain/1.0.0": {
+      "type": "project",
+      "path": "../CricektApp.Domain/CricketApp.Domain.csproj",
+      "msbuildProject": "../CricektApp.Domain/CricketApp.Domain.csproj"
     },
     "WebApp/1.0.0": {
       "type": "project",
@@ -13415,8 +13415,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
-      "CricektApp.Domain >= 1.0.0",
       "CricketApp.Data >= 1.0.0",
+      "CricketApp.Domain >= 1.0.0",
       "Microsoft.NETCore.App >= 2.0.0",
       "WebApp >= 1.0.0"
     ]
@@ -13454,14 +13454,14 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
+            "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricketApp.Domain.csproj": {
+              "projectPath": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricketApp.Domain.csproj"
+            },
             "D:\\Dot Net MVC App\\CricketApp\\WebApp\\WebApp.csproj": {
               "projectPath": "D:\\Dot Net MVC App\\CricketApp\\WebApp\\WebApp.csproj"
             },
             "D:\\Dot Net MVC App\\CricketApp\\CricketApp.Data\\CricketApp.Data.csproj": {
               "projectPath": "D:\\Dot Net MVC App\\CricketApp\\CricketApp.Data\\CricketApp.Data.csproj"
-            },
-            "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricektApp.Domain.csproj": {
-              "projectPath": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricektApp.Domain.csproj"
             }
           }
         }
