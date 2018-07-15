@@ -43,24 +43,50 @@ namespace WebApp.Controllers
                 .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone) && (string.IsNullOrEmpty(city) || i.City == city))
                 , page ?? 1, pageSize));
         }
-
-        public async Task<IActionResult> RoleManagement(int? page)
+        // GET: RoleManagement/
+        public  IActionResult RoleManagement(int? page)
         {
 
             ViewBag.ClubUsers = new SelectList(_context.UserRole
-               .AsNoTracking()
-               .Where(i => i.RoleId == 2)
+              .AsNoTracking()
+               .Where(i => i.RoleId == 1)
                .Select(i => new
                {
                    i.User.UserName,
-                   i.UserId
-               }), "UserId", "UserName");
+                   i.User.Id
+               }), "Id", "UserName");
 
-            ViewBag.Name = "Role Management";
-            int pageSize = 10;
-            return View(await PaginatedList<Team>.CreateAsync(
-                _context.Teams
-                 , page ?? 1, pageSize));
+
+         //   ViewBag.ClubUsers = new SelectList(_context.User, "Id", "UserName");
+
+            ViewBag.Name = "Role Management";         
+            var RoleManagement =  _context.Teams.ToList();
+            return View(RoleManagement);
+        }
+
+        public async Task<IActionResult> RoleManagementUpdate(int id, Team team)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(team);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TeamExists(team.TeamId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return Ok();
         }
 
         // GET: Teams/Details/5

@@ -26,14 +26,22 @@
                             </select>
                         </div>
                         <div class="col-xs-6 col-md-3">
-                            <label>Result</label>
-                            <select id="result" name="result" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                                <option>Win</option>
-                                <option>Loss</option>
-                                <option>Tie</option>
-                            </select>
+                            <div class="form-group label-floating" style="width: 100%;">
+                                <label class="control-label">Overs</label>
+                                <select id="matchOvers" name="matchOvers" asp-items="ViewBag.Overs" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                    <option value="">--Select--</option>
+                                </select>
+                            </div>
                         </div>
+                        @*<div class="col-xs-6 col-md-3">
+                                <label>Result</label>
+                                <select id="result" name="result" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                    <option value="">--Select--</option>
+                                    <option>Win</option>
+                                    <option>Loss</option>
+                                    <option>Tie</option>
+                                </select>
+                            </div>*@
                         @*<div id="clear"></div>*@
 
                         <div class="col-xs-6 col-md-3">
@@ -49,14 +57,7 @@
                             </select>
                         </div>
 
-                        <div class="col-xs-6 col-md-3">
-                            <div class="form-group label-floating" style="width: 100%;">
-                                <label class="control-label">Overs</label>
-                                <select id="matchOvers" name="matchOvers" asp-items="ViewBag.Overs" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                    <option value="">--Select--</option>
-                                </select>
-                            </div>
-                        </div>
+
                         <div class="col-xs-6 col-md-3">
                             <div class="form-group label-floating" style="width: 100%;">
                                 <label class="control-label">Season</label>
@@ -154,15 +155,15 @@
                         <td>
 
                             @*@if (item.PlayerScores.Any() && item.PlayerScores.Any(i => i.Player.TeamId == item.OppponentTeamId))
-                            {
-                                @item.OppponentTeam.Team_Name <span class="label pull-right label-success"><i class="fas fa-check"></i></span>
+                                {
+                                    @item.OppponentTeam.Team_Name <span class="label pull-right label-success"><i class="fas fa-check"></i></span>
 
-                            }
-                            else
-                            {
-                                @item.OppponentTeam.Team_Name<span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
+                                }
+                                else
+                                {
+                                    @item.OppponentTeam.Team_Name<span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
 
-                            }*@
+                                }*@
                         </td>
                         <td>
 

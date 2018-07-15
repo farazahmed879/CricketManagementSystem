@@ -92,7 +92,8 @@ namespace CricketApp.Data
 
             modelBuilder.Entity<UserRole>(entity =>
             {
-                //entity.HasOne(i => i.User)
+                //entity.HasOne(i => i.RoleId)
+                //    .WithOne(i => i.Role)
                 
             });
 

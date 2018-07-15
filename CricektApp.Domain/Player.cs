@@ -19,17 +19,17 @@ namespace CricketApp.Domain
         public string Gender { get; set; }
         public string Address { get; set; }
         public string Status { get; set; }
-        public string CNIC { get; set; }
-        public string PlayerRoleId { get; set; }
+        public string CNIC { get; set; }      
         public int? BattingStyleId { get; set; }
         public int? BowlingStyleId { get; set; }
+        public int? PlayerRoleId { get; set; }
         public DateTime? DOB { get; set; }
         public bool IsGuestPlayer { get; set; }
         public bool IsDeactivated { get; set; }
         public int TeamId { get; set; }
-        public PlayerRole PlayerRole { get; set; }
         public BattingStyle BattingStyle { get; set; }
         public BowlingStyle BowlingStyle { get; set; }
+        public PlayerRole PlayerRole { get; set; }
         public Team Team { get; set; }
         [Column(TypeName = "varbinary(max)")]
         public byte[] PlayerLogo { get; set; }

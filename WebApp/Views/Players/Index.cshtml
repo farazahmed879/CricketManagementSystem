@@ -19,12 +19,8 @@
 
                         <div class=" col-xs-6 col-md-6">
                             <label>Role</label>
-                            <select id="role" name="role" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                            <select id="role" asp-items="ViewBag.PlayerRole" name="role" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select--</option>
-                                <option>Batsman</option>
-                                <option>Bowler</option>
-                                <option>All-Rounder</option>
-                                <option>Wicket-Keeper Batsman</option>
                             </select>
                         </div>
                     </div>
@@ -85,7 +81,7 @@
                             @Html.DisplayFor(modelItem => item.Player_Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Role)
+                            @Html.DisplayFor(modelItem => item.PlayerRole.Name)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.BattingStyle)
@@ -237,23 +233,23 @@
                 alert("Record is not deleted");
             }
         };
-                                                                    //async function FilterData() {
-                                                                    //    var formElement = document.getElementById("Filters");
-                                                                    //    var formData = new FormData(formElement);
+                                                                        //async function FilterData() {
+                                                                        //    var formElement = document.getElementById("Filters");
+                                                                        //    var formData = new FormData(formElement);
 
-                                                                    //    var teamId = formData.get("teamId")
-                                                                    //    var role = formData.get("role")
+                                                                        //    var teamId = formData.get("teamId")
+                                                                        //    var role = formData.get("role")
 
 
 
-                                                                    //    // var header = new Headers();
-                                                                    //    //header.append("content-type");
+                                                                        //    // var header = new Headers();
+                                                                        //    //header.append("content-type");
 
-                                                                    //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
-                                                                    //        credentials: 'same-origin'
-                                                                    //    });
+                                                                        //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
+                                                                        //        credentials: 'same-origin'
+                                                                        //    });
 
-                                                                    //};
+                                                                        //};
 
 
 

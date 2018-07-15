@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
-  
+
     public class PlayersController : Controller
     {
         private readonly CricketContext _context;
@@ -29,18 +29,19 @@ namespace WebApp.Controllers
 
         // GET: Players
 
-        public async Task<IActionResult> Index(int? teamId, int? playerRoleId,int? page)
+        public async Task<IActionResult> Index(int? teamId, int? playerRoleId, int? page)
         {
 
-           
+
             ViewBag.Name = "Players";
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole, "PlayerRoleId", "Name");
             ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
             int pageSize = 10;
             return View(await PaginatedList<Player>.CreateAsync(
                              _context.Players
                            .AsNoTracking()
-                           .Where(i => (!teamId.HasValue || i.TeamId == teamId) 
-                                        //(!playerRoleId.HasValue || i.PlayerRoleId == playerRoleId)
+                           .Where(i => (!teamId.HasValue || i.TeamId == teamId)
+                                         && (!playerRoleId.HasValue || i.PlayerRoleId == playerRoleId)
                                         )
                            .Include(i => i.Team), page ?? 1, pageSize));
 
@@ -49,7 +50,7 @@ namespace WebApp.Controllers
 
 
         // GET: PlayerProfile
-       
+
         public async Task<IActionResult> PlayerProfile(int? teamId)
         {
             ViewBag.Name = "Players Profile";
@@ -92,9 +93,9 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Admin , ClubUser")]
         public IActionResult Create(int? teamId)
         {
-            ViewBag.PlayerRole = new SelectList(_context.PlayerRole, "Id", "Name");
-            ViewBag.BattingStyle = new SelectList(_context.BattingStyle, "Id", "Name");
-            ViewBag.BowlingStyle = new SelectList(_context.BowlingStyle, "Id", "Name");
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole, "PlayerRoleId", "Name");
+            ViewBag.BattingStyle = new SelectList(_context.BattingStyle, "BattingStyleId", "Name");
+            ViewBag.BowlingStyle = new SelectList(_context.BowlingStyle, "BowlingStyleId", "Name");
             ViewBag.Name = "Add Player";
             if (teamId != null)
             {
@@ -107,7 +108,7 @@ namespace WebApp.Controllers
             {
                 ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
             }
-            
+
             return View();
         }
 
@@ -162,9 +163,9 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             ViewBag.Name = "Edit Mode";
-            ViewBag.PlayerRole = new SelectList(_context.PlayerRole, "Id", "Name");
-            ViewBag.BattingStyle = new SelectList(_context.BattingStyle, "Id", "Name");
-            ViewBag.BowlingStyle = new SelectList(_context.BowlingStyle, "Id", "Name");
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole, "PlayerRoleId", "Name");
+            ViewBag.BattingStyle = new SelectList(_context.BattingStyle, "BattingStyleId", "Name");
+            ViewBag.BowlingStyle = new SelectList(_context.BowlingStyle, "BowlingStyleId", "Name");
             ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name");
             if (id == null)
             {
@@ -262,7 +263,9 @@ namespace WebApp.Controllers
             var connection = _context.Database.GetDbConnection();
             var model = connection.QuerySingle<PlayerStatisticsdto>(
                 "[usp_GetSinglePlayerStatistics]",
-                new { paramPlayerId = playerId,
+                new
+                {
+                    paramPlayerId = playerId,
                     @paramOvers = matchOvers
 
                 },
@@ -272,7 +275,7 @@ namespace WebApp.Controllers
         }
         // GET: AllPlayerStatistics
         [Authorize(Roles = "Admin , ClubUser")]
-        public IActionResult AllPlayerStatistics(int? teamId,int? season, int? overs, int? position,string status,int? tournamentId,int? opponentTeamId, bool isApi)
+        public IActionResult AllPlayerStatistics(int? teamId, int? season, int? overs, int? position, string status, int? tournamentId, int? opponentTeamId, bool isApi)
         {
             ViewBag.Name = "Players Records";
             ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
@@ -284,7 +287,8 @@ namespace WebApp.Controllers
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<AllPlayerStatisticsdto>(
                     "[usp_GetAllPlayerStatistics]",
-                    new {
+                    new
+                    {
                         paramTeamId = teamId,
                         paramSeason = season,
                         paramOvers = overs,
@@ -292,7 +296,7 @@ namespace WebApp.Controllers
                         paramStatus = status,
                         paramTournamentId = tournamentId,
                         paramOpponentTeamId = opponentTeamId
-                        
+
                     },
                     commandType: CommandType.StoredProcedure);
                 if (isApi)
@@ -315,7 +319,7 @@ namespace WebApp.Controllers
 
         }
 
-  
+
 
 
         private bool PlayerExists(int id)

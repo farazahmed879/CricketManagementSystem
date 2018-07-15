@@ -49,6 +49,7 @@ namespace WebApp.Controllers
             scoreDto.HomeTeamScoreCard = _context.PlayerScores
                 .AsNoTracking()
                 .Where(i => i.Player.TeamId == homeTeamId && i.MatchId == matchId)
+                .Include(i => i.HowOut)
                 .Select(i => new MatchSummarydto
                 {
                     PlayerScoreId = i.PlayerScoreId,
@@ -79,6 +80,7 @@ namespace WebApp.Controllers
             scoreDto.OpponentTeamScoreCard = _context.PlayerScores
                .AsNoTracking()
                .Where(i => i.Player.TeamId == oppTeamId && i.MatchId == matchId)
+               .Include(i => i.HowOut)
                .Select(i => new MatchSummarydto
                {
                    PlayerScoreId = i.PlayerScoreId,

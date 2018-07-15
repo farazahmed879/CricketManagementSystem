@@ -109,15 +109,8 @@
                                                 </select>
                                             </div>
                                             <div class="col-sm-2">
-                                                <select asp-for="@Model.HomeTeamScoreCard[i].HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
+                                                <select asp-for="@Model.HomeTeamScoreCard[i].HowOutId" asp-items="ViewBag.HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
                                                     <option value="">--How Out--</option>
-                                                    <option>Catch</option>
-                                                    <option>Bowled</option>
-                                                    <option>Stump</option>
-                                                    <option>RunOut</option>
-                                                    <option>Hit Wicket</option>
-                                                    <option>LBW</option>
-                                                    <option>Not Out</option>
                                                 </select>
                                             </div>
 
@@ -203,15 +196,8 @@
                                                 </select>
                                             </div>
                                             <div class="col-sm-2">
-                                                <select asp-for="@Model.OpponentTeamScoreCard[i].HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
+                                                <select asp-for="@Model.OpponentTeamScoreCard[i].HowOutId" asp-items="ViewBag.HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
                                                     <option value="">--How Out--</option>
-                                                    <option>Catch</option>
-                                                    <option>Bowled</option>
-                                                    <option>Stump</option>
-                                                    <option>RunOut</option>
-                                                    <option>Hit Wicket</option>
-                                                    <option>LBW</option>
-                                                    <option>Not Out</option>
                                                 </select>
                                             </div>
 

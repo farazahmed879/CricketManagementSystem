@@ -11,9 +11,10 @@ using System;
 namespace CricketApp.Data.Migrations
 {
     [DbContext(typeof(CricketContext))]
-    partial class CricketContextModelSnapshot : ModelSnapshot
+    [Migration("20180714165456_deletePLayerRole")]
+    partial class deletePLayerRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,8 +181,6 @@ namespace CricketApp.Data.Migrations
                     b.Property<byte[]>("PlayerLogo")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("PlayerRoleId");
-
                     b.Property<string>("Player_Name")
                         .IsRequired();
 
@@ -196,8 +195,6 @@ namespace CricketApp.Data.Migrations
                     b.HasIndex("BattingStyleId");
 
                     b.HasIndex("BowlingStyleId");
-
-                    b.HasIndex("PlayerRoleId");
 
                     b.HasIndex("TeamId");
 
@@ -557,10 +554,6 @@ namespace CricketApp.Data.Migrations
                     b.HasOne("CricketApp.Domain.BowlingStyle", "BowlingStyle")
                         .WithMany()
                         .HasForeignKey("BowlingStyleId");
-
-                    b.HasOne("CricketApp.Domain.PlayerRole", "PlayerRole")
-                        .WithMany()
-                        .HasForeignKey("PlayerRoleId");
 
                     b.HasOne("CricketApp.Domain.Team", "Team")
                         .WithMany("Players")

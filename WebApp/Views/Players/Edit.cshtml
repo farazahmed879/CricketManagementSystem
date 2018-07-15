@@ -37,37 +37,20 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label>Role</label>
-                        <select asp-for="Role" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                        <select asp-for="PlayerRoleId" asp-items="ViewBag.PlayerRole" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                             <option value="">--Select--</option>
-                            <option>Batsman</option>
-                            <option>Bowler</option>
-                            <option>All-Rounder</option>
-                            <option>Wicket-Keeper Batsman</option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label>Batting Style</label>
-                        <select asp-for="BattingStyle" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                        <select asp-for="BattingStyleId" asp-items="ViewBag.BattingStyle" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                             <option value="">--Select--</option>
-                            <option>Right-hand bat</option>
-                            <option>Left-hand bat</option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label>Bowling Style</label>
-                        <select asp-for="BowlingStyle" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                        <select asp-for="BowlingStyleId" asp-items="ViewBag.BowlingStyle" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                             <option value="">--Select--</option>
-                            <option>Right-arm fast</option>
-                            <option>Right-arm fast medium</option>
-                            <option>Right-arm medium fast</option>
-                            <option>Left-arm fast</option>
-                            <option>Left-arm fast medium</option>
-                            <option>Left-arm medium fast</option>
-                            <option>Left-arm medium</option>
-                            <option>Off break (right-arm)</option>
-                            <option>Leg break (right-arm)</option>
-                            <option>Slow left-arm orthodox</option>
-                            <option>Slow left-arm chinaman</option>
                         </select>
                     </div>
                 </div>

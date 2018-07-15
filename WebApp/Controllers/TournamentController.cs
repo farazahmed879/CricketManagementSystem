@@ -19,9 +19,11 @@ namespace WebApp.Controllers
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
 
-        public TournamentController(CricketContext context)
+        public TournamentController(CricketContext context, UserManager<IdentityUser<int>> userManager)
         {
             _context = context;
+            _userManager = userManager;
+           
         }
 
         // GET: Tournaments
@@ -68,8 +70,8 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var users = await _userManager.GetUserAsync(HttpContext.User);
-                //tournament.UserId = users.Id;
+                var users = await _userManager.GetUserAsync(HttpContext.User);
+                tournament.UserId = users.Id;
                 _context.Add(tournament);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

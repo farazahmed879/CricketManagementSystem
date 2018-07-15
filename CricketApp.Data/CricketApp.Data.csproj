@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180714161925_PLayerRole.cs" />
+    <Compile Remove="Migrations\20180714162231_PlayerRoleId.cs" />
+    <Compile Remove="Migrations\20180714163030_playerRoleBattingStyleBowlingStyle.cs" />
+    <Compile Remove="Migrations\20180714163733_deletePLayerRole.cs" />
+    <Compile Remove="Migrations\20180714164611_deletePLayerRole.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.0" PrivateAssets="All" />

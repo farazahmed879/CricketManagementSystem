@@ -55,8 +55,8 @@
 
                 @{ if (ViewBag.HasTeamId != null && ViewBag.HasTeamId)
                     {
-                        <div class="col-md-4">
-                            <label>Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <div class="col-md-4" style="margin-top: 20px">
+                            <label>Team<i class="fa fa-asterisk"  style="color: red" aria-hidden="true"></i></label>
                             <select asp-for="TeamId" asp-items="ViewBag.TeamId" required style="width: 100%" id="teamId" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
@@ -65,7 +65,7 @@
                     }
                     else
                     {
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="margin-top: 20px">
                             <label>Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                             <select asp-for="TeamId" asp-items="ViewBag.TeamId" required style="width: 100%" id="teamId" class="js-example-basic-single">
                                 <option value="">--Select--</option>
@@ -75,7 +75,7 @@
                     }
                 }
 
-                <div class="col-md-4">
+                <div class="col-md-4" style="margin-top: 20px">
                     <label>Gender<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                     <select asp-for="Gender" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                         <option value="">--Select--</option>
@@ -83,7 +83,7 @@
                         <option>Female</option>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" style="margin-top: 20px">
                     <div class="form-group">
                         <label>Date of birth</label>
                         <div class="input-group date">

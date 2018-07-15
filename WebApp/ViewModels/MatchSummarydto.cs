@@ -28,5 +28,6 @@ namespace WebApp.ViewModels
         public bool IsPlayedInning { get; set; }
         public Player Player { get; set; }
         public Match Match { get; set; }
+        public HowOut HowOut { get; set; }
     }
 }
