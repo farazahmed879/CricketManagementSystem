@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebApp.ViewModels.AllPlayerStatisticsdto>
 
 @{
-    ViewData["Title"] = "List of Players";
+    ViewData["Title"] = "Players Record";
 }
 <div class="container-fluid">
     <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
@@ -51,6 +51,12 @@
                             <option>12</option>
                         </select>
                     </div>
+                    <div class="col-xs-6 col-md-4">
+                        <label>Match Type</label>
+                        <select id="MatchTypeId" name="MatchTypeId" asp-items="ViewBag.MatchType" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                            <option value="" selected>--Select--</option>
+                        </select>
+                    </div>
 
                     <div class="col-xs-6 col-md-4">
                         <label>Tournament</label>
@@ -58,11 +64,11 @@
                             <option value="" selected>--Select--</option>
                         </select>
                     </div>
-                    
+
                     <div class="col-xs-6 col-md-4" style="margin-top: 1em">
                         <div class="form-group">
                             <button type="button" id="filterdata" class="btn btn-primary filter-col">
-                                <span class="material-icons">search</span>Search
+                                <span><i class="fas fa-search"></i></span> Search
                             </button>
                         </div>
                     </div>

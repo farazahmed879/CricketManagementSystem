@@ -16,9 +16,12 @@ namespace WebApp
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IHostingEnvironment hostingEnvironment;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
+            this.hostingEnvironment = hostingEnvironment;
         }
 
         public IConfiguration Configuration { get; }
@@ -26,7 +29,6 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("CricketAppConnection");
             services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
                .AddEntityFrameworkStores<CricketContext>()
                .AddDefaultTokenProviders();
@@ -64,8 +66,12 @@ namespace WebApp
                 options.SlidingExpiration = true;
             });
             services.AddMvc();
-            services.AddDbContext<CricketContext>(
-                options => options.UseSqlServer(connectionString));
+            services.AddDbContext<CricketContext>(options =>
+            {
+
+                    options.UseSqlServer(Configuration.GetConnectionString("Production"));
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
@@ -82,7 +88,9 @@ namespace WebApp
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
 
             app.UseStaticFiles();

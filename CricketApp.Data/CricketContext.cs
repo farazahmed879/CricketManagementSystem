@@ -38,15 +38,6 @@ namespace CricketApp.Data
         public DbSet<BowlingStyle> BowlingStyle { get; set; }
         public DbSet<PlayerRole> PlayerRole { get; set; }
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {            
-            optionsBuilder
-                // .UseLoggerFactory(MyConsoleLoggerFactory)
-                .EnableSensitiveDataLogging(true)
-                .UseSqlServer(
-                 "Server =(localdb)\\MSSQLLocalDB; Database = CricketAppDB; Trusted_Connection = True; ");
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -260,6 +260,8 @@ namespace WebApp.Controllers
         // GET: PlayerStatistics
         public IActionResult PlayerStatistics(int playerId, int matchOvers)
         {
+            ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+            try { 
             var connection = _context.Database.GetDbConnection();
             var model = connection.QuerySingle<PlayerStatisticsdto>(
                 "[usp_GetSinglePlayerStatistics]",
@@ -272,15 +274,21 @@ namespace WebApp.Controllers
                 commandType: CommandType.StoredProcedure);
 
             return View(model);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
         // GET: AllPlayerStatistics
         [Authorize(Roles = "Admin , ClubUser")]
-        public IActionResult AllPlayerStatistics(int? teamId, int? season, int? overs, int? position, string status, int? tournamentId, int? opponentTeamId, bool isApi)
+        public IActionResult AllPlayerStatistics(int? teamId, int? season, int? overs, int? position, int? matchTypeId, int? tournamentId, int? opponentTeamId, bool isApi)
         {
             ViewBag.Name = "Players Records";
             ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
             ViewBag.Season = new SelectList(_context.Matches.Select(i => i.Season).ToList().Distinct(), "Season");
             ViewBag.TeamId = new SelectList(_context.Teams, "TeamId", "Team_Name", teamId);
+            ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
             ViewBag.TournamentId = new SelectList(_context.Tournaments, "TournamentId", "TournamentName");
             try
             {
@@ -292,8 +300,8 @@ namespace WebApp.Controllers
                         paramTeamId = teamId,
                         paramSeason = season,
                         paramOvers = overs,
-                        paramPosition = position,
-                        paramStatus = status,
+                        paramPosition = position,                      
+                        paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramOpponentTeamId = opponentTeamId
 

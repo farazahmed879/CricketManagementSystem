@@ -148,6 +148,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             ViewBag.Name = "Edit Match";
+            ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "Name");
             ViewData["TeamId"] = new SelectList(_context.Teams, "TeamId", "Team_Name");
             ViewBag.TournamentId = new SelectList(_context.Tournaments, "TournamentId", "TournamentName");
             var match = await _context.Matches.SingleOrDefaultAsync(m => m.MatchId == id);

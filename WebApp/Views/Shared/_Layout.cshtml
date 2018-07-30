@@ -5,62 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] Score Exec</title>
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="~/bower_components/font-awesome/css/font-awesome.min.css">
-        <!-- Ionicons -->
-        <link rel="stylesheet" href="~/bower_components/Ionicons/css/ionicons.min.css">
-        <!-- jvectormap -->
-        <link rel="stylesheet" href="~/bower_components/jvectormap/jquery-jvectormap.css">
-        <!-- Theme style -->
-        <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
-        <!-- AdminLTE Skins. Choose a skin from the css/skins
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="~/Ionicons/css/ionicons.min.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="~/jvectormap/jquery-jvectormap.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="~/dist/css/skins/_all-skins.min.css">
-        <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-        <link href="~/css/boostrap-wizard.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/css/datatables.responsive.css" />
-       
-        @*OLD*@
-        <link rel="stylesheet" href="~/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css" />
-        @*<link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="~/css/boostrap-wizard.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/datatables.responsive.css" />
+
+    @*OLD*@
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css" />
+    @*<link rel="stylesheet" href="~/css/style.css" />
         <link href= "~/css/Icheck.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.css" />*@
 
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="~/bower_components/font-awesome/css/font-awesome.min.css">
-        <!-- Ionicons -->
-        <link rel="stylesheet" href="~/bower_components/Ionicons/css/ionicons.min.css">
-        <!-- jvectormap -->
-        <link rel="stylesheet" href="~/bower_components/jvectormap/jquery-jvectormap.css">
-        <!-- Theme style -->
-        <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
-        <!-- AdminLTE Skins. Choose a skin from the css/skins
-    folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="~/dist/css/skins/_all-skins.min.css">
-        <link href="~/css/boostrap-wizard.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/css/datatables.responsive.css" />
-      
-
-        @*OLD*@
-        <link rel="stylesheet" href="~/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css" />
-        @*<link rel="stylesheet" href="~/css/style.css" />
-            <link href="~/css/Icheck.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/css/site.css" />*@
-
-
-
-    </environment>
     @RenderSection("styles", false)
 </head>
 <body>
@@ -188,13 +159,13 @@
                         </a>
                     </li>
                     @*<li>
-                        <a asp-controller="Teams" asp-action="RoleManagement">
-                            <i class="fa fa-pie-chart"></i> <span>Role Management</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-green">new</small>
-                            </span>
-                        </a>
-                    </li>*@
+                            <a asp-controller="Teams" asp-action="RoleManagement">
+                                <i class="fa fa-pie-chart"></i> <span>Role Management</span>
+                                <span class="pull-right-container">
+                                    <small class="label pull-right bg-green">new</small>
+                                </span>
+                            </a>
+                        </li>*@
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-pie-chart"></i>
@@ -319,57 +290,29 @@
 
 
 
-    <environment include="Development">
+    <script src="~/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+    <!-- Sparkline -->
+    <script src="~/dist/jquery.sparkline.min.js"></script>
+    <!-- jvectormap  -->
+    <script src="~/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="~/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <!-- SlimScroll -->
+    <script src="~/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- ChartJS -->
+    <script src="~/chart.js/Chart.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="~/dist/js/pages/dashboard2.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/dist/js/demo.js"></script>
+    <script src="~/js/jquery.bootstrap.js"></script>
 
-        <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap 3.3.7 -->
-        <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <script src="~/bower_components/fastclick/lib/fastclick.js"></script>
-        <!-- AdminLTE App -->
-        <script src="~/dist/js/adminlte.min.js"></script>
-        <!-- Sparkline -->
-        <script src="~/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-        <!-- jvectormap  -->
-        <script src="~/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-        <script src="~/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-        <!-- SlimScroll -->
-        <script src="~/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-        <!-- ChartJS -->
-        <script src="~/bower_components/chart.js/Chart.js"></script>
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <script src="~/dist/js/pages/dashboard2.js"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="~/dist/js/demo.js"></script>
-        <script src="~/js/jquery.bootstrap.js"></script>
-
-        <script src="~/js/datatables.responsive.js"></script>
- </environment>
-    <environment exclude="Development">
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap 3.3.7 -->
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <script src="bower_components/fastclick/lib/fastclick.js"></script>
-        <!-- AdminLTE App -->
-        <script src="dist/js/adminlte.min.js"></script>
-        <!-- Sparkline -->
-        <script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-        <!-- jvectormap  -->
-        <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-        <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-        <!-- SlimScroll -->
-        <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-        <!-- ChartJS -->
-        <script src="bower_components/chart.js/Chart.js"></script>
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <script src="dist/js/pages/dashboard2.js"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="dist/js/demo.js"></script>
-        <script src="~/js/jquery.bootstrap.js"></script>
-        <script src="~/js/datatables.responsive.js"></script>
-      
-    </environment>
+    <script src="~/js/datatables.responsive.js"></script>
 
     @RenderSection("Scripts", required: false)
 

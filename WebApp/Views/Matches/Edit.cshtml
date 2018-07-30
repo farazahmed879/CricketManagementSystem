@@ -62,10 +62,8 @@
             </div>
             <div class="col-md-6" style="margin-top: 10px">
                 <label>Match Type<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                <select id="status" asp-for="Status" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                    <option value="" disabled="disabled" selected="selected">--Select--</option>
-                    <option value="Fiendly">Fiendly</option>
-                    <option value="Tournament">Tournament</option>
+                <select id="status" asp-for="MatchTypeId" asp-items="ViewBag.MatchType" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                    <option value="">--Select--</option>
                 </select>
             </div>
             <div id="tourSection" class="col-md-6" style="margin-top: 10px">

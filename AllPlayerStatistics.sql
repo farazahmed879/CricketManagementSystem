@@ -1,9 +1,9 @@
-﻿Create PROCEDURE [usp_GetAllPlayerStatistics]
+﻿Alter PROCEDURE [usp_GetAllPlayerStatistics]
 @paramTeamId AS INT,
 @paramSeason As Int,
 @paramOvers As Int,
 @paramPosition As Int, 
-@paramMatchType As nchar,
+@paramMatchType As Int,
 @paramTournamentId As Int,
 @paramOpponentTeamId As Int
 AS
@@ -29,12 +29,12 @@ BEGIN
 			END As 'StrikeRate',
 
 			CASE WHEN COUNT(cast (Case When IsPlayedInning ='1' Then 1 else null end as float)) - 
-					  COUNT (cast (case when HowOut = 'Not Out' then 1 else null end as float)) = 0
+					  COUNT (cast (case when HowOutId = '14' then 1 else null end as float)) = 0
 				THEN 'N/A'
 			    ELSE CAST(
 							sum(cast (Bat_Runs as float)) / 
 							(cast(COUNT(Case When IsPlayedInning ='1' Then 1 else null end)as float)) - 
-							(cast (COUNT (case when HowOut = 'Not Out' then 1 else null end)as float))
+							(cast (COUNT (case when HowOutId = '14' then 1 else null end)as float))
 						   AS VARCHAR(20)
 						   )
 			END As 'BattingAverage',
@@ -62,11 +62,9 @@ BEGIN
 		 	sum (RunOut) as 'TotalRunOuts',
 			sum (Stump) as 'TotalStumps',
 	
-			Players.Role As 'Role',
+			PlayerRole.Name As 'PlayerRole',
 			Players.Player_Name AS 'PlayerName',
-			Players.TeamId As 'TeamId',
-			Players.BowlingStyle As 'BowlingStyle',
-			Players.BattingStyle As 'BattingStyle',			
+			Players.TeamId As 'TeamId',		
 			Teams.Team_Name As 'TeamName'
 
 	
@@ -74,7 +72,9 @@ BEGIN
 	Inner join Players ON PlayerScores.PlayerId = Players.PlayerId
 	Inner join Teams ON Players.TeamId = Teams.TeamId
 	Inner join Matches ON PlayerScores.MatchId = Matches.MatchId
+	Inner join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
 	left join Tournaments On Matches.TournamentId = Tournaments.TournamentId
+	
 	
 	WHERE (@paramTeamId Is NUll or Players.TeamId = @paramTeamId) And 
 		  (@paramSeason IS NUll OR Matches.Season = @paramSeason)	And
@@ -86,9 +86,7 @@ BEGIN
 	
 	GROUP BY PlayerScores.PlayerId,
 			Players.Player_Name,
-			 Players.Role,
-			 Players.BowlingStyle,
-			 Players.BattingStyle,
+			 PlayerRole.Name,
 			 Players.TeamId,
 			 Teams.Team_Name
 END
@@ -97,4 +95,4 @@ END
 
 execute [usp_GetAllPlayerStatistics] null,null,null,null,null,null,null
 
-select * from Matches
+
