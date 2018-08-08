@@ -1,0 +1,82 @@
+﻿@model CricketApp.Domain.Tournament
+
+@{
+    ViewData["Title"] = "Add Tournament";
+}
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label class="control-label"> Tournament Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <input asp-for="TournamentName" class="form-control" />
+                        <span asp-validation-for="TournamentName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label class="control-label">Organizor</label>
+                        <input asp-for="Organizor" class="form-control" />
+                        <span asp-validation-for="Organizor" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Starting Date</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" asp-for="StartingDate" class="form-control pull-right" id="datepicker">
+                    </div>
+                    <!-- /.input group -->
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+
+    <div class="footer">
+        <div class="container text-center">
+            <div>
+                <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link rel="stylesheet" href="~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <script src="~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        })
+
+        $(function () {
+            $('#BackBtn').click(function () {
+                window.location = '/Tournament/Index'
+            });
+        });
+    </script>
+}
+

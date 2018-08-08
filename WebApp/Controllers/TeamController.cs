@@ -10,16 +10,20 @@ using CricketApp.Domain;
 using System.IO;
 using WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebApp.Controllers
 {
     public class TeamsController : Controller
     {
         private readonly CricketContext _context;
+        private readonly UserManager<IdentityUser<int>> _userManager;
+        private Task<IdentityUser<int>> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        public TeamsController(CricketContext context)
+        public TeamsController(CricketContext context, UserManager<IdentityUser<int>> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Teams
@@ -44,7 +48,7 @@ namespace WebApp.Controllers
                 , page ?? 1, pageSize));
         }
         // GET: RoleManagement/
-        public  IActionResult RoleManagement(int? page)
+        public IActionResult RoleManagement(int? page)
         {
 
             ViewBag.ClubUsers = new SelectList(_context.UserRole
@@ -57,10 +61,10 @@ namespace WebApp.Controllers
                }), "Id", "UserName");
 
 
-         //   ViewBag.ClubUsers = new SelectList(_context.User, "Id", "UserName");
+            //   ViewBag.ClubUsers = new SelectList(_context.User, "Id", "UserName");
 
-            ViewBag.Name = "Role Management";         
-            var RoleManagement =  _context.Teams.ToList();
+            ViewBag.Name = "Role Management";
+            var RoleManagement = _context.Teams.ToList();
             return View(RoleManagement);
         }
 
@@ -108,7 +112,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Teams/Create
-        [Authorize(Roles = "Admin")]
+        
         public IActionResult Create()
         {
             ViewBag.Name = "Add Team";
@@ -134,8 +138,17 @@ namespace WebApp.Controllers
 
                     }
                 }
+               
+
                 team.TeamLogo = fileBytes ?? null;
                 _context.Add(team);
+                var user = await GetCurrentUserAsync();
+                _context.ClubUsers.Add(new ClubUser
+                {
+                    TeamId = team.TeamId,
+                    UserId = user?.Id
+
+                });
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -155,7 +168,7 @@ namespace WebApp.Controllers
             }
         }
         // GET: Teams/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Club Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
 
@@ -178,7 +191,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Club Admin")]
         public async Task<IActionResult> Edit(int id, Team team)
         {
             if (id != team.TeamId)
@@ -238,7 +251,7 @@ namespace WebApp.Controllers
         }
 
         [Route("Team/DeleteConfirmed")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Club Admin")]
         public async Task<IActionResult> DeleteConfirmed(int teamId)
         {
             var team = await _context.Teams.SingleOrDefaultAsync(m => m.TeamId == teamId);

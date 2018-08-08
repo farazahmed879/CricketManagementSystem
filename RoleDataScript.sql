@@ -2,6 +2,8 @@
 INSERT INTO AspNetRoles (Name, NormalizedName)
 VALUES ('Admin','ADMIN');
 INSERT INTO AspNetRoles (Name, NormalizedName)
+VALUES ('Club Admin', 'CLUB ADMIN');
+INSERT INTO AspNetRoles (Name, NormalizedName)
 VALUES ('Club User', 'CLUB USER');
 
 

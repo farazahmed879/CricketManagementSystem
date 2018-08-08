@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using System.Web;
 using CricketApp.Data;
 using CricketApp.Domain;
 using IdentityDemo.Models.AccountViewModels;
@@ -12,6 +14,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RazorHtmlToPdfDemo.Services;
+using WebApp.Extentions;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
@@ -24,18 +29,21 @@ namespace WebApp.Controllers
         private readonly SignInManager<IdentityUser<int>> _signInManager;
         //private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IRazorViewToStringRenderer razorViewToStringRenderer;
 
         public AccountController(
             UserManager<IdentityUser<int>> userManager,
             SignInManager<IdentityUser<int>> signInManager,
             CricketContext cricketContext,
             // IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            IRazorViewToStringRenderer razorViewToStringRenderer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             // _emailSender = emailSender;
             _logger = logger;
+            this.razorViewToStringRenderer = razorViewToStringRenderer;
             _context = cricketContext;
         }
 
@@ -47,6 +55,10 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Login(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -210,8 +222,16 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
-
-            ViewBag.RoleName = new SelectList(_context.Role,"Name");
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var conn = _context.Database.GetDbConnection();
+            _logger.LogInformation($"Database: {conn.Database}");
+            _logger.LogInformation($"Server: {conn.DataSource}");
+            //    var Roles = _context.UserRole.ToList();
+            ViewBag.Teams = new SelectList(_context.Teams, "TeamId", "Team_Name");
+            ViewBag.RoleName = new SelectList(_context.Role, "NormalizedName");
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -224,23 +244,58 @@ namespace WebApp.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser<int> { UserName = model.Email, Email = model.Email };
+                var user = new IdentityUser<int> { UserName = model.UserName, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    // var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                    var url = Request.Host.Value;
+
+                    var link = Url.Action(
+                      "ConfirmEmail",
+                      "Account",
+                      values: new { userId = user.Id, code = code },
+                      protocol: Request.Scheme
+                      );
+
+                    //var link = $"http://{url}/Account/ConfirmEmail?userId={user.Id}&code={code}";
+                    var htmlString = await razorViewToStringRenderer.RenderViewToStringAsync("EmailTemplate", new EmailTemplate
+                    {
+                        Title = "Email Confirmation",
+                        Body = $"<a target=\"_blank\" href=\"{HtmlEncoder.Default.Encode(link)}\">Yes it belongs to me</a>",
+                        Message = " <p>Assalam-o-Alaikum</p> <p>Hello Admin</p> <p>Please confirm, if this user " + model.UserName + " with the email " + model.Email + " belongs to you</P>"
+
+                    });
+                    string adminEmail;
+                    string subject = "Email Confirmation";
+                    if (model.RoleName == "Club Admin")
+                    {
+                        adminEmail = "takecarebudy@gmail.com";
+                    }
+                    else if(model.RoleName == "Club User")
+                    {
+                        adminEmail = _context.ClubUsers
+                           .AsNoTracking()
+                           .Where(i => i.TeamId == model.TeamId)
+                           .Select(i => i.User.Email)
+                           .Single();
+                    }
+                    else
+                    {
+                        adminEmail = "takecarebudy@gmail.com";
+                    }
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
 
                     await _userManager.AddToRoleAsync(user, model.RoleName);
-                    //var users = await _userManager.GetUserAsync(HttpContext.User);
-                    //users.Id;
-                    return RedirectToLocal(returnUrl);
+
+                    await EmailExtensions.Execute(adminEmail, model.UserName, htmlString, subject);
+                 
+                    return RedirectToAction("PendingRequest", "Account");
                 }
                 AddErrors(result);
             }
@@ -251,6 +306,7 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -341,6 +397,10 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (userId == null || code == null)
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
@@ -350,14 +410,69 @@ namespace WebApp.Controllers
             {
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
+           // var id = Int32.Parse(userId);
+
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            if (result.Succeeded)
+            {
+                // var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var url = Request.Host.Value;
+
+                //string Email = _context.User
+                //          .AsNoTracking()
+                //          .Where(i => i.Id == id)
+                //          .Select(i => i.Email)
+                //          .Single();
+
+                var link = Url.Action(
+                  "Login",
+                  "Account",
+                  values: new { email = user.Email},
+                  protocol: Request.Scheme
+                  );
+
+                //var link = $"http://{url}/Account/ConfirmEmail?userId={user.Id}&code={code}";
+                var htmlString = await razorViewToStringRenderer.RenderViewToStringAsync("EmailTemplate", new EmailTemplate
+                {
+                    Title = "Congratulation",
+                    Body = $"<a target=\"_blank\" href=\"{HtmlEncoder.Default.Encode(link)}\">ScoreExec</a>",
+                    Message = " <p>Assalam-o-Alaikum</p> <p>Dear User</p> <p>You are approved by the admin</p> <p>User Name: </P>" +user.UserName +"<p>Email: </p>"+user.Email
+                });
+
+                string subject = "Email Confirmation";
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                await EmailExtensions.Execute(user.Email, user.UserName, htmlString, subject);
+            }
+
+            return RedirectToAction("ApprovedUser", "Account");
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ApprovedUser()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+        public IActionResult PendingRequest()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
         }
 
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -366,6 +481,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
@@ -378,20 +497,50 @@ namespace WebApp.Controllers
                 // For more information on how to enable account confirmation and password reset please
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                var url = Request.Host.Value;
+
+                string adminEmail = model.Email;
+                string subject = "Reset Password";
+
+                var link = $"http://{url}/Account/ResetPassword?userId={user.Id}&code={code}";
+                var htmlString = await razorViewToStringRenderer.RenderViewToStringAsync("EmailTemplate", new EmailTemplate
+                {
+                    Title = "Reset Password",
+                    Body = $"<a target=\"_blank\" href=\"{link}\">Click here</a>",
+                    Message = "<p>Asslam-o-Alaikum</p> <p>Dear User</p> <p>Click the below link to change or reset your passowrd</p>"
+
+                });
+
+                await EmailExtensions.Execute(adminEmail, null, htmlString, subject);
                 //var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
                 //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+                //$"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                return RedirectToAction(nameof(PendingResertPasswordRequest));
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult PendingResertPasswordRequest()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
         }
 
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -399,6 +548,10 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (code == null)
             {
                 throw new ApplicationException("A code must be supplied for password reset.");
@@ -412,6 +565,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -435,6 +592,10 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -467,7 +628,7 @@ namespace WebApp.Controllers
             }
         }
 
-    
+
 
         [HttpGet]
         public IActionResult IsEmailAvailable(string email)
@@ -475,6 +636,14 @@ namespace WebApp.Controllers
             return Json(_context.User
                 .AsNoTracking()
                 .Any(i => i.Email == email));
+        }
+
+        [HttpGet]
+        public IActionResult IsUserAvailable(string user)
+        {
+            return Json(_context.User
+                .AsNoTracking()
+                .Any(i => i.UserName == user));
         }
 
         #endregion

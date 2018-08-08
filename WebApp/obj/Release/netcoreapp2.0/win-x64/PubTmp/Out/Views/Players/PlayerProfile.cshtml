@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CricketApp.Domain.Player>
+
+@{
+    ViewData["Title"] = "List of Players";
+}
+<div class="container-fluid">
+
+
+    <div class="form-group">
+        <a asp-controller="Players" class="btn btn-primary" asp-action="Create">Add</a>
+    </div>
+
+
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <div class="dl-horizontal">
+                <div class="col-md-2">
+                    <a asp-controller="Players" title="@item.Player_Name" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">
+                        @{
+                            var base64 = @item.PlayerLogo == null || !item.PlayerLogo.Any() ? "" : Convert.ToBase64String(@item.PlayerLogo);
+                            <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' onclick="playerStatistics" id="PlayerImg">
+                            </div>
+                        }
+                    </a>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="wizard-header">
+            <h3 class="wizard-title">
+                No Player Found
+            </h3>
+        </div>
+
+    }
+
+
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('#AddBtn').click(function () {
+                window.location = '/Players/Create'
+            });
+        });
+
+        $(function () {
+            $('#playerStatistics').click(function () {
+                window.location = '/Players/PlayerStatistics'
+            });
+        });
+    </script>
+    <style>
+        #PlayerImg {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 160px;
+            width: 140px;
+            border: 1px solid #bbb;
+        }
+    </style>
+
+}

@@ -1,4 +1,3 @@
-D:\Dot Net MVC App\CricketApp\SomeUI\obj\Debug\netcoreapp2.0\SomeUI.csprojResolveAssemblyReference.cache
 D:\Dot Net MVC App\CricketApp\SomeUI\obj\Debug\netcoreapp2.0\SomeUI.csproj.CoreCompileInputs.cache
 D:\Dot Net MVC App\CricketApp\SomeUI\obj\Debug\netcoreapp2.0\SomeUI.AssemblyInfoInputs.cache
 D:\Dot Net MVC App\CricketApp\SomeUI\obj\Debug\netcoreapp2.0\SomeUI.AssemblyInfo.cs
@@ -15,3 +14,5 @@ D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\WebApp.dll
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\WebApp.pdb
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\CricketApp.Domain.dll
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Debug\netcoreapp2.0\CricketApp.Domain.pdb
+D:\Dot Net MVC App\CricketApp\SomeUI\obj\Debug\netcoreapp2.0\SomeUI.csprojAssemblyReference.cache
+D:\Dot Net MVC App\CricketApp\SomeUI\obj\Debug\netcoreapp2.0\SomeUI.csproj.CopyComplete

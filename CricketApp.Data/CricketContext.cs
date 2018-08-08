@@ -37,6 +37,7 @@ namespace CricketApp.Data
         public DbSet<BattingStyle> BattingStyle { get; set; }
         public DbSet<BowlingStyle> BowlingStyle { get; set; }
         public DbSet<PlayerRole> PlayerRole { get; set; }
+        public DbSet<ClubUser> ClubUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -74,12 +75,7 @@ namespace CricketApp.Data
                 .IsRequired();
             });
 
-            modelBuilder.Entity<Team>(entity =>
-            {
-                entity.HasIndex(i => i.ClubUserId)
-                    .IsUnique()
-                    .HasFilter("ClubUserId is not null");
-            });
+         
 
             modelBuilder.Entity<UserRole>(entity =>
             {

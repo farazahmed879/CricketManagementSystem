@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Account\ForgotPassword.cshtml" />
     <Content Remove="Views\Account\Register.cshtml" />
+    <Content Remove="Views\Account\ResetPassword.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -1982,6 +1984,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.0.3" />    
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
+    <PackageReference Include="SendGrid" Version="9.9.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.3.0" />
   </ItemGroup>
 
@@ -1990,6 +1995,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Account\ForgotPassword.cshtml" />
+    <None Include="Views\Account\ResetPassword.cshtml" />
     <None Include="Views\Account\Register.cshtml" />
     <None Include="wwwroot\bower_components\bootstrap-colorpicker\CONTRIBUTING.md" />
     <None Include="wwwroot\bower_components\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.css.map" />

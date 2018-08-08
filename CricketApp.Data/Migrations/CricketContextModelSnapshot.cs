@@ -44,6 +44,24 @@ namespace CricketApp.Data.Migrations
                     b.ToTable("BowlingStyle");
                 });
 
+            modelBuilder.Entity("CricketApp.Domain.ClubUser", b =>
+                {
+                    b.Property<int>("ClubUserId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("TeamId");
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("ClubUserId");
+
+                    b.HasIndex("TeamId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ClubUsers");
+                });
+
             modelBuilder.Entity("CricketApp.Domain.FallOfWicket", b =>
                 {
                     b.Property<int>("FallOfWicketId")
@@ -274,7 +292,7 @@ namespace CricketApp.Data.Migrations
                     b.Property<string>("City")
                         .IsRequired();
 
-                    b.Property<int?>("ClubUserId");
+                    b.Property<string>("Contact");
 
                     b.Property<bool>("IsRegistered");
 
@@ -289,10 +307,6 @@ namespace CricketApp.Data.Migrations
                     b.Property<string>("Zone");
 
                     b.HasKey("TeamId");
-
-                    b.HasIndex("ClubUserId")
-                        .IsUnique()
-                        .HasFilter("ClubUserId is not null");
 
                     b.ToTable("Teams");
                 });
@@ -512,6 +526,18 @@ namespace CricketApp.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CricketApp.Domain.ClubUser", b =>
+                {
+                    b.HasOne("CricketApp.Domain.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("CricketApp.Domain.FallOfWicket", b =>
                 {
                     b.HasOne("CricketApp.Domain.Match", "Match")
@@ -582,13 +608,6 @@ namespace CricketApp.Data.Migrations
                     b.HasOne("CricketApp.Domain.Player", "Player")
                         .WithMany()
                         .HasForeignKey("PlayerId");
-                });
-
-            modelBuilder.Entity("CricketApp.Domain.Team", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "ClubUser")
-                        .WithMany()
-                        .HasForeignKey("ClubUserId");
                 });
 
             modelBuilder.Entity("CricketApp.Domain.TeamScore", b =>

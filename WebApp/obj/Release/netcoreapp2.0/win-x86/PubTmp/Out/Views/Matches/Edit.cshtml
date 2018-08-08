@@ -1,0 +1,199 @@
+﻿@model CricketApp.Domain.Match
+
+@{
+    ViewData["Title"] = "Edit Match";
+}
+<div class="container-fluid">
+
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="MatchId" />
+        <div class="col-md-8">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="GroundName" class="control-label">Ground Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <input asp-for="GroundName" required class="form-control" />
+                        <span asp-validation-for="GroundName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="Place" class="control-label">Place<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <input asp-for="Place" required class="form-control" />
+                        <span asp-validation-for="Place" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="Season" class="control-label">Season<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <input asp-for="Season" required type="number" class="form-control" />
+                        <span asp-validation-for="Season" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="MatchOvers" class="control-label">Overs<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <input asp-for="MatchOvers" required type="number" class="form-control" />
+                        <span asp-validation-for="MatchOvers" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label>First Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" style="width: 100%" placeholder="--Select Team--" class="js-example-basic-single">
+                    <option value="">--Select Team--</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label>Second Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" style="width: 100%" placeholder="--Select Team--" class="js-example-basic-single">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+            <div class="col-md-6" style="margin-top: 10px">
+                <label>Match Type<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                <select id="status" asp-for="MatchTypeId" asp-items="ViewBag.MatchType" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+            <div id="tourSection" class="col-md-6" style="margin-top: 10px">
+                <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
+                    <option value="" disabled="disabled">--Select--</option>
+                </select>
+            </div>
+            <div class="col-md-6" style="margin-top: 10px">
+                <div class="form-group">
+                    <label>Date of Match</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" asp-for="DateOfMatch" class="form-control pull-right" id="datepicker">
+                    </div>
+                    <!-- /.input group -->
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 10px">
+                <div class="form-group">
+                    <div class="form-group label-floating">
+                        <label asp-for="Result" class="control-label">Result<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <input asp-for="Result" required type="text" class="form-control" />
+                        <span asp-validation-for="Result" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        @{
+                            var base64 = Model.MatchLogo == null || !Model.MatchLogo.Any() ? "" : Convert.ToBase64String(Model.MatchLogo);
+                            <div class="img-responsive" id="Img" style='margin-bottom: 1em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                        }
+                        <label asp-for="MatchImage" class="btn btn-primary">
+                            <i class="far fa-images"> Upload</i> <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<div class="footer">
+    <div class="container text-center">
+        <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link rel="stylesheet" href="~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/plugins/iCheck/icheck.min.js"></script>
+    <style>
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 160px;
+            width: 200px;
+            border: 1px solid #bbb;
+        }
+    </style>
+    <script>
+        //Select2
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+        $(function () {
+            $('#BackBtn').click(function () {
+                window.location = '/Matches/Index'
+            });
+        });
+
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        })
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    //$('#PlayerImg').attr('src', e.target.result);
+                    const MatchImg = document.getElementById('Img');
+                    MatchImg.style.backgroundImage = "url(" + e.target.result + ")";
+                    MatchImg.style.backgroundPosition = "cover";
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        const change = () => {
+            if ($("#status").val() === "Tournament") {
+                $("#tourSection").show();
+            }
+            else {
+
+                $("#tourSection").hide();
+                document.getElementById("TournamentId").value = "";
+            }
+        }
+
+        $('#status').on('change', change);
+        change();
+
+        $("#MatchImage").change(function () {
+            readURL(this);
+        });
+
+
+    </script>
+}

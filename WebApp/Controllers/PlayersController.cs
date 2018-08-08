@@ -90,7 +90,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Players/Create
-        [Authorize(Roles = "Admin , ClubUser")]
+        
         public IActionResult Create(int? teamId)
         {
             ViewBag.PlayerRole = new SelectList(_context.PlayerRole, "PlayerRoleId", "Name");
@@ -117,7 +117,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin , ClubUser")]
+       
         public async Task<IActionResult> Create(Player player)
         {
             if (ModelState.IsValid)

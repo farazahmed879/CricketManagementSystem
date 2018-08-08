@@ -1,0 +1,623 @@
+﻿@model WebApp.ViewModels.ScoreCarddto
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-2">
+                    <label style="width: 100%" disabled="disabled">@ViewBag.HomeTeam</label>
+                </div>
+                <div class="col-sm-1">
+                    <p>Vs</p>
+                </div>
+                <div class="col-sm-2">
+                    <label style="width: 100%" disabled="disabled">@ViewBag.OpponentTeam</label>
+                </div>
+            </div>
+        </div>
+        @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any() || Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any() || Model.TeamScoreCard != null && Model.TeamScoreCard.Any())
+        {
+            <div class="form-group">
+                <a class="btn btn-primary" style="width: 100%" button="button" asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Edit</a>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <a class="btn btn-primary" style="width: 100%" button="button" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Add</a>
+            </div>
+        }
+
+
+        <div class="col-md-12">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li><a style="width: 100%" href="#tab_1" data-toggle="tab"><h4 class="fas fa-flag-checkered">@ViewBag.HomeTeam</h4></a></li>
+                    <li><a href="#tab_2" style="width: 100%" data-toggle="tab"><h4 class="far fa-flag">@ViewBag.OpponentTeam</h4></a></li>
+                    <li><a href="#tab_3" style="width: 100%" data-toggle="tab"><h4 class="fas fa-check">Match Summary</h4></a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
+                        {
+
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            S.No
+                                        </th>
+                                        <th>
+                                            Player Name
+                                        </th>
+                                        <th>
+                                            Runs
+                                        </th>
+                                        <th>
+                                            Balls
+                                        </th>
+                                        <th>
+                                            St. Rate
+                                        </th>
+                                        <th>
+                                            How Out
+                                        </th>
+                                        <th>
+                                            Overs
+                                        </th>
+                                        <th>
+                                            Runs
+                                        </th>
+                                        <th>
+                                            Wickets
+                                        </th>
+                                        <th>
+                                            Econ
+                                        </th>
+
+                                        <th>
+                                            Stump
+                                        </th>
+                                        <th>
+                                            Catch
+                                        </th>
+                                        <th>
+                                            Maiden
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.HomeTeamScoreCard)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Position)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Bat_Runs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Bat_Balls)
+                                            </td>
+                                            <td>
+                                                @{
+
+                                                    var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
+
+                                                    <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HowOut.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Overs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Ball_Runs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Wickets)
+                                            </td>
+                                            <td>
+                                                @{
+
+                                                    var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
+
+                                                    <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Stump)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Catches)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Maiden)
+                                            </td>
+                                            <td>
+                                                <a data-placement="top" style="cursor: pointer" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i class="fas fa-walking"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        }
+                        else
+                        {
+                            <div class="wizard-header">
+                                <h3 class="wizard-title">
+                                    <i class="far fa-frown"> Record is not Inserted</i>
+                                </h3>
+                            </div>
+
+                        }
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_2">
+                        @if (Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any())
+                        {
+
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            S.No
+                                        </th>
+                                        <th>
+                                            Player Name
+                                        </th>
+                                        <th>
+                                            Runs
+                                        </th>
+                                        <th>
+                                            Balls
+                                        </th>
+                                        <th>
+                                            St. Rate
+                                        </th>
+                                        <th>
+                                            How Out
+                                        </th>
+                                        <th>
+                                            Overs
+                                        </th>
+                                        <th>
+                                            Runs
+                                        </th>
+                                        <th>
+                                            Wickets
+                                        </th>
+                                        <th>
+                                            Econ
+                                        </th>
+
+                                        <th>
+                                            Stump
+                                        </th>
+                                        <th>
+                                            Catch
+                                        </th>
+                                        <th>
+                                            Maiden
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OpponentTeamScoreCard)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Position)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Bat_Runs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Bat_Balls)
+                                            </td>
+                                            <td>
+                                                @{
+
+                                                    var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
+
+                                                    <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HowOut.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Overs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Ball_Runs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Wickets)
+                                            </td>
+                                            <td>
+                                                @{
+
+                                                    var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
+
+                                                    <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Stump)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Catches)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Maiden)
+                                            </td>
+                                            <td>
+                                                <a data-placement="top" style="cursor: pointer" id="scoreCard" title="Add Player Score" data-toggle="modal" onclick="Player(@item.PlayerScoreId)" data-target="#PlayerScoreModal"><i class="fas fa-walking"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        }
+                        else
+                        {
+                            <div class="wizard-header">
+                                <h3 class="wizard-title">
+                                    <i class="far fa-frown"> Record is not Inserted</i>
+                                </h3>
+                            </div>
+
+                        }
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_3">
+                        @if (Model.TeamScoreCard != null && Model.TeamScoreCard.Any())
+                        {
+
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Team Name
+                                        </th>
+                                        <th>
+                                            Total Score
+                                        </th>
+                                        <th>
+                                            Given Extras
+                                        </th>
+                                        <th>
+                                            Wide Balls
+                                        </th>
+                                        <th>
+                                            No Balls
+                                        </th>
+                                        <th>
+                                            Byes
+                                        </th>
+                                        <th>
+                                            Leg Byes
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.TeamScoreCard)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Team.Team_Name)
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TotalScore)
+                                            </td>
+                                            <td>
+                                                @{
+
+                                                    var TotalExtras = item.Wideballs + item.NoBalls + item.Byes + item.LegByes;
+
+                                                    <span>@(TotalExtras)</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Wideballs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NoBalls)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Byes)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LegByes)
+                                            </td>
+
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        }
+                        else
+                        {
+                            <div class="wizard-header">
+                                <h3 class="wizard-title">
+                                    <i class="far fa-frown"> Record is not Inserted</i>
+                                </h3>
+                            </div>
+
+                        }
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
+        </div>
+    </div>
+</div>
+<div id="PlayerScoreModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Score</h4>
+            </div>
+            <div class="modal-body">
+                <div id="rootwizard">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <div class="container">
+                                <ul>
+                                    <li><a href="#batting" data-toggle="tab">Batting</a></li>
+                                    <li><a href="#bowlling" data-toggle="tab">Bowling</a></li>
+                                    <li><a href="#fielding" data-toggle="tab">Fielding</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="batting">
+                            <input type="hidden" id="PlayerScoreId" />
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Runs</label>
+                                        <input id="battingRuns" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Balls</label>
+                                        <input id="battingBalls" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">4s</label>
+                                        <input id="fours" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">6s</label>
+                                        <input id="sixes" type="number" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="bowlling">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Overs</label>
+                                        <input id="overs" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Runs</label>
+                                        <input id="bowlingRuns" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Wickets</label>
+                                        <input id="wickets" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Maidens</label>
+                                        <input id="maidens" type="number" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="fielding">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Catches</label>
+                                        <input id="catches" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Run Out</label>
+                                        <input id="runOuts" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Stump</label>
+                                        <input id="stumps" type="number" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <ul class="pager wizard">
+                        <li class="previous"><a href="#">Previous</a></li>
+                        <li class="next"><a href="#">Next</a></li>
+                    </ul>
+                    <input id="btnFinish" type='button' class='btn btn-previous btn-fill btn-primary btn-wd' data-dismiss="modal" value='Finish' />
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+
+        $(document).ready(function () {
+            $('#rootwizard').bootstrapWizard();
+        });
+
+        $(function () {
+            $('#AddBtn').click(function () {
+                window.location = '/PlayerScores/Create'
+            });
+        });
+        $(function () {
+            $('#EditBtn').click(function () {
+                window.location = '/PlayerScores/Edit'
+            });
+        });
+        const postData = async () => {
+            const battingRun = document.getElementById('battingRuns').value;
+            const battingBall = document.getElementById('battingBalls').value;
+            const battingFour = document.getElementById('fours').value;
+            const battingSix = document.getElementById('sixes').value;
+            const bowlingOver = document.getElementById('overs').value;
+            const bowlingRun = document.getElementById('bowlingRuns').value;
+            const bowlingWicket = document.getElementById('wickets').value;
+            const bowlingMaiden = document.getElementById('maidens').value;
+            const fieldingCatch = document.getElementById('catches').value;
+            const fieldingRunOut = document.getElementById('runOuts').value;
+            const fieldingStump = document.getElementById('stumps').value;
+            const params = new URLSearchParams(location.href);
+            const PlayerScoreId = document.getElementById('PlayerScoreId').value;
+            const model = {
+                bat_Runs: Number(battingRun) || 0,
+                bat_Balls: Number(battingBall) || 0,
+                four: Number(battingFour) || 0,
+                six: Number(battingSix) || 0,
+                overs: Number(bowlingOver) || 0,
+                ball_Runs: Number(bowlingRun) || 0,
+                wickets: Number(bowlingWicket) || 0,
+                maiden: Number(bowlingMaiden) || 0,
+                catch: Number(fieldingCatch) || 0,
+                runOut: Number(fieldingRunOut) || 0,
+                stump: Number(fieldingStump) || 0,
+                PlayerScoreId: Number(PlayerScoreId),
+            };
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            const response = await fetch('/PlayerScores/PlayerScoreModal', {
+                method: "POST",
+                body: JSON.stringify(model),
+                credentials: 'same-origin',
+                headers: header
+            });
+
+            if (response.ok) {
+                window.location.reload();
+                return;
+            } else {
+                alert("Error");
+            }
+        };
+
+        $("#btnFinish")
+            .off()
+            .on("click", async () => await postData());
+
+
+
+        //function editplayerscore(playerscoreid) {
+        //    var playerscoreid = playerscoreid
+
+        //    const response = fetch(`/Teams/Index?playerscoreid=${playerscoreid}`, {
+        //        credentials: 'same-origin'
+        //    });
+        //}
+
+
+
+        function Player(PlayerScoreId) {
+
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            fetch(`/PlayerScores/GetPlayerScoreModal?playerScoreId=${PlayerScoreId}`, {
+                credentials: 'same-origin',
+                headers: header
+            })
+                .then(response => {
+                    if (response.ok) {
+                        response.json()
+                            .then(json => {
+                                document.getElementById("battingRuns").value = json[0].bat_Runs;
+                                document.getElementById("battingBalls").value = json[0].bat_Balls;
+                                document.getElementById("fours").value = json[0].four;
+                                document.getElementById("sixes").value = json[0].six;
+                                document.getElementById("overs").value = json[0].overs;
+                                document.getElementById("bowlingRuns").value = json[0].ball_Runs;
+                                document.getElementById("wickets").value = json[0].wickets;
+                                document.getElementById("maidens").value = json[0].maiden;
+                                document.getElementById("catches").value = json[0].catches;
+                                document.getElementById("runOuts").value = json[0].runOut;
+                                document.getElementById("stumps").value = json[0].stump;
+                                document.getElementById("PlayerScoreId").value = json[0].playerScoreId;
+
+
+                            })
+                            .catch(err => {
+                                console.error(err);
+                            })
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        }
+
+    </script>
+
+}

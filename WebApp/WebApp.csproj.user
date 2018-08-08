@@ -18,5 +18,6 @@
     <NameOfLastUsedPublishProfile>WebApp20180716085442 - Web Deploy</NameOfLastUsedPublishProfile>
     <ShowAllFiles>false</ShowAllFiles>
     <ToolsVersionPromptShown>0.0</ToolsVersionPromptShown>
+    <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
   </PropertyGroup>
 </Project>

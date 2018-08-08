@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RazorHtmlToPdfDemo.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace WebApp
@@ -29,7 +30,11 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
+            services.AddTransient<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
+            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(config =>
+            {
+                config.SignIn.RequireConfirmedEmail = true;
+            })
                .AddEntityFrameworkStores<CricketContext>()
                .AddDefaultTokenProviders();
 
@@ -69,7 +74,7 @@ namespace WebApp
             services.AddDbContext<CricketContext>(options =>
             {
 
-                    options.UseSqlServer(Configuration.GetConnectionString("Production"));
+                options.UseSqlServer(Configuration.GetConnectionString("Production"));
             });
 
             services.AddSwaggerGen(c =>

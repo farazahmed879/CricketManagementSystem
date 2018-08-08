@@ -25,6 +25,7 @@ namespace CricketApp.Domain
         public string Team_Name { get; set; }
         public string Place { get; set; }
         public string Zone { get; set; }
+        public string Contact { get; set; }
         public bool IsRegistered { get; set; }
         [Required]
         public string City { get; set; }
@@ -38,8 +39,7 @@ namespace CricketApp.Domain
         public List<Match> HomeTeamMatches { get; set; }
         public List<TeamScore> TeamScores { get; set; }
         public List<FallOfWicket> FallOfWickets { get; set; }
-        public IdentityUser<int> ClubUser { get; set; }
-        public int? ClubUserId { get; set; }
+        
 
     }
 }

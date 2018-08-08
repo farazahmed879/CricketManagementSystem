@@ -1,0 +1,130 @@
+﻿@model IEnumerable<CricketApp.Domain.Team>
+
+@{
+    ViewData["Title"] = "Teams";
+}
+<div class="container-fluid">
+
+    <div class="table-responsive">
+        <table id="RoleManagementTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Club User
+                    </th>
+                    <th>
+                        Team
+                    </th>
+                    <th>
+                        Zone
+                    </th>
+                    <th>
+                        ISRegistered
+                    </th>
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <select asp-items="ViewBag.ClubUsers" style="width: 100%" id="ClubUserId" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Team_Name)
+
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Zone)
+                        </td>
+                        <td>
+                            @if (item.IsRegistered)
+                            {
+                                <p>Yes</p>
+
+                            }
+                            else
+                            {
+                                <p>No</p>
+
+                            }
+                        </td>
+
+                        <td>
+                            <button type="button" value="Save" class="btn btn-info dropdown-toggle" asp-route-teamId="@item.TeamId">
+                                Save
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+@section Scripts{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script src="~/plugins/iCheck/icheck.min.js"></script>
+    <style>
+        td {
+            text-align: center !important;
+        }
+
+        th {
+            text-align: center !important;
+        }
+
+        /*.btn-disabled,
+        .btn-disabled[disabled] {
+            opacity: .4;
+            cursor: default !important;
+            pointer-events: none;
+        }*/
+    </style>
+    <script>
+
+
+        //Select2
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+
+        var responsiveHelper;
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
+        var tableElement = $('#RoleManagementTable');
+
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            }
+        });
+
+                                                                                                               //}
+
+    </script>
+
+}
