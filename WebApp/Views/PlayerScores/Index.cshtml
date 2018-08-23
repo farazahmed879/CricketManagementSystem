@@ -16,18 +16,27 @@
                 </div>
             </div>
         </div>
-        @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any() || Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any() || Model.TeamScoreCard != null && Model.TeamScoreCard.Any())
+
+
+
+        @if (User.Identity.IsAuthenticated)
         {
-            <div class="form-group">
-                <a class="btn btn-primary" style="width: 100%" button="button" asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Edit</a>
-            </div>
+
+            if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any() || Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any() || Model.TeamScoreCard != null && Model.TeamScoreCard.Any() || Model.FallOfWicket != null && Model.FallOfWicket.Any())
+            {
+                <div class="form-group">
+                    <a class="btn btn-primary" style="width: 100%" button="button" asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Edit</a>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <a class="btn btn-primary" style="width: 100%" button="button" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Add</a>
+                </div>
+            }
+
         }
-        else
-        {
-            <div class="form-group">
-                <a class="btn btn-primary" style="width: 100%" button="button" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Add</a>
-            </div>
-        }
+
 
 
         <div class="col-md-12">
@@ -114,7 +123,7 @@
                                                 }
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.HowOut.Name)
+                                                @Html.DisplayFor(modelItem => item.HowOutName)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Overs)
@@ -143,9 +152,14 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Maiden)
                                             </td>
-                                            <td>
-                                                <a data-placement="top" style="cursor: pointer" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i class="fas fa-walking"></i></a>
-                                            </td>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <td>
+                                                    <a data-placement="top" style="cursor: pointer" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i class="fas fa-walking"></i></a>
+                                                </td>
+
+                                            }
+
                                         </tr>
                                     }
                                 </tbody>
@@ -238,7 +252,7 @@
                                                 }
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.HowOut.Name)
+                                                @Html.DisplayFor(modelItem => item.HowOutName)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Overs)
@@ -323,7 +337,7 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Team.Team_Name)
+                                                @Html.DisplayFor(modelItem => item.TeamName)
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.TotalScore)
                                             </td>
@@ -616,6 +630,30 @@
                 .catch(err => {
                     console.error(err);
                 });
+        }
+
+
+        function OpponentTeam(form) {
+            try {
+                var formData = $("#OpponentTeamData").serialize();
+                $.ajax(`/PLayerScores/Save`, {
+                    data: formData,
+                    headers: {
+                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                    },
+                    method: "POST"
+                }).done(function (response) {
+                    if (!response) {
+                        alert("Record inserted successfully");
+                    }
+                }).fail(function () {
+                    alert("Record can not be inserted");
+                });
+
+            } catch (ex) {
+                console.error(ex);
+            }
+
         }
 
     </script>

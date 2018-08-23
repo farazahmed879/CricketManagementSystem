@@ -74,7 +74,7 @@
                         </div>
                         <div class="col-md-6" style="margin-top: 10px">
                             <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" required  style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
+                            <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" required style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
                         </div>
@@ -85,7 +85,13 @@
 
                         <div class="col-md-6" style="margin-top: 10px">
                             <label>Match Type<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select id="status" asp-for="MatchTypeId" asp-items="ViewBag.MatchType" required  placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                            <select id="MatchTypeId" asp-for="MatchTypeId" asp-items="ViewBag.MatchType" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 10px" id="TourSection">
+                            <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" required style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
                         </div>
@@ -171,6 +177,19 @@
         $('#datepicker').datepicker({
             autoclose: true
         })
+
+        document.getElementById('TourSection').style.visibility = 'hidden';
+        $("#MatchTypeId").change(function () {
+            if ($('#MatchTypeId').val() === "2") {
+                document.getElementById('TourSection').style.visibility = 'visible';
+
+            }
+            else {
+                document.getElementById('TourSection').style.visibility = 'hidden';
+                document.getElementById('TourSection').value = "";
+            }
+        });
+
         $(function () {
             $('#BackBtn').click(function () {
                 window.location = '/Matches/Index'

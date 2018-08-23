@@ -1,0 +1,390 @@
+﻿@model PaginatedList<CricketApp.Domain.Match>
+
+@{
+    ViewData["Title"] = "Matches";
+}
+<div class="container-fluid">
+
+
+    <div class="form-group">
+        <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
+            <div class="panel-body">
+                <form class="form-inline" role="form" id="Filters">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <label>First Inning</label>
+                            <select id="homeTeamId" name="homeTeamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <label>
+                                Second Inning
+                            </label>
+                            <select id="opponentTeamId" name="opponentTeamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group label-floating" style="width: 100%;">
+                                <label class="control-label">Overs</label>
+                                <select id="matchOvers" name="matchOvers" asp-items="ViewBag.Overs" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                    <option value="">--Select--</option>
+                                </select>
+                            </div>
+                        </div>
+                        @*<div class="col-xs-6 col-md-3">
+                                <label>Result</label>
+                                <select id="result" name="result" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                    <option value="">--Select--</option>
+                                    <option>Win</option>
+                                    <option>Loss</option>
+                                    <option>Tie</option>
+                                </select>
+                            </div>*@
+                        @*<div id="clear"></div>*@
+
+                        <div class="col-xs-6 col-md-3">
+                            <label>Type</label>
+                            <select id="matchType" placeholder="--Select--" asp-items="ViewBag.MatchTypeId" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div id="tourSection" class="col-xs-6 col-md-3">
+                            <label>Tournament</label>
+                            <select id="tournamentId" name="tournamentId" asp-items="ViewBag.TournamentId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+
+
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group label-floating" style="width: 100%;">
+                                <label class="control-label">Season</label>
+                                <select id="season" name="season" asp-items="ViewBag.Season" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                    <option value="">--Select--</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <button type="submit" id="filterdata" class="btn btn-primary filter-col">
+                                    <span><i class="fas fa-search"></i></span> Search
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+            Advanced Search
+        </button>
+    </div>
+    @*Filter*@
+
+    <div class="form-group">
+        <a asp-controller="Matches" class="btn btn-primary" asp-action="Create">Add</a>
+    </div>
+
+    <div class="table-responsive">
+        <table id="MatchTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Ground
+                    </th>
+
+                    <th>
+                        First Inning
+                    </th>
+                    <th>
+                        Second Inning
+                    </th>
+                    <th>
+                        Match Summary
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Overs
+                    </th>
+
+                    <th>
+                        Result
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GroundName)
+                        </td>
+
+                        <td>
+
+                            @if (item.PlayerScores.Any() && item.PlayerScores.Any(i => i.Player.TeamId == item.HomeTeamId))
+                            {
+                                @item.HomeTeam.Team_Name<span class="label  pull-right label-success"><i class="fas fa-check"></i></span>
+
+                            }
+                            else
+                            {
+                                @item.HomeTeam.Team_Name <span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
+
+                            }
+
+                        </td>
+                        <td>
+
+                            @*@if (item.PlayerScores.Any() && item.PlayerScores.Any(i => i.Player.TeamId == item.OppponentTeamId))
+                                {
+                                    @item.OppponentTeam.Team_Name <span class="label pull-right label-success"><i class="fas fa-check"></i></span>
+
+                                }
+                                else
+                                {
+                                    @item.OppponentTeam.Team_Name<span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
+
+                                }*@
+                        </td>
+                        <td>
+
+                            @if (item.TeamScores.Any() && item.TeamScores.Any(i => i.MatchId == item.MatchId))
+                            {
+                                <h1 class="label label-success">Read<i class="fas fa-check"></i></h1>
+
+                            }
+                            else
+                            {
+                                <h3 class="label label-warning">Pending<i class="fas fa-question"></i></h3>
+
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MatchType.MatchTypeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfMatch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MatchOvers)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Result)
+                        </td>
+
+                        <td>
+                            <div class="col-md-12">
+                                <div class="btn-group">
+                                    <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Score Card">Score Card </a>
+
+                                    @*<a >
+                                            <i class="fas fa-walking">Score Card</i>
+                                        </a>*@
+
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a data-placement="top" class="btn btn-default" data-toggle="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId"><i class="fas fa-edit">Edit</i></a></li>
+                                        <li><a data-placement="top" class="btn btn-default" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-id="@item.MatchId"><i class="fas fa-info-circle">Detail</i></a></li>
+                                        <li><a data-placement="top" class="btn btn-default" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.MatchId)" class="fas fa-trash-alt">Delete</i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+    <nav class="navbar navbar-light bg-light">
+        <form class="form-inline">
+            <a asp-action="Index" class="@prevDisabled"
+               asp-route-page="@(Model.PageIndex - 1)">
+                <i style="font-size:30px" class="far fa-hand-point-left"></i>
+            </a>
+            <a asp-action="Index"
+               asp-route-page="@(Model.PageIndex + 1)"
+               class="@nextDisabled">
+                <i style="font-size:30px" class="far fa-hand-point-right"></i>
+            </a>
+        </form>
+    </nav>
+
+</div>
+<div id="DeleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <input type="hidden" id="MatchId" />
+                <h3>Are you sure you want to delete this?</h3>
+
+                <div class="wizard-footer">
+                    <div class="pull-right">
+
+                    </div>
+                    <div class="pull-left">
+                        <input type='button' class='btn btn-previous btn-fill btn-primary btn-wd' data-dismiss="modal" value='Cancel' />
+                        <input id="deleteBtn" type="button" class='btn btn-finish btn-fill btn-primary btn-wd' data-dismiss="modal" value='Delete' />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script>
+        //Select2
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        const change = () => {
+            if ($("#matchType").val() === "1") {
+                $("#tourSection").show();
+            }
+            else {
+                $("#tourSection").hide();
+                //  document.getElementById("TournamentId").value = "";
+            }
+        }
+        $('#matchType').on('change', change);
+        change();
+
+        $(function () {
+            $('#AddNewMatchBtn').click(function () {
+                window.location = '/Matches/Create'
+            });
+        });
+        var responsiveHelper;
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
+
+        var tableElement = $('#MatchTable');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            }
+        });
+
+
+        $(function () {
+            $('#filterdata').click(async function () {
+                var formElement = document.getElementById("Filters");
+                var formData = new FormData(formElement);
+
+                var homeTeamId = formData.get("homeTeamId")
+                var opponentTeamId = formData.get("opponentTeamId")
+                var matchTypeId = formData.get("matchTypeId")
+                var tournamentId = formData.get("tournamentId")
+                var matchTypeId = formData.get("matchType")
+                var season = formData.get("season")
+                var matchOvers = formData.get("matchOvers")
+
+                const response = await fetch(`/Matches/Index?homeTeamId=${homeTeamId}&opponentTeamId=${opponentTeamId}&matchTypeId=${matchTypeId}&result=${result}&tournamentId=${tournamentId}&overs=${matchOvers}&season=${season}`, {
+                    credentials: 'same-origin'
+                });
+            }
+            )
+        });
+        function Delete(MatchId) {
+            document.getElementById("MatchId").value = MatchId;
+        }
+
+        $("#deleteBtn")
+            .off()
+            .on("click", async () => await DeleteData());
+
+        const DeleteData = async () => {
+            const matchId = document.getElementById('MatchId').value;
+            const model = {
+                matchId: Number(matchId),
+            };
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            const response = await fetch(`/Matches/DeleteConfirmed?matchId=${matchId}`, {
+                method: "POST",
+                body: JSON.stringify(model),
+                credentials: 'same-origin',
+                headers: header
+            });
+
+            if (response.ok) {
+                window.location.reload();
+                alert("Record is deleted successfully");
+                return;
+            } else {
+                alert("Record is not deleted");
+            }
+        };
+
+    </script>
+    <style>
+        @@media only screen and (max-width: 768px) {
+            /* For mobile phones: */
+            .material-icons.md-14 {
+                font-size: 14px;
+            }
+
+            body {
+                font-size: 1em;
+            }
+        }
+
+        td {
+            text-align: center !important;
+        }
+
+        th {
+            text-align: center !important;
+        }
+    </style>
+}

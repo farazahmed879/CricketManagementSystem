@@ -1,11 +1,4 @@
-﻿using CricketApp.Domain;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebApp.ViewModels
+﻿namespace WebApp.ViewModels
 {
     public class HomeScreendto
     {
@@ -14,6 +7,14 @@ namespace WebApp.ViewModels
         public int Teams { get; set; }
         public int Matches { get; set; }
         public int Records { get; set; }
-        public int Result { get; set; }
+        public string Summary { get; set; }
+        public string HomeTeam { get; set; }
+        public string OppponentTeam { get; set; }
+        public int HomeTeamScore { get; set; }
+        public int OpponentsTeamScore { get; set; }
+        public int HomeTeamWickets { get; set; }
+        public int OppenentTeamWickets { get; set; }
+        public byte[] OpponentTeamLogo { get; set; }
+        public byte[] HomeTeamTeamLogo { get; set; }
     }
 }

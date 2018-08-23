@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0/win-x64",
-    "signature": "2410e7b8e8f5dc7e80b8834383c76be01bccbd60"
+    "signature": "847e41cfa0dd6810f5ddb67a5fbc2bda57139fc2"
   },
   "compilationOptions": {
     "defines": [
@@ -32,6 +32,7 @@
           "Microsoft.EntityFrameworkCore.Design": "2.0.1",
           "Microsoft.NETCore.App": "2.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.2",
+          "Sendgrid": "9.9.0",
           "Serilog.AspNetCore": "2.1.1",
           "Serilog.Sinks.Console": "3.1.1",
           "Swashbuckle.AspNetCore": "2.3.0"
@@ -2314,6 +2315,16 @@
           "System.Private.Uri": "4.3.0"
         }
       },
+      "Sendgrid/9.9.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "2.0.2",
+          "NETStandard.Library": "2.0.0",
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/SendGrid.dll": {}
+        }
+      },
       "Serilog/2.5.0": {
         "dependencies": {
           "Microsoft.CSharp": "4.4.0",
@@ -3539,7 +3550,9 @@
         "dependencies": {
           "CricketApp.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.0.1",
-          "Microsoft.Extensions.Logging.Console": "2.0.0"
+          "Microsoft.Extensions.Logging.Console": "2.0.0",
+          "Sendgrid": "9.9.0",
+          "System.IO.FileSystem": "4.3.0"
         },
         "compile": {
           "CricketApp.Data.dll": {}
@@ -3567,6 +3580,7 @@
           "Microsoft.EntityFrameworkCore.Design": "2.0.1",
           "Microsoft.NETCore.App": "2.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.2",
+          "Sendgrid": "9.9.0",
           "Serilog.AspNetCore": "2.1.1",
           "Serilog.Sinks.Console": "3.1.1",
           "Swashbuckle.AspNetCore": "2.3.0"
@@ -5721,6 +5735,16 @@
           "System.Private.Uri": "4.3.0"
         }
       },
+      "Sendgrid/9.9.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "2.0.2",
+          "NETStandard.Library": "2.0.0",
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/SendGrid.dll": {}
+        }
+      },
       "Serilog/2.5.0": {
         "dependencies": {
           "Microsoft.CSharp": "4.4.0",
@@ -6969,7 +6993,9 @@
         "dependencies": {
           "CricketApp.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.0.1",
-          "Microsoft.Extensions.Logging.Console": "2.0.0"
+          "Microsoft.Extensions.Logging.Console": "2.0.0",
+          "Sendgrid": "9.9.0",
+          "System.IO.FileSystem": "4.3.0"
         },
         "runtime": {
           "CricketApp.Data.dll": {}
@@ -8573,6 +8599,13 @@
       "sha512": "sha512-RkgHVhUPvzZxuUubiZe8yr/6CypRVXj0VBzaR8hsqQ8f+rUo7e4PWrHTLOCjd8fBMGWCrY//fi7Ku3qXD7oHRw==",
       "path": "runtime.win.system.runtime.extensions/4.3.0",
       "hashPath": "runtime.win.system.runtime.extensions.4.3.0.nupkg.sha512"
+    },
+    "Sendgrid/9.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3v4aIYXqTvhnozBvpCyf+U9DMiZzN9s4m7tpl8RjVHRN0IUKSFwJ0eio7GVjT03vTTUOXhOY8M+15zLYzQGhYQ==",
+      "path": "sendgrid/9.9.0",
+      "hashPath": "sendgrid.9.9.0.nupkg.sha512"
     },
     "Serilog/2.5.0": {
       "type": "package",

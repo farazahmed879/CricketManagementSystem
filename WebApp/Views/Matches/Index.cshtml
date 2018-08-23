@@ -12,19 +12,12 @@
                 <form class="form-inline" role="form" id="Filters">
                     <div class="row">
                         <div class="col-xs-6 col-md-3">
-                            <label>First Inning</label>
-                            <select id="homeTeamId" name="homeTeamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                            <label>Team</label>
+                            <select id="teamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
                         </div>
-                        <div class="col-xs-6 col-md-3">
-                            <label>
-                                Second Inning
-                            </label>
-                            <select id="opponentTeamId" name="opponentTeamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
+
                         <div class="col-xs-6 col-md-3">
                             <div class="form-group label-floating" style="width: 100%;">
                                 <label class="control-label">Overs</label>
@@ -33,16 +26,6 @@
                                 </select>
                             </div>
                         </div>
-                        @*<div class="col-xs-6 col-md-3">
-                                <label>Result</label>
-                                <select id="result" name="result" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                    <option value="">--Select--</option>
-                                    <option>Win</option>
-                                    <option>Loss</option>
-                                    <option>Tie</option>
-                                </select>
-                            </div>*@
-                        @*<div id="clear"></div>*@
 
                         <div class="col-xs-6 col-md-3">
                             <label>Type</label>
@@ -83,15 +66,20 @@
             </div>
 
         </div>
+        <hr />
         <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
             Advanced Search
         </button>
     </div>
     @*Filter*@
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="form-group">
+            <a asp-controller="Matches" class="btn btn-primary" asp-action="Create">Add</a>
+        </div>
 
-    <div class="form-group">
-        <a asp-controller="Matches" class="btn btn-primary" asp-action="Create">Add</a>
-    </div>
+    }
+
 
     <div class="table-responsive">
         <table id="MatchTable" class="table table-bordered table-striped">
@@ -140,7 +128,7 @@
 
                         <td>
 
-                            @if (item.PlayerScores.Any() && item.PlayerScores.Any(i => i.Player.TeamId == item.HomeTeamId))
+                            @if (item.PlayerScores.Any() && item.PlayerScores.Any(i => i.Player != null && i.Player.TeamId == item.HomeTeamId))
                             {
                                 @item.HomeTeam.Team_Name<span class="label  pull-right label-success"><i class="fas fa-check"></i></span>
 
@@ -151,32 +139,35 @@
 
                             }
 
+                            @*@item.HomeTeam.Team_Name <span class="label pull-right label-warning"><i class="fas fa-question"></i></span>*@
+
                         </td>
                         <td>
 
-                            @*@if (item.PlayerScores.Any() && item.PlayerScores.Any(i => i.Player.TeamId == item.OppponentTeamId))
-                                {
-                                    @item.OppponentTeam.Team_Name <span class="label pull-right label-success"><i class="fas fa-check"></i></span>
+                            @if (item.PlayerScores.Any() && item.PlayerScores.Any(i => i.Player != null && i.Player.TeamId == item.OppponentTeamId))
+                            {
+                                @item.OppponentTeam.Team_Name <span class="label pull-right label-success"><i class="fas fa-check"></i></span>
 
-                                }
-                                else
-                                {
-                                    @item.OppponentTeam.Team_Name<span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
+                            }
+                            else
+                            {
+                                @item.OppponentTeam.Team_Name<span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
 
-                                }*@
+                            }
                         </td>
                         <td>
 
-                            @if (item.TeamScores.Any() && item.TeamScores.Any(i => i.MatchId == item.MatchId))
+                            @if (item.TeamScores.Any() && item.TeamScores.Any(i => i.MatchId == item.MatchId) || item.FallOfWickets.Any() && item.FallOfWickets.Any(i => i.MatchId == item.MatchId))
                             {
                                 <h1 class="label label-success">Read<i class="fas fa-check"></i></h1>
 
                             }
                             else
+
                             {
                                 <h3 class="label label-warning">Pending<i class="fas fa-question"></i></h3>
-
                             }
+
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.MatchType.MatchTypeName)
@@ -193,24 +184,33 @@
                         </td>
 
                         <td>
-                            <div class="col-md-12">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="fas fa-baseball-ball"></i></a>
+                                <a data-placement="top" data-toggle="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId"><i class="fas fa-edit"></i></a>
+                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.MatchId)" class="fas fa-trash-alt"></i></a>
                                 <div class="btn-group">
-                                    <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Score Card">Score Card </a>
-
-                                    @*<a >
-                                            <i class="fas fa-walking">Score Card</i>
-                                        </a>*@
-
                                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a data-placement="top" class="btn btn-default" data-toggle="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId"><i class="fas fa-edit">Edit</i></a></li>
-                                        <li><a data-placement="top" class="btn btn-default" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-id="@item.MatchId"><i class="fas fa-info-circle">Detail</i></a></li>
-                                        <li><a data-placement="top" class="btn btn-default" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.MatchId)" class="fas fa-trash-alt">Delete</i></a></li>
+                                        <li><a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-id="@item.MatchId"><i class="fas fa-info-circle">Detail</i></a></li>
+                                        <li><a data-placement="top" data-toggle="Graph" title="Graph" asp-action="MatchChart" asp-route-id="@item.MatchId"><i class="fas fa-info-circle">Graph</i></a></li>
                                     </ul>
                                 </div>
-                            </div>
+
+
+                            }
+                            else
+                            {
+
+                                <div class="btn-group">
+                                    <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Score Card">Score Card </a>
+                                </div>
+
+
+                            }
+
                         </td>
                     </tr>
                 }
@@ -223,16 +223,20 @@
     }
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a asp-action="Index" class="@prevDisabled"
+            <a asp-action="Index" class="btn @prevDisabled"
                asp-route-page="@(Model.PageIndex - 1)">
                 <i style="font-size:30px" class="far fa-hand-point-left"></i>
             </a>
             <a asp-action="Index"
                asp-route-page="@(Model.PageIndex + 1)"
-               class="@nextDisabled">
+               class="btn @nextDisabled">
                 <i style="font-size:30px" class="far fa-hand-point-right"></i>
             </a>
+            <span class="fa-1x pull-right">
+                <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
+            </span>
         </form>
+
     </nav>
 
 </div>
@@ -320,8 +324,7 @@
                 var formElement = document.getElementById("Filters");
                 var formData = new FormData(formElement);
 
-                var homeTeamId = formData.get("homeTeamId")
-                var opponentTeamId = formData.get("opponentTeamId")
+                var homeTeamId = formData.get("teamId")
                 var matchTypeId = formData.get("matchTypeId")
                 var tournamentId = formData.get("tournamentId")
                 var matchTypeId = formData.get("matchType")

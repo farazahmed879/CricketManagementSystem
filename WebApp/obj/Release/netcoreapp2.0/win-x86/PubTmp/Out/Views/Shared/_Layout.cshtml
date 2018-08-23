@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+﻿img<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] Score Exec</title>
+    <title>@ViewData["Title"] ScoreExec</title>
 
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -42,7 +42,10 @@
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>A</b>LT</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>Score</b>Exec</span>
+                <div align="center" valign="top" class="textContent">
+                    <img id="logo" alt="ScoreExec" src="~/images/ScoreExec Black.png" />
+                </div>
+                @*<span class="logo-lg">Score<b>Exec</b></span>*@
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top">
@@ -53,33 +56,49 @@
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            {
 
-                        <!-- User Account: style can be found in dropdown.less -->
-                        <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="~/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs"> @User.GetDisplayName()</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <!-- User image -->
-                                <li class="user-header">
-                                    <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                    <p>
-                                        @User.GetEmail()
-                                    </p>
+                                <!-- User Account: style can be found in dropdown.less -->
+                                <li class="dropdown user user-menu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <img src="~/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                        <span class="hidden-xs"> @User.GetDisplayName()</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <!-- User image -->
+                                        <li class="user-header">
+                                            <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                            <p>
+                                                @User.GetEmail()
+                                            </p>
+                                        </li>
+                                        <!-- Menu Body -->
+                                        <!-- Menu Footer-->
+                                        <li class="user-footer">
+                                            <div class="pull-left">
+                                                <a asp-controller="Teams" asp-action="RoleManagement" class="btn btn-default btn-flat">Role Management</a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a id="Logout" class="btn btn-default btn-flat">Logout</a>
+                                                <span class="AntiForge"> @Html.AntiForgeryToken() </span>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <!-- Menu Body -->
-                                <!-- Menu Footer-->
-                                <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a asp-controller="Teams" asp-action="RoleManagement" class="btn btn-default btn-flat">Role Management</a>
-                                    </div>
-                                    <div class="pull-right">
-                                        <a asp-controller="Account" asp-action="Logout" class="btn btn-default btn-flat">Sign out</a>
-                                    </div>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a asp-controller="Account" asp-action="Login" class="btn-flat">
+                                        Login
+                                    </a>
                                 </li>
-                            </ul>
-                        </li>
+
+                            }
+                        }
+
                         <!-- Control Sidebar Toggle Button -->
                         <li>
                             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -93,15 +112,22 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <!-- Sidebar user panel -->
-                <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                    </div>
-                    <div class="pull-left info">
-                        <p>Guest</p>
-                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                    </div>
-                </div>
+                @{
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="user-panel">
+                            <div class="pull-left image">
+                                <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            </div>
+                            <div class="pull-left info">
+                                <p>@User.GetDisplayName()</p>
+                                <i class="fa fa-circle text-success"></i>Online
+                            </div>
+                        </div>
+
+                    }
+                }
+
                 <!-- search form -->
                 <!--<form action="#" method="get" class="sidebar-form">
                   <div class="input-group">
@@ -116,46 +142,31 @@
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">MAIN NAVIGATION</li>
+                    @*<li class="header">MAIN NAVIGATION</li>*@
 
                     <li>
                         <a asp-controller="Tournament" asp-action="Index">
                             <i class="fa fa-th"></i> <span>Tournaments</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-green">new</small>
-                            </span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Teams" asp-action="Index">
                             <i class="fa fa-th"></i> <span>Teams</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-green">new</small>
-                            </span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Matches" asp-action="Index">
                             <i class="fa fa-th"></i> <span>Matches</span>
-                            <span class="pull-right-container">
-                                <small class="label  bg-green">new</small>
-                            </span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Players" asp-action="Index">
                             <i class="fa fa-th"></i> <span>Players</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-green">new</small>
-                            </span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Players" asp-action="AllPlayerStatistics">
                             <i class="fa fa-pie-chart"></i> <span>Records</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-green">new</small>
-                            </span>
                         </a>
                     </li>
                     @*<li>
@@ -318,10 +329,38 @@
 
 
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <style>
+
+        #logo {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 55px;
+            width: 170px;
+        }
+    </style>
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
+
+
+        $(function () {
+            $('#Logout').click(function () {
+                const header = new Headers();
+                header.append("RequestVerificationToken", $(".AntiForge" + " input").val());
+                fetch('/Account/Logout', {
+                    method: "POST",
+                    credentials: 'same-origin',
+                    headers: header
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location = "/";
+                        }
+                    });
+            });
+        });
     </script>
 </body>
 </html>

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,29 +29,36 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Index(string zone, string city, int? page)
         {
 
-            ViewBag.ClubUsers = new SelectList(_context.UserRole
-               .AsNoTracking()
-               .Where(i => i.RoleId == 2)
-               .Select(i => new
-               {
-                   i.User.UserName,
-                   i.UserId
-               }), "UserId", "UserName");
-
+            var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Team";
             int pageSize = 10;
-            return View(await PaginatedList<Team>.CreateAsync(
+            if (users == null)
+            {
+                return View(await PaginatedList<Team>.CreateAsync(
                 _context.Teams
-                .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone) && (string.IsNullOrEmpty(city) || i.City == city))
+                .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone) && (string.IsNullOrEmpty(city) || i.City == city)
+                )
                 , page ?? 1, pageSize));
+            }
+            else
+            {
+                return View(await PaginatedList<Team>.CreateAsync(
+                _context.Teams
+                .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone) && (string.IsNullOrEmpty(city) || i.City == city)
+                && (i.clubAdmin.UserId == users.Id || users == null)
+                )
+                , page ?? 1, pageSize));
+            }
         }
         // GET: RoleManagement/
-        public IActionResult RoleManagement(int? page)
+        [Route("Teams/RoleManagement")]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<IActionResult> RoleManagement(int? page)
         {
 
             ViewBag.ClubUsers = new SelectList(_context.UserRole
               .AsNoTracking()
-               .Where(i => i.RoleId == 1)
+               .Where(i => i.RoleId == 17)
                .Select(i => new
                {
                    i.User.UserName,
@@ -62,12 +67,15 @@ namespace WebApp.Controllers
 
 
             //   ViewBag.ClubUsers = new SelectList(_context.User, "Id", "UserName");
-
+            var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Role Management";
-            var RoleManagement = _context.Teams.ToList();
+            var RoleManagement = _context.Teams
+                .Where(i => i.clubAdmin.UserId == users.Id)
+                .ToList();
             return View(RoleManagement);
         }
 
+        [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> RoleManagementUpdate(int id, Team team)
         {
             if (ModelState.IsValid)
@@ -112,7 +120,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Teams/Create
-        
+        [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create()
         {
             ViewBag.Name = "Add Team";
@@ -124,6 +132,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Create(Team team)
         {
             if (ModelState.IsValid)
@@ -138,12 +147,12 @@ namespace WebApp.Controllers
 
                     }
                 }
-               
+
 
                 team.TeamLogo = fileBytes ?? null;
                 _context.Add(team);
                 var user = await GetCurrentUserAsync();
-                _context.ClubUsers.Add(new ClubUser
+                _context.ClubAdmins.Add(new ClubAdmin
                 {
                     TeamId = team.TeamId,
                     UserId = user?.Id
@@ -168,7 +177,7 @@ namespace WebApp.Controllers
             }
         }
         // GET: Teams/Edit/5
-        [Authorize(Roles = "Admin, Club Admin")]
+        [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
 
@@ -191,7 +200,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Club Admin")]
+        [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int id, Team team)
         {
             if (id != team.TeamId)
@@ -232,26 +241,9 @@ namespace WebApp.Controllers
             return View(team);
         }
 
-        // GET: Teams/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var team = await _context.Teams
-                .SingleOrDefaultAsync(m => m.TeamId == id);
-            if (team == null)
-            {
-                return NotFound();
-            }
-
-            return View(team);
-        }
-
+       
         [Route("Team/DeleteConfirmed")]
-        [Authorize(Roles = "Admin, Club Admin")]
+        [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int teamId)
         {
             var team = await _context.Teams.SingleOrDefaultAsync(m => m.TeamId == teamId);

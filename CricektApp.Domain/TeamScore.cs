@@ -1,9 +1,4 @@
-﻿using CricketApp.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CricketApp.Domain
+﻿namespace CricketApp.Domain
 {
     public class TeamScore
     {

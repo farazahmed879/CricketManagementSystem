@@ -43,13 +43,20 @@
                                 </span>
                             </a>
                         </li>
+                        <li role="presentation">
+                            <a href="#fallOfWicket" data-toggle="tab" aria-controls="fallOfWicket" role="tab" title="fallOfWicket">
+                                <span class="round-tab">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane active" role="tabpanel" id="step1">
                         <div class="container-fluid">
-                            <div class="col-sm-2">
-                                <select asp-items="ViewBag.HomeTeam" disabled="disabled" style="width: 100%" class="js-example-basic-single"></select>
+                            <div class="col-sm-4">
+                                <label>@ViewBag.HomeTeam</label>
                             </div>
                             <hr />
                             <form class="form-inline" role="form" id="HomeTeamData">
@@ -89,6 +96,7 @@
                                         <div class="row">
                                             <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].MatchId" />
                                             <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].PlayerScoreId" />
+                                            <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].TeamId" />
                                             <div class="col-sm-1">
                                                 @{
                                                     var position = i + 1;
@@ -134,12 +142,12 @@
                     <div class="tab-pane" role="tabpanel" id="step2">
 
                         <div class="container-fluid">
-                            <div class="col-sm-2">
-                                <select asp-items="ViewBag.OpponentTeam" disabled="disabled" class="js-example-basic-single"></select>
+                            <div class="col-sm-4">
+                                <label>@ViewBag.OpponentTeam</label>
                             </div>
 
                             <hr />
-                            <form class="form-inline" role="form" id="OpponentTeam">
+                            <form class="form-inline" role="form" id="OpponentTeamData">
 
                                 <div class="form-inline">
 
@@ -176,6 +184,7 @@
                                         <div class="row">
                                             <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].MatchId" />
                                             <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].PlayerScoreId" />
+                                            <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].TeamId" />
                                             <div class="col-sm-1">
                                                 @{
                                                     var position = i + 1;
@@ -209,6 +218,7 @@
                                         </div>
                                     }
                                 }
+                                <hr />
                                 <ul class="list-inline pull-right">
                                     <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
                                     <li><input type="button" id="OpponentTeamBtn" value="Save and Continue" class="btn btn-primary next-step" onclick="return OpponentTeam(this.form)"></li>
@@ -228,6 +238,7 @@
                                     <div class="row">
                                         <input type="hidden" asp-for="@Model.TeamScoreCard[i].TeamScoreId" />
                                         <input type="hidden" asp-for="@Model.TeamScoreCard[i].MatchId" />
+
                                         <div class="col-sm-1">
 
                                             @{
@@ -248,15 +259,21 @@
                                             @{
                                                 if (i < 1)
                                                 {
-
-                                                    <select asp-for="@Model.TeamScoreCard[i].TeamId" asp-items="ViewBag.HomeTeam" style="width: 100%" disabled="disabled" class="js-example-basic-single"></select>
+                                                    ViewBag.teamId = ViewBag.homeTeamId;
+                                                    ViewBag.TeamName = ViewBag.HomeTeam;
                                                 }
                                                 else
                                                 {
-                                                    <select asp-for="@Model.TeamScoreCard[i].TeamId" asp-items="ViewBag.OpponentTeam" style="width: 100%" disabled="disabled" class="js-example-basic-single"></select>
+                                                    ViewBag.teamId = ViewBag.opponentTeamId;
+                                                    ViewBag.TeamName = ViewBag.OpponentTeam;
+
                                                 }
 
                                             }
+                                            <input type="hidden" asp-for="TeamScoreCard[i].TeamId" value="@ViewBag.teamId" />
+                                            <p class="form-control-static">@ViewBag.TeamName</p>
+
+
                                         </div>
                                         <div class="col-sm-1">
                                             @{
@@ -327,6 +344,122 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane" role="tabpanel" id="fallOfWicket">
+                        <form class="form-inline" role="form" id="FallOfWicket">
+                            <div class="form-inline">
+                                <div class="col-sm-2">
+                                    <label class="control-label">Team Name</label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="control-label">1st</label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="control-label">2nd</label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="control-label">3rd</label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="control-label">4th</label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="control-label">5th</label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="control-label">6th</label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="control-label">7th</label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="control-label">8th</label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="control-label">9th</label>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="control-label">10th</label>
+                                </div>
+                            </div>
+                            @{
+
+                                for (int i = 0; i < Model.FallOfWicket.Count; i++)
+                                {
+
+                                    <div class="row">
+                                        <input type="hidden" asp-for="@Model.FallOfWicket[i].MatchId" />
+                                         <input type="hidden" asp-for="@Model.FallOfWicket[i].FallOfWicketId" />
+
+
+                                        <div class="col-sm-2">
+                                            @{
+                                                if (i < 1)
+                                                {
+                                                    ViewBag.teamId = ViewBag.homeTeamId;
+                                                    ViewBag.TeamName = ViewBag.HomeTeam;
+                                                }
+                                                else
+                                                {
+                                                    ViewBag.teamId = ViewBag.opponentTeamId;
+                                                    ViewBag.TeamName = ViewBag.OpponentTeam;
+                                                }
+
+
+                                            }
+
+                                            <input type="hidden" asp-for="FallOfWicket[i].TeamId" value="@ViewBag.teamId" />
+                                            <p class="form-control-static">@ViewBag.TeamName</p>
+
+                                        </div>
+
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.FallOfWicket[i].First" style="width: 50px" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.FallOfWicket[i].Second" style="width: 50px" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.FallOfWicket[i].Third" style="width: 50px" />
+                                        </div>
+
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.FallOfWicket[i].Fourth" style="width: 50px" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.FallOfWicket[i].Fifth" style="width: 50px" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.FallOfWicket[i].Sixth" style="width: 50px" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.FallOfWicket[i].Seventh" style="width: 50px" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.FallOfWicket[i].Eight" style="width: 50px" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.FallOfWicket[i].Ninth" style="width: 50px" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.FallOfWicket[i].Tenth" style="width: 50px" />
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <hr />
+                            <hr />
+                            <ul class="list-inline pull-right">
+                                <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
+                                <li><input type="button" value="Finish" class="btn btn-primary" onclick="return FallOfWicketData(this.form)"></li>
+                            </ul>
+                        </form>
+                        <div class="container text-center">
+                            <div>
+                                <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="clearfix"></div>
                 </div>
             </div>
@@ -377,7 +510,11 @@
                     var matchScore = {};
                     for (let i = 0; i < currentModel.length; i++) {
                         const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
-                        matchScore[currentModel[i].name.substring(indexOfBracket)] = currentModel[i].value;
+                        const name = currentModel[i].name.substring(indexOfBracket);
+                        if (name == "IsPlayedInning")
+                            matchScore[name] = $(".checked input[name='" + currentModel[i].name + "']").val();
+                        else
+                            matchScore[name] = currentModel[i].value;
                     }
                     model.matchScore.push(matchScore);
                 }
@@ -390,9 +527,7 @@
                     },
                     method: "POST"
                 }).done(function (response) {
-                    if (!response.ok) {
-                        alert("Record updated successfully");
-                    }
+                    alert("Record is updated successfully");
                 }).fail(function () {
                     alert("Record can not be updated");
                 });
@@ -416,21 +551,23 @@
                     var matchScore = {};
                     for (let i = 0; i < currentModel.length; i++) {
                         const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
-                        matchScore[currentModel[i].name.substring(indexOfBracket)] = currentModel[i].value;
+                        const name = currentModel[i].name.substring(indexOfBracket);
+                        if (name == "IsPlayedInning")
+                            matchScore[name] = $(".checked input[name='" + currentModel[i].name + "']").val();
+                        else
+                            matchScore[name] = currentModel[i].value;
                     }
                     model.matchScore.push(matchScore);
                 }
                 console.log(model);
                 $.ajax(`/PLayerScores/Edit`, {
-                    data: formData,
+                    data: model,
                     headers: {
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (response) {
-                    if (!response) {
-                        alert("Record updated successfully");
-                    }
+                }).done(function (response, status, jqXhr) {
+                    alert("Record is updated successfully");
                 }).fail(function () {
                     alert("Record can not be updated");
                 });
@@ -458,15 +595,14 @@
                 }
                 console.log(model);
                 $.ajax(`/PLayerScores/UpdateTeamScore`, {
-                    data: formData,
+                    data: model,
                     headers: {
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
                 }).done(function (response) {
-                    if (!response) {
-                        alert("Record inserted successfully");
-                    }
+                    alert("Record is updated successfully");
+                    windows.location = "/Matches/Index";
                 }).fail(function () {
                     alert("Record can not be inserted");
                 });
@@ -476,9 +612,43 @@
             }
 
         }
+        function FallOfWicketData() {
+            try {
+                var formData = $("#FallOfWicket").serializeArray();
+                var model = {
+                    fallOfWicket: []
+                };
+                for (let index = 0; index < 2; index++) {
+                    const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
+                    var fallOfWicket = {};
+                    for (let i = 0; i < currentModel.length; i++) {
+                        const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
+                        fallOfWicket[currentModel[i].name.substring(indexOfBracket)] = currentModel[i].value;
+                    }
+                    model.fallOfWicket.push(fallOfWicket);
+                }
+                console.log(model);
+                $.ajax(`/PLayerScores/UpdateFallOfWicket`, {
+                    data: model,
+                    headers: {
+                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                    },
+                    method: "POST"
+                }).done(function (response) {
+                    alert("Record is updated successfully");
+                    window.location = '/Matches/Index'
+                }).fail(function () {
+                    alert("Record can not be inserted");
+                });
 
+            } catch (ex) {
+                console.error(ex);
+            }
+
+        }
+        //Initialize tooltips
         $(document).ready(function () {
-            //Initialize tooltips
+
             $('.nav-tabs > li a[title]').tooltip();
 
             //Wizard

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace CricketApp.Domain
 {
-   public class MatchType
+    public class MatchType
     {
         public MatchType()
         {

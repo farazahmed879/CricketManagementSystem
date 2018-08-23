@@ -1,9 +1,5 @@
 ﻿using CricketApp.Domain;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebApp.ViewModels
 {
@@ -26,8 +22,10 @@ namespace WebApp.ViewModels
         public int Catch { get; set; }
         public int Maiden { get; set; }
         public int RunOut { get; set; }
+        public int TeamId { get; set; }
         public bool IsPlayedInning { get; set; }
         public SelectList PlayerList { get; set; }
         public Match Match { get; set; }
+        public Team Team { get; set; }
     }
 }

@@ -6,7 +6,7 @@ D:\Dot Net MVC App\CricketApp\CricektApp.Domain\bin\Debug\netstandard2.0\Microso
 D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.csproj.CoreCompileInputs.cache
 D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.AssemblyInfoInputs.cache
 D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.AssemblyInfo.cs
+D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.csproj.CopyComplete
 D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.dll
 D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.pdb
 D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.csprojAssemblyReference.cache
-D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.csproj.CopyComplete

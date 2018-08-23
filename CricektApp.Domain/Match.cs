@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace CricketApp.Domain
 {
@@ -14,6 +13,7 @@ namespace CricketApp.Domain
         {
             PlayerScores = new List<PlayerScore>();
             TeamScores = new List<TeamScore>();
+            FallOfWickets = new List<FallOfWicket>();
         }
 
         public int MatchId { get; set; }
@@ -26,7 +26,6 @@ namespace CricketApp.Domain
         [Required]
         public string Result { get; set; }
         public int? Season { get; set; }
-        [Required]
         public int? TournamentId { get; set; }
         public DateTime? DateOfMatch { get; set; }
         [Required]
@@ -43,6 +42,7 @@ namespace CricketApp.Domain
         public IFormFile MatchImage { get; set; }
         public List<PlayerScore> PlayerScores { get; set; }
         public List<TeamScore> TeamScores { get; set; }
+        public List<FallOfWicket> FallOfWickets { get; set; }
         public int UserId { get; set; }
         public MatchType MatchType { get; set;}
         public int MatchTypeId { get; set; }

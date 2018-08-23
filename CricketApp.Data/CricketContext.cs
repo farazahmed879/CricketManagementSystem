@@ -3,11 +3,6 @@ using CricketApp.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CricketApp.Data
 {
@@ -37,7 +32,7 @@ namespace CricketApp.Data
         public DbSet<BattingStyle> BattingStyle { get; set; }
         public DbSet<BowlingStyle> BowlingStyle { get; set; }
         public DbSet<PlayerRole> PlayerRole { get; set; }
-        public DbSet<ClubUser> ClubUsers { get; set; }
+        public DbSet<ClubAdmin> ClubAdmins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

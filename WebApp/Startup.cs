@@ -49,7 +49,7 @@ namespace WebApp
                 options.Password.RequiredUniqueChars = 6;
 
                 // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 options.Lockout.MaxFailedAccessAttempts = 10;
                 options.Lockout.AllowedForNewUsers = true;
 
@@ -74,7 +74,10 @@ namespace WebApp
             services.AddDbContext<CricketContext>(options =>
             {
 
-                options.UseSqlServer(Configuration.GetConnectionString("Production"));
+                options
+                .UseSqlServer(Configuration.GetConnectionString("Production"))
+                .EnableSensitiveDataLogging()
+                .ConfigureWarnings(i => i.Log());
             });
 
             services.AddSwaggerGen(c =>

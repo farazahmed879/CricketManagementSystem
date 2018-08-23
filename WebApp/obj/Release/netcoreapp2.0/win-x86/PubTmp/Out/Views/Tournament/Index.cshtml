@@ -4,72 +4,73 @@
     ViewData["Title"] = "Tournaments";
 }
 
-<div class="container-fluid">
+<div class="container">
     <div class="form-group">
         <a asp-controller="Tournament" class="btn btn-primary" asp-action="Create">Add</a>
     </div>
 
-    <table id="TournamentTable" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>
-                    Tournament
-                </th>
-                <th>
-                    Organizor
-                </th>
-                <th>
-                    Starting Date
-                </th>
-                <th>
-                    ----Actions----
-                </th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-responsive">
+        <table id="TournamentTable" class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TournamentName)
+                    <th>
+                        Tournament
+                    </th>
+                    <th>
+                        Organizor
+                    </th>
+                    <th>
+                        Starting Date
+                    </th>
+                    <th>
+                        ----Actions----
+                    </th>
 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Organizor)
-
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartingDate)
-
-                    </td>
-                    <td>
-
-                        <div class="btn-group">
-
-                            <a asp-controller="Matches" asp-action="Create" asp-route-tournamentId="@item.TournamentId" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Add Match">Add Match</a>
-
-                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a data-toggle="tooltip" class="btn btn-default" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TournamentId"><i class="fas fa-edit">Edit</i></a></li>
-                                <li> <a data-placement="top" class="btn btn-default" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(@item.TournamentId)">Delete</i></a></li>
-                                <li> <a asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId" class="btn btn-default" data-placement="top" data-toggle="tooltip" title="Matches">Matches</a></li>
-                            </ul>
-                        </div>
-
-                    </td>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TournamentName)
 
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-    }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Organizor)
 
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartingDate)
+
+                        </td>
+                        <td>
+
+                            <div class="btn-group">
+
+                                <a asp-controller="Matches" asp-action="Create" asp-route-tournamentId="@item.TournamentId" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Add Match">Add Match</a>
+
+                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a data-toggle="tooltip" class="btn btn-default" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TournamentId"><i class="fas fa-edit">Edit</i></a></li>
+                                    <li> <a data-placement="top" class="btn btn-default" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(@item.TournamentId)">Delete</i></a></li>
+                                    <li> <a asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId" class="btn btn-default" data-placement="top" data-toggle="tooltip" title="Matches">Matches</a></li>
+                                </ul>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+    </div>
     <nav class="navbar navbar-light bg-light">
 
         <form class="form-inline">
@@ -112,7 +113,7 @@
 @section Scripts{
     <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-   
+
     <style>
         td {
             text-align: center !important;

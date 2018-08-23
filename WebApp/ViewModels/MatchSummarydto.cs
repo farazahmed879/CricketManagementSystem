@@ -1,8 +1,4 @@
 ﻿using CricketApp.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebApp.ViewModels
 {
@@ -16,6 +12,7 @@ namespace WebApp.ViewModels
         public int? Bat_Runs { get; set; }
         public int? Bat_Balls { get; set; }
         public int? HowOutId { get; set; }
+        public string HowOutName { get; set; }
         public int? Ball_Runs { get; set; }
         public int? Overs { get; set; }
         public int? Wickets { get; set; }
@@ -25,9 +22,11 @@ namespace WebApp.ViewModels
         public int? RunOut { get; set; }
         public int? Four { get; set; }
         public int? Six { get; set; }
+        public int TeamId { get; set; }
         public bool IsPlayedInning { get; set; }
         public Player Player { get; set; }
         public Match Match { get; set; }
         public HowOut HowOut { get; set; }
+        public Team Team { get; set; }
     }
 }

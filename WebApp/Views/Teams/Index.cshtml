@@ -5,9 +5,14 @@
 }
 <div class="container-fluid">
 
-    <div class="form-group">
-        <a asp-controller="Teams" class="btn btn-primary" asp-action="Create">Add</a>
-    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="form-group">
+            <a asp-controller="Teams" class="btn btn-primary" asp-action="Create">Add</a>
+        </div>
+
+    }
+
 
     <div class="table-responsive">
         <table id="TeamTable" class="table table-bordered table-striped">
@@ -41,75 +46,89 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>
-                        @{
-                            if (item.TeamLogo != null)
-                            {
-                                var base64 = item.TeamLogo == null || !item.TeamLogo.Any() ? "" : Convert.ToBase64String(item.TeamLogo);
-                                <div class="img-responsive" id="Img" style='margin-bottom: 1em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                    <tr>
+                        <td>
+                            @{
+                                if (item.TeamLogo != null)
+                                {
+                                    var base64 = item.TeamLogo == null || !item.TeamLogo.Any() ? "" : Convert.ToBase64String(item.TeamLogo);
+                                    <div class="img-responsive" id="Img" style='margin-bottom: 1em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
 
+                                }
+                                else
+                                {
+                                    <span class="label label-warning pull-left">Logo Missing<i class="fas fa-question"></i></span>
+
+                                }
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Team_Name)
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Place)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Zone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contact)
+                        </td>
+
+                        <td>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a data-placement="top" data-toggle="tooltip" title="Add Player" asp-controller="Players" asp-action="create" asp-route-teamId="@item.TeamId"><i class="fas fa-user-alt"></i></a>
+                                <a data-placement="top" data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TeamId"><i class="fas fa-edit"></i></a>
+                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.TeamId)" class="fas fa-trash-alt"></i></a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                               
+                                        <li><a data-placement="top" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayerProfile" asp-route-teamId="@item.TeamId"><i class="fas fa-users">Players</i></a></li>
+                                        <li><a data-placement="top" data-toggle="tooltip" title="Players Records" asp-controller="Players" asp-action="AllPlayerStatistics" asp-route-teamId="@item.TeamId"><i class="fas fa-chart-line">Players Records</i></a></li>
+                                        <li><a data-placement="top" data-toggle="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="fab fa-accusoft">Team Matches</i></a></li>
+                                    </ul>
+                                </div>
                             }
                             else
                             {
-                                <span class="label label-warning pull-left">Logo Missing<i class="fas fa-question"></i></span>
+                                <div class="btn-group">
+                                    <a data-placement="top" class="btn btn-primary" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayerProfile" asp-route-teamId="@item.TeamId"><i class="fas fa-users">Players</i></a>
+                                </div>
 
                             }
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Team_Name)
-
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Place)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Zone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.City)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Contact)
-                    </td>
-
-                    <td>
-                        <div class="btn-group">
-                            <a data-placement="top" class="btn btn-primary" data-toggle="tooltip" title="Add Player" asp-controller="Players" asp-action="create" asp-route-teamId="@item.TeamId"><i class="fas fa-info-circle">Add Player</i></a>
-                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a data-placement="top" class="btn btn-default" data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TeamId"><i class="fas fa-edit">Edit</i></a></li>
-                                <li> <a data-placement="top" class="btn btn-default" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.TeamId)" class="fas fa-trash-alt">Delete</i></a></li>
-                                <li><a data-placement="top" class="btn btn-default" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayerProfile" asp-route-teamId="@item.TeamId"><i class="fas fa-users">Players</i></a></li>
-                                <li><a data-placement="top" class="btn btn-default" data-toggle="tooltip" title="Players Records" asp-controller="Players" asp-action="AllPlayerStatistics" asp-route-teamId="@item.TeamId"><i class="fas fa-chart-line">Players Records</i></a></li>
-                                <li><a data-placement="top" class="btn btn-default" data-toggle="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="fab fa-accusoft">Team Matches</i></a></li>
-                            </ul>
-                        </div>
-
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
+
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
     </div>
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-    }
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a asp-action="Index" class="@prevDisabled"
+            <a asp-action="Index" class="btn @prevDisabled"
                asp-route-page="@(Model.PageIndex - 1)">
                 <i style="font-size:30px" class="far fa-hand-point-left"></i>
             </a>
             <a asp-action="Index"
                asp-route-page="@(Model.PageIndex + 1)"
-               class="@nextDisabled">
+               class="btn @nextDisabled">
                 <i style="font-size:30px" class="far fa-hand-point-right"></i>
             </a>
+            <span class="fa-1x pull-right">
+                <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
+            </span>
         </form>
     </nav>
 
@@ -232,22 +251,22 @@
                 window.location = '/Teams/Create'
             });
         });
-                                                                                            //async function FilterData() {
-                                                                                            //    var formElement = document.getElementById("Filters");
-                                                                                            //    var formData = new FormData(formElement);
+                                                                                                            //async function FilterData() {
+                                                                                                            //    var formElement = document.getElementById("Filters");
+                                                                                                            //    var formData = new FormData(formElement);
 
-                                                                                            //    var zone = formData.get("zone")
-                                                                                            //    var city = formData.get("city")
+                                                                                                            //    var zone = formData.get("zone")
+                                                                                                            //    var city = formData.get("city")
 
 
-                                                                                            //    // var header = new Headers();
-                                                                                            //    //header.append("content-type");
+                                                                                                            //    // var header = new Headers();
+                                                                                                            //    //header.append("content-type");
 
-                                                                                            //    const response = await fetch(`/Teams/Index?zone=${zone}&city=${city}`, {
-                                                                                            //        credentials: 'same-origin'
-                                                                                            //    });
+                                                                                                            //    const response = await fetch(`/Teams/Index?zone=${zone}&city=${city}`, {
+                                                                                                            //        credentials: 'same-origin'
+                                                                                                            //    });
 
-                                                                                            //}
+                                                                                                            //}
 
     </script>
 

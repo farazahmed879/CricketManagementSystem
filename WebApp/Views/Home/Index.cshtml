@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WebApp.ViewModels.HomeScreendto
+@{
     ViewData["Title"] = "";
 }
 <div class="container-fluid">
@@ -61,13 +62,13 @@
                     <!-- small box -->
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>65</h3>
+                            <h3>@Model.Tournaments</h3>
                             <p>Tournaments</p>
                         </div>
                         <div class="icon">
                             <i class="far fa-calendar-alt"></i>
                         </div>
-                        <a data-toggle="tooltip"  data-placement="top" title="Click me" asp-controller="Tournament" asp-action="Index" class="small-box-footer">
+                        <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="Tournament" asp-action="Index" class="small-box-footer">
                             Tournaments List <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -76,7 +77,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>@Model.Teams</h3>
                             <p>Teams</p>
                         </div>
                         <div class="icon">
@@ -91,7 +92,7 @@
                     <!-- small box -->
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                            <h3>1555</h3>
+                            <h3>@Model.Players</h3>
                             <p>Players</p>
                         </div>
                         <div class="icon">
@@ -106,7 +107,7 @@
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
+                            <h3>@Model.Matches</h3>
                             <p>Cricket Match</p>
                         </div>
                         <div class="icon">
@@ -122,7 +123,7 @@
                     <!-- small box -->
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>1000+</h3>
+                            <h3>@Model.Records+</h3>
                             <p>Records</p>
                         </div>
                         <div class="icon">
@@ -151,7 +152,7 @@
                     <!-- /.box -->
                 </div>
 
-                <div class="col-md-3">
+                @*<div class="col-md-3">
                     <div class="box box-warning box-solid">
                         <div class="box-header with-border">
                             <h3 class="box-title">New Feed</h3>
@@ -169,9 +170,9 @@
                         <!-- /.box-body -->
                     </div>
                     <!-- /.box -->
-                </div>
+                </div>*@
 
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="box box-warning box-solid">
                         <div class="box-header with-border">
                             <h3 class="box-title">Last Match Summary</h3>
@@ -184,15 +185,72 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            The body of the box
+                            <div class="form-inline">
+                                <div class="col-md-12">
+
+                                    <div class="col-md-4">
+                                        @{
+                                            if (Model.HomeTeamTeamLogo != null)
+                                            {
+                                                var base64 = Model.HomeTeamTeamLogo == null || !Model.HomeTeamTeamLogo.Any() ? "" : Convert.ToBase64String(Model.HomeTeamTeamLogo);
+                                                <div class="img-responsive" id="Img" style='margin-bottom: 1em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+
+                                            }
+                                            else
+                                            {
+                                                <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+
+                                            }
+                                        }
+                                    </div>
+                                    <div class="col-md-8">
+                                        <strong> @Model.HomeTeam </strong> @Model.HomeTeamScore/@Model.HomeTeamWickets
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+
+                                    <div class="col-md-4">
+                                        @{
+                                            if (Model.OpponentTeamLogo != null)
+                                            {
+                                                var base64 = Model.OpponentTeamLogo == null || !Model.OpponentTeamLogo.Any() ? "" : Convert.ToBase64String(Model.OpponentTeamLogo);
+                                                <div class="img-responsive" id="Img" style='margin-bottom: 1em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+
+                                            }
+                                            else
+                                            {
+                                                <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+
+                                            }
+                                        }
+                                    </div>
+                                    <div class="col-md-8">
+                                        <strong> @Model.OppponentTeam </strong> @Model.OpponentsTeamScore/@Model.OppenentTeamWickets
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <p>@Model.Summary</p> 
+                                </div>
+
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
                         </div>
-                        <!-- /.box-body -->
+
                     </div>
-                    <!-- /.box -->
                 </div>
-
             </div>
-
         </div>
     </div>
-</div>
+    @section Scripts{
+        <style>
+
+            #Img {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 20px;
+                width: 25px;
+            }
+        </style>
+    }

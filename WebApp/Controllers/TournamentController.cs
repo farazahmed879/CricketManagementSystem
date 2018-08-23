@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CricketApp.Data;
 using CricketApp.Domain;
@@ -13,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace WebApp.Controllers
 {
-    
+
     public class TournamentController : Controller
     {
         private readonly CricketContext _context;
@@ -23,17 +20,47 @@ namespace WebApp.Controllers
         {
             _context = context;
             _userManager = userManager;
-           
+
         }
 
         // GET: Tournaments
-        
+
         public async Task<IActionResult> Index(int? page)
         {
             ViewBag.Name = "Tournaments";
             int pageSize = 10;
-            return View(await PaginatedList<Tournament>.CreateAsync(
-                _context.Tournaments, page?? 1, pageSize));
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            if (users == null)
+            {
+                return View(await PaginatedList<ViewModels.Tournamentdto>.CreateAsync(
+                  _context.Tournaments
+                 .Select(i => new ViewModels.Tournamentdto
+                 {
+                     TournamentId = i.TournamentId,
+                     TournamentName = i.TournamentName,
+                     Organizor = i.Organizor,
+                     StartingDate = i.StartingDate
+
+                 })
+          , page ?? 1, pageSize));
+            }
+            else
+            {
+                return View(await PaginatedList<ViewModels.Tournamentdto>.CreateAsync(
+                 _context.Tournaments
+                  .Where(i => i.UserId == users.Id || users == null)
+                   .Select(i => new ViewModels.Tournamentdto
+                   {
+                       TournamentId = i.TournamentId,
+                       TournamentName = i.TournamentName,
+                       Organizor = i.Organizor,
+                       StartingDate = i.StartingDate
+
+                   })
+          , page ?? 1, pageSize));
+            }
+
+
         }
 
         // GET: Tournaments/Details/5
@@ -55,7 +82,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Tournaments/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create()
         {
             ViewBag.Name = "Add Tournament";
@@ -65,7 +92,7 @@ namespace WebApp.Controllers
         // POST: Tournaments/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Create(Tournament tournament)
         {
             if (ModelState.IsValid)
@@ -80,7 +107,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Tournaments/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             ViewBag.Name = "Edit Tournament";
@@ -102,7 +129,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int id, Tournament tournament)
         {
             if (id != tournament.TournamentId)
@@ -153,7 +180,7 @@ namespace WebApp.Controllers
         }
 
         // POST: Tournaments/Delete/5
-        [Route("Tournament/DeleteConfirmed")]
+        [Authorize(Roles = "Club Admin,Administrator")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int tournamentId)
         {

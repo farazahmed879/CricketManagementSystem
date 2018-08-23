@@ -12,7 +12,7 @@
         <p class="login-box-msg">Sign in to start your session</p>
         <form asp-action="Login" method="post">
             <div class="form-group has-feedback">
-                <input type="email" class="form-control" asp-for="Email" placeholder="Email">
+                <input type="text" class="form-control" asp-for="userName" placeholder="User Name">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
@@ -23,7 +23,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input asp-for="RememberMe" type="checkbox"> Remember Me
+                            <input asp-for="isPersistent" type="checkbox"> Remember Me
                         </label>
                     </div>
                 </div>
@@ -77,61 +77,6 @@
             });
 
         })
-
-
-        var headers = new Headers();
-        headers.append("content-type", "application/json");
-
-        function validateEmail(email) {
-            var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(String(email).toLowerCase());
-        }
-
-
-        $(function () {
-            $('#SignInBtn').click((event) => {
-                event.preventDefault();
-                const email = $('#Email').val();
-                const password = $('#Password').val();
-                if (validateEmail(email)) {
-                    fetch(`/Login/IsEmailMatch?email=${email}&password=${password}`, {
-                        method: "GET",
-                        credentials: 'same-origin',
-                        headers: headers
-                    }).then(res => {
-                        const body = res.json().then(data => {
-                            if (data) {
-                                $(function () {
-                                    window.location = '/Home/Index'
-                                });
-                            }
-                            else {
-
-                                document.getElementById("EmailError").innerHTML = "Invalid user or password";
-                                return;
-                            }
-
-                        })
-                    });
-                }
-            });
-        });
-
-
-        $('#Email').blur(function () {
-
-            const email = $('#Email').val();
-            if (!validateEmail(email)) {
-                document.getElementById("EmailError").style.color = "#FF0000";
-                document.getElementById("EmailError").innerHTML = "Please insert a valid email";
-            }
-            else {
-                document.getElementById("EmailError").style.color = "#32CD32";
-                document.getElementById("EmailError").innerHTML = "valid";
-
-            }
-
-            return;
-        });
+      
     </script>
 }

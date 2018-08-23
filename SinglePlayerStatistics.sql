@@ -1,4 +1,4 @@
-﻿Create PROCEDURE [usp_GetSinglePlayerStatistics]
+﻿Alter PROCEDURE [usp_GetSinglePlayerStatistics]
 @paramPlayerId AS INT,
 @paramOvers AS INT
 AS
@@ -51,18 +51,18 @@ BEGIN
 				Players.TeamId As 'TeamId',					
 				Teams.Team_Name As 'TeamName',
 				Players.PlayerLogo As 'PlayerImage',
-				Matches.MatchOvers As 'MatchOvers',
-				BattingStyle.Name As 'BattingStyle',
-				BowlingStyle.Name As 'BowlingStyle',
-				PlayerRole.Name As 'PlayerRole'
+				Matches.MatchOvers As 'MatchOvers'
+				--BattingStyle.Name As 'BattingStyle',
+				--BowlingStyle.Name As 'BowlingStyle',
+				--PlayerRole.Name As 'PlayerRole'
 		
 		FROM PlayerScores
 		Inner join Players ON PlayerScores.PlayerId = Players.PlayerId
 		Inner join Teams ON Players.TeamId = Teams.TeamId
 		Inner join Matches ON PlayerScores.MatchId = Matches.MatchId
-		Inner join BattingStyle On Players.BattingStyleId = BattingStyle.BattingStyleId
-		Inner join BowlingStyle On Players.BowlingStyleId = BowlingStyle.BowlingStyleId
-		Inner join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
+		--left join BattingStyle On Players.BattingStyleId = BattingStyle.BattingStyleId
+		--left join BowlingStyle On Players.BowlingStyleId = BowlingStyle.BowlingStyleId
+		--left join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
 	
 		WHERE PlayerScores.PlayerId = @paramPlayerId And (@paramOvers IS NUll OR Matches.MatchOvers = @paramOvers)
 		GROUP BY PlayerScores.PlayerId,
@@ -73,14 +73,20 @@ BEGIN
 				 Players.TeamId,			 
 				 Teams.Team_Name,
 				 Players.PlayerLogo,
-				 Matches.MatchOvers,
-				 BattingStyle.Name,
-				 BowlingStyle.Name,
-				 PlayerRole.Name
+				 Matches.MatchOvers
+				 --BattingStyle.Name,
+				 --BowlingStyle.Name,
+				 --PlayerRole.Name
 				 
 	) AS data
 END
+exec [usp_GetSinglePlayerStatistics] 1, 0
 
-exec [usp_GetSinglePlayerStatistics] 1
+select * from Players
 
-drop procedure usp_GetSinglePlayerStatistics
+
+delete from matches
+
+select * from PlayerScores
+
+select * from TeamScores

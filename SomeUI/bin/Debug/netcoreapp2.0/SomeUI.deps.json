@@ -3529,7 +3529,9 @@
         "dependencies": {
           "CricketApp.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.0.1",
-          "Microsoft.Extensions.Logging.Console": "2.0.0"
+          "Microsoft.Extensions.Logging.Console": "2.0.0",
+          "Sendgrid": "9.9.0",
+          "System.IO.FileSystem": "4.3.0"
         },
         "runtime": {
           "CricketApp.Data.dll": {}

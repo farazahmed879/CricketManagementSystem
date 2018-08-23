@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CricketApp.Domain
 {
@@ -25,10 +22,12 @@ namespace CricketApp.Domain
         public int? RunOut { get; set; }
         public int? Four { get; set; }
         public int? Six { get; set; }
+        public int TeamId { get; set; }
         public bool IsPlayedInning { get; set; }
         public Player Player { get; set; }
         public Match Match { get; set; }
         public HowOut HowOut { get; set; }
+        public Team Team { get; set; }
 
 
 

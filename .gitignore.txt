@@ -327,3 +327,6 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+# SendGrid
+D:\Dot Net MVC App\CricketApp\WebApp\Extentions\EmailExtentions.cs

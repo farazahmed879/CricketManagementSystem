@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using CricketApp.Data;
 using Dapper;
 using Microsoft.AspNetCore.Authorization;
@@ -19,17 +15,26 @@ namespace WebApp.Controllers
     {
         private readonly CricketContext _context;
 
+        public HomeController(CricketContext context)
+        {
+            _context = context;
+        }
+
+
         [AllowAnonymous]
         public IActionResult Index()
         {
-            //var connection = _context.Database.GetDbConnection();
-            //var model = connection.QuerySingle<HomeScreendto>(
-            //    "[usp_HomeScreen]",
-            //    new
-            //    {                                },
-            //    commandType: CommandType.StoredProcedure);
+            var connection = _context.Database.GetDbConnection();
+            var model = connection.QuerySingleOrDefault<HomeScreendto>(
+                "[usp_HomeScreen]",
+                new
+                { },
+                commandType: CommandType.StoredProcedure) ?? new HomeScreendto
+                {
+                    
+                };
 
-            return View();
+            return View(model);
         }
 
         public IActionResult About()

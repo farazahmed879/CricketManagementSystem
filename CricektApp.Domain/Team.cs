@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace CricketApp.Domain
 {
@@ -34,6 +31,7 @@ namespace CricketApp.Domain
         [NotMapped]
         [Display(Name = "Team Image")]
         public IFormFile TeamImage { get; set; }
+        public ClubAdmin clubAdmin { get; set; }
         public List<Player> Players { get; set; }
         public List<Match> OpponentTeamMatches { get; set; }
         public List<Match> HomeTeamMatches { get; set; }

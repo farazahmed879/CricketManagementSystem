@@ -1,4 +1,4 @@
-﻿img<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -28,13 +28,13 @@
     @*OLD*@
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css" />
-    @*<link rel="stylesheet" href="~/css/style.css" />
-        <link href= "~/css/Icheck.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    @* <link href= "~/css/Icheck.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.css" />*@
 
     @RenderSection("styles", false)
 </head>
-<body>
+<body class="skin-blue">
     <div class="wrapper fixed">
         <header class="main-header">
             <!-- Logo -->
@@ -59,7 +59,12 @@
                         @{
                             if (User.Identity.IsAuthenticated)
                             {
+                                var RoleManagementDisabled = "";
+                                if (User.IsInRole("Club User"))
+                                {
+                                    RoleManagementDisabled = "disabled";
 
+                                }
                                 <!-- User Account: style can be found in dropdown.less -->
                                 <li class="dropdown user user-menu">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -76,9 +81,11 @@
                                         </li>
                                         <!-- Menu Body -->
                                         <!-- Menu Footer-->
+
                                         <li class="user-footer">
+
                                             <div class="pull-left">
-                                                <a asp-controller="Teams" asp-action="RoleManagement" class="btn btn-default btn-flat">Role Management</a>
+                                                <a asp-controller="Teams" asp-action="RoleManagement" class="btn btn-default btn-flat @RoleManagementDisabled ">Role Management</a>
                                             </div>
                                             <div class="pull-right">
                                                 <a id="Logout" class="btn btn-default btn-flat">Logout</a>
@@ -164,38 +171,33 @@
                             <i class="fa fa-th"></i> <span>Players</span>
                         </a>
                     </li>
-                    <li>
-                        <a asp-controller="Players" asp-action="AllPlayerStatistics">
-                            <i class="fa fa-pie-chart"></i> <span>Records</span>
-                        </a>
-                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <a asp-controller="Players" asp-action="AllPlayerStatistics">
+                                <i class="fa fa-pie-chart"></i> <span>Records</span>
+                            </a>
+                        </li>
+
+                    }
+
                     @*<li>
-                            <a asp-controller="Teams" asp-action="RoleManagement">
-                                <i class="fa fa-pie-chart"></i> <span>Role Management</span>
+
+                        @*<li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-pie-chart"></i>
+                                <span>Charts</span>
                                 <span class="pull-right-container">
-                                    <small class="label pull-right bg-green">new</small>
+                                    <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
+                            <ul class="treeview-menu">
+                                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
+                                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
+                                <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
+                                <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+                            </ul>
                         </li>*@
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-pie-chart"></i>
-                            <span>Charts</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                            <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-                            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-                        </ul>
-                    </li>
-                    <li class="header">LABELS</li>
-                    <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-                    <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-                    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
                 </ul>
             </section>
             <!-- /.sidebar -->
@@ -361,6 +363,7 @@
                     });
             });
         });
+        localStorage.setItem("Skin", "skin-blue")
     </script>
 </body>
 </html>

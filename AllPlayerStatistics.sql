@@ -72,8 +72,8 @@ BEGIN
 	Inner join Players ON PlayerScores.PlayerId = Players.PlayerId
 	Inner join Teams ON Players.TeamId = Teams.TeamId
 	Inner join Matches ON PlayerScores.MatchId = Matches.MatchId
-	Inner join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
 	left join Tournaments On Matches.TournamentId = Tournaments.TournamentId
+	left join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
 	
 	
 	WHERE (@paramTeamId Is NUll or Players.TeamId = @paramTeamId) And 
@@ -86,7 +86,7 @@ BEGIN
 	
 	GROUP BY PlayerScores.PlayerId,
 			Players.Player_Name,
-			 PlayerRole.Name,
+			PlayerRole.Name,
 			 Players.TeamId,
 			 Teams.Team_Name
 END
@@ -95,4 +95,4 @@ END
 
 execute [usp_GetAllPlayerStatistics] null,null,null,null,null,null,null
 
-
+select * from aspnetusers

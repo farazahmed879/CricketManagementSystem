@@ -5,7 +5,7 @@
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>Score</b>Exec</a>
+        <img id="logo" src="~/images/ScoreExec copy.png" />
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -34,9 +34,9 @@
                 <!-- /.col -->
             </div>
         </form>
-      
+
         <!-- /.social-auth-links -->
-        <a href="#">I forgot my password</a><br>
+        <a id="ForgotPassword" style="cursor: pointer" class="text-center">I forgot my password</a><br>
         <a id="Register" style="cursor: pointer" class="text-center">Register a new membership</a>
     </div>
     <!-- /.login-box-body -->
@@ -44,6 +44,16 @@
 @section scripts {
     <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
     <script src="../../plugins/iCheck/icheck.min.js"></script>
+    <style>
+        #logo {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 45px;
+            width: 200px;
+            
+        }
+    </style>
     <script>
         $(function () {
             $('input').iCheck({
@@ -53,13 +63,21 @@
             });
         });
 
-        $('#Register').click(function(){
+        $('#Register').click(function () {
             $(function () {
                 window.location = '/Account/Register'
             });
-        
+
         })
-    
+
+
+        $('#ForgotPassword').click(function () {
+            $(function () {
+                window.location = '/Account/ForgotPassword'
+            });
+
+        })
+
 
         var headers = new Headers();
         headers.append("content-type", "application/json");

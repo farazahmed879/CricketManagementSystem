@@ -1,9 +1,4 @@
-﻿using CricketApp.Domain;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WebApp.ViewModels
 {
@@ -14,10 +9,12 @@ namespace WebApp.ViewModels
             HomeTeamScoreCard = new List<MatchSummarydto>(12);
             OpponentTeamScoreCard = new List<MatchSummarydto>(12);
             TeamScoreCard = new List<TeamScoredto>(2);
+            FallOfWicket = new List<FallOfWicketdto>(2);
         }
 
         public List<MatchSummarydto> HomeTeamScoreCard { get; set; }
         public List<MatchSummarydto> OpponentTeamScoreCard { get; set; }
         public List<TeamScoredto> TeamScoreCard { get; set; }
+        public List<FallOfWicketdto> FallOfWicket { get; set; }
     }
 }
