@@ -1,4 +1,4 @@
-﻿@model PaginatedList<CricketApp.Domain.Player>
+﻿@model PaginatedList<WebApp.ViewModels.Playersdto>
 
 @{
     ViewData["Title"] = "Players";
@@ -86,19 +86,19 @@
                             @Html.DisplayFor(modelItem => item.Player_Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.PlayerRole.Name)
+                            @Html.DisplayFor(modelItem => item.PlayerRole)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.BattingStyle.Name)
+                            @Html.DisplayFor(modelItem => item.BattingStyle)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.BowlingStyle.Name)
+                            @Html.DisplayFor(modelItem => item.BowlingStyle)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.DOB)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Team.Team_Name)
+                            @Html.DisplayFor(modelItem => item.Team)
                         </td>
                         <td>
                             @if (User.Identity.IsAuthenticated)
@@ -144,7 +144,6 @@
             </span>
         </form>
     </nav>
-
 </div>
 
 <div id="DeleteModal" class="modal fade" role="dialog">
@@ -176,7 +175,11 @@
 @section Scripts{
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script>
         //Select2
@@ -185,29 +188,44 @@
         });
 
 
-        var responsiveHelper;
-        var breakpointDefinition = {
-            tablet: 1024,
-            phone: 480
-        };
-        var tableElement = $('#PlayerTable');
+        //var responsiveHelper;
+        //var breakpointDefinition = {
+        //    tablet: 1024,
+        //    phone: 480
+        //};
+        //var tableElement = $('#PlayerTable');
 
-        tableElement.dataTable({
-            autoWidth: false,
-            preDrawCallback: function () {
-                // Initialize the responsive datatables helper once.
-                if (!responsiveHelper) {
-                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-                }
-            },
-            rowCallback: function (nRow) {
-                responsiveHelper.createExpandIcon(nRow);
-            },
-            drawCallback: function (oSettings) {
-                responsiveHelper.respond();
-            }
+        //tableElement.dataTable({
+        //    autoWidth: false,
+        //    preDrawCallback: function () {
+        //        // Initialize the responsive datatables helper once.
+        //        if (!responsiveHelper) {
+        //            responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+        //        }
+        //    },
+        //    rowCallback: function (nRow) {
+        //        responsiveHelper.createExpandIcon(nRow);
+        //    },
+        //    drawCallback: function (oSettings) {
+        //        responsiveHelper.respond();
+        //    }
+        //});
+
+
+        $(document).ready(function () {
+            $('#PlayerTable').DataTable({
+                "paging": false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+
+                        //orientation: 'landscape',
+                        //pageSize: 'LEGAL'
+                    }
+                ]
+            });
         });
-
 
         $(function () {
             $('#AddBtn').click(function () {
@@ -247,23 +265,23 @@
                 alert("Record is not deleted");
             }
         };
-                                                                                    //async function FilterData() {
-                                                                                    //    var formElement = document.getElementById("Filters");
-                                                                                    //    var formData = new FormData(formElement);
+                                                                                                                //async function FilterData() {
+                                                                                                                //    var formElement = document.getElementById("Filters");
+                                                                                                                //    var formData = new FormData(formElement);
 
-                                                                                    //    var teamId = formData.get("teamId")
-                                                                                    //    var role = formData.get("role")
+                                                                                                                //    var teamId = formData.get("teamId")
+                                                                                                                //    var role = formData.get("role")
 
 
 
-                                                                                    //    // var header = new Headers();
-                                                                                    //    //header.append("content-type");
+                                                                                                                //    // var header = new Headers();
+                                                                                                                //    //header.append("content-type");
 
-                                                                                    //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
-                                                                                    //        credentials: 'same-origin'
-                                                                                    //    });
+                                                                                                                //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
+                                                                                                                //        credentials: 'same-origin'
+                                                                                                                //    });
 
-                                                                                    //};
+                                                                                                                //};
 
 
 

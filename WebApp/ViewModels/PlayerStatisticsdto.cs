@@ -7,12 +7,12 @@ namespace WebApp.ViewModels
     {
         public int playerId { get; set;}
         public string PlayerName { get; set; }
-        public string Role { get; set; }
+        public string PlayerRole { get; set; }
         public string BattingStyle { get; set; }
         public string BowlingStyle { get; set; }
         public int TeamId { get; set; }
         public string TeamName { get; set; }
-        public DateTime DOB { get; set; }
+        public DateTime? DOB { get; set; }
         public int TotalMatch { get; set; }
         public int TotalInnings { get; set; }
         public int TotalBatRuns { get; set; }
@@ -21,21 +21,21 @@ namespace WebApp.ViewModels
         public int TotalSixes { get; set; }
         public int NumberOf50s { get; set; }
         public int NumberOf100s { get; set; }
-        public float StrikeRate { get; set; }
+        public string StrikeRate { get; set; }
         public string BattingAverage { get; set; }
         public int TotalOvers { get; set; }
         public int TotalBallRuns { get; set; }
         public int TotalWickets { get; set; }
         public int TotalMaidens { get; set; }
         public string BowlingAvg { get; set; }
-        public float Economy { get; set; }
+        public string Economy { get; set; }
         public int FiveWickets { get; set; }
         public int TotalCatches { get; set; }
         public int TotalRunOuts { get; set; }
         public int TotalStumps { get; set; }
         public int TotalNotOut { get; set; }
-        public string TotalBowled { get; set; }
-        public float TotalCatch { get; set; }
+        public int TotalBowled { get; set; }
+        public int TotalCatch { get; set; }
         public int TotalStump { get; set; }
         public int TotalRunOut { get; set; }
         public int TotalHitWicket { get; set; }

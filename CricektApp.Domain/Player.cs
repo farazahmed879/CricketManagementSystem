@@ -16,7 +16,6 @@ namespace CricketApp.Domain
         [Required]
         public string Gender { get; set; }
         public string Address { get; set; }
-        public string Status { get; set; }
         public string CNIC { get; set; }      
         public int? BattingStyleId { get; set; }
         public int? BowlingStyleId { get; set; }
@@ -34,7 +33,5 @@ namespace CricketApp.Domain
         [NotMapped]
         [Display(Name = "Player Image")]
         public IFormFile PlayerImage { get; set; }
-        public int UserId { get; set; }
-
     }
 }

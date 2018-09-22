@@ -4,210 +4,215 @@
     ViewData["Title"] = "Players Record";
 }
 <div class="container-fluid">
-    <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
-        <div class="panel-body">
-            <form class="form-inline" role="form" id="Filters">
-                <div class="row">
-                    <div class="col-xs-6 col-md-4">
-                        <label>Home Team</label>
-                        <select id="homeTeamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
-                            <option value="" selected>--Select--</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-6 col-md-4">
-                        <label>Opponent</label>
-                        <select id="opponentTeamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
-                            <option value="" selected>--Select--</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-6 col-md-4">
-                        <label>Season</label>
-                        <select id="season" name="season" asp-items="ViewBag.Season" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
-                            <option value="" selected>--Select--</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-6 col-md-4">
-                        <label>Overs</label>
-                        <select id="overs" name="overs" asp-items="ViewBag.Overs" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
-                            <option value="" selected>--Select--</option>
-                        </select>
-                    </div>
+    <div class="form-group">
+        <div id="filter-panel" class="collapse filter-panel">
+            <div class="panel-body">
+                <form class="form-inline" role="form" id="Filters">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-4">
+                            <label>Home Team</label>
+                            <select id="homeTeamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
+                                <option value="" selected>--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                            <label>Season</label>
+                            <select id="season" name="season" asp-items="ViewBag.Season" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
+                                <option value="" selected>--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                            <label>Overs</label>
+                            <select id="overs" name="overs" asp-items="ViewBag.Overs" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
+                                <option value="" selected>--Select--</option>
+                            </select>
+                        </div>
 
-                    <div class="col-xs-6 col-md-4">
-                        <label>Position</label>
-                        <select id="position" name="position" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
-                            <option value="" selected>--Select--</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                            <option>11</option>
-                            <option>12</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-6 col-md-4">
-                        <label>Match Type</label>
-                        <select id="MatchTypeId" name="MatchTypeId" asp-items="ViewBag.MatchType" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
-                            <option value="" selected>--Select--</option>
-                        </select>
-                    </div>
+                        <div class="col-xs-6 col-md-4">
+                            <label>Position</label>
+                            <select id="position" name="position" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
+                                <option value="" selected>--Select--</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                            <label>Match Type</label>
+                            <select id="matchTypeId" name="matchTypeId" asp-items="ViewBag.MatchType" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                <option value="" selected>--Select--</option>
+                            </select>
+                        </div>
 
-                    <div class="col-xs-6 col-md-4">
-                        <label>Tournament</label>
-                        <select id="tournamenId" name="tournamenId" asp-items="ViewBag.TournamentId" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
-                            <option value="" selected>--Select--</option>
-                        </select>
-                    </div>
+                        <div class="col-xs-6 col-md-4">
+                            <label>Tournament</label>
+                            <select id="tournamenId" name="tournamenId" asp-items="ViewBag.TournamentId" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                <option value="" selected>--Select--</option>
+                            </select>
+                        </div>
 
-                    <div class="col-xs-6 col-md-4" style="margin-top: 1em">
-                        <div class="form-group">
-                            <button type="button" id="filterdata" class="btn btn-primary filter-col">
-                                <span><i class="fas fa-search"></i></span> Search
-                            </button>
+                        <div class="col-xs-6 col-md-4" style="margin-top: 1em">
+                            <div class="form-group">
+                                <button type="button" id="filterdata" class="btn btn-primary filter-col">
+                                    <span><i class="fas fa-search"></i></span> Search
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </form>
+                </form>
+            </div>
+
         </div>
-
+        <br />
+        <button id="advSearch" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+            Advanced Search
+        </button>
     </div>
-    <button id="advSearch" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
-        Advanced Search
-    </button>
     <hr />
-    <table id="RecordTable" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th style="width: 100%">
-                    Name
-                </th>
-                <th>
-                    Matches
-                </th>
-                <th>
-                    Total Runs
-                </th>
-                <th>
-                    Avg
-                </th>
-                <th>
-                    St. Rate
-                </th>
-                <th>
-                    4s
-                </th>
-                <th>
-                    6s
-                </th>
-                <th>
-                    50s
-                </th>
-                <th>
-                    100s
-                </th>
-                <th>
-                    Overs
-                </th>
-                <th>
-                    Wickets
-                </th>
-                <th>
-                    Avg
-                </th>
-                <th>
-                    Econ
-                </th>
-                <th>
-                    5Ws
-                </th>
-                <th>
-                    Catch
-                </th>
-                <th>
-                    R/O
-                </th>
-                <th>
-                    Stump
-                </th>
-
-
-            </tr>
-        </thead>
-        <tbody id="myTable">
-            @foreach (var item in Model)
-            {
+    <div class="table-responsive">
+        <table id="RecordTable" class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td style="width: 100%">
-                        @Html.DisplayFor(modelItem => item.PlayerName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalMatch)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalBatRuns)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BattingAverage)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StrikeRate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalFours)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalSixes)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOf50s)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOf100s)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalOvers)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalWickets)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BowlingAvg)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Economy)
-                    </td>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Matches
+                    </th>
+                    <th>
+                        Total Runs
+                    </th>
+                    <th>
+                        Avg
+                    </th>
+                    <th>
+                        St. Rate
+                    </th>
+                    <th>
+                        4s
+                    </th>
+                    <th>
+                        6s
+                    </th>
+                    <th>
+                        50s
+                    </th>
+                    <th>
+                        100s
+                    </th>
+                    <th>
+                        Overs
+                    </th>
+                    <th>
+                        Wickets
+                    </th>
+                    <th>
+                        Avg
+                    </th>
+                    <th>
+                        Econ
+                    </th>
+                    <th>
+                        5Ws
+                    </th>
+                    <th>
+                        Catch
+                    </th>
+                    <th>
+                        R/O
+                    </th>
+                    <th>
+                        Stump
+                    </th>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FiveWickets)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalCatches)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalRunOuts)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalStumps)
-                    </td>
 
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody id="myTable">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PlayerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalMatch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalBatRuns)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BattingAverage)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StrikeRate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalFours)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalSixes)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumberOf50s)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumberOf100s)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalOvers)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalWickets)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BowlingAvg)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Economy)
+                        </td>
 
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FiveWickets)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalCatches)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalRunOuts)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalStumps)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 @section Scripts{
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    @*<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet" />*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    @*
+        <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>*@
     <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script>
 
@@ -216,27 +221,19 @@
             $('.js-example-basic-single').select2();
         });
 
-        var responsiveHelper;
-        var breakpointDefinition = {
-            tablet: 1024,
-            phone: 480
-        };
-        var tableElement = $('#RecordTable');
+        $(document).ready(function () {
+            $('#RecordTable').DataTable({
+                dom: 'Bfrtip',
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
 
-        tableElement.dataTable({
-            autoWidth: false,
-            preDrawCallback: function () {
-                // Initialize the responsive datatables helper once.
-                if (!responsiveHelper) {
-                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-                }
-            },
-            rowCallback: function (nRow) {
-                responsiveHelper.createExpandIcon(nRow);
-            },
-            drawCallback: function (oSettings) {
-                responsiveHelper.respond();
-            }
+                        //orientation: 'landscape',
+                        //pageSize: 'LEGAL'
+                    }
+                ]
+            });
         });
 
         const change = () => {
@@ -260,21 +257,21 @@
 
                     //const param = new window.URL(window.location.href).searchParams;
                     var homeTeamId = document.getElementById("homeTeamId").value
-                    var opponentTeamId = document.getElementById("opponentTeamId").value
                     var season = formData.get("season")
                     var overs = formData.get("overs")
-                    var position = formData.get("position")                  
+                    var position = formData.get("position")
+                    var matchTypeId = document.getElementById("matchTypeId").value
                     var tournamentId = formData.get("tournamenId")
-                   
+
                     //var opponentTeamId = formData.get("opponentTeamId")
 
                     // var header = new headers();
                     //header.append("content-type");
                     //
 
-                    const response = await fetch(`/players/AllPlayerStatistics?teamId=${homeTeamId}&opponentTeamId=${opponentTeamId}&overs=${overs}&position=${position}&status=${status}&tournamentId=${tournamentId}&isApi=true`, {
+                    const response = await fetch(`/players/AllPlayerStatistics?teamId=${homeTeamId}&overs=${overs}&position=${position}&matchTypeId=${matchTypeId}&tournamentId=${tournamentId}&isApi=true`, {
                         method: "POST",
-                   //     body: JSON.stringify(model),
+                        //     body: JSON.stringify(model),
                         credentials: 'same-origin'
 
                     });
@@ -285,69 +282,25 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-                                                                                                    <td style="width: 100%">
-                                                                                                        ${i.playerName}
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        ${i.totalMatch}
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                          ${i.totalBatRuns}
+<td> ${i.playerName} </td>
+<td>${i.totalMatch}</td>
+<td>${i.totalBatRuns}</td>
+<td> ${i.battingAverage} </td>
+<td> ${i.strikeRate}</td>
+<td> ${i.totalFours} </td>
+<td> ${i.totalSixes}</td>
+<td> ${i.numberOf50s} </td>
+<td>${i.numberOf100s}</td>
+<td> ${i.totalOvers} </td>
+<td> ${i.totalWickets} </td>
+<td> ${i.bowlingAvg} </td>
+<td>  ${i.economy} </td>
+<td>${i.fiveWickets}</td>
+<td> ${i.totalCatches}</td>
+<td> ${i.totalRunOuts}</td>
+<td>${i.totalStumps}</td>
 
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                   ${i.battingAverage}
-
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                          ${i.strikeRate}
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                          ${i.totalFours}
-
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                           ${i.totalSixes}
-
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                             ${i.numberOf50s}
-
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                           ${i.numberOf100s}
-                                                                                                    <td>
-                                                                                                         ${i.totalOvers}
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                      ${i.totalWickets}
-
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                     ${i.bowlingAvg}
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                       ${i.economy}
-                                                                                                    </td>
-
-                                                                                                    <td>
-                                                                                                 ${i.fiveWickets}
-
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                ${i.totalCatches}
-
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                 ${i.totalRunOuts}
-
-                                                                                                    </td>
-
-                                                                                                    <td>
-                                                                                                       ${i.totalStumps}
-                                                                                                    </td>
-
-                                                                                                `;
+                                                                                                                                                                                                                `;
                             tbody.appendChild(tr);
                             return tr;
                         });
@@ -361,20 +314,22 @@
                 }
             });
         });
-                                                                         //   async function filterdata() {
-                                                                         //'
-                                                                         //       }
-                                                                         //       );
+
 
     </script>
     <style>
-        #PlayerImg {
-            background-image: url('');
-            background-size: cover;
-            background-position: center;
-            height: 60px;
-            width: 100px;
+        #filter-panel {
             border: 1px solid #bbb;
+        }
+
+        td {
+            text-align: center !important;
+            font-size: 1em;
+        }
+
+        th {
+            text-align: center !important;
+            font-size: 1em;
         }
     </style>
 

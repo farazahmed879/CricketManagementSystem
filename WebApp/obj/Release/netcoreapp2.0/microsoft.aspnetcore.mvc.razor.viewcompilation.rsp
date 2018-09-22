@@ -16,6 +16,7 @@ D:\Dot Net MVC App\CricketApp\WebApp
 --file=D:\Dot Net MVC App\CricketApp\WebApp\Views\Matches\Create.cshtml
 --file=D:\Dot Net MVC App\CricketApp\WebApp\Views\Matches\Edit.cshtml
 --file=D:\Dot Net MVC App\CricketApp\WebApp\Views\Matches\Index.cshtml
+--file=D:\Dot Net MVC App\CricketApp\WebApp\Views\Matches\MatchChart.cshtml
 --file=D:\Dot Net MVC App\CricketApp\WebApp\Views\PlayerScores\Create.cshtml
 --file=D:\Dot Net MVC App\CricketApp\WebApp\Views\PlayerScores\Edit.cshtml
 --file=D:\Dot Net MVC App\CricketApp\WebApp\Views\PlayerScores\Index.cshtml

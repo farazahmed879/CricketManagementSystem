@@ -1,4 +1,4 @@
-﻿@model PaginatedList<CricketApp.Domain.Match>
+﻿@model PaginatedList<WebApp.ViewModels.Matchdto>
 
 @{
     ViewData["Title"] = "Matches";
@@ -42,12 +42,10 @@
 
 
                         <div class="col-xs-6 col-md-3">
-                            <div class="form-group label-floating" style="width: 100%;">
-                                <label class="control-label">Season</label>
-                                <select id="season" name="season" asp-items="ViewBag.Season" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                    <option value="">--Select--</option>
-                                </select>
-                            </div>
+                            <label class="control-label">Season</label>
+                            <select id="season" name="season" asp-items="ViewBag.Season" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
                         </div>
                     </div>
                     <br />
@@ -128,36 +126,46 @@
 
                         <td>
 
-                            @if (item.PlayerScores.Any() && item.PlayerScores.Any(i => i.Player != null && i.Player.TeamId == item.HomeTeamId))
+                            @if (item.HasFilledHomeTeamData == true)
                             {
-                                @item.HomeTeam.Team_Name<span class="label  pull-right label-success"><i class="fas fa-check"></i></span>
+                                @item.HomeTeam<span class="label  pull-right label-success"><i class="fas fa-check"></i></span>
 
                             }
                             else
                             {
-                                @item.HomeTeam.Team_Name <span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
+                                @item.HomeTeam <span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
 
                             }
-
                             @*@item.HomeTeam.Team_Name <span class="label pull-right label-warning"><i class="fas fa-question"></i></span>*@
 
                         </td>
                         <td>
 
-                            @if (item.PlayerScores.Any() && item.PlayerScores.Any(i => i.Player != null && i.Player.TeamId == item.OppponentTeamId))
+                            @if (item.HasFilledOpponentTeamData == true)
                             {
-                                @item.OppponentTeam.Team_Name <span class="label pull-right label-success"><i class="fas fa-check"></i></span>
+                                @item.OppponentTeam <span class="label pull-right label-success"><i class="fas fa-check"></i></span>
 
                             }
                             else
                             {
-                                @item.OppponentTeam.Team_Name<span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
+                                @item.OppponentTeam<span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
 
                             }
+
                         </td>
                         <td>
 
-                            @if (item.TeamScores.Any() && item.TeamScores.Any(i => i.MatchId == item.MatchId) || item.FallOfWickets.Any() && item.FallOfWickets.Any(i => i.MatchId == item.MatchId))
+                            @*@if (item.TeamScores.Any() && item.TeamScores.Any(i => i.MatchId == item.MatchId) || item.FallOfWickets.Any() && item.FallOfWickets.Any(i => i.MatchId == item.MatchId))
+                                {
+                                    <h1 class="label label-success">Read<i class="fas fa-check"></i></h1>
+
+                                }
+                                else
+
+                                {
+                                    <h3 class="label label-warning">Pending<i class="fas fa-question"></i></h3>
+                                }*@
+                            @if (item.HasFilledTeamScoreData == true)
                             {
                                 <h1 class="label label-success">Read<i class="fas fa-check"></i></h1>
 
@@ -168,9 +176,10 @@
                                 <h3 class="label label-warning">Pending<i class="fas fa-question"></i></h3>
                             }
 
+
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.MatchType.MatchTypeName)
+                            @Html.DisplayFor(modelItem => item.MatchType)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.DateOfMatch)
@@ -186,9 +195,7 @@
                         <td>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="fas fa-baseball-ball"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId"><i class="fas fa-edit"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.MatchId)" class="fas fa-trash-alt"></i></a>
+
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                                         <span class="caret"></span>
@@ -198,6 +205,10 @@
                                         <li><a data-placement="top" data-toggle="Graph" title="Graph" asp-action="MatchChart" asp-route-id="@item.MatchId"><i class="fas fa-info-circle">Graph</i></a></li>
                                     </ul>
                                 </div>
+                                <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="fas fa-baseball-ball"></i></a>
+                                <a data-placement="top" data-toggle="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId"><i class="fas fa-edit"></i></a>
+                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.MatchId)" class="fas fa-trash-alt"></i></a>
+
 
 
                             }
@@ -268,7 +279,11 @@
 @section Scripts{
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script>
         //Select2
@@ -295,28 +310,22 @@
                 window.location = '/Matches/Create'
             });
         });
-        var responsiveHelper;
-        var breakpointDefinition = {
-            tablet: 1024,
-            phone: 480
-        };
 
-        var tableElement = $('#MatchTable');
-        tableElement.dataTable({
-            autoWidth: false,
-            preDrawCallback: function () {
-                // Initialize the responsive datatables helper once.
-                if (!responsiveHelper) {
-                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-                }
-            },
-            rowCallback: function (nRow) {
-                responsiveHelper.createExpandIcon(nRow);
-            },
-            drawCallback: function (oSettings) {
-                responsiveHelper.respond();
-            }
+        $(document).ready(function () {
+            $('#MatchTable').DataTable({
+                "paging": false,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+
+                        //orientation: 'landscape',
+                        //pageSize: 'LEGAL'
+                    }
+                ]
+            });
         });
+
 
 
         $(function () {

@@ -1,4 +1,4 @@
-﻿Alter PROCEDURE [usp_GetSinglePlayerStatistics]
+﻿Create PROCEDURE [usp_GetSinglePlayerStatistics]
 @paramPlayerId AS INT,
 @paramOvers AS INT
 AS
@@ -24,7 +24,14 @@ BEGIN
 				max (Wickets) as 'MostWickets',		
 				COUNT(CASE WHEN Bat_Runs >= 50 THEN 1 ELSE NULL END) AS 'NumberOf50s',
 				COUNT(CASE WHEN Bat_Runs >= 100 THEN 1 ELSE NULL END) AS 'NumberOf100s',
-				cast(sum (cast (Bat_Runs as float)) *100 / sum (cast (Bat_Balls as float)) as float)  as 'StrikeRate',
+				Case When sum(Bat_Balls) is null  OR sum(Bat_Balls) = 0 
+					THEN 'N/A'
+				    ELSE CAST(
+								cast(sum (Bat_Runs) as float) * 100 / 
+								CAST(sum(Bat_Balls) as float) AS VARCHAR(20))
+				END As 'StrikeRate',
+
+
 				CASE WHEN COUNT(cast (Case When IsPlayedInning ='1' Then 1 else null end as float)) - 
 						  COUNT (cast (case when HowOutId = '14' then 1 else null end as float)) = 0
 					THEN 'N/A'
@@ -38,11 +45,16 @@ BEGIN
 				sum (Ball_Runs) as 'TotalBallRuns',
 				sum (Wickets) as 'TotalWickets',
 				sum (Maiden) as 'TotalMaidens',
-				CASE WHEN COUNT(Wickets) IS NULL OR COUNT(Wickets) = 0 
+				CASE WHEN sum(Wickets) IS NULL OR sum(Wickets) = 0 
 					THEN 'N/A'
-					ELSE CAST((CAST(SUM(Ball_Runs)as float) / CAST(COUNT(Wickets) as float)) AS VARCHAR(20))
+					ELSE CAST((CAST(SUM(Ball_Runs)as float) / CAST(sum(Wickets) as float)) AS VARCHAR(20))
 					END As 'BowlingAvg',
-				cast(SUM (cast (Ball_Runs as float)) / SUM(cast (Overs as float)) as float) As 'Economy',
+
+				CASE WHEN sum(Overs) IS NULL OR sum(Overs) = 0 
+					THEN 'N/A'
+				ELSE CAST((CAST(SUM(Ball_Runs)as float) / CAST(sum(Overs) as float)) AS VARCHAR(20))
+					END As 'Economy',
+									
 			    count(Case When Wickets >=5 Then 1 Else Null End) As 'FiveWickets',
 				sum (Catches) as 'TotalCatches',
 			 	sum (RunOut) as 'TotalRunOuts',
@@ -51,18 +63,19 @@ BEGIN
 				Players.TeamId As 'TeamId',					
 				Teams.Team_Name As 'TeamName',
 				Players.PlayerLogo As 'PlayerImage',
-				Matches.MatchOvers As 'MatchOvers'
-				--BattingStyle.Name As 'BattingStyle',
-				--BowlingStyle.Name As 'BowlingStyle',
-				--PlayerRole.Name As 'PlayerRole'
+				Players.DOB as 'DOB',
+				Matches.MatchOvers As 'MatchOvers',
+				BattingStyle.Name As 'BattingStyle',
+				BowlingStyle.Name As 'BowlingStyle',
+				PlayerRole.Name As 'PlayerRole'
 		
 		FROM PlayerScores
 		Inner join Players ON PlayerScores.PlayerId = Players.PlayerId
 		Inner join Teams ON Players.TeamId = Teams.TeamId
 		Inner join Matches ON PlayerScores.MatchId = Matches.MatchId
-		--left join BattingStyle On Players.BattingStyleId = BattingStyle.BattingStyleId
-		--left join BowlingStyle On Players.BowlingStyleId = BowlingStyle.BowlingStyleId
-		--left join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
+		left join BattingStyle On Players.BattingStyleId = BattingStyle.BattingStyleId
+		left join BowlingStyle On Players.BowlingStyleId = BowlingStyle.BowlingStyleId
+		left join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
 	
 		WHERE PlayerScores.PlayerId = @paramPlayerId And (@paramOvers IS NUll OR Matches.MatchOvers = @paramOvers)
 		GROUP BY PlayerScores.PlayerId,
@@ -72,21 +85,12 @@ BEGIN
 				 Players.BattingStyleId,
 				 Players.TeamId,			 
 				 Teams.Team_Name,
+                 Players.DOB,
 				 Players.PlayerLogo,
-				 Matches.MatchOvers
-				 --BattingStyle.Name,
-				 --BowlingStyle.Name,
-				 --PlayerRole.Name
+				 Matches.MatchOvers,
+				 BattingStyle.Name,
+				 BowlingStyle.Name,
+				 PlayerRole.Name
 				 
 	) AS data
 END
-exec [usp_GetSinglePlayerStatistics] 1, 0
-
-select * from Players
-
-
-delete from matches
-
-select * from PlayerScores
-
-select * from TeamScores

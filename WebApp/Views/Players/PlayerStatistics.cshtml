@@ -40,7 +40,7 @@
                     Playing Role
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.Role)
+                    @Html.DisplayFor(model => model.PlayerRole)
                 </dd>
                 <dt>
                     Batting Style
@@ -58,7 +58,7 @@
                     Born
                 </dt>
                 <dd style="width: 100%">
-                    @Html.DisplayFor(model => model.DOB)
+                    @Html.DisplayFor(model => model.DOB.HasValue ? model.DOB.Value.ToShortDateString() : "")
                 </dd>
                 <dt>
                     Major Team

@@ -9,9 +9,10 @@ D:\Dot Net MVC App\CricketApp\SomeUI\bin\Release\netcoreapp2.0\WebApp.dll
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Release\netcoreapp2.0\CricketApp.Domain.pdb
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Release\netcoreapp2.0\CricketApp.Data.pdb
 D:\Dot Net MVC App\CricketApp\SomeUI\bin\Release\netcoreapp2.0\WebApp.pdb
-D:\Dot Net MVC App\CricketApp\SomeUI\obj\Release\netcoreapp2.0\SomeUI.csprojResolveAssemblyReference.cache
 D:\Dot Net MVC App\CricketApp\SomeUI\obj\Release\netcoreapp2.0\SomeUI.csproj.CoreCompileInputs.cache
 D:\Dot Net MVC App\CricketApp\SomeUI\obj\Release\netcoreapp2.0\SomeUI.AssemblyInfoInputs.cache
 D:\Dot Net MVC App\CricketApp\SomeUI\obj\Release\netcoreapp2.0\SomeUI.AssemblyInfo.cs
 D:\Dot Net MVC App\CricketApp\SomeUI\obj\Release\netcoreapp2.0\SomeUI.dll
 D:\Dot Net MVC App\CricketApp\SomeUI\obj\Release\netcoreapp2.0\SomeUI.pdb
+D:\Dot Net MVC App\CricketApp\SomeUI\obj\Release\netcoreapp2.0\SomeUI.csprojAssemblyReference.cache
+D:\Dot Net MVC App\CricketApp\SomeUI\obj\Release\netcoreapp2.0\SomeUI.csproj.CopyComplete

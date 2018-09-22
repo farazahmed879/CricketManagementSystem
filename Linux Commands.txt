@@ -1,0 +1,27 @@
+sudo unzip path/filename.zip --- to unzip file
+mkdir foldername --- to create folders
+
+
+
+Release
+scp filename root@ip:production
+
+systemctl enable kestrel-hellomvc.service
+
+systemctl start kestrel-hellomvc.service
+
+systemctl status kestrel-hellomvc.service
+
+dotnet publish --configuration Release 
+
+
+sqlcmd -S LOCALHOST -d ScoreExecDb -U SA -P Super@samad123 -i script.sql
+
+SystemD Errors
+1)200 Folder Issue
+1)1 Application startup crash
+
+sqlcmd -S localhost -U SA -P Super@samad123  ---- Connect MSSQL
+
+
+CREATE INDEX IX_TeamId ON dbo.Players(TeamId);

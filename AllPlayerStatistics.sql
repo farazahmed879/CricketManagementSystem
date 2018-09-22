@@ -1,11 +1,10 @@
-﻿Alter PROCEDURE [usp_GetAllPlayerStatistics]
+﻿Create PROCEDURE [usp_GetAllPlayerStatistics]
 @paramTeamId AS INT,
 @paramSeason As Int,
 @paramOvers As Int,
 @paramPosition As Int, 
 @paramMatchType As Int,
-@paramTournamentId As Int,
-@paramOpponentTeamId As Int
+@paramTournamentId As Int
 AS
 BEGIN
 	SELECT  count (PlayerScores.MatchId) as 'TotalMatch',
@@ -19,7 +18,7 @@ BEGIN
 		
 			--Calculating Batting Strike Rate
 			CASE WHEN 
-					Sum(cast (Bat_Balls as float)) = 0  OR Sum(cast (Bat_Balls as float)) = NULL
+					Sum(Bat_Balls) = 0  OR Sum(Bat_Balls) is NULL
 									THEN 'N/A'
 			ELSE CAST(
 							Sum(cast (Bat_Runs as float)) *100 / 
@@ -42,14 +41,14 @@ BEGIN
 			sum (Ball_Runs) as 'TotalBallRuns',
 			sum (Wickets) as 'TotalWickets',
 			sum (Maiden) as 'TotalMaidens',
-			CASE WHEN COUNT(Wickets) IS NULL OR COUNT(Wickets) = 0 
+			CASE WHEN sum(Wickets) IS NULL OR sum(Wickets) = 0 
 				THEN 'N/A'
-				ELSE CAST((CAST(SUM(Ball_Runs)as float) / CAST(COUNT(Wickets) as float)) AS VARCHAR(20))
+				ELSE CAST((CAST(SUM(Ball_Runs)as float) / CAST(sum(Wickets) as float)) AS VARCHAR(20))
 				END As 'BowlingAvg',
 			
 			--Economy Rate
 			Case When
-					sum(cast(overs as float)) = 0 OR sum(cast(overs as float)) = null
+					sum(overs) = 0 OR sum(overs) is null
 					Then 'N/A'
 					Else CAST(
 			cast(sum (cast (ball_runs as float)) / sum(cast (overs as float)) as float) 
@@ -76,13 +75,12 @@ BEGIN
 	left join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
 	
 	
-	WHERE (@paramTeamId Is NUll or Players.TeamId = @paramTeamId) And 
+	WHERE (@paramTeamId Is NUll or Players.TeamId = @paramTeamId or Matches.OppponentTeamId = @paramTeamId ) And 
 		  (@paramSeason IS NUll OR Matches.Season = @paramSeason)	And
 		  (@paramOvers IS NUll OR Matches.MatchOvers = @paramOvers)	And
 		  (@paramPosition IS NULL OR PlayerScores.Position = @paramPosition) And 
 		  (@paramMatchType IS NULL OR Matches.MatchTypeId = @paramMatchType) And 
-		  (@paramTournamentId IS NUll OR Tournaments.TournamentId = @paramTournamentId) And
-		  (@paramOpponentTeamId IS NUll OR Matches.OppponentTeamId = @paramOpponentTeamId) 
+		  (@paramTournamentId IS NUll OR Tournaments.TournamentId = @paramTournamentId)
 	
 	GROUP BY PlayerScores.PlayerId,
 			Players.Player_Name,
@@ -91,8 +89,3 @@ BEGIN
 			 Teams.Team_Name
 END
 
-
-
-execute [usp_GetAllPlayerStatistics] null,null,null,null,null,null,null
-
-select * from aspnetusers

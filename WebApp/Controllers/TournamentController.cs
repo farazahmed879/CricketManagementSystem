@@ -25,41 +25,27 @@ namespace WebApp.Controllers
 
         // GET: Tournaments
 
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(int? page, int? userId)
         {
             ViewBag.Name = "Tournaments";
-            int pageSize = 10;
+            int pageSize = 20;
             var users = await _userManager.GetUserAsync(HttpContext.User);
-            if (users == null)
-            {
-                return View(await PaginatedList<ViewModels.Tournamentdto>.CreateAsync(
-                  _context.Tournaments
-                 .Select(i => new ViewModels.Tournamentdto
-                 {
-                     TournamentId = i.TournamentId,
-                     TournamentName = i.TournamentName,
-                     Organizor = i.Organizor,
-                     StartingDate = i.StartingDate
+            if (users != null)
+                userId = users.Id;
 
-                 })
-          , page ?? 1, pageSize));
-            }
-            else
-            {
-                return View(await PaginatedList<ViewModels.Tournamentdto>.CreateAsync(
-                 _context.Tournaments
-                  .Where(i => i.UserId == users.Id || users == null)
-                   .Select(i => new ViewModels.Tournamentdto
-                   {
-                       TournamentId = i.TournamentId,
-                       TournamentName = i.TournamentName,
-                       Organizor = i.Organizor,
-                       StartingDate = i.StartingDate
+            return View(await PaginatedList<ViewModels.Tournamentdto>.CreateAsync(
+              _context.Tournaments
+               .Where(i => !userId.HasValue || i.UserId == users.Id)
+                .Select(i => new ViewModels.Tournamentdto
+                {
+                    TournamentId = i.TournamentId,
+                    TournamentName = i.TournamentName,
+                    Organizor = i.Organizor,
+                    StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToShortDateString() : "",
 
-                   })
-          , page ?? 1, pageSize));
-            }
-
+                })
+                .OrderByDescending(i => i.TournamentId)
+       , page ?? 1, pageSize));
 
         }
 

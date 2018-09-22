@@ -64,7 +64,7 @@ namespace WebApp.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> UserProfile(string userName)
+        public IActionResult UserProfile(string userName)
         {
             if (User.Identity.IsAuthenticated)
             {

@@ -52,16 +52,16 @@
                         <td>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                
+
                                 <a data-toggle="tooltip" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TournamentId"><i class="fas fa-edit"></i></a>
                                 <a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(@item.TournamentId)"></i></a>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                                         <span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu">                         
+                                    <ul class="dropdown-menu">
                                         <li><a asp-controller="Matches" asp-action="Create" asp-route-tournamentId="@item.TournamentId" data-placement="top" data-toggle="tooltip" title="Add Match"><i class="fab fa-accusoft"> Add Match</i></a></li>
-                                        <li> <a asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId"  data-placement="top" data-toggle="tooltip" title="Matches"><i class="fa fa-th"> Matches</i></a></li>
+                                        <li> <a asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId" data-placement="top" data-toggle="tooltip" title="Matches"><i class="fa fa-th"> Matches</i></a></li>
                                     </ul>
                                 </div>
                             }
@@ -97,7 +97,7 @@
             <span class="fa-1x pull-right">
                 <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
             </span>
-
+            
         </form>
     </nav>
 </div>
@@ -126,7 +126,11 @@
     </div>
 </div>
 @section Scripts{
-    <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
     <style>
@@ -148,28 +152,22 @@
             });
         });
 
-        var responsiveHelper;
-        var breakpointDefinition = {
-            tablet: 1024,
-            phone: 480
-        };
-        var tableElement = $('#TournamentTable');
+        $(document).ready(function () {
+            $('#TournamentTable').DataTable({
+                "paging": false,
+                "info": false,
+                    dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
 
-        tableElement.dataTable({
-            autoWidth: false,
-            preDrawCallback: function () {
-                // Initialize the responsive datatables helper once.
-                if (!responsiveHelper) {
-                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-                }
-            },
-            rowCallback: function (nRow) {
-                responsiveHelper.createExpandIcon(nRow);
-            },
-            drawCallback: function (oSettings) {
-                responsiveHelper.respond();
-            }
+                        //orientation: 'landscape',
+                        //pageSize: 'LEGAL'
+                    }
+                ]
+            });
         });
+
 
         function Delete(MatchId) {
             document.getElementById("MatchId").value = MatchId;

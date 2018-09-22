@@ -171,15 +171,14 @@
                             <i class="fa fa-th"></i> <span>Players</span>
                         </a>
                     </li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li>
-                            <a asp-controller="Players" asp-action="AllPlayerStatistics">
-                                <i class="fa fa-pie-chart"></i> <span>Records</span>
-                            </a>
-                        </li>
 
-                    }
+                    <li>
+                        <a asp-controller="Players" asp-action="AllPlayerStatistics">
+                            <i class="fa fa-pie-chart"></i> <span>Records</span>
+                        </a>
+                    </li>
+
+
 
                     @*<li>
 

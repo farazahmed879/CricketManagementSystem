@@ -21,14 +21,14 @@ namespace WebApp.ViewModels
         public int TotalSixes { get; set; }
         public int NumberOf50s { get; set; }
         public int NumberOf100s { get; set; }
-        public float StrikeRate { get; set; }
+        public string StrikeRate { get; set; }
         public string BattingAverage { get; set; }
         public int TotalOvers { get; set; }
         public int TotalBallRuns { get; set; }
         public int TotalWickets { get; set; }
         public int TotalMaidens { get; set; }
         public string BowlingAvg { get; set; }
-        public float Economy { get; set; }
+        public string Economy { get; set; }
         public int FiveWickets { get; set; }
         public int TotalCatches { get; set; }
         public int TotalRunOuts { get; set; }

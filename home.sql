@@ -1,4 +1,4 @@
-﻿Alter procedure [usp_HomeScreen]
+﻿Create procedure [usp_HomeScreen]
 AS
 begin
 	SELECT *
@@ -56,12 +56,3 @@ begin
 		order by Matches.MatchId Desc
 	) AS LastMatch
 end
-
-execute [usp_HomeScreen]
-delete from Matches
-select * from PlayerScores
-select * from Matches
-
---select top 1 * from Matches order by MatchId Desc
-
-CREATE INDEX IX_TeamId ON dbo.Players(TeamId);

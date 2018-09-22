@@ -31,10 +31,27 @@ namespace WebApp.Controllers
                 { },
                 commandType: CommandType.StoredProcedure) ?? new HomeScreendto
                 {
-                    
+
                 };
 
             return View(model);
+        }
+
+        [Route("home/HomePage")]
+        [AllowAnonymous]
+        public IActionResult HomePage()
+        {
+            var connection = _context.Database.GetDbConnection();
+            var model = connection.QuerySingleOrDefault<HomeScreendto>(
+                "[usp_HomeScreen]",
+                new
+                { },
+                commandType: CommandType.StoredProcedure) ?? new HomeScreendto
+                {
+
+                };
+
+            return Json(model);
         }
 
         public IActionResult About()

@@ -73,6 +73,7 @@ namespace WebApp.Controllers
 
 
                 })
+                .OrderBy(i => i.Position)
                 .ToList();
 
 
@@ -105,6 +106,7 @@ namespace WebApp.Controllers
 
 
                })
+               .OrderBy(i => i.Position)
                .ToList();
 
             scoreDto.TeamScoreCard = _context.TeamScores
@@ -122,7 +124,9 @@ namespace WebApp.Controllers
                     TeamName = i.Team.Team_Name
 
 
-                }).ToList();
+                })
+                .OrderBy(i => i.TeamScoreId)
+                .ToList();
             scoreDto.FallOfWicket = _context.FallOFWickets
               .AsNoTracking()
               .Include(i => i.Team)
@@ -173,7 +177,11 @@ namespace WebApp.Controllers
         public IActionResult Create(int homeTeamId, int oppTeamId, int matchId)
         {
             ViewBag.Name = "Add Match Players";
-            ViewBag.HowOut = new SelectList(_context.HowOut, "HowOutId", "Name");
+            ViewBag.HowOut = new SelectList(_context.HowOut
+                .AsNoTracking()
+                .Select(i => new { i.HowOutId, i.Name })
+                , "HowOutId", "Name");
+
             ViewBag.OpponentTeam = _context.Teams
                  .AsNoTracking()
                  .Where(i => i.TeamId == oppTeamId)
@@ -186,16 +194,22 @@ namespace WebApp.Controllers
                .Where(i => i.TeamId == homeTeamId)
                .Select(i => i.Team_Name)
                .Single();
+
             ViewBag.homeTeamId = homeTeamId;
             ViewBag.opponentTeamId = oppTeamId;
 
             ViewBag.HomePlayerId = new SelectList(_context.Players
                 .AsNoTracking()
-                .Where(i => i.TeamId == homeTeamId), "PlayerId", "Player_Name");
+                .Where(i => i.TeamId == homeTeamId)
+                .Select(i => new { i.PlayerId, i.Player_Name })
+                , "PlayerId", "Player_Name");
 
             ViewBag.OpponentPlayerId = new SelectList(_context.Players
              .AsNoTracking()
-             .Where(i => i.TeamId == oppTeamId), "PlayerId", "Player_Name");
+             .Where(i => i.TeamId == oppTeamId)
+             .Select(i => new { i.PlayerId, i.Player_Name })
+             , "PlayerId", "Player_Name");
+
             var model = new TeamMatchScoredto();
             for (int i = 0; i < 2; i++)
 
@@ -462,7 +476,10 @@ namespace WebApp.Controllers
         public IActionResult Edit(int? matchId, int? homeTeamId, int? oppTeamId, int? playerScoreId)
         {
             ViewBag.Name = "Edit Match Players";
-            ViewBag.HowOut = new SelectList(_context.HowOut, "HowOutId", "Name");
+            ViewBag.HowOut = new SelectList(_context.HowOut
+                .AsNoTracking()
+                .Select(i => new { i.HowOutId, i.Name })
+                , "HowOutId", "Name");
             var scoreDto = new ScoreCarddto();
             //ViewBag.matchId = matchId;
             ViewBag.OpponentTeam = _context.Teams
@@ -482,7 +499,9 @@ namespace WebApp.Controllers
 
             ViewBag.HomePlayerId = new SelectList(_context.Players
                  .AsNoTracking()
-                 .Where(i => i.TeamId == homeTeamId), "PlayerId", "Player_Name");
+                 .Where(i => i.TeamId == homeTeamId)
+                 .Select(i => new { i.PlayerId, i.Player_Name })
+                 , "PlayerId", "Player_Name");
 
             ViewBag.OpponentPlayerId = new SelectList(_context.Players
              .AsNoTracking()

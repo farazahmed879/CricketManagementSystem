@@ -26,29 +26,35 @@ namespace WebApp.Controllers
 
         // GET: Teams
 
-        public async Task<IActionResult> Index(string zone, string city, int? page)
+        public async Task<IActionResult> Index(string zone, string city, int? page, int? userId)
         {
 
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Team";
-            int pageSize = 10;
-            if (users == null)
+            int pageSize = 20;
+            if (users != null)
+                userId = users.Id;
+
+            return View(await PaginatedList<ViewModels.Teamdto>.CreateAsync(
+            _context.Teams
+            .AsNoTracking()
+            .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone)
+                    && (string.IsNullOrEmpty(city) || i.City == city)
+                    && (!userId.HasValue || i.clubAdmin.UserId == userId)
+            )
+            .Select(i => new ViewModels.Teamdto
             {
-                return View(await PaginatedList<Team>.CreateAsync(
-                _context.Teams
-                .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone) && (string.IsNullOrEmpty(city) || i.City == city)
-                )
-                , page ?? 1, pageSize));
-            }
-            else
-            {
-                return View(await PaginatedList<Team>.CreateAsync(
-                _context.Teams
-                .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone) && (string.IsNullOrEmpty(city) || i.City == city)
-                && (i.clubAdmin.UserId == users.Id || users == null)
-                )
-                , page ?? 1, pageSize));
-            }
+                TeamId = i.TeamId,
+                Team_Name = i.Team_Name,
+                Place = i.Place,
+                Zone = i.Zone,
+                City = i.City,
+                Contact = i.Contact,
+                TeamLogo = i.TeamLogo
+            })
+            .OrderByDescending(i => i.TeamId)
+            , page ?? 1, pageSize));
+
         }
         // GET: RoleManagement/
         [Route("Teams/RoleManagement")]
@@ -71,6 +77,7 @@ namespace WebApp.Controllers
             ViewBag.Name = "Role Management";
             var RoleManagement = _context.Teams
                 .Where(i => i.clubAdmin.UserId == users.Id)
+                .Select(i => new { i.TeamId, i.Team_Name, i.IsRegistered, i.clubAdmin.UserId })
                 .ToList();
             return View(RoleManagement);
         }
@@ -241,7 +248,7 @@ namespace WebApp.Controllers
             return View(team);
         }
 
-       
+
         [Route("Team/DeleteConfirmed")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int teamId)
