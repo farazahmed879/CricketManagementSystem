@@ -284,11 +284,35 @@ namespace WebApp.Controllers
             return Ok();
         }
 
+        public IActionResult MatchChartJson(int matchId)
+        {
+            ViewBag.MatchId = matchId;
+            var graph = _context.FallOFWickets
+                .Where(i => i.MatchId == matchId)
+                .Select(i => new WebApp.ViewModels.FallOfWicketdto
+                {
+                    First = i.First,
+                    Second = i.Second,
+                    Third = i.Third,
+                    Fourth = i.Fourth,
+                    Fifth = i.Fifth,
+                    Sixth = i.Sixth,
+                    Seventh = i.Seventh,
+                    Eight = i.Eight,
+                    Ninth = i.Ninth,
+                    Tenth = i.Tenth
+
+                }).ToList();
+            return Json(graph);
+
+        }
         public IActionResult MatchChart(int matchId)
         {
-
-            var graph = _context.FallOFWickets.ToList();
-            return View(graph);
+            ViewBag.MatchId = matchId;
+            ViewBag.MatchName = _context.FallOFWickets
+                .Where(i => i.MatchId == matchId)
+                .Select(i => i.Team.Team_Name).FirstOrDefault();
+            return View();
 
         }
 

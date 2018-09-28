@@ -308,11 +308,12 @@ namespace WebApp.Controllers
         // GET: PlayerStatistics
         public IActionResult PlayerStatistics(int playerId, int? matchOvers)
         {
+            ViewBag.Name = "Players / Profile";
             ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
             try
             {
                 var connection = _context.Database.GetDbConnection();
-                var model = connection.QuerySingle<PlayerStatisticsdto>(
+                var model = connection.QuerySingleOrDefault<PlayerStatisticsdto>(
                     "[usp_GetSinglePlayerStatistics]",
                     new
                     {

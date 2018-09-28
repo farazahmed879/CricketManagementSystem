@@ -18,7 +18,5 @@ namespace WebApp.ViewModels
         public int Eight { get; set; }
         public int Ninth { get; set; }
         public int Tenth { get; set; }
-        public Team Team { get; set; }
-        public Match Match { get; set; }
     }
 }

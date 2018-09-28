@@ -225,6 +225,77 @@ namespace CricketApp.Data.Migrations
                     b.ToTable("Players");
                 });
 
+            modelBuilder.Entity("CricketApp.Domain.PlayerPastRecord", b =>
+                {
+                    b.Property<int>("PlayerPastRecordId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("DoBowled");
+
+                    b.Property<int?>("DoCatch");
+
+                    b.Property<int?>("DoHitWicket");
+
+                    b.Property<int?>("DoLBW");
+
+                    b.Property<int?>("DoStump");
+
+                    b.Property<int?>("FiveWickets");
+
+                    b.Property<int?>("GetBowled");
+
+                    b.Property<int?>("GetCatch");
+
+                    b.Property<int?>("GetHitWicket");
+
+                    b.Property<int?>("GetLBW");
+
+                    b.Property<int?>("GetRunOut");
+
+                    b.Property<int?>("GetStump");
+
+                    b.Property<int?>("NumberOf100s");
+
+                    b.Property<int?>("NumberOf50s");
+
+                    b.Property<int?>("OnFieldCatch");
+
+                    b.Property<int?>("OnFieldRunOut");
+
+                    b.Property<int?>("OnFieldStump");
+
+                    b.Property<int>("PlayerId");
+
+                    b.Property<int?>("TotalBallRuns");
+
+                    b.Property<int?>("TotalBatBalls");
+
+                    b.Property<int?>("TotalBatRuns");
+
+                    b.Property<int?>("TotalFours");
+
+                    b.Property<int?>("TotalInnings");
+
+                    b.Property<int?>("TotalMaidens");
+
+                    b.Property<int?>("TotalMatch");
+
+                    b.Property<int?>("TotalNotOut");
+
+                    b.Property<int?>("TotalOvers");
+
+                    b.Property<int?>("TotalSixes");
+
+                    b.Property<int?>("TotalWickets");
+
+                    b.HasKey("PlayerPastRecordId");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("PlayerPastRecord");
+                });
+
             modelBuilder.Entity("CricketApp.Domain.PlayerRole", b =>
                 {
                     b.Property<int>("PlayerRoleId")
@@ -606,6 +677,14 @@ namespace CricketApp.Data.Migrations
                     b.HasOne("CricketApp.Domain.Team", "Team")
                         .WithMany("Players")
                         .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CricketApp.Domain.PlayerPastRecord", b =>
+                {
+                    b.HasOne("CricketApp.Domain.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

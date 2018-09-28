@@ -38,18 +38,26 @@
             </div>
 
         </div>
-        <hr />
-        <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
-            Advanced Search
-        </button>
-    </div>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <div class="form-group">
-            <a asp-controller="Players" class="btn btn-primary" asp-action="Create">Add</a>
+        <br />
+        <div class="row">
+            <div class="col-md-10 col-sm-10">
+                <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+                    Advanced Search
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="form-group">
+                        <a asp-controller="Players" class="btn btn-primary" asp-action="Create">Add</a>
+                    </div>
+
+                }
+            </div>
         </div>
 
-    }
+    </div>
+
 
 
     <div class="table-responsive">
@@ -106,6 +114,7 @@
                                 <a data-placement="top" data-toggle="tooltip" title="Player Profile" asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId"><i class="fa fa-pie-chart"></i></a>
                                 <a data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.PlayerId"><i class="fas fa-edit"></i></a>
                                 <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" onclick="Delete(@item.PlayerId)"></i></a>
+                                <a data-placement="top" data-toggle="tooltip" title="Past Record" asp-controller="PlayerPastRecord" asp-action="PastRecord" asp-route-playerId="@item.PlayerId"><i class="fa fa-pie-chart"></i></a>
 
                             }
                             else
@@ -265,23 +274,23 @@
                 alert("Record is not deleted");
             }
         };
-                                                                                                                //async function FilterData() {
-                                                                                                                //    var formElement = document.getElementById("Filters");
-                                                                                                                //    var formData = new FormData(formElement);
+                                                                                                                        //async function FilterData() {
+                                                                                                                        //    var formElement = document.getElementById("Filters");
+                                                                                                                        //    var formData = new FormData(formElement);
 
-                                                                                                                //    var teamId = formData.get("teamId")
-                                                                                                                //    var role = formData.get("role")
+                                                                                                                        //    var teamId = formData.get("teamId")
+                                                                                                                        //    var role = formData.get("role")
 
 
 
-                                                                                                                //    // var header = new Headers();
-                                                                                                                //    //header.append("content-type");
+                                                                                                                        //    // var header = new Headers();
+                                                                                                                        //    //header.append("content-type");
 
-                                                                                                                //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
-                                                                                                                //        credentials: 'same-origin'
-                                                                                                                //    });
+                                                                                                                        //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
+                                                                                                                        //        credentials: 'same-origin'
+                                                                                                                        //    });
 
-                                                                                                                //};
+                                                                                                                        //};
 
 
 

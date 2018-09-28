@@ -203,16 +203,17 @@
         </aside>
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">@ViewBag.Name</a></li>
+            </ol>
             <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>
-                    @ViewBag.Name
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li class="active">Dashboard</li>
-                </ol>
-            </section>
+            @*<section class="content-header">
+                    <h1>
+                        @ViewBag.Name
+                    </h1>
+
+                </section>*@
             <!-- Main content -->
             <section class="content wizard">
 
@@ -309,22 +310,12 @@
     <script src="~/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE App -->
     <script src="~/dist/js/adminlte.min.js"></script>
-    <!-- Sparkline -->
-    <script src="~/dist/jquery.sparkline.min.js"></script>
-    <!-- jvectormap  -->
-    <script src="~/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="~/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
     <!-- SlimScroll -->
-    <script src="~/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <!-- ChartJS -->
-    <script src="~/chart.js/Chart.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="~/dist/js/pages/dashboard2.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="~/dist/js/demo.js"></script>
+    @*<script src="~/jquery-slimscroll/jquery.slimscroll.min.js"></script>*@
+
     <script src="~/js/jquery.bootstrap.js"></script>
 
-    <script src="~/js/datatables.responsive.js"></script>
+    @* <script src="~/js/datatables.responsive.js"></script>*@
 
     @RenderSection("Scripts", required: false)
 

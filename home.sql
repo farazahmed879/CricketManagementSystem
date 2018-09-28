@@ -56,3 +56,4 @@ begin
 		order by Matches.MatchId Desc
 	) AS LastMatch
 end
+go

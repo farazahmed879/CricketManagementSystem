@@ -1,4 +1,4 @@
-﻿@model CricketApp.Domain.FallOfWicket
+﻿@model WebApp.ViewModels.FallOfWicketdto
 
 @{
     ViewData["Title"] = "Matches";
@@ -7,8 +7,10 @@
     <div class="form-group">
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">Line Chart</h3>
+                <h4 class="box-title">@ViewBag.MatchName: </h4>
+                <h4 class="box-title">Fall Of Wickets Graph</h4>
                 <div class="box-tools pull-right">
+                    <input type="hidden" id="matchId" value="@ViewBag.MatchId" />
                     <button type="button" class="btn btn-box-tool" data-widget="collapse">
                         <i class="fa fa-minus"></i>
                     </button>
@@ -29,14 +31,79 @@
 @section Scripts{
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
-        TESTER = document.getElementById('tester');
-        Plotly.plot(TESTER, [{
-            x: [1, 2, 3, 4, 5,6,7,8,9,10],
-            y: [50,100,150,200,250,300  ]
-        }], {
-                margin: { t: 0 }
-            });
-        @Model.
+        var matchId = document.getElementById('matchId').value;
+        $.ajax(`/MAtches/MatchChartJson?matchId=${matchId}`)
+            .done(function (data) {
+                var xArr = [];
+                var objOne = data[0];
+                if (objOne.first != null)
+                    xArr.push(objOne.first);
+                if (objOne.second != null)
+                    xArr.push(objOne.second);
+                if (objOne.third != 0)
+                    xArr.push(objOne.third);
+                if (objOne.fourth != 0)
+                    xArr.push(objOne.fourth);
+                if (objOne.fifth != 0)
+                    xArr.push(objOne.fifth);
+                if (objOne.sixth != 0)
+                    xArr.push(objOne.sixth);
+                if (objOne.seventh != 0)
+                    xArr.push(objOne.seventh);
+                if (objOne.eight != 0)
+                    xArr.push(objOne.eight);
+                if (objOne.ninth != 0)
+                    xArr.push(objOne.ninth);
+                if (objOne.tenth != 0)
+                    xArr.push(objOne.tenth);
+
+                //var yArr = [];
+                //var objTwo = data[1];
+                //yArr.push(objTwo.first);
+                //yArr.push(objTwo.second);
+                //yArr.push(objTwo.third);
+                //yArr.push(objTwo.fourth);
+                //yArr.push(objTwo.fifth);
+                //yArr.push(objTwo.sixth);
+                //yArr.push(objTwo.seventh);
+                //yArr.push(objTwo.eight);
+                //yArr.push(objTwo.ninth);
+                //yArr.push(objTwo.tenth);
+
+                TESTER = document.getElementById('tester');
+                var layout = {
+                    title: 'Fall of wickets',
+                    xaxis: {
+                        title: 'Wickets',
+                        titlefont: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: '#7f7f7f'
+                        }
+                    },
+                    yaxis: {
+                        title: 'Runs',
+                        titlefont: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: '#7f7f7f'
+                        }
+                    }
+                };
+                Plotly.plot(TESTER, [{
+                    x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                    y: xArr,
+
+                }], layout, {
+                        margin: { t: 0 }
+                    });
+            })
+            .fail(function (error) {
+
+
+            })
+
+
     </script>
     <style>
     </style>

@@ -64,19 +64,28 @@
             </div>
 
         </div>
-        <hr />
-        <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
-            Advanced Search
-        </button>
-    </div>
-    @*Filter*@
-    @if (User.Identity.IsAuthenticated)
-    {
-        <div class="form-group">
-            <a asp-controller="Matches" class="btn btn-primary" asp-action="Create">Add</a>
+        <br />
+        <div class="row">
+            <div class="col-md-10">
+                <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+                    Advanced Search
+                </button>
+            </div>
+            <div class="col-md-2">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="form-group">
+                        <a asp-controller="Matches" class="btn btn-primary" asp-action="Create">Add</a>
+                    </div>
+
+                }
+            </div>
+
         </div>
 
-    }
+    </div>
+    @*Filter*@
+
 
 
     <div class="table-responsive">
@@ -201,8 +210,8 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-id="@item.MatchId"><i class="fas fa-info-circle">Detail</i></a></li>
-                                        <li><a data-placement="top" data-toggle="Graph" title="Graph" asp-action="MatchChart" asp-route-id="@item.MatchId"><i class="fas fa-info-circle">Graph</i></a></li>
+                                        <li><a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-matchId="@item.MatchId"><i class="fas fa-info-circle">Detail</i></a></li>
+                                        <li><a data-placement="top" data-toggle="Graph" title="Graph" asp-action="MatchChart" asp-route-matchId="@item.MatchId"><i class="fas fa-info-circle">Graph</i></a></li>
                                     </ul>
                                 </div>
                                 <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="fas fa-baseball-ball"></i></a>

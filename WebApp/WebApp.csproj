@@ -55,4 +55,10 @@
     <Compile Include="wwwroot\Models\Utilities\FileHelpercs.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\PlayerPastRecord\PastRecord.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

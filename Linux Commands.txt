@@ -1,6 +1,6 @@
-sudo unzip path/filename.zip --- to unzip file
-mkdir foldername --- to create folders
 
+mkdir foldername --- to create folders
+scp root@ip:<Server Path> <local Path> 
 
 
 Release
@@ -15,13 +15,23 @@ systemctl status kestrel-hellomvc.service
 dotnet publish --configuration Release 
 
 
-sqlcmd -S LOCALHOST -d ScoreExecDb -U SA -P Super@samad123 -i script.sql
+sqlcmd -S LOCALHOST -d ScoreExecDb -U SA -P Super@samad123 -i SinglePlayerStatistics.sql
+
+SqlCmd -E -S LOCALHOST –Q "BACKUP DATABASE [ScoreExecDb] TO DISK='/root/production/database/ScoreExecDb.bak'"
 
 SystemD Errors
 1)200 Folder Issue
 1)1 Application startup crash
 
+
+dashboard
 sqlcmd -S localhost -U SA -P Super@samad123  ---- Connect MSSQL
 
 
 CREATE INDEX IX_TeamId ON dbo.Players(TeamId);
+BACKUP DATABASE [ScoreExecDb] TO DISK='D:\ScoreExecDb.bak'
+
+PlayerScores Bowler dataType String
+
+
+sqlcmd -S localhost -U SA -Q "BACKUP DATABASE [ScoreExecDb] TO DISK = N'/var/opt/mssql/data/ScoreExec.bak' WITH NOFORMAT, NOINIT, NAME = 'demodb-full', SKIP, NOREWIND, NOUNLOAD, STATS = 10"
