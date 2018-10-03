@@ -10,3 +10,15 @@ D:\Dot Net MVC App\CricketApp\CricketApp.Data\obj\Debug\netstandard2.0\CricketAp
 D:\Dot Net MVC App\CricketApp\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.csproj.CopyComplete
 D:\Dot Net MVC App\CricketApp\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.dll
 D:\Dot Net MVC App\CricketApp\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.pdb
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\bin\Debug\netstandard2.0\CricketApp.Data.deps.json
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.AssemblyInfo.cs
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.dll
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.pdb
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\bin\Debug\netstandard2.0\CricketApp.Data.dll
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\bin\Debug\netstandard2.0\CricketApp.Data.pdb
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\bin\Debug\netstandard2.0\CricketApp.Domain.dll
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\bin\Debug\netstandard2.0\CricketApp.Domain.pdb
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.csprojAssemblyReference.cache
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.csproj.CoreCompileInputs.cache
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.AssemblyInfoInputs.cache
+C:\Data\Dot Net MVC App\CricketApp\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.csproj.CopyComplete

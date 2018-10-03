@@ -7,3 +7,12 @@ D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\Cricket
 D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.dll
 D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.pdb
 D:\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.csprojAssemblyReference.cache
+C:\Data\Dot Net MVC App\CricketApp\CricektApp.Domain\bin\Debug\netstandard2.0\CricketApp.Domain.deps.json
+C:\Data\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.AssemblyInfo.cs
+C:\Data\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.dll
+C:\Data\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.pdb
+C:\Data\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.csprojAssemblyReference.cache
+C:\Data\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.csproj.CoreCompileInputs.cache
+C:\Data\Dot Net MVC App\CricketApp\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.AssemblyInfoInputs.cache
+C:\Data\Dot Net MVC App\CricketApp\CricektApp.Domain\bin\Debug\netstandard2.0\CricketApp.Domain.dll
+C:\Data\Dot Net MVC App\CricketApp\CricektApp.Domain\bin\Debug\netstandard2.0\CricketApp.Domain.pdb

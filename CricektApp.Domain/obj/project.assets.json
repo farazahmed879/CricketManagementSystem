@@ -3552,11 +3552,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricketApp.Domain.csproj",
+      "projectUniqueName": "C:\\Data\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricketApp.Domain.csproj",
       "projectName": "CricketApp.Domain",
-      "projectPath": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricketApp.Domain.csproj",
+      "projectPath": "C:\\Data\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\CricketApp.Domain.csproj",
       "packagesPath": "C:\\Users\\Faraz\\.nuget\\packages\\",
-      "outputPath": "D:\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\obj\\",
+      "outputPath": "C:\\Data\\Dot Net MVC App\\CricketApp\\CricektApp.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
