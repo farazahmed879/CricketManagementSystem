@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using CricketApp.Data;
 using CricketApp.Domain;
 using Microsoft.AspNetCore.Builder;
@@ -74,6 +75,9 @@ namespace WebApp
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+
+            services.AddAutoMapper();
+
             services.AddMvc();
             services.AddDbContext<CricketContext>(options =>
             {

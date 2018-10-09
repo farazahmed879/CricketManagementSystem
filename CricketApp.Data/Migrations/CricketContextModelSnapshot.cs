@@ -15,7 +15,7 @@ namespace CricketApp.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -135,6 +135,8 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int>("MatchOvers");
 
+                    b.Property<int?>("MatchSeriesId");
+
                     b.Property<int>("MatchTypeId");
 
                     b.Property<int>("OppponentTeamId");
@@ -155,6 +157,8 @@ namespace CricketApp.Data.Migrations
 
                     b.HasIndex("HomeTeamId");
 
+                    b.HasIndex("MatchSeriesId");
+
                     b.HasIndex("MatchTypeId");
 
                     b.HasIndex("OppponentTeamId");
@@ -162,6 +166,30 @@ namespace CricketApp.Data.Migrations
                     b.HasIndex("TournamentId");
 
                     b.ToTable("Matches");
+                });
+
+            modelBuilder.Entity("CricketApp.Domain.MatchSeries", b =>
+                {
+                    b.Property<int>("MatchSeriesId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("Organizor");
+
+                    b.Property<DateTime?>("StartingDate");
+
+                    b.Property<int?>("TenantUserId");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("MatchSeriesId");
+
+                    b.HasIndex("TenantUserId");
+
+                    b.ToTable("MatchSeries");
                 });
 
             modelBuilder.Entity("CricketApp.Domain.MatchType", b =>
@@ -645,6 +673,10 @@ namespace CricketApp.Data.Migrations
                         .HasForeignKey("HomeTeamId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("CricketApp.Domain.MatchSeries", "MatchSeries")
+                        .WithMany("Matches")
+                        .HasForeignKey("MatchSeriesId");
+
                     b.HasOne("CricketApp.Domain.MatchType", "MatchType")
                         .WithMany("Matches")
                         .HasForeignKey("MatchTypeId")
@@ -658,6 +690,13 @@ namespace CricketApp.Data.Migrations
                     b.HasOne("CricketApp.Domain.Tournament", "Tournament")
                         .WithMany("Matches")
                         .HasForeignKey("TournamentId");
+                });
+
+            modelBuilder.Entity("CricketApp.Domain.MatchSeries", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", "TenantUser")
+                        .WithMany()
+                        .HasForeignKey("TenantUserId");
                 });
 
             modelBuilder.Entity("CricketApp.Domain.Player", b =>

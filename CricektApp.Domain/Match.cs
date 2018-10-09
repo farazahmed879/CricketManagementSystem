@@ -46,6 +46,8 @@ namespace CricketApp.Domain
         public int UserId { get; set; }
         public MatchType MatchType { get; set;}
         public int MatchTypeId { get; set; }
+        public MatchSeries MatchSeries { get; set; }
+        public int? MatchSeriesId { get; set; }
 
     }
 }

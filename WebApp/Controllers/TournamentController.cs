@@ -127,6 +127,8 @@ namespace WebApp.Controllers
             {
                 try
                 {
+                    var users = await _userManager.GetUserAsync(HttpContext.User);
+                    tournament.UserId = users.Id;
                     _context.Update(tournament);
                     await _context.SaveChangesAsync();
                 }

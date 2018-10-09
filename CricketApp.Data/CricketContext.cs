@@ -34,6 +34,7 @@ namespace CricketApp.Data
         public DbSet<PlayerRole> PlayerRole { get; set; }
         public DbSet<ClubAdmin> ClubAdmins { get; set; }
         public DbSet<PlayerPastRecord> PlayerPastRecord { get; set; }
+        public DbSet<MatchSeries> MatchSeries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

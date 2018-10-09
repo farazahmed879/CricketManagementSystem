@@ -10,6 +10,9 @@ using System.IO;
 using WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using WebApp.ViewModels;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace WebApp.Controllers
 {
@@ -18,11 +21,16 @@ namespace WebApp.Controllers
     {
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly IMapper _mapper;
 
-        public MatchesController(CricketContext context, UserManager<IdentityUser<int>> userManager)
+        public MatchesController(
+            CricketContext context,
+            UserManager<IdentityUser<int>> userManager,
+            IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         // GET: Matches
@@ -117,7 +125,7 @@ namespace WebApp.Controllers
         //GET: Matches/Create
 
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Create(int? tournamentId)
+        public async Task<IActionResult> Create(int? tournamentId, int? matchSeriesId)
         {
             ViewBag.Name = "Add Match";
             var users = await _userManager.GetUserAsync(HttpContext.User);
@@ -126,7 +134,7 @@ namespace WebApp.Controllers
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
 
-            if (tournamentId != null)
+            if (tournamentId != null && matchSeriesId == null)
             {
                 ViewBag.IsTournament = true;
                 ViewBag.TournamentId = new SelectList(_context.Tournaments
@@ -138,11 +146,29 @@ namespace WebApp.Controllers
                     .Select(i => new { i.MatchTypeId, i.MatchTypeName })
                     , "MatchTypeId", "MatchTypeName", 2);
             }
+            else if (matchSeriesId != null && tournamentId == null)
+            {
+                ViewBag.IsMatchSeries = true;
+                ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+                    .Where(i => i.UserId == users.Id)
+                    .Select(i => new { i.MatchSeriesId, i.Name })
+                    , "MatchSeriesId", "Name", matchSeriesId);
+
+                ViewBag.MatchType = new SelectList(_context.MatchType
+                    .Select(i => new { i.MatchTypeId, i.MatchTypeName })
+                    , "MatchTypeId", "MatchTypeName", 3);
+            }
             else
             {
                 ViewBag.MatchType = new SelectList(_context.MatchType
                     .Select(i => new { i.MatchTypeId, i.MatchTypeName })
                     , "MatchTypeId", "MatchTypeName");
+
+                ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+                    .Where(i => i.UserId == users.Id)
+                    .Select(i => new { i.MatchSeriesId, i.Name })
+                    , "MatchSeriesId", "Name");
+
                 ViewBag.TournamentId = new SelectList(_context.Tournaments
                     .Where(i => i.UserId == users.Id)
                      .Select(i => new { i.TournamentId, i.TournamentName })
@@ -160,7 +186,7 @@ namespace WebApp.Controllers
         [Route("Matches/Create")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Create(Match match)
+        public async Task<IActionResult> Create(Matchdto match)
         {
             if (ModelState.IsValid)
             {
@@ -178,7 +204,7 @@ namespace WebApp.Controllers
                 var users = await _userManager.GetUserAsync(HttpContext.User);
                 match.UserId = users.Id;
                 match.MatchLogo = fileBytes ?? null;
-                _context.Add(match);
+                _context.Matches.Add(_mapper.Map<Match>(match));
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -207,16 +233,29 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             ViewBag.Name = "Edit Match";
-            ViewBag.MatchType = new SelectList(_context.MatchType
-                .Select(i => new { i.MatchTypeId, i.MatchTypeName })
-                , "MatchTypeId", "Name");
+            var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewData["TeamId"] = new SelectList(_context.Teams
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType
+                    .Select(i => new { i.MatchTypeId, i.MatchTypeName })
+                    , "MatchTypeId", "MatchTypeName");
+
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+                .Where(i => i.UserId == users.Id)
+                .Select(i => new { i.MatchSeriesId, i.Name })
+                , "MatchSeriesId", "Name");
+
             ViewBag.TournamentId = new SelectList(_context.Tournaments
-                .Select(i => new { i.TournamentId, i.TournamentName })
+                .Where(i => i.UserId == users.Id)
+                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
-            var match = await _context.Matches.SingleOrDefaultAsync(m => m.MatchId == id);
+
+            var match = await _context.Matches
+                .AsNoTracking()
+                .ProjectTo<Matchdto>()
+                .SingleOrDefaultAsync(m => m.MatchId == id);
             if (match == null)
             {
                 return NotFound();

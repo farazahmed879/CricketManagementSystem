@@ -103,7 +103,7 @@ namespace WebApp.Controllers
         // GET: Players/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            ViewBag.Name = "Match Detail";
+            ViewBag.Name = "Player Detail";
             if (id == null)
             {
                 return NotFound();
