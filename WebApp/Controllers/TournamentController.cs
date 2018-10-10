@@ -7,6 +7,9 @@ using CricketApp.Domain;
 using WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using AutoMapper;
+using WebApp.ViewModels;
+using AutoMapper.QueryableExtensions;
 
 namespace WebApp.Controllers
 {
@@ -15,12 +18,15 @@ namespace WebApp.Controllers
     {
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly IMapper _mapper;
 
-        public TournamentController(CricketContext context, UserManager<IdentityUser<int>> userManager)
+        public TournamentController(CricketContext context,
+            UserManager<IdentityUser<int>> userManager,
+            IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
-
+            _mapper = mapper;
         }
 
         // GET: Tournaments
@@ -79,13 +85,13 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Create(Tournament tournament)
+        public async Task<IActionResult> Create(Tournamentdto tournament)
         {
             if (ModelState.IsValid)
             {
                 var users = await _userManager.GetUserAsync(HttpContext.User);
                 tournament.UserId = users.Id;
-                _context.Add(tournament);
+                _context.Tournaments.Add(_mapper.Map<Tournament>(tournament));
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -102,7 +108,10 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var tournament = await _context.Tournaments.SingleOrDefaultAsync(m => m.TournamentId == id);
+            var tournament = await _context.Tournaments
+                .AsNoTracking()
+                .ProjectTo<Tournamentdto>()
+                .SingleOrDefaultAsync(m => m.TournamentId == id);
             if (tournament == null)
             {
                 return NotFound();
@@ -116,7 +125,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Edit(int id, Tournament tournament)
+        public async Task<IActionResult> Edit(int id, Tournamentdto tournament)
         {
             if (id != tournament.TournamentId)
             {
@@ -129,7 +138,7 @@ namespace WebApp.Controllers
                 {
                     var users = await _userManager.GetUserAsync(HttpContext.User);
                     tournament.UserId = users.Id;
-                    _context.Update(tournament);
+                    _context.Tournaments.Update(_mapper.Map<Tournament>(tournament));
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

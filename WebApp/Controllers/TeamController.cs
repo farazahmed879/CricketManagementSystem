@@ -9,6 +9,9 @@ using System.IO;
 using WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using AutoMapper;
+using WebApp.ViewModels;
+using AutoMapper.QueryableExtensions;
 
 namespace WebApp.Controllers
 {
@@ -17,8 +20,12 @@ namespace WebApp.Controllers
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
         private Task<IdentityUser<int>> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+        private readonly IMapper _mapper;
 
-        public TeamsController(CricketContext context, UserManager<IdentityUser<int>> userManager)
+        public TeamsController(CricketContext context,
+            UserManager<IdentityUser<int>> userManager
+            IMapper mapper
+            )
         {
             _context = context;
             _userManager = userManager;
@@ -134,13 +141,11 @@ namespace WebApp.Controllers
             return View();
         }
 
-        // POST: Teams/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Post: Teams/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Create(Team team)
+        public async Task<IActionResult> Create(Teamdto team)
         {
             if (ModelState.IsValid)
             {
@@ -157,7 +162,7 @@ namespace WebApp.Controllers
 
 
                 team.TeamLogo = fileBytes ?? null;
-                _context.Add(team);
+                _context.Teams.Add(_mapper.Map<Team>(team));
                 var user = await GetCurrentUserAsync();
                 _context.ClubAdmins.Add(new ClubAdmin
                 {
@@ -194,7 +199,10 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var team = await _context.Teams.SingleOrDefaultAsync(m => m.TeamId == id);
+            var team = await _context.Teams
+                .AsNoTracking()
+                .ProjectTo<Teamdto>()
+                .SingleOrDefaultAsync(m => m.TeamId == id);
             if (team == null)
             {
                 return NotFound();
@@ -208,7 +216,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Edit(int id, Team team)
+        public async Task<IActionResult> Edit(int id, Teamdto team)
         {
             if (id != team.TeamId)
             {
@@ -229,7 +237,7 @@ namespace WebApp.Controllers
                         }
                     }
                     team.TeamLogo = fileBytes ?? null;
-                    _context.Update(team);
+                    _context.Teams.Update(_mapper.Map<Team>(team));
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
