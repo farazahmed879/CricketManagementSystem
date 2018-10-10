@@ -90,8 +90,9 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var users = await _userManager.GetUserAsync(HttpContext.User);
-                tournament.UserId = users.Id;
-                _context.Tournaments.Add(_mapper.Map<Tournament>(tournament));
+                var tournamentModel = _mapper.Map<Tournament>(tournament);
+                tournamentModel.UserId = users.Id;
+                _context.Tournaments.Add(tournamentModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -110,7 +111,7 @@ namespace WebApp.Controllers
 
             var tournament = await _context.Tournaments
                 .AsNoTracking()
-                .ProjectTo<Tournamentdto>()
+                .ProjectTo<Tournamentdto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(m => m.TournamentId == id);
             if (tournament == null)
             {
@@ -120,8 +121,6 @@ namespace WebApp.Controllers
         }
 
         // POST: Tournaments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
@@ -137,8 +136,9 @@ namespace WebApp.Controllers
                 try
                 {
                     var users = await _userManager.GetUserAsync(HttpContext.User);
-                    tournament.UserId = users.Id;
-                    _context.Tournaments.Update(_mapper.Map<Tournament>(tournament));
+                    var tournamentModal = _mapper.Map<Tournament>(tournament);
+                    tournamentModal.UserId = users.Id;
+                    _context.Tournaments.Update(tournamentModal);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

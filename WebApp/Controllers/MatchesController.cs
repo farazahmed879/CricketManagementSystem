@@ -251,7 +251,7 @@ namespace WebApp.Controllers
 
             var match = await _context.Matches
                 .AsNoTracking()
-                .ProjectTo<Matchdto>()
+                .ProjectTo<Matchdto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(m => m.MatchId == id);
             if (match == null)
             {

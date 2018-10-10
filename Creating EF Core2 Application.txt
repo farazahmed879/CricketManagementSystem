@@ -1,0 +1,30 @@
+Dot Net Core 2
+Create A blank project
+1) Data (.Net Standard Class Library)
+2) Domain (.Net Standard Class Library)
+3) SomeUI (ConsoleApp.net core)
+4) WebApp(ASP.net Core) => MVC
+5) EmployeeManagaement.Data (install Microsoft.EntityFrameworkCore.SqlServer)
+6) Give Reference .Data Project .. => .domain
+7) EmployeeManagaement.Data (install Microsoft.EntityFrameworkCore.Tools)
+8) EmployeeManagaement.Data (install Microsoft.Extensions.Logging.Console)
+
+Now Create All Classes and give connection string After Setting all code
+	Create Table Classes in .Domain
+	Create  abcContext.CS in .Data	
+  
+7) WebApp (install Microsoft.EntityFrameworkCore.Design, ASPNETCORE.All, CodeGenerator.Design(optional))
+8) Give Reference webapp project .. => .data and .domain
+  
+9) Set WebApp to startup project
+10) add-migration abcName
+11) update-database
+IF you want to change something in database
+change in code and then
+12) add-migration xyzName
+13) update-database
+14) Database will have been Created
+
+ EF core 2 output 
+1) EmployeeManagement.Data (Microsoft.Extensions.logging.console)
+Change to "public DbSet<SamuraiApp.Domain.Samurai> Samurais { get; set; }"

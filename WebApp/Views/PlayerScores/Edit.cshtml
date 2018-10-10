@@ -528,6 +528,7 @@
                     method: "POST"
                 }).done(function (response) {
                     alert("Record is updated successfully");
+                    $('#HomeTeamBtn').attr('disabled', true);
                 }).fail(function () {
                     alert("Record can not be updated");
                 });
@@ -568,6 +569,7 @@
                     method: "POST"
                 }).done(function (response, status, jqXhr) {
                     alert("Record is updated successfully");
+                    $('#OpponentTeamBtn').attr('disabled', true);
                 }).fail(function () {
                     alert("Record can not be updated");
                 });
@@ -602,7 +604,8 @@
                     method: "POST"
                 }).done(function (response) {
                     alert("Record is updated successfully");
-                    windows.location = "/Matches/Index";
+                    $('#TeamScorebtn').attr('disabled', true);
+              
                 }).fail(function () {
                     alert("Record can not be inserted");
                 });
@@ -636,7 +639,7 @@
                     method: "POST"
                 }).done(function (response) {
                     alert("Record is updated successfully");
-                    window.location = '/Matches/Index'
+                    windows.location = "/Matches/Index";
                 }).fail(function () {
                     alert("Record can not be inserted");
                 });

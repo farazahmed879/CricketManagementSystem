@@ -76,18 +76,18 @@
 
                                     <div class="col-sm-4">
 
-                                        <label class="control-label">Batsman</label>
+                                        <label class="control-label">Players</label>
 
                                     </div>
                                     <div class="col-sm-2">
 
                                         <label class="control-label">How Out</label>
                                     </div>
-
-                                    <div class="col-sm-4">
-                                        <label class="control-label">Bowler</label>
-                                    </div>
                                 </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">Bowler</label>
+                                </div>
+
                                 @{
 
                                     for (int i = 0; i < Model.MatchScore.Count; i++)
@@ -112,17 +112,17 @@
                                             </div>
                                             <div class="col-sm-4">
                                                 <select asp-for="@Model.MatchScore[i].PlayerId" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
-                                                    <option selected value="">--Select Player--</option>
+                                                    <option value="">--Select Player--</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-2">
-                                                <select asp-for="@Model.MatchScore[i].HowOutId" asp-items="ViewBag.HowOut" style="width: 100%" class="js-example-basic-single">
+                                                <select asp-for="@Model.MatchScore[i].HowOutId" asp-items="ViewBag.HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
                                                     <option value="">--How Out--</option>
                                                 </select>
                                             </div>
 
                                             <div class="col-sm-4">
-                                                <select asp-for="@Model.MatchScore[i].Bowler" asp-items="ViewBag.OpponentPlayerId" style="width: 100%" placeholder="--Select Player--" class="js-example-basic-single">
+                                                <select asp-for="@Model.MatchScore[i].Bowler" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
                                                     <option value="">--Select Bowler--</option>
                                                 </select>
                                             </div>
@@ -332,7 +332,7 @@
                             <hr />
                             <ul class="list-inline pull-right">
                                 <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
-                                <li><input type="button" id="TeamScorebtn" value="Finish" class="btn btn-primary next-step" onclick="return TeamScoreData(this.form)"></li>
+                                <li><input type="button" id="TeamScorebtn" value="Save and continue" class="btn btn-primary next-step" onclick="return TeamScoreData(this.form)"></li>
                             </ul>
                         </form>
                         <div class="container text-center">
@@ -505,6 +505,7 @@
                 }).done(function (response) {
                     if (!response) {
                         alert("Record inserted successfully");
+                        $('#HomeTeamBtn').attr('disabled', true);
                     }
                 }).fail(function () {
                     alert("Record can not inserted");
@@ -529,6 +530,7 @@
                 }).done(function (response) {
                     if (!response) {
                         alert("Record inserted successfully");
+                        $('#OpponentTeamBtn').attr('disabled', true);
                     }
                 }).fail(function () {
                     alert("Record can not be inserted");
@@ -551,6 +553,7 @@
                 }).done(function (response) {
                     if (!response) {
                         alert("Record inserted successfully");
+                        $('#TeamScorebtn').attr('disabled', true);
                     }
                 }).fail(function () {
                     alert("Record can not be inserted");

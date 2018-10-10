@@ -91,8 +91,9 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var users = await _userManager.GetUserAsync(HttpContext.User);
-                matchSeries.UserId = users.Id;
-                _context.MatchSeries.Add(_mapper.Map<MatchSeries>(matchSeries));
+                var matchSeriesModal = _mapper.Map<MatchSeries>(matchSeries);
+                matchSeriesModal.UserId = users.Id;
+                _context.MatchSeries.Add(matchSeriesModal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -111,7 +112,7 @@ namespace WebApp.Controllers
 
             var matchSeries = await _context.MatchSeries
                 .AsNoTracking()
-                .ProjectTo<MatchSeriesdto>()
+                .ProjectTo<MatchSeriesdto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(m => m.MatchSeriesId == id);
             if (matchSeries == null)
             {
@@ -120,9 +121,7 @@ namespace WebApp.Controllers
             return View(matchSeries);
         }
 
-        // POST: MatchSeries/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
@@ -138,8 +137,9 @@ namespace WebApp.Controllers
                 try
                 {
                     var users = await _userManager.GetUserAsync(HttpContext.User);
-                    matchSeries.UserId = users.Id;
-                    _context.MatchSeries.Update(_mapper.Map<MatchSeries>(matchSeries));
+                    var matchSeriesModal = _mapper.Map<MatchSeries>(matchSeries);
+                    matchSeriesModal.UserId = users.Id;
+                    _context.MatchSeries.Update(matchSeriesModal);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

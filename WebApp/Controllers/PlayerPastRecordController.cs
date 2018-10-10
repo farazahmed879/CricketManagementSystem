@@ -53,7 +53,7 @@ namespace WebApp.Controllers
 
             var playerPastRecord = await _context.PlayerPastRecord
                 .AsNoTracking()
-                .ProjectTo<PlayerPastRecorddto>()
+                .ProjectTo<PlayerPastRecorddto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(m => m.PlayerId == playerId);
             if(playerPastRecord == null)
             {

@@ -23,12 +23,13 @@ namespace WebApp.Controllers
         private readonly IMapper _mapper;
 
         public TeamsController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager
+            UserManager<IdentityUser<int>> userManager,
             IMapper mapper
             )
         {
             _context = context;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         // GET: Teams
@@ -162,11 +163,12 @@ namespace WebApp.Controllers
 
 
                 team.TeamLogo = fileBytes ?? null;
-                _context.Teams.Add(_mapper.Map<Team>(team));
+                var teamModel = _mapper.Map<Team>(team);
+                _context.Teams.Add(teamModel);
                 var user = await GetCurrentUserAsync();
                 _context.ClubAdmins.Add(new ClubAdmin
                 {
-                    TeamId = team.TeamId,
+                    TeamId = teamModel.TeamId,
                     UserId = user?.Id
 
                 });
@@ -201,7 +203,7 @@ namespace WebApp.Controllers
 
             var team = await _context.Teams
                 .AsNoTracking()
-                .ProjectTo<Teamdto>()
+                .ProjectTo<Teamdto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(m => m.TeamId == id);
             if (team == null)
             {

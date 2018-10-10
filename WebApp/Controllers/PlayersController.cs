@@ -244,7 +244,7 @@ namespace WebApp.Controllers
 
             var player = await _context.Players
                 .AsNoTracking()
-                .ProjectTo<Playersdto>()
+                .ProjectTo<Playersdto>(_mapper.ConfigurationProvider)
                 .Include(i => i.Team)
                 .SingleOrDefaultAsync(m => m.PlayerId == id);
             if (player == null)

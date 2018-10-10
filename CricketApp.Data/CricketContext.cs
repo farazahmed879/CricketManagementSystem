@@ -11,17 +11,13 @@ namespace CricketApp.Data
         public CricketContext(DbContextOptions<CricketContext> options)
             : base(options)
         { }
-        //public static readonly LoggerFactory MyConsoleLoggerFactory
-        //    = new LoggerFactory(new[] {
-        //       new ConsoleLoggerProvider((category, level)
-        //          => category == DbLoggerCategory.Database.Command.Name
-        //         && level == LogLevel.Information, true) });
 
-        public DbSet<CricketApp.Domain.Team> Teams { get; set; }
-        public DbSet<CricketApp.Domain.Player> Players { get; set; }
-        public DbSet<CricketApp.Domain.Match> Matches { get; set; }
-        public DbSet<CricketApp.Domain.PlayerScore> PlayerScores { get; set; }
-        public DbSet<CricketApp.Domain.Tournament> Tournaments { get; set; }   
+
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<Match> Matches { get; set; }
+        public DbSet<PlayerScore> PlayerScores { get; set; }
+        public DbSet<Tournament> Tournaments { get; set; }   
         public DbSet<TeamScore> TeamScores { get; set; }
         public DbSet<FallOfWicket> FallOFWickets { get; set; }
         public DbSet<MatchType> MatchType { get; set; }
