@@ -178,9 +178,6 @@ namespace WebApp.Controllers
             return View();
         }
 
-        // POST: Matches/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 
         [HttpPost]
         [Route("Matches/Create")]
@@ -267,7 +264,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Edit(int id, Match match)
+        public async Task<IActionResult> Edit(int id, Matchdto match)
         {
             if (id != match.MatchId)
             {
@@ -291,7 +288,7 @@ namespace WebApp.Controllers
                     var users = await _userManager.GetUserAsync(HttpContext.User);
                     match.UserId = users.Id;
                     match.MatchLogo = fileBytes ?? null;
-                    _context.Update(match);
+                    _context.Update(_mapper.Map<Match>(match));
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -317,7 +314,8 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int matchId)
         {
-            var match = await _context.Matches.SingleOrDefaultAsync(m => m.MatchId == matchId);
+            var match = await _context.Matches
+                .SingleOrDefaultAsync(m => m.MatchId == matchId);
             _context.Matches.Remove(match);
             await _context.SaveChangesAsync();
             return Ok();

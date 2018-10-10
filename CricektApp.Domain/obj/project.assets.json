@@ -3554,11 +3554,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\ScoreExec\\CricketManagementSystem.git\\CricektApp.Domain\\CricketApp.Domain.csproj",
+      "projectUniqueName": "E:\\ScoreExec\\CricketManagementSystem\\CricektApp.Domain\\CricketApp.Domain.csproj",
       "projectName": "CricketApp.Domain",
-      "projectPath": "E:\\ScoreExec\\CricketManagementSystem.git\\CricektApp.Domain\\CricketApp.Domain.csproj",
+      "projectPath": "E:\\ScoreExec\\CricketManagementSystem\\CricektApp.Domain\\CricketApp.Domain.csproj",
       "packagesPath": "C:\\Users\\FAST\\.nuget\\packages\\",
-      "outputPath": "E:\\ScoreExec\\CricketManagementSystem.git\\CricektApp.Domain\\obj\\",
+      "outputPath": "E:\\ScoreExec\\CricketManagementSystem\\CricektApp.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

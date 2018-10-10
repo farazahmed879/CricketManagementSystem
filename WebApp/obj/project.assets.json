@@ -14798,11 +14798,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\ScoreExec\\CricketManagementSystem.git\\WebApp\\WebApp.csproj",
+      "projectUniqueName": "E:\\ScoreExec\\CricketManagementSystem\\WebApp\\WebApp.csproj",
       "projectName": "WebApp",
-      "projectPath": "E:\\ScoreExec\\CricketManagementSystem.git\\WebApp\\WebApp.csproj",
+      "projectPath": "E:\\ScoreExec\\CricketManagementSystem\\WebApp\\WebApp.csproj",
       "packagesPath": "C:\\Users\\FAST\\.nuget\\packages\\",
-      "outputPath": "E:\\ScoreExec\\CricketManagementSystem.git\\WebApp\\obj\\",
+      "outputPath": "E:\\ScoreExec\\CricketManagementSystem\\WebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14821,11 +14821,11 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "E:\\ScoreExec\\CricketManagementSystem.git\\CricektApp.Domain\\CricketApp.Domain.csproj": {
-              "projectPath": "E:\\ScoreExec\\CricketManagementSystem.git\\CricektApp.Domain\\CricketApp.Domain.csproj"
+            "E:\\ScoreExec\\CricketManagementSystem\\CricektApp.Domain\\CricketApp.Domain.csproj": {
+              "projectPath": "E:\\ScoreExec\\CricketManagementSystem\\CricektApp.Domain\\CricketApp.Domain.csproj"
             },
-            "E:\\ScoreExec\\CricketManagementSystem.git\\CricketApp.Data\\CricketApp.Data.csproj": {
-              "projectPath": "E:\\ScoreExec\\CricketManagementSystem.git\\CricketApp.Data\\CricketApp.Data.csproj"
+            "E:\\ScoreExec\\CricketManagementSystem\\CricketApp.Data\\CricketApp.Data.csproj": {
+              "projectPath": "E:\\ScoreExec\\CricketManagementSystem\\CricketApp.Data\\CricketApp.Data.csproj"
             }
           }
         }

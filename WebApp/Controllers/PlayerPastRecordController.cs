@@ -13,6 +13,8 @@ using WebApp.Models;
 using CricketApp.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace WebApp.Controllers
 {
@@ -21,30 +23,17 @@ namespace WebApp.Controllers
     {
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly IMapper _mapper;
 
-        public PlayerPastRecordController(CricketContext context, UserManager<IdentityUser<int>> userManager)
+        public PlayerPastRecordController(CricketContext context, 
+            UserManager<IdentityUser<int>> userManager,
+            IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
-        public async Task<IActionResult> Details(int? id)
-        {
-            ViewBag.Name = "Match Detail";
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var player = await _context.Players
-                .SingleOrDefaultAsync(m => m.PlayerId == id);
-            if (player == null)
-            {
-                return NotFound();
-            }
-
-            return View(player);
-        }
         // GET: PlayerPastRecord/Create/5
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create(int? playerId)
@@ -64,10 +53,11 @@ namespace WebApp.Controllers
 
             var playerPastRecord = await _context.PlayerPastRecord
                 .AsNoTracking()
+                .ProjectTo<PlayerPastRecorddto>()
                 .SingleOrDefaultAsync(m => m.PlayerId == playerId);
             if(playerPastRecord == null)
             {
-                playerPastRecord = new PlayerPastRecord();
+                playerPastRecord = new PlayerPastRecorddto();
             }
             return View(playerPastRecord);
         }
@@ -78,14 +68,14 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> PastRecordSave(int id, PlayerPastRecord playerPastRecord)
+        public async Task<IActionResult> PastRecordSave(int id, PlayerPastRecorddto playerPastRecord)
         {
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(playerPastRecord);
+                    _context.PlayerPastRecord.Update(_mapper.Map<PlayerPastRecord>(playerPastRecord));
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

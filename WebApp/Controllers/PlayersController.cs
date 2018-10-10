@@ -13,6 +13,8 @@ using WebApp.Models;
 using CricketApp.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace WebApp.Controllers
 {
@@ -21,11 +23,15 @@ namespace WebApp.Controllers
     {
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly IMapper _mapper;
 
-        public PlayersController(CricketContext context, UserManager<IdentityUser<int>> userManager)
+        public PlayersController(CricketContext context, 
+            UserManager<IdentityUser<int>> userManager,
+            IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         // GET: Players
@@ -166,7 +172,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Create(Player player)
+        public async Task<IActionResult> Create(Playersdto player)
         {
 
             if (ModelState.IsValid)
@@ -184,7 +190,7 @@ namespace WebApp.Controllers
                 //var file = await FileHelpers.ProcessFormFile(player.PlayerImage, ModelState);
 
                 player.PlayerLogo = fileBytes ?? null;
-                _context.Add(player);
+                _context.Players.Add(_mapper.Map<Player>(player));
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -238,6 +244,7 @@ namespace WebApp.Controllers
 
             var player = await _context.Players
                 .AsNoTracking()
+                .ProjectTo<Playersdto>()
                 .Include(i => i.Team)
                 .SingleOrDefaultAsync(m => m.PlayerId == id);
             if (player == null)
@@ -253,7 +260,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Edit(int id, Player player)
+        public async Task<IActionResult> Edit(int id, Playersdto player)
         {
             if (id != player.PlayerId)
             {
@@ -274,7 +281,7 @@ namespace WebApp.Controllers
                         }
                     }
                     player.PlayerLogo = fileBytes ?? null;
-                    _context.Update(player);
+                    _context.Players.Update(_mapper.Map<Player>(player));
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
