@@ -25,26 +25,26 @@
                         <li role="presentation" class="active">
                             <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="First Inning">
                                 <span class="round-tab">
-                                    <i class="fas fa-flag-checkered"></i>
+                                    <i class="fas fa-globe-americas"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
                             <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Second Inning">
                                 <span class="round-tab">
-                                    <i class="far fa-flag"></i>
+                                    <i class="fas fa-globe-africa"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
-                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Match Summary">
                                 <span class="round-tab">
-                                    <i class="fas fa-check"></i>
+                                    <i class="fas fa-check-circle"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
-                            <a href="#fallOfWicket" data-toggle="tab" aria-controls="fallOfWicket" role="tab" title="fallOfWicket">
+                            <a href="#fallOfWicket" data-toggle="tab" aria-controls="fallOfWicket" role="tab" title="Fall Of Wickets">
                                 <span class="round-tab">
                                     <i class="fas fa-check"></i>
                                 </span>
@@ -465,14 +465,17 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap-wizard/1.2/jquery.bootstrap.wizard.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap-wizard/1.2/jquery.bootstrap.wizard.min.js"></script>
     <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
     <script src="~/plugins/iCheck/icheck.min.js"></script>
 
     <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
 
         $(function () {
             $('input').iCheck({
@@ -623,35 +626,33 @@
         function prevTab(elem) {
             $(elem).prev().find('a[data-toggle="tab"]').click();
         }
-        //$('.playerDropDown')
-        //.on('change', (event) => {
-        //    const element = event.target;
-        //    if (!element.value)
-        //        return;
-        //    globalStates.push({
-        //        value: element.value
-        //    });
-        //    removeValues();
-        //});
+            //$('.playerDropDown')
+            //.on('change', (event) => {
+            //    const element = event.target;
+            //    if (!element.value)
+            //        return;
+            //    globalStates.push({
+            //        value: element.value
+            //    });
+            //    removeValues();
+            //});
 
-        //const removeValues = () => {
-        //    const elements = $('select.playerDropDown');
-        //    for (let index = 0; index < elements.length; index++) {
-        //        const isAdded = _.some(globalStates, {
-        //            value: elements[index].value
-        //        });
-        //        if (!isAdded) {
-        //            for (let globalState of globalStates) {
-        //                //elements[index].selectize.removeValues(globalState.value);
-        //                $(`#${elements[index].id}`)[0].selectize.removeOption(globalState.value);
-        //            }
-        //        }
-        //    }
-        //};
+            //const removeValues = () => {
+            //    const elements = $('select.playerDropDown');
+            //    for (let index = 0; index < elements.length; index++) {
+            //        const isAdded = _.some(globalStates, {
+            //            value: elements[index].value
+            //        });
+            //        if (!isAdded) {
+            //            for (let globalState of globalStates) {
+            //                //elements[index].selectize.removeValues(globalState.value);
+            //                $(`#${elements[index].id}`)[0].selectize.removeOption(globalState.value);
+            //            }
+            //        }
+            //    }
+            //};
 
-        $(document).ready(function () {
-            $('.js-example-basic-single').select2();
-        });
+
 
     </script>
 }

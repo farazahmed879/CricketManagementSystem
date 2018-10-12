@@ -22,6 +22,7 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\MatchSeries\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerPastRecord\PastRecord.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Create.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Create12.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\AllPlayerStatistics.cshtml

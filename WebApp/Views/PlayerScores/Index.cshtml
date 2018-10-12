@@ -9,7 +9,7 @@
                     <label style="width: 100%" disabled="disabled">@ViewBag.HomeTeam</label>
                 </div>
                 <div class="col-sm-1">
-                    <p>Vs</p>
+                    <p>vs</p>
                 </div>
                 <div class="col-sm-2">
                     <label style="width: 100%" disabled="disabled">@ViewBag.OpponentTeam</label>
@@ -43,9 +43,9 @@
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li><a style="width: 100%" href="#tab_1" data-toggle="tab"><h4 class="fas fa-flag-checkered">@ViewBag.HomeTeam</h4></a></li>
-                    <li><a href="#tab_2" style="width: 100%" data-toggle="tab"><h4 class="far fa-flag">@ViewBag.OpponentTeam</h4></a></li>
-                    <li><a href="#tab_3" style="width: 100%" data-toggle="tab"><h4 class="fas fa-check">Match Summary</h4></a></li>
+                    <li><a style="width: 100%" href="#tab_1" data-toggle="tab"><h4>First Inning</h4></a></li>
+                    <li><a href="#tab_2" style="width: 100%" data-toggle="tab"><h4>Second Inning</h4></a></li>
+                    <li><a href="#tab_3" style="width: 100%" data-toggle="tab"><h4>Match Summary</h4></a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
@@ -152,14 +152,14 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Maiden)
                                             </td>
-                                            @if (User.Identity.IsAuthenticated)
-                                            {
-                                                <td>
+                                            <td>
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+
                                                     <a data-placement="top" style="cursor: pointer" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i class="fas fa-walking"></i></a>
-                                                </td>
 
-                                            }
-
+                                                }
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>

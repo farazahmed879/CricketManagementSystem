@@ -244,8 +244,6 @@ namespace WebApp.Controllers
         }
 
         // POST: PlayerScores/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
@@ -640,19 +638,22 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.UpdateRange(Matchplayers.MatchScore.Select(i => new PlayerScore
+                foreach (var mp in Matchplayers.MatchScore)
                 {
-                    PlayerScoreId = i.PlayerScoreId,
-                    Position = i.Position,
-                    IsPlayedInning = i.IsPlayedInning,
-                    PlayerId = i.PlayerId,
-                    HowOutId = i.HowOutId,
-                    Bowler = i.Bowler,
-                    MatchId = i.MatchId,
-                    TeamId = i.TeamId
+                    var matchScore = new PlayerScore { PlayerScoreId = mp.PlayerScoreId };
+
+                    _context.PlayerScores.Attach(matchScore);
+                    matchScore.PlayerScoreId = mp.PlayerScoreId;
+                    matchScore.Position = mp.Position;
+                    matchScore.IsPlayedInning = mp.IsPlayedInning;
+                    matchScore.PlayerId = mp.PlayerId;
+                    matchScore.HowOutId = mp.HowOutId;
+                    matchScore.Bowler = mp.Bowler;
+                    matchScore.MatchId = mp.MatchId;
+                    matchScore.TeamId = mp.TeamId;
+                    _context.SaveChanges();
+
                 }
-                ));
-                await _context.SaveChangesAsync();
                 return Ok();
                 // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }

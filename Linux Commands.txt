@@ -6,16 +6,19 @@ scp root@ip:<Server Path> <local Path>
 Release
 scp filename root@ip:production
 
-systemctl enable kestrel-hellomvc.service
+sudo systemctl enable kestrel-hellomvc.service
 
-systemctl start kestrel-hellomvc.service
+sudo systemctl start kestrel-hellomvc.service
 
-systemctl status kestrel-hellomvc.service
+sudo systemctl status kestrel-hellomvc.service
 
 dotnet publish --configuration Release 
 
 
 sqlcmd -S LOCALHOST -d ScoreExecDb -U SA -P Super@samad123 -i SinglePlayerStatistics.sql
+sqlcmd -S LOCALHOST -d ScoreExecDb -U SA -P Super@samad123 -i home.sql
+sqlcmd -S LOCALHOST -d ScoreExecDb -U SA -P Super@samad123 -i script.sql
+sqlcmd -S LOCALHOST -d ScoreExecDb -U SA -P Super@samad123 -i AllPlayerStatistics.sql
 
 SqlCmd -E -S LOCALHOST –Q "BACKUP DATABASE [ScoreExecDb] TO DISK='/root/production/database/ScoreExecDb.bak'"
 
@@ -35,3 +38,6 @@ PlayerScores Bowler dataType String
 
 
 sqlcmd -S localhost -U SA -Q "BACKUP DATABASE [ScoreExecDb] TO DISK = N'/var/opt/mssql/data/ScoreExec.bak' WITH NOFORMAT, NOINIT, NAME = 'demodb-full', SKIP, NOREWIND, NOUNLOAD, STATS = 10"
+SELECT TABLE_NAME FROM ScoreExecDb.INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'
+SET QUOTED_IDENTIFIER ON
+service nginx restart --- restart nigix

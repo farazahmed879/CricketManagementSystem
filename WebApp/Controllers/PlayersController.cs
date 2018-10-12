@@ -25,7 +25,7 @@ namespace WebApp.Controllers
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
 
-        public PlayersController(CricketContext context, 
+        public PlayersController(CricketContext context,
             UserManager<IdentityUser<int>> userManager,
             IMapper mapper)
         {
@@ -93,17 +93,26 @@ namespace WebApp.Controllers
         {
             ViewBag.Name = "Players";
 
-            return View(await _context.Players
+            return View(await _context.Teams
                            .AsNoTracking()
                            .Where(i => i.TeamId == teamId)
-                           .Select(i => new ViewModels.PlayersProfiledto
+                           .Select(i => new TeamDetailsdto
                            {
-                               PlayerId = i.PlayerId,
-                               Player_Name = i.Player_Name,
-                               PlayerLogo = i.PlayerLogo
-
+                               TeamId = i.TeamId,
+                               Team_Name = i.Team_Name,
+                               TeamLogo = i.TeamLogo,
+                               Zone = i.Zone,
+                               Place = i.Place,
+                               City = i.City,                      
+                               TeamPlayers = i.Players != null && i.Players.Any() ?
+                                               i.Players.Select(o => new TeamPlayersdto
+                                               {
+                                                   PlayerId = o.PlayerId,
+                                                   Player_Name = o.Player_Name,
+                                                   PlayerLogo = o.PlayerLogo,
+                                               }).ToList() : null
                            })
-                           .ToListAsync());
+                           .SingleAsync());
 
         }
         // GET: Players/Details/5
