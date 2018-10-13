@@ -651,7 +651,7 @@ namespace WebApp.Controllers
                     matchScore.Bowler = mp.Bowler;
                     matchScore.MatchId = mp.MatchId;
                     matchScore.TeamId = mp.TeamId;
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
 
                 }
                 return Ok();

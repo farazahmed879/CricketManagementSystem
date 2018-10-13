@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Tournaments";
 }
-
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li><a>Tournament</a></li>
+    </ol>
+</div>
 <div class="container-fluid">
     @if (User.Identity.IsAuthenticated)
     {

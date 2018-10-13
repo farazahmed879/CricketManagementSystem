@@ -58,14 +58,28 @@
                         <p>Cricket Match</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="ion-ios-partlysunny"></i>
                     </div>
                     <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="Matches" asp-action="Index" class="small-box-footer">
                         Matches List <i class="fa fa-arrow-circle-right"></i>
                     </a>
                 </div>
             </div>
-
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>@Model.Teams</h3>
+                        <p>Series</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-android-apps"></i>
+                    </div>
+                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="MatchSeries" asp-action="Index" class="small-box-footer">
+                        Match Series List <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-red">
@@ -100,24 +114,24 @@
             </div>
 
             @*<div class="col-md-3">
-                    <div class="box box-warning box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">New Feed</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                            <!-- /.box-tools -->
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            The body of the box
-                        </div>
-                        <!-- /.box-body -->
+            <div class="box box-warning box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">New Feed</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
                     </div>
-                    <!-- /.box -->
-                </div>*@
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    The body of the box
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>*@
 
             <div class="col-md-6">
                 <div class="box box-warning box-solid">

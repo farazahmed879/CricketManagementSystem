@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] ScoreExec</title>
+    <title> @ViewData["Title"] ScoreExec</title>
 
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -148,70 +148,86 @@
                 </form>-->
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                        <ul class="sidebar-menu" data-widget="tree">
-                            @*<li class="header">MAIN NAVIGATION</li>*@
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">MAIN NAVIGATION</li>
 
-                            <li>
-                                <a asp-controller="Tournament" asp-action="Index">
-                                    <i class="fa fa-th"></i> <span>Tournaments</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-controller="MatchSeries" asp-action="Index">
-                                    <i class="fa fa-th"></i> <span>Series</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-controller="Teams" asp-action="Index">
-                                    <i class="fa fa-th"></i> <span>Teams</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-controller="Matches" asp-action="Index">
-                                    <i class="fa fa-th"></i> <span>Matches</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-controller="Players" asp-action="Index">
-                                    <i class="fa fa-th"></i> <span>Players</span>
-                                </a>
-                            </li>
+                    <li>
+                        <a asp-controller="Tournament" asp-action="Index">
+                            <i class="ion ion-calendar"></i> <span>Tournaments</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="MatchSeries" asp-action="Index">
+                            <i class="ion ion-android-apps"></i> <span>Series</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Teams" asp-action="Index">
+                            <i class="ion ion-flag"></i> <span>Teams</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Matches" asp-action="Index">
+                            <i class="ion ion-ios-partlysunny"></i> <span>Matches</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Players" asp-action="Index">
+                            <i class="ion ion-person-add"></i> <span>Players</span>
+                        </a>
+                    </li>
 
-                            <li>
-                                <a asp-controller="Players" asp-action="AllPlayerStatistics">
-                                    <i class="fa fa-pie-chart"></i> <span>Records</span>
-                                </a>
-                            </li>
+                    <li>
+                        <a asp-controller="Players" asp-action="AllPlayerStatistics">
+                            <i class="ion ion-pie-graph"></i> <span>Records</span>
+                        </a>
+                    </li>
+
+                    <li class="header">OTHERS</li>
+                    <li>
+                        <a asp-controller="Others" asp-action="Partners">
+                            <i class="ion ion-ios-partlysunny"></i> <span>Our Partners</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Others" asp-action="Developers">
+                            <i class="ion ion-person-stalker"></i> <span>Developers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Others" asp-action="AboutUs">
+                            <i class="ion ion-document-text"></i> <span>About Us</span>
+                        </a>
+                    </li>
 
 
+                    @*
 
-                            @*<li>
-
-        @*<li class="treeview">
-            <a href="#">
-                <i class="fa fa-pie-chart"></i>
-                <span>Charts</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-                <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-            </ul>
-        </li>*@
-                        </ul>
+                        @*<li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-pie-chart"></i>
+                                <span>Charts</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
+                                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
+                                <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
+                                <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+                            </ul>
+                        </li>*@
+                </ul>
             </section>
             <!-- /.sidebar -->
         </aside>
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">@ViewBag.Name</a></li>
-            </ol>
+            @*<ol class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">@ViewBag.Name</a></li>
+                </ol>*@
             <!-- Content Header (Page header) -->
             @*<section class="content-header">
                     <h1>
@@ -302,7 +318,6 @@
         <!-- /.control-sidebar -->
         <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
-        <div class="control-sidebar-bg"></div>
     </div>
 
 

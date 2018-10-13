@@ -56,6 +56,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Others\AboutUs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Others\Partners.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Others\Developers.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\PlayerPastRecord\PastRecord.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
