@@ -4,6 +4,13 @@
     ViewData["Title"] = "Edit Match";
 }
 <div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="Matches" asp-action="Index">Match</a></li>
+        <li><a>Edit</a></li>
+    </ol>
+</div>
+<div class="container-fluid">
 
     <form asp-action="Edit" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>

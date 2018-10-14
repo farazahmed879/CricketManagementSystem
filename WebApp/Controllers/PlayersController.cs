@@ -227,20 +227,20 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             ViewBag.Name = "Edit Mode";
-            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
-                .AsNoTracking()
-                .Select(i => new { i.PlayerRoleId, i.Name })
-                , "PlayerRoleId", "Name");
+            //ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+            //    .AsNoTracking()
+            //    .Select(i => new { i.PlayerRoleId, i.Name })
+            //    , "PlayerRoleId", "Name");
 
-            ViewBag.BattingStyle = new SelectList(_context.BattingStyle
-                .AsNoTracking()
-                .Select(i => new { i.BattingStyleId, i.Name })
-                , "BattingStyleId", "Name");
+            //ViewBag.BattingStyle = new SelectList(_context.BattingStyle
+            //    .AsNoTracking()
+            //    .Select(i => new { i.BattingStyleId, i.Name })
+            //    , "BattingStyleId", "Name");
 
-            ViewBag.BowlingStyle = new SelectList(_context.BowlingStyle
-                .AsNoTracking()
-                .Select(i => new { i.BowlingStyleId, i.Name })
-                , "BowlingStyleId", "Name");
+            //ViewBag.BowlingStyle = new SelectList(_context.BowlingStyle
+            //    .AsNoTracking()
+            //    .Select(i => new { i.BowlingStyleId, i.Name })
+            //    , "BowlingStyleId", "Name");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
@@ -254,7 +254,6 @@ namespace WebApp.Controllers
             var player = await _context.Players
                 .AsNoTracking()
                 .ProjectTo<Playersdto>(_mapper.ConfigurationProvider)
-                .Include(i => i.Team)
                 .SingleOrDefaultAsync(m => m.PlayerId == id);
             if (player == null)
             {

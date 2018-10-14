@@ -3,11 +3,15 @@
 @{
     ViewData["Title"] = "Add Series";
 }
-
 <div class="container-fluid">
-
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="MatchSeries" asp-action="Index">Series</a></li>
+        <li><a>Add</a></li>
+    </ol>
+</div>
+<div class="container-fluid">
     <div class="row">
-
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="col-md-6">

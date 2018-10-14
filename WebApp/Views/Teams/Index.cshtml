@@ -4,7 +4,12 @@
     ViewData["Title"] = "Teams";
 }
 <div class="container-fluid">
-
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a>Team</a></li>
+    </ol>
+</div>
+<div class="container-fluid">
     @if (User.Identity.IsAuthenticated)
     {
         <div class="form-group">
@@ -12,8 +17,6 @@
         </div>
 
     }
-
-
     <div class="table-responsive">
         <table id="TeamTable" class="table table-bordered table-striped">
             <thead>

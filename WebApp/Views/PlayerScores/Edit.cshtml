@@ -11,7 +11,14 @@
     }
 }
 
-
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="Matches" asp-action="Index">Match</a></li>
+        <li><a>Score Card</a></li>
+        <li><a>Edit</a></li>
+    </ol>
+</div>
 <input type="hidden" id="RequestVerificationToken"
        name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
 
@@ -467,7 +474,7 @@
                             <hr />
                             <ul class="list-inline pull-right">
                                 <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
-                                <li><input type="button" value="Finish" class="btn btn-primary" onclick="return FallOfWicketData(this.form)"></li>
+                                <li><input type="button" value="Save and Continue" class="btn btn-primary" onclick="return FallOfWicketData(this.form)"></li>
                             </ul>
                         </form>
                         <div class="container text-center">

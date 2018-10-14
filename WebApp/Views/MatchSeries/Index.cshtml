@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Match Series";
 }
-
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="MatchSeries" asp-action="Index">Series</a></li>
+    </ol>
+</div>
 <div class="container-fluid">
     @if (User.Identity.IsAuthenticated)
     {

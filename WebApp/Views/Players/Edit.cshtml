@@ -4,6 +4,13 @@
     ViewData["Title"] = "Edit Player";
 }
 <div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="Players" asp-action="Index">Players</a></li>
+        <li><a>Edit</a></li>
+    </ol>
+</div>
+<div class="container-fluid">
     <div class="row">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -20,7 +27,7 @@
                     <div class="col-md-4">
                         <div class="form-group label-floating">
                             <label asp-for="Contact" class="control-label">Contact No.</label>
-                            <input asp-for="Contact" id="playerContact" class="form-control" />
+                            <input asp-for="Contact" id="playerContact" class="form-control" data-inputmask='"mask": "9999-9999999"' data-mask />
                             <span asp-validation-for="Contact" class="text-danger"></span>
                         </div>
                     </div>
@@ -28,7 +35,7 @@
                         <div class="form-group">
                             <div class="form-group label-floating">
                                 <label asp-for="CNIC" class="control-label">Cnic</label>
-                                <input asp-for="CNIC" id="playerCnic" class="form-control" />
+                                <input asp-for="CNIC" id="playerCnic" class="form-control" data-inputmask='"mask": "99999-9999999-9"' data-mask />
                                 <span asp-validation-for="CNIC" class="text-danger"></span>
                             </div>
                         </div>
@@ -140,7 +147,9 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
+    <script src="~/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="~/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="~/plugins/input-mask/jquery.inputmask.extensions.js"></script>
     <link rel="stylesheet" href="~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
@@ -207,17 +216,6 @@
         });
 
 
-        const phoneNumber = "9999-9999999";
-        const cnic = "99999-9999999-9";
-
-        const teleNumber = document.getElementById("playerContact");
-
-        let telIm = new Inputmask(phoneNumber);
-        telIm.mask(teleNumber);
-
-        const cnicNumber = document.getElementById("playerCnic");
-
-        let cnicIm = new Inputmask(cnic);
-        cnicIm.mask(cnicNumber);
+        $('[data-mask]').inputmask()
     </script>
 }

@@ -3,7 +3,13 @@
 @{
     ViewData["Title"] = "Add Player";
 }
-
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="Players" asp-action="Index">Players</a></li>
+        <li><a>Edit</a></li>
+    </ol>
+</div>
 <div class="container-fluid">
     <div class="row">
         <form asp-action="Create" enctype="multipart/form-data">
@@ -223,18 +229,6 @@
             });
         });
 
-        //const phoneNumber = "9999-9999999";
-        //const cnic = "99999-9999999-9";
-
-        //const teleNumber = document.getElementById("playerContact");
-
-        //let telIm = new Inputmask(phoneNumber);
-        //telIm.mask(teleNumber);
-
-        //const cnicNumber = document.getElementById("playerCnic");
-
-        //let cnicIm = new Inputmask(cnic);
-        //cnicIm.mask(cnicNumber);
 
         $('[data-mask]').inputmask()
     </script>

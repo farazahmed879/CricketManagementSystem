@@ -3,7 +3,13 @@
 @{
     ViewData["Title"] = "Add Team";
 }
-
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="Teams" asp-action="Index">Team</a></li>
+        <li><a>Add</a></li>
+    </ol>
+</div>
 <div class="container-fluid">
     <div class="row">
         <form asp-action="Create" enctype="multipart/form-data">
