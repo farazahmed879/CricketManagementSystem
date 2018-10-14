@@ -109,6 +109,16 @@ namespace WebApp.Controllers
                .OrderBy(i => i.Position)
                .ToList();
 
+            ViewBag.HomeTeamScore = _context.TeamScores
+                .AsNoTracking()
+                .Where(i => i.TeamId == homeTeamId && i.MatchId == matchId)
+                .Select(i => i.TotalScore).Single();
+
+            ViewBag.OppTeamScore = _context.TeamScores
+                .AsNoTracking()
+                .Where(i => i.TeamId == oppTeamId && i.MatchId == matchId)
+                .Select(i => i.TotalScore).Single();
+
             scoreDto.TeamScoreCard = _context.TeamScores
                 .AsNoTracking()
                 .Include(i => i.Team)
@@ -127,6 +137,7 @@ namespace WebApp.Controllers
                 })
                 .OrderBy(i => i.TeamScoreId)
                 .ToList();
+
             scoreDto.FallOfWicket = _context.FallOFWickets
               .AsNoTracking()
               .Include(i => i.Team)

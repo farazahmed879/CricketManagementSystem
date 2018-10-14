@@ -59,6 +59,9 @@
     <Content Update="Views\Others\AboutUs.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Others\TestMatch.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Others\Partners.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

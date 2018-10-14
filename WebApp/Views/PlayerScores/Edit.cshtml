@@ -1,7 +1,7 @@
 ﻿@model WebApp.ViewModels.ScoreCarddto
 
 @{
-    ViewData["Title"] = "Add a Match Score";
+    ViewData["Title"] = "Edit Match Players";
 }
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @functions{
@@ -17,6 +17,18 @@
 
 <div class="container-fluid">
     <div class="row">
+        <div class="col-sm-12" style="background-color:powderblue;">
+            <div class="col-sm-2">
+                <h4>@ViewBag.HomeTeam</h4>
+            </div>
+            <div class="col-sm-1">
+                <h4>vs</h4>
+            </div>
+            <div class="col-sm-3">
+                <h4>@ViewBag.OpponentTeam</h4>
+            </div>
+
+        </div>
         <section>
             <div class="wizard">
                 <div class="wizard-inner">
@@ -25,28 +37,28 @@
                         <li role="presentation" class="active">
                             <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="First Inning">
                                 <span class="round-tab">
-                                    <i class="fas fa-globe-americas"></i>
+                                    <i class="ion ion-flag"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
                             <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Second Inning">
                                 <span class="round-tab">
-                                    <i class="fas fa-globe-africa"></i>
+                                    <i class="ion ion-ios-flag"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
                             <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Match Summary">
                                 <span class="round-tab">
-                                    <i class="fas fa-check-circle"></i>
+                                    <i class="ion ion-reply-all"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
                             <a href="#fallOfWicket" data-toggle="tab" aria-controls="fallOfWicket" role="tab" title="fallOfWicket">
                                 <span class="round-tab">
-                                    <i class="fas fa-check"></i>
+                                    <i class="ion ion-eject"></i>
                                 </span>
                             </a>
                         </li>
@@ -55,39 +67,38 @@
                 <div class="tab-content">
                     <div class="tab-pane active" role="tabpanel" id="step1">
                         <div class="container-fluid">
-                            <div class="col-sm-4">
-                                <label>@ViewBag.HomeTeam</label>
+                            <div class="col-md-12" style="background-color:powderblue;">
+                                <h4>@ViewBag.HomeTeam</h4>
                             </div>
-                            <hr />
                             <form class="form-inline" role="form" id="HomeTeamData">
 
                                 <div class="form-inline">
 
                                     <div class="col-sm-1">
 
-                                        <label class="control-label">S.No</label>
+                                        <h4>S.No</h4>
 
                                     </div>
                                     <div class="col-sm-1">
 
-                                        <label class="control-label">Inning</label>
+                                        <h4>Inning</h4>
 
                                     </div>
 
                                     <div class="col-sm-4">
 
-                                        <label class="control-label">Players</label>
+                                        <h4>Batsman</h4>
 
                                     </div>
                                     <div class="col-sm-2">
 
-                                        <label class="control-label">How Out</label>
+                                        <h4>How Out</h4>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <h4>Bowler</h4>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <label class="control-label">Bowler</label>
-                                </div>
-
                                 @{
 
                                     for (int i = 0; i < 12; i++)
@@ -97,6 +108,7 @@
                                             <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].MatchId" />
                                             <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].PlayerScoreId" />
                                             <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].TeamId" />
+                                            <br />
                                             <div class="col-sm-1">
                                                 @{
                                                     var position = i + 1;
@@ -122,7 +134,7 @@
                                                 </select>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-3">
                                                 <select asp-for="@Model.HomeTeamScoreCard[i].Bowler" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
                                                     <option value="">--Select Bowler--</option>
                                                 </select>
@@ -142,40 +154,38 @@
                     <div class="tab-pane" role="tabpanel" id="step2">
 
                         <div class="container-fluid">
-                            <div class="col-sm-4">
-                                <label>@ViewBag.OpponentTeam</label>
+                            <div class="col-md-12" style="background-color:powderblue;">
+                                <h4>@ViewBag.OpponentTeam</h4>
                             </div>
-
-                            <hr />
                             <form class="form-inline" role="form" id="OpponentTeamData">
 
                                 <div class="form-inline">
 
                                     <div class="col-sm-1">
 
-                                        <label class="control-label">S.No</label>
+                                        <h4>S.No</h4>
 
                                     </div>
                                     <div class="col-sm-1">
 
-                                        <label class="control-label">Inning</label>
+                                        <h4>Inning</h4>
 
                                     </div>
 
                                     <div class="col-sm-4">
 
-                                        <label class="control-label">Players</label>
+                                        <h4>Batsman</h4>
 
                                     </div>
                                     <div class="col-sm-2">
 
-                                        <label class="control-label">How Out</label>
+                                        <h4>How Out</h4>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <h4>Bowler</h4>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <label class="control-label">Bowler</label>
-                                </div>
-
                                 @{
 
                                     for (int i = 0; i < 12; i++)
@@ -185,6 +195,7 @@
                                             <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].MatchId" />
                                             <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].PlayerScoreId" />
                                             <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].TeamId" />
+                                            <br />
                                             <div class="col-sm-1">
                                                 @{
                                                     var position = i + 1;
@@ -228,6 +239,9 @@
 
                     </div>
                     <div class="tab-pane" role="tabpanel" id="complete">
+                        <div class="col-md-12" style="background-color:powderblue;">
+                            <h4>Match Summary</h4>
+                        </div>
                         <form class="form-inline" role="form" id="MatchSummary">
 
                             @{
@@ -345,40 +359,43 @@
                         </div>
                     </div>
                     <div class="tab-pane" role="tabpanel" id="fallOfWicket">
+                        <div class="col-md-12" style="background-color:powderblue;">
+                            <h4>Fall Of Wickets</h4>
+                        </div>
                         <form class="form-inline" role="form" id="FallOfWicket">
                             <div class="form-inline">
                                 <div class="col-sm-2">
-                                    <label class="control-label">Team Name</label>
+                                    <h4>Team Name</h4>
                                 </div>
                                 <div class="col-sm-1">
-                                    <label class="control-label">1st</label>
+                                    <h4>1st</h4>
                                 </div>
                                 <div class="col-sm-1">
-                                    <label class="control-label">2nd</label>
+                                    <h4>2nd</h4>
                                 </div>
                                 <div class="col-sm-1">
-                                    <label class="control-label">3rd</label>
+                                    <h4>3rd</h4>
                                 </div>
                                 <div class="col-sm-1">
-                                    <label class="control-label">4th</label>
+                                    <h4>4th</h4>
                                 </div>
                                 <div class="col-sm-1">
-                                    <label class="control-label">5th</label>
+                                    <h4>5th</h4>
                                 </div>
                                 <div class="col-sm-1">
-                                    <label class="control-label">6th</label>
+                                    <h4>6th</h4>
                                 </div>
                                 <div class="col-sm-1">
-                                    <label class="control-label">7th</label>
+                                    <h4>7th</h4>
                                 </div>
                                 <div class="col-sm-1">
-                                    <label class="control-label">8th</label>
+                                    <h4>8th</h4>
                                 </div>
                                 <div class="col-sm-1">
-                                    <label class="control-label">9th</label>
+                                    <h4>9th</h4>
                                 </div>
                                 <div class="col-sm-1">
-                                    <label class="control-label">10th</label>
+                                    <h4>10th</h4>
                                 </div>
                             </div>
                             @{
@@ -388,7 +405,7 @@
 
                                     <div class="row">
                                         <input type="hidden" asp-for="@Model.FallOfWicket[i].MatchId" />
-                                         <input type="hidden" asp-for="@Model.FallOfWicket[i].FallOfWicketId" />
+                                        <input type="hidden" asp-for="@Model.FallOfWicket[i].FallOfWicketId" />
 
 
                                         <div class="col-sm-2">
@@ -605,7 +622,7 @@
                 }).done(function (response) {
                     alert("Record is updated successfully");
                     $('#TeamScorebtn').attr('disabled', true);
-              
+
                 }).fail(function () {
                     alert("Record can not be inserted");
                 });

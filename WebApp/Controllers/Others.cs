@@ -44,7 +44,12 @@ namespace WebApp.Controllers
             ViewBag.Name = "AboutUs";
             return View();
         }
-
+        // View: Others/TestMatch
+        public IActionResult TestMatch()
+        {
+            ViewBag.Name = "AboutUs";
+            return View();
+        }
 
     }
 }
