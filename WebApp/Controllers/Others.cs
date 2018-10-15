@@ -50,6 +50,12 @@ namespace WebApp.Controllers
             ViewBag.Name = "AboutUs";
             return View();
         }
+        // View: Others/Records
+        public IActionResult Records()
+        {
+            ViewBag.Name = "Records";
+            return View();
+        }
 
     }
 }
