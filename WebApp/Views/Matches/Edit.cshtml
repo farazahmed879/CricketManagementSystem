@@ -188,22 +188,22 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-        document.getElementById('tourSection').style.visibility = 'hidden';
-        document.getElementById('matchSeriesSection').style.visibility = 'hidden';
+        $("#TournamentId").attr("disabled", true);
+        $("#MatchSeriesId").attr("disabled", true);
         $("#MatchTypeId").change(function () {
             if ($('#MatchTypeId').val() === "2") {
-                document.getElementById('tourSection').style.visibility = 'visible';
-                document.getElementById('matchSeriesSection').style.visibility = 'hidden';
                 $("#MatchSeriesId").val('').trigger('change');
+                $("#TournamentId").attr("disabled", false);
+                $("#MatchSeriesId").attr("disabled", true);
             }
             else if ($('#MatchTypeId').val() === "3") {
-                document.getElementById('matchSeriesSection').style.visibility = 'visible';
-                document.getElementById('tourSection').style.visibility = 'hidden';
+                $("#MatchSeriesId").attr("disabled", false);
+                $("#TournamentId").attr("disabled", true);
                 $("#TournamentId").val('').trigger('change');
             }
-            else {
-                document.getElementById('tourSection').style.visibility = 'hidden';
-                document.getElementById('matchSeriesSection').style.visibility = 'hidden';
+            else if ($('#MatchTypeId').val() === "1") {
+                $("#TournamentId").attr("disabled", true);
+                $("#MatchSeriesId").attr("disabled", true);
                 $("#TournamentId").val('').trigger('change');
                 $("#MatchSeriesId").val('').trigger('change');
             }

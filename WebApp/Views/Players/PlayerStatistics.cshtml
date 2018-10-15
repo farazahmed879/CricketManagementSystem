@@ -7,228 +7,351 @@
 
 
 <div class="container-fluid">
-    <div class="jumbotron">
-        <!-- Widget: user widget style 1 -->
-        <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-yellow">
-                <div class="col-md-4">
 
-                    @{ if (Model.PlayerImage != null)
-                        {
-                            var base64 = (Model.PlayerImage == null || !Model.PlayerImage.Any()) ? "" : Convert.ToBase64String(@Model.PlayerImage);
-                            <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' id="PlayerImg"></div>
-                        }
-                        else
-                        {
-                            <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("/images/no-user-profile-picture-whatsapp.jpg");' id="PlayerImg"></div>
+    <!-- Widget: user widget style 1 -->
+    <div class="box box-widget widget-user-2">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-light-blue-gradient">
+            <div class="col-md-4">
 
-                        }
+                @{ if (Model.PlayerImage != null)
+                    {
+                        var base64 = (Model.PlayerImage == null || !Model.PlayerImage.Any()) ? "" : Convert.ToBase64String(@Model.PlayerImage);
+                        <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' id="PlayerImg"></div>
                     }
+                    else
+                    {
+                        <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("/images/no-user-profile-picture-whatsapp.jpg");' id="PlayerImg"></div>
 
-                </div>
-                <!-- /.widget-user-image -->
-                <h3 class="widget-user-username">@Html.DisplayFor(model => model.PlayerName)</h3>
-                <h5 class="widget-user-desc">@Html.DisplayFor(model => model.TeamName)</h5>
+                    }
+                }
 
             </div>
-            <br />
-            <div class="col-md-6">
+            <!-- /.widget-user-image -->
+            <h2>@Html.DisplayFor(model => model.PlayerName)</h2>
+            <h4>@Html.DisplayFor(model => model.TeamName)</h4>
 
-                <dl class="dl-horizontal">
+        </div>
+        <br />
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
 
+                <dt>
+                    Playing Role
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PlayerRole)
+                </dd>
+                <dt>
+                    Batting Style
+                </dt>
+                <dd style="width: 100%">
+                    @Html.DisplayFor(model => model.BattingStyle)
+                </dd>
+                <dt>
+                    Bowling Style
+                </dt>
+                <dd style="width: 100%">
+                    @Html.DisplayFor(model => model.BowlingStyle)
+                </dd>
+                <dt>
+                    Born
+                </dt>
+
+                <dd style="width: 100%">
+                    @Html.DisplayFor(model => model.DOB)
+                </dd>
+                <dt>
+                    Major Team
+                </dt>
+                <dd style="width: 100%">
+                    @Html.DisplayFor(model => model.TeamName)
+                </dd>
+            </dl>
+        </div>
+        <div class="box-footer">
+            <div class="col-md-4">
+                <div class="col-md-12 bg-light-blue-active">
+                    <h3>Batting<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BattingModal"><i title="More" data-toggle="tooltip" class="ion ion-more"></i></a></h3>
+                </div>
+                <dl class="dl-horizontal table-bordered">
                     <dt>
-                        Playing Role
+                        Matches
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.PlayerRole)
+                        @Html.DisplayFor(model => model.TotalMatch)
                     </dd>
                     <dt>
-                        Batting Style
+                        Innings
                     </dt>
-                    <dd style="width: 100%">
-                        @Html.DisplayFor(model => model.BattingStyle)
+                    <dd>
+                        @Html.DisplayFor(model => model.TotalInnings)
                     </dd>
                     <dt>
-                        Bowling Style
+                        Total Runs
                     </dt>
-                    <dd style="width: 100%">
-                        @Html.DisplayFor(model => model.BowlingStyle)
+                    <dd>
+                        @Html.DisplayFor(model => model.TotalBatRuns)
                     </dd>
                     <dt>
-                        Born
+                        Balls Faced
                     </dt>
-
-                    <dd style="width: 100%">
-                        @Html.DisplayFor(model => model.DOB);
+                    <dd>
+                        @Html.DisplayFor(model => model.TotalBatBalls)
                     </dd>
                     <dt>
-                        Major Team
+                        50s
                     </dt>
-                    <dd style="width: 100%">
-                        @Html.DisplayFor(model => model.TeamName)
+                    <dd>
+                        @Html.DisplayFor(model => model.NumberOf50s)
+                    </dd>
+                    <dt>
+                        100s
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.NumberOf100s)
+                    </dd>
+                    <dt>
+                        Avg
+                    </dt>
+                    @if (Model.BattingAverage != null || Model.BattingAverage.Equals('0'))
+                    {
+                        <dd>
+                            @Html.DisplayFor(model => model.BattingAverage)
+                        </dd>
+                    }
+                    else
+                    {
+                        <dd>
+                            N/A
+                        </dd>
+                    }
+                    <dt>
+                        Strike Rate
+                    </dt>
+                    @if (Model.StrikeRate != null)
+                    {
+                        <dd>
+                            @Html.DisplayFor(model => model.StrikeRate)
+                        </dd>
+                    }
+                    else
+                    {
+                        <dd>
+                            N/A
+                        </dd>
+                    }
+                    <dt>
+                        Best Score
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.BestScore)
                     </dd>
                 </dl>
             </div>
-            <div class="box-footer">
-                <nav class="navbar navbar-light bg-light">
-                    <form class="form-inline">
-                        <div class="col-md-4">
-                            <h3>Batting</h3>
-                            <dl class="dl-horizontal table-bordered">
-                                <dt>
-                                    Matches
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.TotalMatch)
-                                </dd>
-                                <dt>
-                                    Innings
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.TotalInnings)
-                                </dd>
-                                <dt>
-                                    Total Runs
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.TotalBatRuns)
-                                </dd>
-                                <dt>
-                                    Balls Faced
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.TotalBatBalls)
-                                </dd>
-                                <dt>
-                                    50s
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.NumberOf50s)
-                                </dd>
-                                <dt>
-                                    100s
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.NumberOf100s)
-                                </dd>
-                                <dt>
-                                    Avg
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.BattingAverage)
-                                </dd>
-                                <dt>
-                                    Strike Rate
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.StrikeRate)
-                                </dd>
-                                <dt>
-                                    Best Score
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.BestScore)
-                                </dd>
-                            </dl>
-                        </div>
-                        <div class="col-md-4">
-                            <h3>Bowling</h3>
-                            <dl class="dl-horizontal table-bordered">
-                                <dt>
-                                    Matches
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.TotalMatch)
-                                </dd>
-                                <dt>
-                                    Overs
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.TotalOvers)
-                                </dd>
-                                <dt>
-                                    Wickes
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.TotalWickets)
-                                </dd>
-                                <dt>
-                                    Runs
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.TotalBallRuns)
-                                </dd>
-                                <dt>
-                                    5Ws
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.FiveWickets)
-                                </dd>
-                                <dt>
-                                    Maiden
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.TotalMaidens)
-                                </dd>
-                                <dt>
-                                    Avg
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.BowlingAvg)
-                                </dd>
-                                <dt>
-                                    Economy
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.Economy)
-                                </dd>
+            <div class="col-md-4">
+                <div class="col-md-12 bg-light-blue-active">
+                    <h3>Bowling<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BowlingModal"><i title="More" data-toggle="tooltip" class="ion ion-more"></i></a></h3>
+                </div>
 
-                                <dt>
-                                    Best
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.BestBowling)
-                                </dd>
-                            </dl>
-                        </div>
-                        <div class="col-md-4">
-                            <h3>Fielding</h3>
-                            <dl class="dl-horizontal table-bordered">
-                                <dt>
-                                    Matches
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.TotalMatch)
-                                </dd>
-                                <dt>
-                                    Catches
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.OnFieldCatch)
-                                </dd>
-                                <dt>
-                                    Stumps
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.OnFieldStump)
-                                </dd>
-                                <dt>
-                                    Run Out
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.OnFieldRunOut)
-                                </dd>
-                            </dl>
-                        </div>
-                    </form>
-                </nav>
+                <dl class="dl-horizontal table-bordered">
+
+                    <dt>
+                        Overs
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.TotalOvers)
+                    </dd>
+                    <dt>
+                        Wickes
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.TotalWickets)
+                    </dd>
+                    <dt>
+                        Runs
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.TotalBallRuns)
+                    </dd>
+                    <dt>
+                        5Ws
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FiveWickets)
+                    </dd>
+                    <dt>
+                        Maiden
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.TotalMaidens)
+                    </dd>
+                    <dt>
+                        Avg
+                    </dt>
+                    @if (Model.BowlingAvg != null)
+                    {
+                        <dd>
+                            @Html.DisplayFor(model => model.BowlingAvg)
+                        </dd>
+                    }
+                    else
+                    {
+                        <dd>
+                            N/A
+                        </dd>
+                    }
+                    <dt>
+                        Economy
+                    </dt>
+
+                    @if (Model.Economy != null)
+                    {
+                        <dd>
+                            @Html.DisplayFor(model => model.Economy)
+                        </dd>
+                    }
+                    else
+                    {
+                        <dd>
+                            N/A
+                        </dd>
+                    }
+
+
+                    <dt>
+                        Best
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.BestBowling)
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12 bg-light-blue-active">
+                    <h3>Fielding</h3>
+                </div>
+
+                <dl class="dl-horizontal table-bordered">
+                    <dt>
+                        Catches
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OnFieldCatch)
+                    </dd>
+                    <dt>
+                        Stumps
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OnFieldStump)
+                    </dd>
+                    <dt>
+                        Run Out
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OnFieldRunOut)
+                    </dd>
+                </dl>
+            </div>
+
+        </div>
+    </div>
+    <!-- /.widget-user -->
+</div>
+<div id="BowlingModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  bg-light-blue-active">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Bowling</h4>
+            </div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        Bowled
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DoBowled)
+                    </dd>
+                    <dt>
+                        Catch
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DoCatch)
+                    </dd>
+                    <dt>
+                        Hit Wicket
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DoHitWicket)
+                    </dd>
+                    <dt>
+                        Lbw
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DoLBW)
+                    </dd>
+                    <dt>
+                        Stump
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DoStump)
+                    </dd>
+                </dl>
             </div>
         </div>
-        <!-- /.widget-user -->
     </div>
 </div>
-
+<div id="BattingModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  bg-light-blue-active">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Batting</h4>
+            </div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        Bowled
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.GetBowled)
+                    </dd>
+                    <dt>
+                        Catch
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.GetCatch)
+                    </dd>
+                    <dt>
+                        Hit Wicket
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.GetHitWicket)
+                    </dd>
+                    <dt>
+                        Lbw
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.GetLBW)
+                    </dd>
+                    <dt>
+                        Run Out
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.GetRunOut)
+                    </dd>
+                    <dt>
+                        Stump
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.GetStump)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -236,6 +359,8 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css" />
     <script>
+        $('[data-toggle="tooltip"]').tooltip();
+
 
     </script>
     <style>

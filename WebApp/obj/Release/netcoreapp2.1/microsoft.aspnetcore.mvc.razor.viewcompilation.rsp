@@ -23,6 +23,7 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Others\AboutUs.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Others\Developers.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Others\Partners.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Others\TestMatch.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerPastRecord\PastRecord.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Create.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Create12.cshtml

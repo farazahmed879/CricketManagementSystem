@@ -112,12 +112,12 @@ namespace WebApp.Controllers
             ViewBag.HomeTeamScore = _context.TeamScores
                 .AsNoTracking()
                 .Where(i => i.TeamId == homeTeamId && i.MatchId == matchId)
-                .Select(i => i.TotalScore).Single();
+                .Select(i => i.TotalScore).SingleOrDefault();
 
             ViewBag.OppTeamScore = _context.TeamScores
                 .AsNoTracking()
                 .Where(i => i.TeamId == oppTeamId && i.MatchId == matchId)
-                .Select(i => i.TotalScore).Single();
+                .Select(i => i.TotalScore).SingleOrDefault();
 
             scoreDto.TeamScoreCard = _context.TeamScores
                 .AsNoTracking()

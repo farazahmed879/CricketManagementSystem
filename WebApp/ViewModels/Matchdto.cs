@@ -37,7 +37,7 @@ namespace WebApp.ViewModels
         public int UserId { get; set; }
         public string MatchType { get; set; }
         public int MatchTypeId { get; set; }
-        public int MatchSeriesId { get; set; }
+        public int? MatchSeriesId { get; set; }
         public bool HasFilledHomeTeamData { get; set; }
         public bool HasFilledOpponentTeamData { get; set; }
         public bool HasFilledTeamScoreData { get; set; }

@@ -95,7 +95,7 @@
 
     <div class="table-responsive">
         <table id="MatchTable" class="table table-bordered table-striped">
-            <thead>
+            <thead class="bg-blue-active">
                 <tr>
                     <th>
                         Ground
@@ -307,17 +307,6 @@
 
         $('[data-toggle="tooltip"]').tooltip();
 
-        const change = () => {
-            if ($("#matchType").val() === "1") {
-                $("#tourSection").show();
-            }
-            else {
-                $("#tourSection").hide();
-                //  document.getElementById("TournamentId").value = "";
-            }
-        }
-        $('#matchType').on('change', change);
-        change();
 
         $(function () {
             $('#AddNewMatchBtn').click(function () {

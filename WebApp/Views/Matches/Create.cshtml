@@ -68,64 +68,26 @@
                     </select>
                 </div>
 
-                @{
-                    if (ViewBag.IsTournament != null && ViewBag.IsTournament)
-                    {
 
-                        <div class="col-md-6" style="margin-top: 10px">
-                            <label>Match Type<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select id="status" asp-for="MatchTypeId" required asp-items="ViewBag.MatchType" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6" style="margin-top: 10px">
-                            <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select asp-for="TournamentId" asp-items="ViewBag.TournamentId" required style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
+                <div class="col-md-4" style="margin-top: 10px">
+                    <label>Match Type<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                    <select id="MatchTypeId" asp-for="MatchTypeId" asp-items="ViewBag.MatchType" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="col-md-4" style="margin-top: 10px" id="tourSection">
+                    <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                    <select id="TournamentId" asp-for="TournamentId" asp-items="ViewBag.TournamentId" required style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div id="matchSeriesSection" class="col-md-4" style="margin-top: 10px">
+                    <label>Series<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                    <select id="MatchSeriesId" asp-for="MatchSeriesId" asp-items="ViewBag.MatchSeries" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
 
-                    }
-                    else if (ViewBag.IsMatchSeries != null && ViewBag.IsMatchSeries)
-                    {
-
-                        <div class="col-md-6" style="margin-top: 10px">
-                            <label>Match Type<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select id="status" asp-for="MatchTypeId" required asp-items="ViewBag.MatchType" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4" style="margin-top: 10px">
-                            <label>Series<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select asp-for="MatchSeriesId" asp-items="ViewBag.MatchSeries" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
-
-                    }
-                    else
-                    {
-
-                        <div class="col-md-4" style="margin-top: 10px">
-                            <label>Match Type<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select id="MatchTypeId" asp-for="MatchTypeId" asp-items="ViewBag.MatchType" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4" style="margin-top: 10px" id="tourSection">
-                            <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select id="TournamentId" asp-for="TournamentId" asp-items="ViewBag.TournamentId" required style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
-                        <div id="matchSeriesSection" class="col-md-4" style="margin-top: 10px">
-                            <label>Series<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select id="MatchSeriesId" asp-for="MatchSeriesId" asp-items="ViewBag.MatchSeries" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
-                    }
-                }
                 <div class="col-md-6" style="margin-top: 10px">
                     <div class="form-group">
                         <label>Date of Match</label>
@@ -205,23 +167,22 @@
         $('#datepicker').datepicker({
             autoclose: true
         })
-
-        document.getElementById('tourSection').style.visibility = 'hidden';
-        document.getElementById('matchSeriesSection').style.visibility = 'hidden';
+        $("#TournamentId").attr("disabled", true);
+        $("#MatchSeriesId").attr("disabled", true);
         $("#MatchTypeId").change(function () {
             if ($('#MatchTypeId').val() === "2") {
-                document.getElementById('tourSection').style.visibility = 'visible';
-                document.getElementById('matchSeriesSection').style.visibility = 'hidden';
                 $("#MatchSeriesId").val('').trigger('change');
+                $("#TournamentId").attr("disabled", false);
+                $("#MatchSeriesId").attr("disabled", true);
             }
             else if ($('#MatchTypeId').val() === "3") {
-                document.getElementById('matchSeriesSection').style.visibility = 'visible';
-                document.getElementById('tourSection').style.visibility = 'hidden';
+                $("#MatchSeriesId").attr("disabled", false);
+                $("#TournamentId").attr("disabled", true);
                 $("#TournamentId").val('').trigger('change');
             }
-            else {
-                document.getElementById('TourSection').style.visibility = 'hidden';
-                document.getElementById('matchSeriesSection').style.visibility = 'hidden';
+            else if ($('#MatchTypeId').val() === "1") {
+                $("#TournamentId").attr("disabled", true);
+                $("#MatchSeriesId").attr("disabled", true);
                 $("#TournamentId").val('').trigger('change');
                 $("#MatchSeriesId").val('').trigger('change');
             }
@@ -255,12 +216,12 @@
             readURL(this);
         });
 
-                                                                                                        //$('.datepicker').datepicker();
+                                                                                                                                //$('.datepicker').datepicker();
 
 
-                                                                                                        //$.fn.datepicker.defaults.format = "mm/dd/yyyy";
-                                                                                                        //$('.datepicker').datepicker({
-                                                                                                        //    startDate: '-3d'
-                                                                                                        //});
+                                                                                                                                //$.fn.datepicker.defaults.format = "mm/dd/yyyy";
+                                                                                                                                //$('.datepicker').datepicker({
+                                                                                                                                //    startDate: '-3d'
+                                                                                                                                //});
     </script>
 }

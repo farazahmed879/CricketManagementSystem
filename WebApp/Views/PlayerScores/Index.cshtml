@@ -46,7 +46,7 @@
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab_1" data-toggle="tab">First Inning</a></li>
+                    <li class="active"><a href="#tab_1" data-toggle="tab"><h4>First Inning</h4></a></li>
                     <li><a href="#tab_2" data-toggle="tab"><h4>Second Inning</h4></a></li>
                     <li><a href="#tab_3" data-toggle="tab"><h4>Summary</h4></a></li>
                 </ul>
@@ -132,7 +132,7 @@
                                                 @if (User.Identity.IsAuthenticated)
                                                 {
 
-                                                    <a data-placement="top" style="cursor: pointer" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i class="fas fa-walking"></i></a>
+                                                    <a data-placement="top" style="cursor: pointer"  data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
 
                                                 }
                                             </td>
@@ -210,7 +210,7 @@
                                                 @if (User.Identity.IsAuthenticated)
                                                 {
 
-                                                    <a data-placement="top" style="cursor: pointer" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i class="fas fa-walking"></i></a>
+                                                    <a data-placement="top" style="cursor: pointer"  data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
 
                                                 }
                                             </td>
@@ -312,7 +312,7 @@
                                                     @if (User.Identity.IsAuthenticated)
                                                     {
 
-                                                        <a data-placement="top" style="cursor: pointer" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i class="fas fa-walking"></i></a>
+                                                        <a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
 
                                                     }
                                                 </td>
@@ -391,7 +391,7 @@
                                                 @if (User.Identity.IsAuthenticated)
                                                 {
 
-                                                    <a data-placement="top" style="cursor: pointer" title="Add Player Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i class="fas fa-walking"></i></a>
+                                                    <a data-placement="top" style="cursor: pointer"  data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
 
                                                 }
                                             </td>
@@ -642,6 +642,8 @@
                 window.location = '/PlayerScores/Edit'
             });
         });
+
+        $('[data-toggle="tooltip"]').tooltip();
         const postData = async () => {
             const battingRun = document.getElementById('battingRuns').value;
             const battingBall = document.getElementById('battingBalls').value;
