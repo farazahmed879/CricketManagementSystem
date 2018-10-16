@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using WebApp.ViewModels;
 using AutoMapper.QueryableExtensions;
+using WebApp.Helper;
 
 namespace WebApp.Controllers
 {
@@ -95,7 +96,7 @@ namespace WebApp.Controllers
                 matchSeriesModal.UserId = users.Id;
                 _context.MatchSeries.Add(matchSeriesModal);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Json(ResponseHelper.Success());
             }
             return View(matchSeries);
         }

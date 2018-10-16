@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using WebApp.ViewModels;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using WebApp.Helper;
 
 namespace WebApp.Controllers
 {
@@ -125,6 +126,7 @@ namespace WebApp.Controllers
         //GET: Matches/Create
 
         [Authorize(Roles = "Club Admin,Administrator")]
+        [Route("Matches/Create")]
         public async Task<IActionResult> Create(int? tournamentId, int? matchSeriesId)
         {
             ViewBag.Name = "Add Match";
@@ -203,7 +205,7 @@ namespace WebApp.Controllers
                 match.MatchLogo = fileBytes ?? null;
                 _context.Matches.Add(_mapper.Map<Match>(match));
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Json(ResponseHelper.Success());
             }
             return View(match);
         }

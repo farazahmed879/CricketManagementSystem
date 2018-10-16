@@ -29,12 +29,14 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Create12.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Index.cshtml
---file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\AllPlayerStatistics.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\Create.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\PlayerProfile.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\PlayerStatistics.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Batting.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Bowling.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Shared\EmailTemplate.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Shared\Error.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Shared\_Layout.cshtml
