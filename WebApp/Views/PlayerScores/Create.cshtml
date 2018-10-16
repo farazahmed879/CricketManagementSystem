@@ -456,15 +456,11 @@
                                 <li><input type="button" id="TeamScorebtn" value="Finish" class="btn btn-primary" onclick="return FallOfWicketData(this.form)"></li>
                             </ul>
                         </form>
-                        <div class="container text-center">
-                            <div>
-                                <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
-                            </div>
-                        </div>
 
                     </div>
                     <div class="clearfix"></div>
                 </div>
+                <div id="snackbar"></div>
             </div>
         </section>
     </div>
@@ -491,7 +487,12 @@
                 increaseArea: '20%' /* optional */
             });
         });
-
+        function myFunction(data) {
+            var snackBar = document.getElementById('snackbar');
+            snackBar.textContent = data;
+            snackBar.className = "show";
+            setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+        }
         const globalStates = [];
         $(function () {
             $('#BackBtn').click(function () {
@@ -512,13 +513,13 @@
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (response) {
-                    if (!response) {
-                        alert("Record inserted successfully");
-                        $('#HomeTeamBtn').attr('disabled', true);
-                    }
+                }).done(function (data) {
+
+                    myFunction(data);
+                    $('#HomeTeamBtn').attr('disabled', true);
+
                 }).fail(function () {
-                    alert("Record can not inserted");
+                    myFunction(data);
                 });
 
 
@@ -527,7 +528,6 @@
             }
 
         }
-
         function OpponentTeam(form) {
             try {
                 var formData = $("#OpponentTeamData").serialize();
@@ -537,13 +537,13 @@
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (response) {
-                    if (!response) {
-                        alert("Record inserted successfully");
-                        $('#OpponentTeamBtn').attr('disabled', true);
-                    }
+                }).done(function (data) {
+
+                    myFunction(data);
+                    $('#OpponentTeamBtn').attr('disabled', true);
+
                 }).fail(function () {
-                    alert("Record can not be inserted");
+                    myFunction(data);
                 });
 
             } catch (ex) {
@@ -560,13 +560,13 @@
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (response) {
-                    if (!response) {
-                        alert("Record inserted successfully");
-                        $('#TeamScorebtn').attr('disabled', true);
-                    }
+                }).done(function (data) {
+
+                    myFunction(data);
+                    $('#TeamScorebtn').attr('disabled', true);
+
                 }).fail(function () {
-                    alert("Record can not be inserted");
+                    myFunction(data);
                 });
 
             } catch (ex) {
@@ -583,13 +583,13 @@
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (response) {
-                    if (!response) {
-                        alert("Record inserted successfully");
-                        window.location = '/Matches/Index'
-                    }
-                }).fail(function () {
-                    alert("Record can not be inserted");
+                }).done(function (data) {
+
+                    myFunction(data);
+                    window.location = '/Matches/Index'
+
+                }).fail(function (data) {
+                    myFunction(data);
                 });
 
             } catch (ex) {
@@ -633,31 +633,31 @@
         function prevTab(elem) {
             $(elem).prev().find('a[data-toggle="tab"]').click();
         }
-            //$('.playerDropDown')
-            //.on('change', (event) => {
-            //    const element = event.target;
-            //    if (!element.value)
-            //        return;
-            //    globalStates.push({
-            //        value: element.value
-            //    });
-            //    removeValues();
-            //});
+                                //$('.playerDropDown')
+                                //.on('change', (event) => {
+                                //    const element = event.target;
+                                //    if (!element.value)
+                                //        return;
+                                //    globalStates.push({
+                                //        value: element.value
+                                //    });
+                                //    removeValues();
+                                //});
 
-            //const removeValues = () => {
-            //    const elements = $('select.playerDropDown');
-            //    for (let index = 0; index < elements.length; index++) {
-            //        const isAdded = _.some(globalStates, {
-            //            value: elements[index].value
-            //        });
-            //        if (!isAdded) {
-            //            for (let globalState of globalStates) {
-            //                //elements[index].selectize.removeValues(globalState.value);
-            //                $(`#${elements[index].id}`)[0].selectize.removeOption(globalState.value);
-            //            }
-            //        }
-            //    }
-            //};
+                                //const removeValues = () => {
+                                //    const elements = $('select.playerDropDown');
+                                //    for (let index = 0; index < elements.length; index++) {
+                                //        const isAdded = _.some(globalStates, {
+                                //            value: elements[index].value
+                                //        });
+                                //        if (!isAdded) {
+                                //            for (let globalState of globalStates) {
+                                //                //elements[index].selectize.removeValues(globalState.value);
+                                //                $(`#${elements[index].id}`)[0].selectize.removeOption(globalState.value);
+                                //            }
+                                //        }
+                                //    }
+                                //};
 
 
 

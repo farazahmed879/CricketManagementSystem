@@ -20,26 +20,7 @@
             <div class="col-sm-7">
                 <h4>@ViewBag.OpponentTeam</h4>
             </div>
-            <div class="col-md-2">
-                @if (User.Identity.IsAuthenticated)
-                {
 
-                    if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any() || Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any() || Model.TeamScoreCard != null && Model.TeamScoreCard.Any() || Model.FallOfWicket != null && Model.FallOfWicket.Any())
-                    {
-                        <div class="form-group">
-                            <a class="btn btn-primary" asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Edit</a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="form-group">
-                            <a class="btn btn-primary" style="width: 100%" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Add</a>
-                        </div>
-                    }
-
-                }
-
-            </div>
 
         </div>
         <div class="col-md-12">
@@ -132,7 +113,7 @@
                                                 @if (User.Identity.IsAuthenticated)
                                                 {
 
-                                                    <a data-placement="top" style="cursor: pointer"  data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
+                                                    <a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
 
                                                 }
                                             </td>
@@ -210,7 +191,7 @@
                                                 @if (User.Identity.IsAuthenticated)
                                                 {
 
-                                                    <a data-placement="top" style="cursor: pointer"  data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
+                                                    <a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
 
                                                 }
                                             </td>
@@ -332,7 +313,7 @@
                             }
                         </div>
                         <div class="col-md-12" style="background-color:powderblue;">
-                            <h4>Bowling</h4>
+                            <h4>@ViewBag.HomeTeam Bowling</h4>
                         </div>
                         @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
                         {
@@ -391,7 +372,7 @@
                                                 @if (User.Identity.IsAuthenticated)
                                                 {
 
-                                                    <a data-placement="top" style="cursor: pointer"  data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
+                                                    <a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
 
                                                 }
                                             </td>
@@ -496,6 +477,25 @@
             </div>
             <!-- nav-tabs-custom -->
         </div>
+    </div>
+    <div class="footer">
+        <ul class="list-inline">
+            <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
+            @if (User.Identity.IsAuthenticated)
+            {
+
+                if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any() || Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any() || Model.TeamScoreCard != null && Model.TeamScoreCard.Any() || Model.FallOfWicket != null && Model.FallOfWicket.Any())
+                {
+                    <li><a class="btn btn-primary" asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Edit</a></li>
+                }
+                else
+                {
+                    <li><a class="btn btn-primary" style="width: 100%" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Add</a></li>
+
+                }
+
+            }
+        </ul>
     </div>
 </div>
 <div id="PlayerScoreModal" class="modal fade" role="dialog">

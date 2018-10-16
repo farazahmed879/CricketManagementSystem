@@ -486,6 +486,7 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
+                <div id="snackbar"></div>
             </div>
         </section>
     </div>
@@ -520,7 +521,12 @@
         const openModal = (id) => {
             document.getElementById('Modal_PlayerId').value = document.getElementById(`Grid_${id}__PlayerId`).value;
         };
-
+        function myFunction(data) {
+            var snackBar = document.getElementById('snackbar');
+            snackBar.textContent = data;
+            snackBar.className = "show";
+            setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+        }
 
         function HomeTeam() {
             try {
@@ -550,11 +556,11 @@
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (response) {
-                    alert("Record is updated successfully");
+                }).done(function (data) {
+                    myFunction(data);
                     $('#HomeTeamBtn').attr('disabled', true);
-                }).fail(function () {
-                    alert("Record can not be updated");
+                }).fail(function (data) {
+                    myFunction(data);
                 });
 
 
@@ -563,7 +569,6 @@
             }
 
         }
-
         function OpponentTeam() {
             try {
 
@@ -591,11 +596,11 @@
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (response, status, jqXhr) {
-                    alert("Record is updated successfully");
+                }).done(function (data) {
+                    myFunction(data);
                     $('#OpponentTeamBtn').attr('disabled', true);
-                }).fail(function () {
-                    alert("Record can not be updated");
+                }).fail(function (data) {
+                    myFunction(data);
                 });
 
             } catch (ex) {
@@ -603,7 +608,6 @@
             }
 
         }
-
         function TeamScoreData() {
             try {
                 var formData = $("#MatchSummary").serializeArray();
@@ -626,12 +630,12 @@
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (response) {
-                    alert("Record is updated successfully");
+                }).done(function (data) {
+                    myFunction(data);
                     $('#TeamScorebtn').attr('disabled', true);
 
-                }).fail(function () {
-                    alert("Record can not be inserted");
+                }).fail(function (data) {
+                    myFunction(data);
                 });
 
             } catch (ex) {
@@ -661,11 +665,11 @@
                         'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                     },
                     method: "POST"
-                }).done(function (response) {
-                    alert("Record is updated successfully");
+                }).done(function (data) {
+                    myFunction(data);
                     windows.location = "/Matches/Index";
-                }).fail(function () {
-                    alert("Record can not be inserted");
+                }).fail(function (data) {
+                    myFunction(data);
                 });
 
             } catch (ex) {

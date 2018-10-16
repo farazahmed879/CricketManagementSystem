@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using WebApp.ViewModels;
 using AutoMapper.QueryableExtensions;
+using WebApp.Helper;
 
 namespace WebApp.Controllers
 {
@@ -73,7 +74,7 @@ namespace WebApp.Controllers
             return View(tournament);
         }
 
-        // GET: Tournaments/Create
+        // GET: Tournament/Create
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create()
         {
@@ -81,9 +82,10 @@ namespace WebApp.Controllers
             return View();
         }
 
-        // POST: Tournaments/Create
+        // POST: Tournament/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Tournament/Create")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Create(Tournamentdto tournament)
         {
@@ -94,9 +96,9 @@ namespace WebApp.Controllers
                 tournamentModel.UserId = users.Id;
                 _context.Tournaments.Add(tournamentModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Json(ResponseHelper.Success());
             }
-            return View(tournament);
+            return Json(ResponseHelper.UnSuccess());
         }
 
         // GET: Tournaments/Edit/5
@@ -123,13 +125,14 @@ namespace WebApp.Controllers
         // POST: Tournaments/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Tournament/Edit")]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Edit(int id, Tournamentdto tournament)
+        public async Task<IActionResult> Edit(Tournamentdto tournament)
         {
-            if (id != tournament.TournamentId)
-            {
-                return NotFound();
-            }
+            //if (id != tournament.TournamentId)
+            //{
+            //    return Json(ResponseHelper.UpdateUnSuccess());
+            //}
 
             if (ModelState.IsValid)
             {
@@ -152,9 +155,9 @@ namespace WebApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Json(ResponseHelper.UpdateSuccess());
             }
-            return View(tournament);
+            return Json(ResponseHelper.UpdateUnSuccess());
         }
 
         // GET: Tournaments/Delete/5

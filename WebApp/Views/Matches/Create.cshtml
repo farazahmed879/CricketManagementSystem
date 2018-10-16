@@ -135,23 +135,14 @@
                     </div>
                 </div>
             </div>
-            <ul class="list-inline pull-right">
-                <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
-                <li><input type="button" value="Finish" class="btn btn-primary" onclick="return MatchCreate(this.form)"></li>
-            </ul>
-            @*<div class="col-md-6">
-                    <div class="form-group">
-                        <input type="submit" value="Create" onclick="return FallOfWicketData(this.form)" class="btn btn-primary" />
-                    </div>
-                </div>*@
         </form>
     </div>
-    <meta name="viewport" content="width=device-width,  initial-scale=1">
     <div id="snackbar"></div>
     <div class="footer">
-        <div class="container text-center">
-            <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
-        </div>
+        <ul class="list-inline">
+            <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
+            <li><input type="button" value="Save" class="btn btn-primary" onclick="return MatchCreate(this.form)"></li>
+        </ul>
     </div>
 </div>
 
@@ -228,8 +219,8 @@
                 }).done(function (data) {
                     window.location = '/Matches/Index'
                     myFunction(data);
-                }).fail(function () {
-
+                }).fail(function (data) {
+                    myFunction(data);
                 });
 
 
@@ -259,12 +250,5 @@
             readURL(this);
         });
 
-                                                                                                                                                //$('.datepicker').datepicker();
-
-
-                                                                                                                                                //$.fn.datepicker.defaults.format = "mm/dd/yyyy";
-                                                                                                                                                //$('.datepicker').datepicker({
-                                                                                                                                                //    startDate: '-3d'
-                                                                                                                                                //});
     </script>
 }

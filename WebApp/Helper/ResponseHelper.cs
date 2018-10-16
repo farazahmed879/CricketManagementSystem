@@ -11,7 +11,46 @@ namespace WebApp.Helper
         {
             try
             {
-                return "Data has been Inserted";
+                return "Record has been inserted";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                throw;
+            }
+        }
+        public static string UnSuccess()
+        {
+            try
+            {
+                return "Record could not be Inserted";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                throw;
+            }
+        }
+        public static string UpdateSuccess()
+        {
+            try
+            {
+                return "Record has been updated";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                throw;
+            }
+        }
+        public static string UpdateUnSuccess()
+        {
+            try
+            {
+                return "Record could not be updated";
             }
             catch (Exception e)
             {

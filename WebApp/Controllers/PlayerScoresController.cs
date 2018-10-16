@@ -8,6 +8,7 @@ using CricketApp.Data;
 using CricketApp.Domain;
 using WebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using WebApp.Helper;
 
 namespace WebApp.Controllers
 {
@@ -276,10 +277,10 @@ namespace WebApp.Controllers
                 ));
 
                 await _context.SaveChangesAsync();
-                return Ok();
+                return Json(ResponseHelper.Success());
                 // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }
-            return BadRequest(ModelState);
+            return Json(ResponseHelper.UnSuccess());
         }
 
         [HttpPost]
@@ -303,10 +304,10 @@ namespace WebApp.Controllers
                 ));
 
                 await _context.SaveChangesAsync();
-                return Ok();
+                return Json(ResponseHelper.Success());
                 // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }
-            return BadRequest(ModelState);
+            return Json(ResponseHelper.UnSuccess());
         }
 
         [HttpPost]
@@ -335,10 +336,10 @@ namespace WebApp.Controllers
                 ));
 
                 await _context.SaveChangesAsync();
-                return Ok();
+                return Json(ResponseHelper.Success());
                 // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }
-            return BadRequest(ModelState);
+            return Json(ResponseHelper.UnSuccess());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -368,10 +369,10 @@ namespace WebApp.Controllers
                 }
 
                 await _context.SaveChangesAsync();
-                return Ok();
+                return Json(ResponseHelper.UpdateSuccess());
             }
             else
-                return BadRequest(ModelState);
+                return Json(ResponseHelper.UpdateUnSuccess());
 
         }
         [HttpPost]
@@ -407,10 +408,10 @@ namespace WebApp.Controllers
                 }
 
                 await _context.SaveChangesAsync();
-                return Ok();
+                return Json(ResponseHelper.UpdateSuccess());
             }
             else
-                return BadRequest(ModelState);
+                return Json(ResponseHelper.UpdateUnSuccess());
 
         }
 
@@ -665,10 +666,10 @@ namespace WebApp.Controllers
                     await _context.SaveChangesAsync();
 
                 }
-                return Ok();
+                return Json(ResponseHelper.UpdateSuccess());
                 // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }
-            return BadRequest(ModelState);
+            return Json(ResponseHelper.UpdateUnSuccess());
         }
 
 

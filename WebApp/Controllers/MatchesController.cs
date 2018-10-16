@@ -207,7 +207,7 @@ namespace WebApp.Controllers
                 await _context.SaveChangesAsync();
                 return Json(ResponseHelper.Success());
             }
-            return View(match);
+            return Json(ResponseHelper.UnSuccess());
         }
         public static byte[] ReadStream(Stream input)
         {
