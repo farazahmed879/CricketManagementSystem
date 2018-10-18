@@ -103,9 +103,7 @@
                             }
                             else
                             {
-                                <div class="btn-group">
-                                    <a data-placement="top" class="btn btn-primary" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayerProfile" asp-route-teamId="@item.TeamId"><i class="fas fa-users">Players</i></a>
-                                </div>
+                                <a data-placement="top"  data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayerProfile" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-helmet"></i></a>
 
                             }
                         </td>
@@ -253,22 +251,22 @@
                 window.location = '/Teams/Create'
             });
         });
-                                                                                                                    //async function FilterData() {
-                                                                                                                    //    var formElement = document.getElementById("Filters");
-                                                                                                                    //    var formData = new FormData(formElement);
+                                                                                                                        //async function FilterData() {
+                                                                                                                        //    var formElement = document.getElementById("Filters");
+                                                                                                                        //    var formData = new FormData(formElement);
 
-                                                                                                                    //    var zone = formData.get("zone")
-                                                                                                                    //    var city = formData.get("city")
+                                                                                                                        //    var zone = formData.get("zone")
+                                                                                                                        //    var city = formData.get("city")
 
 
-                                                                                                                    //    // var header = new Headers();
-                                                                                                                    //    //header.append("content-type");
+                                                                                                                        //    // var header = new Headers();
+                                                                                                                        //    //header.append("content-type");
 
-                                                                                                                    //    const response = await fetch(`/Teams/Index?zone=${zone}&city=${city}`, {
-                                                                                                                    //        credentials: 'same-origin'
-                                                                                                                    //    });
+                                                                                                                        //    const response = await fetch(`/Teams/Index?zone=${zone}&city=${city}`, {
+                                                                                                                        //        credentials: 'same-origin'
+                                                                                                                        //    });
 
-                                                                                                                    //}
+                                                                                                                        //}
 
     </script>
 

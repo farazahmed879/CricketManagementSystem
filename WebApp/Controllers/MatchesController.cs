@@ -105,16 +105,32 @@ namespace WebApp.Controllers
 
 
         // GET: Matches/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? matchId)
         {
             ViewBag.Name = "Match Detail";
-            if (id == null)
+            if (matchId == null)
             {
                 return NotFound();
             }
 
             var match = await _context.Matches
-                .SingleOrDefaultAsync(m => m.MatchId == id);
+                .Select(i => new Matchdto
+                {
+                    MatchId = i.MatchId,
+                    HomeTeam = i.HomeTeam.Team_Name,
+                    OppponentTeam = i.OppponentTeam.Team_Name,
+                    DateOfMatch = i.DateOfMatch.HasValue ? i.DateOfMatch.Value.ToShortDateString() : "",
+                    GroundName = i.GroundName,
+                    Season = i.Season,
+                    MatchType = i.MatchType.MatchTypeName,
+                    Tournament = i.Tournament.TournamentName,
+                    Series = i.MatchSeries.Name,
+                    MatchOvers = i.MatchOvers,
+                    Place = i.Place,
+                    Result = i.Result
+                   
+                })
+                .SingleOrDefaultAsync(m => m.MatchId == matchId);
             if (match == null)
             {
                 return NotFound();
@@ -253,7 +269,25 @@ namespace WebApp.Controllers
 
             var match = await _context.Matches
                 .AsNoTracking()
-                .ProjectTo<Matchdto>(_mapper.ConfigurationProvider)
+                .Select(i => new Matchdto
+                {
+                    MatchId = i.MatchId,
+                    GroundName = i.GroundName,
+                    MatchImage = i.MatchImage,
+                    MatchLogo = i.MatchLogo,
+                    MatchOvers = i.MatchOvers,
+                    MatchSeriesId = i.MatchSeriesId,
+                    MatchTypeId = i.MatchTypeId,
+                    HomeTeamId = i.HomeTeamId,
+                    OppponentTeamId = i.OppponentTeamId,
+                    DateOfMatch = i.DateOfMatch.HasValue ? i.DateOfMatch.Value.ToShortDateString() : "",
+                    Place = i.Place,
+                    Result = i.Result,
+                    Season = i.Season,
+                    TournamentId = i.TournamentId,
+
+
+                })
                 .SingleOrDefaultAsync(m => m.MatchId == id);
             if (match == null)
             {
@@ -266,47 +300,29 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Edit(int id, Matchdto match)
+        public async Task<IActionResult> Edit(Matchdto match)
         {
-            if (id != match.MatchId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                var form = Request.Form;
+                byte[] fileBytes = null;
+                if (match.MatchImage != null)
                 {
-                    var form = Request.Form;
-                    byte[] fileBytes = null;
-                    if (match.MatchImage != null)
+                    using (var stream = match.MatchImage.OpenReadStream())
                     {
-                        using (var stream = match.MatchImage.OpenReadStream())
-                        {
-                            fileBytes = ReadStream(stream);
+                        fileBytes = ReadStream(stream);
 
-                        }
-                    }
-                    var users = await _userManager.GetUserAsync(HttpContext.User);
-                    match.UserId = users.Id;
-                    match.MatchLogo = fileBytes ?? null;
-                    _context.Update(_mapper.Map<Match>(match));
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MatchExists(match.MatchId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                var users = await _userManager.GetUserAsync(HttpContext.User);
+                match.UserId = users.Id;
+                match.MatchLogo = fileBytes ?? null;
+                _context.Update(_mapper.Map<Match>(match));
+                await _context.SaveChangesAsync();
+
+                return Json(ResponseHelper.UpdateSuccess());
             }
-            return View(match);
+            return Json(ResponseHelper.UpdateUnSuccess());
         }
 
 

@@ -29,6 +29,7 @@ namespace WebApp.ViewModels
         public string OppponentTeam { get; set; }
         public string HomeTeam { get; set; }
         public string Tournament { get; set; }
+        public string Series { get; set; }
         [Column(TypeName = "varbinary(max)")]
         public byte[] MatchLogo { get; set; }
         [NotMapped]

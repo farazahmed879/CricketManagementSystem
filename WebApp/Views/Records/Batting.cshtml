@@ -16,29 +16,29 @@
             <div class="panel-body">
                 <form class="form-inline" role="form" id="Filters">
                     <div class="row">
-                        <div class="col-xs-6 col-md-4">
+                        <div class="col-xs-6 col-md-3">
                             <label>Home Team</label>
                             <select id="homeTeamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
-                                <option value="" selected>--Select--</option>
+                                <option value="">--Select--</option>
                             </select>
                         </div>
-                        <div class="col-xs-6 col-md-4">
+                        <div class="col-xs-6 col-md-3">
                             <label>Season</label>
                             <select id="season" name="season" asp-items="ViewBag.Season" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
-                                <option value="" selected>--Select--</option>
+                                <option value="">--Select--</option>
                             </select>
                         </div>
-                        <div class="col-xs-6 col-md-4">
+                        <div class="col-xs-6 col-md-3">
                             <label>Overs</label>
                             <select id="overs" name="overs" asp-items="ViewBag.Overs" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
-                                <option value="" selected>--Select--</option>
+                                <option value="">--Select--</option>
                             </select>
                         </div>
 
-                        <div class="col-xs-6 col-md-4">
+                        <div class="col-xs-6 col-md-3">
                             <label>Position</label>
                             <select id="position" name="position" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
-                                <option value="" selected>--Select--</option>
+                                <option value="">--Select--</option>
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -53,30 +53,50 @@
                                 <option>12</option>
                             </select>
                         </div>
-                        <div class="col-xs-6 col-md-4">
+
+                        <div class="col-xs-6 col-md-3">
+                            <label>Player Role</label>
+                            <select id="playerRoleId" name="playerRoleId" asp-items="ViewBag.PlayerRole" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-6 col-md-3">
                             <label>Match Type</label>
                             <select id="matchTypeId" name="matchTypeId" asp-items="ViewBag.MatchType" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
-                                <option value="" selected>--Select--</option>
+                                <option value="">--Select--</option>
                             </select>
                         </div>
 
-                        <div class="col-xs-6 col-md-4">
+                        <div class="col-xs-6 col-md-3">
                             <label>Tournament</label>
-                            <select id="tournamenId" name="tournamenId" asp-items="ViewBag.TournamentId" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
-                                <option value="" selected>--Select--</option>
+                            <select id="tournamentId" name="tournamentId" asp-items="ViewBag.Tournament" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <label>Series</label>
+                            <select id="matchSeriesId" name="matchSeriesId" asp-items="ViewBag.Matchseries" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                <option value="">--Select--</option>
                             </select>
                         </div>
 
-                        <div class="col-xs-6 col-md-4" style="margin-top: 1em">
-                            <div class="form-group">
-                                <button type="button" id="filterdata" class="btn btn-primary filter-col">
-                                    <span><i class="fas fa-search"></i></span> Search
-                                </button>
-                            </div>
-                        </div>
+                        @*<div class="col-xs-6 col-md-4" style="margin-top: 1em">
+                                <div class="form-group">
+                                    <button type="button" id="filterdata" class="btn btn-primary filter-col">
+                                        <span><i class="fas fa-search"></i></span> Search
+                                    </button>
+                                </div>
+                            </div>*@
                     </div>
 
                 </form>
+                <div class="footer" style="margin-top : .5em">
+                    <ul class="list-inline">
+                        <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
+                        <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
+                    </ul>
+                </div>
             </div>
 
         </div>
@@ -122,35 +142,53 @@
             <tbody id="myTable">
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PlayerName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalMatch)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalBatRuns)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BattingAverage)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StrikeRate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalFours)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalSixes)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOf50s)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOf100s)
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PlayerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalMatch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalBatRuns)
+                        </td>
+                        @if (string.IsNullOrEmpty(item.BattingAverage) || item.BattingAverage == "0")
+                        {
+                            <td>
+                                N/A
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(model => item.BattingAverage)
+                            </td>
+                        }
+                        @if (string.IsNullOrEmpty(item.StrikeRate) || item.StrikeRate == "0")
+                        {
+                            <td>
+                                N/A
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(model => item.StrikeRate)
+                            </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalFours)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalSixes)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumberOf50s)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumberOf100s)
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -190,7 +228,7 @@
             });
         });
 
-  
+
 
 
         $(function () {
@@ -198,22 +236,16 @@
                 try {
                     var formelement = document.getElementById("Filters");
                     var formData = new FormData(formelement);
-
-                    //const param = new window.URL(window.location.href).searchParams;
                     var homeTeamId = document.getElementById("homeTeamId").value
                     var season = formData.get("season")
                     var overs = formData.get("overs")
                     var position = formData.get("position")
+                    var playerRoleId = document.getElementById("playerRoleId").value
                     var matchTypeId = document.getElementById("matchTypeId").value
-                    var tournamentId = formData.get("tournamenId")
+                    var tournamentId = formData.get("tournamentId")
+                    var matchSeriesId = document.getElementById("matchSeriesId").value
 
-                    //var opponentTeamId = formData.get("opponentTeamId")
-
-                    // var header = new headers();
-                    //header.append("content-type");
-                    //
-
-                    const response = await fetch(`/Records/Batting?teamId=${homeTeamId}&overs=${overs}&position=${position}&matchTypeId=${matchTypeId}&tournamentId=${tournamentId}&isApi=true`, {
+                    const response = await fetch(`/Records/Batting?teamId=${homeTeamId}&season=${season}&overs=${overs}&position=${position}&playerRoleId=${playerRoleId}&matchTypeId=${matchTypeId}&tournamentId=${tournamentId}&matchSeriesId=${matchSeriesId}&isApi=true`, {
                         method: "POST",
                         //     body: JSON.stringify(model),
                         credentials: 'same-origin'
@@ -247,6 +279,26 @@
                     console.error(ex);
                 }
             });
+        });
+        $("#tournamentId").attr("disabled", true);
+        $("#matchSeriesId").attr("disabled", true);
+        $("#matchTypeId").change(function () {
+            if ($('#matchTypeId').val() === "2") {
+                $("#matchSeriesId").val('').trigger('change');
+                $("#tournamentId").attr("disabled", false);
+                $("#matchSeriesId").attr("disabled", true);
+            }
+            else if ($('#matchTypeId').val() === "3") {
+                $("#matchSeriesId").attr("disabled", false);
+                $("#tournamentId").attr("disabled", true);
+                $("#tournamentId").val('').trigger('change');
+            }
+            else if ($('#matchTypeId').val() === "1") {
+                $("#tournamentId").attr("disabled", true);
+                $("#matchSeriesId").attr("disabled", true);
+                $("#tournamentId").val('').trigger('change');
+                $("#matchSeriesId").val('').trigger('change');
+            }
         });
 
 

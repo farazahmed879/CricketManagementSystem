@@ -32,7 +32,8 @@ namespace WebApp.Controllers
             return View();
         }
         // GET: Batting
-        public async Task<IActionResult> Batting(int? teamId, int? season, int? overs, int? position, int? matchTypeId, int? tournamentId, int? userId, bool isApi)
+        public async Task<IActionResult> Batting(int? teamId, int? season, int? overs,
+            int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Players Records";
@@ -58,14 +59,24 @@ namespace WebApp.Controllers
                 .Select(i => new { i.TeamId, i.Team_Name })
                   , "TeamId", "Team_Name", teamId);
 
-            ViewBag.TournamentId = new SelectList(_context.Tournaments
+            ViewBag.Tournament = new SelectList(_context.Tournaments
                 .AsNoTracking()
                 .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+               .AsNoTracking()
+               .Where(i => (!userId.HasValue || i.UserId == users.Id))
+               .Select(i => new { i.MatchSeriesId, i.Name })
+               , "MatchSeriesId", "Name");
 
-            ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+                .AsNoTracking()
+                , "PlayerRoleId", "Name");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType
+                .AsNoTracking(), "MatchTypeId", "MatchTypeName");
 
             try
             {
@@ -79,7 +90,9 @@ namespace WebApp.Controllers
                         paramOvers = overs,
                         paramPosition = position,
                         paramMatchType = matchTypeId,
-                        paramTournamentId = tournamentId
+                        paramTournamentId = tournamentId,
+                        paramMatchseriesId = matchseriesId,
+                        paramPlayerRoleId = playerRoleId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<BattingRecorddto>();
@@ -103,7 +116,7 @@ namespace WebApp.Controllers
 
         }
         // GET: Bowling
-        public async Task<IActionResult> Bowling(int? teamId, int? season, int? overs, int? position, int? matchTypeId, int? tournamentId, int? userId, bool isApi)
+        public async Task<IActionResult> Bowling(int? teamId, int? season, int? overs, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Players Records";
@@ -134,7 +147,10 @@ namespace WebApp.Controllers
                 .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
-
+            
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+              .AsNoTracking()
+              , "PlayerRoleId", "Name");
 
             ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
 
@@ -148,9 +164,10 @@ namespace WebApp.Controllers
                         paramTeamId = teamId,
                         paramSeason = season,
                         paramOvers = overs,
-                        paramPosition = position,
                         paramMatchType = matchTypeId,
-                        paramTournamentId = tournamentId
+                        paramTournamentId = tournamentId,
+                        paramMatchseriesId = matchseriesId,
+                        paramPlayerRoleId = playerRoleId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<BowlingRecorddto>();

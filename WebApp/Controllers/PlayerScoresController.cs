@@ -36,6 +36,11 @@ namespace WebApp.Controllers
                 .Where(i => i.TeamId == oppTeamId)
                 .Select(i => i.Team_Name)
                 .Single();
+            //ViewBag.HomeTeamOut = _context.PlayerScores
+            //    .AsNoTracking()
+            //    .Where(i => i.TeamId == homeTeamId && i.MatchId == matchId)
+            //    .Count(i => i.HowOutId)
+            //    .Single();
 
 
             ViewBag.HomeTeam = _context.Teams
@@ -43,6 +48,24 @@ namespace WebApp.Controllers
                .Where(i => i.TeamId == homeTeamId)
                .Select(i => i.Team_Name)
                .Single();
+
+            ViewBag.HomeTeamScore = _context.TeamScores
+              .AsNoTracking()
+              .Where(i => i.TeamId == homeTeamId && i.MatchId == matchId)
+              .Select(i => i.TotalScore).SingleOrDefault();
+
+            ViewBag.OppTeamScore = _context.TeamScores
+                .AsNoTracking()
+                .Where(i => i.TeamId == oppTeamId && i.MatchId == matchId)
+                .Select(i => i.TotalScore).SingleOrDefault();
+
+            ViewBag.HomeTeamOut = _context.PlayerScores
+                .AsNoTracking()
+                .Count(i => i.HowOutId != 7 && i.TeamId == oppTeamId && i.MatchId == matchId);
+
+            ViewBag.OpponenetTeamOut = _context.PlayerScores
+               .AsNoTracking()
+               .Count(i => i.HowOutId != 7 && i.TeamId == oppTeamId && i.MatchId == matchId);
 
             scoreDto.HomeTeamScoreCard = _context.PlayerScores
                 .AsNoTracking()
@@ -110,15 +133,7 @@ namespace WebApp.Controllers
                .OrderBy(i => i.Position)
                .ToList();
 
-            ViewBag.HomeTeamScore = _context.TeamScores
-                .AsNoTracking()
-                .Where(i => i.TeamId == homeTeamId && i.MatchId == matchId)
-                .Select(i => i.TotalScore).SingleOrDefault();
 
-            ViewBag.OppTeamScore = _context.TeamScores
-                .AsNoTracking()
-                .Where(i => i.TeamId == oppTeamId && i.MatchId == matchId)
-                .Select(i => i.TotalScore).SingleOrDefault();
 
             scoreDto.TeamScoreCard = _context.TeamScores
                 .AsNoTracking()

@@ -59,6 +59,32 @@ namespace WebApp.Helper
                 throw;
             }
         }
+        public static string DeleteSuccess()
+        {
+            try
+            {
+                return "Record is deleted successfully";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                throw;
+            }
+        }
+        public static string DeleteUnSuccess()
+        {
+            try
+            {
+                return "Record could not be deleted";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                throw;
+            }
+        }
 
     }
 }

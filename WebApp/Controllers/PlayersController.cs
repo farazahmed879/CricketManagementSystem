@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using WebApp.Helper;
 
 namespace WebApp.Controllers
 {
@@ -73,10 +74,6 @@ namespace WebApp.Controllers
                             PlayerLogo = i.PlayerLogo,
                             DOB = i.DOB.HasValue ? i.DOB.Value.ToShortDateString() : "",
                             Team = i.Team.Team_Name,
-                            //   PlayerRoleId = i.PlayerRoleId,
-                            //   BowlingStyleId = i.BowlingStyleId,
-                            // BattingStyleId = i.BattingStyleId,
-                            //TeamId = i.TeamId
 
                         })
                           .OrderByDescending(i => i.PlayerId)
@@ -103,7 +100,7 @@ namespace WebApp.Controllers
                                TeamLogo = i.TeamLogo,
                                Zone = i.Zone,
                                Place = i.Place,
-                               City = i.City,                      
+                               City = i.City,
                                TeamPlayers = i.Players != null && i.Players.Any() ?
                                                i.Players.Select(o => new TeamPlayersdto
                                                {
@@ -176,8 +173,6 @@ namespace WebApp.Controllers
         }
 
         // POST: Players/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
@@ -201,10 +196,10 @@ namespace WebApp.Controllers
                 player.PlayerLogo = fileBytes ?? null;
                 _context.Players.Add(_mapper.Map<Player>(player));
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Json(ResponseHelper.Success());
             }
 
-            return View(player);
+            return Json(ResponseHelper.UnSuccess());
 
         }
 
@@ -253,7 +248,23 @@ namespace WebApp.Controllers
 
             var player = await _context.Players
                 .AsNoTracking()
-                .ProjectTo<Playersdto>(_mapper.ConfigurationProvider)
+                .Select(i => new Playersdto
+                {
+                    PlayerId = i.PlayerId,
+                    Player_Name = i.Player_Name,
+                    PlayerLogo = i.PlayerLogo,
+                    PlayerRoleId = i.PlayerRoleId,
+                    BattingStyleId = i.BattingStyleId,
+                    BowlingStyleId = i.BowlingStyleId,
+                    Contact = i.Contact,
+                    CNIC = i.CNIC,
+                    DOB = i.DOB.HasValue ? i.DOB.Value.ToShortDateString() : "",
+                    Address = i.Address,
+                    IsGuestPlayer = i.IsGuestPlayer,
+                    IsDeactivated = i.IsDeactivated,
+                    TeamId = i.TeamId
+
+                })
                 .SingleOrDefaultAsync(m => m.PlayerId == id);
             if (player == null)
             {
@@ -263,49 +274,28 @@ namespace WebApp.Controllers
         }
 
         // POST: Players/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Edit(int id, Playersdto player)
+        public async Task<IActionResult> Edit(Playersdto player)
         {
-            if (id != player.PlayerId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                var fokrm = Request.Form;
+                byte[] fileBytes = null;
+                if (player.PlayerImage != null)
                 {
-                    var fokrm = Request.Form;
-                    byte[] fileBytes = null;
-                    if (player.PlayerImage != null)
+                    using (var stream = player.PlayerImage.OpenReadStream())
                     {
-                        using (var stream = player.PlayerImage.OpenReadStream())
-                        {
-                            fileBytes = ReadStream(stream);
-                        }
-                    }
-                    player.PlayerLogo = fileBytes ?? null;
-                    _context.Players.Update(_mapper.Map<Player>(player));
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PlayerExists(player.PlayerId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        fileBytes = ReadStream(stream);
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                player.PlayerLogo = fileBytes ?? null;
+                _context.Players.Update(_mapper.Map<Player>(player));
+                await _context.SaveChangesAsync();
+                return Json(ResponseHelper.UpdateSuccess());
             }
-            return View(player);
+            return Json(ResponseHelper.UpdateUnSuccess());
         }
 
 
@@ -348,7 +338,7 @@ namespace WebApp.Controllers
                 throw;
             }
         }
-     
+
 
 
 

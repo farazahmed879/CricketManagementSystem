@@ -96,47 +96,47 @@
                 </div>
             </div>
             @*<div class="col-md-3">
-                <div class="box box-success box-solid">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">New Feed</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <div class="box box-success box-solid">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">New Feed</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                            <!-- /.box-tools -->
                         </div>
-                        <!-- /.box-tools -->
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            The body of the box
+                        </div>
+                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        The body of the box
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-            </div>*@
+                    <!-- /.box -->
+                </div>*@
 
             @*<div class="col-md-3">
-            <div class="box box-warning box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">New Feed</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
+                    <div class="box box-warning box-solid">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">New Feed</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            The body of the box
+                        </div>
+                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box-tools -->
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    The body of the box
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-        </div>*@
+                    <!-- /.box -->
+                </div>*@
 
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="box box-warning box-solid">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Last Match Summary</h3>
+                        <h3 class="box-title">@Model.Summary</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
@@ -147,14 +147,13 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="form-inline">
-                            <div class="col-md-12">
-
-                                <div class="col-md-4">
+                            <ul class="list-inline">
+                                <li>
                                     @{
                                         if (Model.HomeTeamTeamLogo != null)
                                         {
                                             var base64 = Model.HomeTeamTeamLogo == null || !Model.HomeTeamTeamLogo.Any() ? "" : Convert.ToBase64String(Model.HomeTeamTeamLogo);
-                                            <div class="img-responsive" id="Img" style='margin-bottom: 1em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                                            <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
 
                                         }
                                         else
@@ -163,19 +162,20 @@
 
                                         }
                                     }
-                                </div>
-                                <div class="col-md-8">
-                                    <strong> @Model.HomeTeam </strong> @Model.HomeTeamScore/@Model.HomeTeamWickets
-                                </div>
-                            </div>
-                            <div class="col-md-12">
+                                </li>
+                                <li>  <strong> @Model.HomeTeam </strong> @Model.HomeTeamScore/@Model.HomeTeamWickets</li>
 
-                                <div class="col-md-4">
+
+
+                            </ul>
+                            <ul class="list-inline">
+
+                                <li>
                                     @{
                                         if (Model.OpponentTeamLogo != null)
                                         {
                                             var base64 = Model.OpponentTeamLogo == null || !Model.OpponentTeamLogo.Any() ? "" : Convert.ToBase64String(Model.OpponentTeamLogo);
-                                            <div class="img-responsive" id="Img" style='margin-bottom: 1em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                                            <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
 
                                         }
                                         else
@@ -184,13 +184,13 @@
 
                                         }
                                     }
-                                </div>
-                                <div class="col-md-8">
+                                </li>
+                                <li>
                                     <strong> @Model.OppponentTeam </strong> @Model.OpponentsTeamScore/@Model.OppenentTeamWickets
-                                </div>
-                            </div>
+                                </li>
+                            </ul>
                             <div class="col-md-12">
-                                <p>@Model.Summary</p>
+                                <p></p>
                             </div>
 
                             <!-- /.box-body -->

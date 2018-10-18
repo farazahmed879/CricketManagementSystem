@@ -129,59 +129,24 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(Tournamentdto tournament)
         {
-            //if (id != tournament.TournamentId)
-            //{
-            //    return Json(ResponseHelper.UpdateUnSuccess());
-            //}
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var users = await _userManager.GetUserAsync(HttpContext.User);
-                    var tournamentModal = _mapper.Map<Tournament>(tournament);
-                    tournamentModal.UserId = users.Id;
-                    _context.Tournaments.Update(tournamentModal);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TournamentExists(tournament.TournamentId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+
+                var users = await _userManager.GetUserAsync(HttpContext.User);
+                var tournamentModal = _mapper.Map<Tournament>(tournament);
+                tournamentModal.UserId = users.Id;
+                _context.Tournaments.Update(tournamentModal);
+                await _context.SaveChangesAsync();
+
                 return Json(ResponseHelper.UpdateSuccess());
             }
             return Json(ResponseHelper.UpdateUnSuccess());
         }
 
-        // GET: Tournaments/Delete/5
-
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tournament = await _context.Tournaments
-                .SingleOrDefaultAsync(m => m.TournamentId == id);
-            if (tournament == null)
-            {
-                return NotFound();
-            }
-
-            return View(tournament);
-        }
 
         // POST: Tournaments/Delete/5
         [Authorize(Roles = "Club Admin,Administrator")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int tournamentId)
         {
             var tournament = await _context.Tournaments.SingleOrDefaultAsync(m => m.TournamentId == tournamentId);

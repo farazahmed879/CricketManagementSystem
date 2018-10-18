@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using WebApp.Helper;
 
 namespace WebApp.Controllers
 {
@@ -25,7 +26,7 @@ namespace WebApp.Controllers
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
 
-        public PlayerPastRecordController(CricketContext context, 
+        public PlayerPastRecordController(CricketContext context,
             UserManager<IdentityUser<int>> userManager,
             IMapper mapper)
         {
@@ -34,14 +35,8 @@ namespace WebApp.Controllers
             _mapper = mapper;
         }
 
-        // GET: PlayerPastRecord/Create/5
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public IActionResult Create(int? playerId)
-        {
-            return View();
-        }
 
-        // GET: PlayerPastRecord/Edit/5
+        // GET: PlayerPastRecord
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> PastRecord(int? playerId)
         {
@@ -53,9 +48,43 @@ namespace WebApp.Controllers
 
             var playerPastRecord = await _context.PlayerPastRecord
                 .AsNoTracking()
-                .ProjectTo<PlayerPastRecorddto>(_mapper.ConfigurationProvider)
+                .Select(i => new PlayerPastRecorddto
+                {
+                    PlayerPastRecordId = i.PlayerPastRecordId,
+                    PlayerId = i.PlayerId,
+                    TotalMatch = i.TotalMatch,
+                    TotalInnings = i.TotalInnings,
+                    TotalBatRuns = i.TotalBatRuns,
+                    TotalBatBalls = i.TotalBatBalls,
+                    TotalFours = i.TotalFours,
+                    TotalSixes = i.TotalSixes,
+                    NumberOf50s = i.NumberOf50s,
+                    NumberOf100s = i.NumberOf100s,
+                    TotalNotOut = i.TotalNotOut,
+                    GetBowled = i.GetBowled,
+                    GetCatch = i.GetCatch,
+                    GetHitWicket = i.GetHitWicket,
+                    GetLBW = i.GetLBW,
+                    GetRunOut = i.GetRunOut,
+                    GetStump = i.GetStump,
+                    TotalOvers = i.TotalOvers,
+                    TotalBallRuns = i.TotalBallRuns,
+                    TotalWickets = i.TotalWickets,
+                    TotalMaidens = i.TotalMaidens,
+                    FiveWickets = i.FiveWickets,
+                    DoBowled = i.DoBowled,
+                    DoCatch = i.DoCatch,
+                    DoHitWicket = i.DoHitWicket,
+                    DoLBW = i.DoLBW,
+                    DoStump = i.DoStump,
+                    OnFieldCatch = i.OnFieldCatch,
+                    OnFieldRunOut = i.OnFieldRunOut,
+                    OnFieldStump = i.OnFieldStump
+
+
+                })
                 .SingleOrDefaultAsync(m => m.PlayerId == playerId);
-            if(playerPastRecord == null)
+            if (playerPastRecord == null)
             {
                 playerPastRecord = new PlayerPastRecorddto();
             }
@@ -63,35 +92,21 @@ namespace WebApp.Controllers
         }
 
         // POST: Players/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> PastRecordSave(int id, PlayerPastRecorddto playerPastRecord)
+        public async Task<IActionResult> PastRecordSave(PlayerPastRecorddto playerPastRecord)
         {
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.PlayerPastRecord.Update(_mapper.Map<PlayerPastRecord>(playerPastRecord));
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PlayerExists(playerPastRecord.PlayerId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index", "Players");
+
+                _context.PlayerPastRecord.Update(_mapper.Map<PlayerPastRecord>(playerPastRecord));
+                await _context.SaveChangesAsync();
+
+                return Json(ResponseHelper.UpdateSuccess());
             }
-            return View(playerPastRecord);
+            return Json(ResponseHelper.UpdateUnSuccess());
         }
 
         private bool PlayerExists(int id)

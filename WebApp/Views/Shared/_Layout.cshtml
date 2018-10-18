@@ -84,10 +84,6 @@
                                         <!-- Menu Footer-->
 
                                         <li class="user-footer">
-
-                                            <div class="pull-left">
-                                                <a asp-controller="Teams" asp-action="RoleManagement" class="btn btn-default btn-flat @RoleManagementDisabled ">Role Management</a>
-                                            </div>
                                             <div class="pull-right">
                                                 <a id="Logout" class="btn btn-default btn-flat">Logout</a>
                                                 <span class="AntiForge"> @Html.AntiForgeryToken() </span>
@@ -149,82 +145,82 @@
                 </form>-->
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                        <ul class="sidebar-menu" data-widget="tree">
-                            <li class="header">MAIN NAVIGATION</li>
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">MAIN NAVIGATION</li>
 
-                            <li>
-                                <a asp-controller="Tournament" asp-action="Index">
-                                    <i class="flaticon-cricket-ground-1"></i> <span>Tournaments</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-controller="MatchSeries" asp-action="Index">
-                                    <i class="flaticon-appointment"></i> <span>Series</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-controller="Teams" asp-action="Index">
-                                    <i class="flaticon-cricket-2"></i> <span>Teams</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-controller="Matches" asp-action="Index">
-                                    <i class="flaticon-cricket-4"></i> <span>Matches</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-controller="Others" asp-action="TestMatch">
-                                    <i class="flaticon-cricket-3"></i> <span>Test Match</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-controller="Players" asp-action="Index">
-                                    <i class="flaticon-cricket-helmet"></i> <span>Players</span>
-                                </a>
-                            </li>
+                    <li>
+                        <a asp-controller="Tournament" asp-action="Index">
+                            <i class="flaticon-cricket-ground-1"></i> <span>Tournaments</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="MatchSeries" asp-action="Index">
+                            <i class="flaticon-appointment"></i> <span>Series</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Teams" asp-action="Index">
+                            <i class="flaticon-cricket-2"></i> <span>Teams</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Matches" asp-action="Index">
+                            <i class="flaticon-cricket-4"></i> <span>Matches</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Others" asp-action="TestMatch">
+                            <i class="flaticon-cricket-3"></i> <span>Test Match</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Players" asp-action="Index">
+                            <i class="flaticon-cricket-helmet"></i> <span>Players</span>
+                        </a>
+                    </li>
 
-                            <li>
-                                <a asp-controller="Records" asp-action="Index">
-                                    <i class="flaticon-bar-chart"></i> <span>Records</span>
-                                </a>
-                            </li>
+                    <li>
+                        <a asp-controller="Records" asp-action="Index">
+                            <i class="flaticon-bar-chart"></i> <span>Records</span>
+                        </a>
+                    </li>
 
-                            <li class="header">OTHERS</li>
-                            <li>
-                                <a asp-controller="Others" asp-action="Partners">
-                                    <i class="flaticon-partners-claping-hands"></i> <span>Our Partners</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-controller="Others" asp-action="Developers">
-                                    <i class="flaticon-settings"></i> <span>Developers</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-controller="Others" asp-action="AboutUs">
-                                    <i class="flaticon-care-about-planet"></i> <span>About Us</span>
-                                </a>
-                            </li>
+                    <li class="header">OTHERS</li>
+                    <li>
+                        <a asp-controller="Others" asp-action="Partners">
+                            <i class="flaticon-partners-claping-hands"></i> <span>Our Partners</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Others" asp-action="Developers">
+                            <i class="flaticon-settings"></i> <span>Developers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Others" asp-action="AboutUs">
+                            <i class="flaticon-care-about-planet"></i> <span>About Us</span>
+                        </a>
+                    </li>
 
 
-                            @*
+                    @*
 
-        @*<li class="treeview">
-            <a href="#">
-                <i class="fa fa-pie-chart"></i>
-                <span>Charts</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-                <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-            </ul>
-        </li>*@
-                        </ul>
+                        @*<li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-pie-chart"></i>
+                                <span>Charts</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
+                                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
+                                <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
+                                <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+                            </ul>
+                        </li>*@
+                </ul>
             </section>
             <!-- /.sidebar -->
         </aside>

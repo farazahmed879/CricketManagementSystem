@@ -62,7 +62,7 @@ BEGIN
 					END As 'Economy',
 									
 			    (COALESCE(PlayerPastRecord.FiveWickets,0) + count(Case When Wickets >=5 Then 1 Else Null End)) As 'FiveWickets',
-				(COALESCE(PlayerPastRecord.OnFieldCatch,0) + COALESCE(sum (Catches),0)) as 'OnFieldCatches',
+				(COALESCE(PlayerPastRecord.OnFieldCatch,0) + COALESCE(sum (Catches),0)) as 'OnFieldCatch',
 			 	(COALESCE(PlayerPastRecord.OnFieldRunOut,0) + COALESCE(sum (RunOut),0)) as 'OnFieldRunOut',
 				(COALESCE(PlayerPastRecord.OnFieldStump,0) + COALESCE(sum (Stump),0)) as 'OnFieldStump',
 				Players.Player_Name AS 'PlayerName',
@@ -138,4 +138,10 @@ BEGIN
 	) AS data
 END
 GO
-select * from matchType
+
+exec [usp_GetSinglePlayerStatistics] 5,null
+
+select * from PlayerPastRecord
+
+delete from Tournaments
+delete from Matches

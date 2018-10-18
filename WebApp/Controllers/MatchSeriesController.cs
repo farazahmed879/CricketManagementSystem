@@ -126,37 +126,22 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Edit(int id, MatchSeriesdto matchSeries)
+        public async Task<IActionResult> Edit(MatchSeriesdto matchSeries)
         {
-            if (id != matchSeries.MatchSeriesId)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var users = await _userManager.GetUserAsync(HttpContext.User);
-                    var matchSeriesModal = _mapper.Map<MatchSeries>(matchSeries);
-                    matchSeriesModal.UserId = users.Id;
-                    _context.MatchSeries.Update(matchSeriesModal);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MatchSeriesExists(matchSeries.MatchSeriesId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+
+                var users = await _userManager.GetUserAsync(HttpContext.User);
+                var matchSeriesModal = _mapper.Map<MatchSeries>(matchSeries);
+                matchSeriesModal.UserId = users.Id;
+                _context.MatchSeries.Update(matchSeriesModal);
+                await _context.SaveChangesAsync();
+
+                return Json(ResponseHelper.UpdateSuccess());
             }
-            return View(matchSeries);
+
+            return Json(ResponseHelper.UpdateUnSuccess());
         }
 
         // GET: MatchSeries/Delete/5

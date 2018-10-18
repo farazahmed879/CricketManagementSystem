@@ -69,7 +69,7 @@
 
         </div>
         <br />
-      
+
         <div class="list-inline">
             <div>
                 <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
@@ -77,12 +77,12 @@
                 </button>
             </div>
             <div>
-             
-                    <div class="form-group">
-                        <a asp-controller="Matches" class="btn btn-primary" asp-action="Create">Add</a>
-                    </div>
 
-              
+                <div class="form-group">
+                    <a asp-controller="Matches" class="btn btn-primary" asp-action="Create">Add</a>
+                </div>
+
+
             </div>
 
         </div>
@@ -107,7 +107,7 @@
                         Second Inning
                     </th>
                     <th>
-                        Match Summary
+                        Summary
                     </th>
                     <th>
                         Type
@@ -117,7 +117,7 @@
                     </th>
 
                     <th>
-                        Overs
+                        Ov
                     </th>
 
                     <th>
@@ -141,12 +141,12 @@
 
                             @if (item.HasFilledHomeTeamData == true)
                             {
-                                @item.HomeTeam<span class="label  pull-right label-success"><i class="fas fa-check"></i></span>
+                                @item.HomeTeam<span data-placement="top" data-toggle="tooltip" title="Has Filled" class="label  pull-right label-success"><i class="fas fa-check"></i></span>
 
                             }
                             else
                             {
-                                @item.HomeTeam <span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
+                                @item.HomeTeam <span data-placement="top" data-toggle="tooltip" title="No Data" class="label pull-right label-warning"><i class="fas fa-question"></i></span>
 
                             }
                             @*@item.HomeTeam.Team_Name <span class="label pull-right label-warning"><i class="fas fa-question"></i></span>*@
@@ -156,37 +156,27 @@
 
                             @if (item.HasFilledOpponentTeamData == true)
                             {
-                                @item.OppponentTeam <span class="label pull-right label-success"><i class="fas fa-check"></i></span>
+                                @item.OppponentTeam <span data-placement="top" data-toggle="tooltip" title="Has Filled" class="label pull-right label-success"><i class="fas fa-check"></i></span>
 
                             }
                             else
                             {
-                                @item.OppponentTeam<span class="label pull-right label-warning"><i class="fas fa-question"></i></span>
+                                @item.OppponentTeam<span data-placement="top" data-toggle="tooltip" title="No Data" class="label pull-right label-warning"><i class="fas fa-question"></i></span>
 
                             }
 
                         </td>
                         <td>
 
-                            @*@if (item.TeamScores.Any() && item.TeamScores.Any(i => i.MatchId == item.MatchId) || item.FallOfWickets.Any() && item.FallOfWickets.Any(i => i.MatchId == item.MatchId))
-                                {
-                                    <h1 class="label label-success">Read<i class="fas fa-check"></i></h1>
-
-                                }
-                                else
-
-                                {
-                                    <h3 class="label label-warning">Pending<i class="fas fa-question"></i></h3>
-                                }*@
                             @if (item.HasFilledTeamScoreData == true)
                             {
-                                <h1 class="label label-success">Read<i class="fas fa-check"></i></h1>
+                                <h1 data-placement="top" data-toggle="tooltip" title="Has Filled" class="label label-success">Read<i class="fas fa-check"></i></h1>
 
                             }
                             else
 
                             {
-                                <h3 class="label label-warning">Pending<i class="fas fa-question"></i></h3>
+                                <h3 data-placement="top" data-toggle="tooltip" title="No Data" class="label label-warning">Pending<i class="fas fa-question"></i></h3>
                             }
 
 
@@ -228,10 +218,7 @@
                             else
                             {
 
-                                <div class="btn-group">
-                                    <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Score Card">Score Card </a>
-                                </div>
-
+                                <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId"  data-placement="top" data-toggle="tooltip" title="Score Card"><i class="flaticon-cricket-18"></i></a>
 
                             }
 

@@ -14,6 +14,7 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\UserProfile.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Create.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Details.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\MatchChart.cshtml
@@ -26,7 +27,6 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Others\TestMatch.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerPastRecord\PastRecord.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Create.cshtml
---file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Create12.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\PlayerScores\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\Create.cshtml
@@ -45,7 +45,6 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Teams\Create.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Teams\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Teams\Index.cshtml
---file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Teams\RoleManagement.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Tournament\Create.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Tournament\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Tournament\Index.cshtml

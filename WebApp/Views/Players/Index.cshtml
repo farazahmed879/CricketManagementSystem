@@ -117,17 +117,15 @@
                         <td>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <a data-placement="top" data-toggle="tooltip" title="Player Profile" asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId"><i class="fa fa-pie-chart"></i></a>
+                                <a data-placement="top" data-toggle="tooltip" title="Player Profile" asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId"><i class="fa fa-user"></i></a>
                                 <a data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.PlayerId"><i class="fas fa-edit"></i></a>
                                 <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" onclick="Delete(@item.PlayerId)"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" title="Past Record" asp-controller="PlayerPastRecord" asp-action="PastRecord" asp-route-playerId="@item.PlayerId"><i class="fa fa-laptop"></i></a>
+                                <a data-placement="top" data-toggle="tooltip" title="Past Record" asp-controller="PlayerPastRecord" asp-action="PastRecord" asp-route-playerId="@item.PlayerId"><i class="fa fa-history"></i></a>
 
                             }
                             else
                             {
-                                <div class="btn-group">
-                                    <a data-placement="top" data-toggle="tooltip" title="Player Profile" asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId"><i class="fa fa-pie-chart">Profile</i></a>
-                                </div>
+                                <a data-placement="top" data-toggle="tooltip" title="Player Profile" asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId"><i class="flaticon-cricket-22"></i></a>
 
                             }
 
@@ -145,18 +143,25 @@
 
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a asp-action="Index" class="btn @prevDisabled"
-               asp-route-page="@(Model.PageIndex - 1)">
-                <i style="font-size:30px" class="far fa-hand-point-left"></i>
-            </a>
-            <a asp-action="Index"
-               asp-route-page="@(Model.PageIndex + 1)"
-               class="btn @nextDisabled">
-                <i style="font-size:30px" class="far fa-hand-point-right"></i>
-            </a>
-            <span class="fa-1x pull-right">
-                <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
-            </span>
+            <div class="col-md-12">
+                <span class="fa-1x">
+                    <strong class="text-primary">Showing @Model.PageStartValue to @Model.PageEndValue of @Model.TotalCount entries</strong>
+                </span>
+                <span class="fa-1x pull-right">
+                    <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
+                </span>
+            </div>
+            <div class="row">
+                <a asp-action="Index" class="btn @prevDisabled"
+                   asp-route-page="@(Model.PageIndex - 1)">
+                    <i style="font-size:30px" class="far fa-hand-point-left"></i>
+                </a>
+                <a asp-action="Index"
+                   asp-route-page="@(Model.PageIndex + 1)"
+                   class="btn @nextDisabled">
+                    <i style="font-size:30px" class="far fa-hand-point-right"></i>
+                </a>
+            </div>
         </form>
     </nav>
 </div>
@@ -230,7 +235,7 @@
         $(document).ready(function () {
             $('#PlayerTable').DataTable({
                 "paging": false,
-                dom: 'Bfrtip',
+                dom: 'Bfrt',
                 buttons: [
                     {
                         extend: 'pdfHtml5',
@@ -280,23 +285,23 @@
                 alert("Record is not deleted");
             }
         };
-                                                                                                                            //async function FilterData() {
-                                                                                                                            //    var formElement = document.getElementById("Filters");
-                                                                                                                            //    var formData = new FormData(formElement);
+                                                                                                                                                    //async function FilterData() {
+                                                                                                                                                    //    var formElement = document.getElementById("Filters");
+                                                                                                                                                    //    var formData = new FormData(formElement);
 
-                                                                                                                            //    var teamId = formData.get("teamId")
-                                                                                                                            //    var role = formData.get("role")
+                                                                                                                                                    //    var teamId = formData.get("teamId")
+                                                                                                                                                    //    var role = formData.get("role")
 
 
 
-                                                                                                                            //    // var header = new Headers();
-                                                                                                                            //    //header.append("content-type");
+                                                                                                                                                    //    // var header = new Headers();
+                                                                                                                                                    //    //header.append("content-type");
 
-                                                                                                                            //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
-                                                                                                                            //        credentials: 'same-origin'
-                                                                                                                            //    });
+                                                                                                                                                    //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
+                                                                                                                                                    //        credentials: 'same-origin'
+                                                                                                                                                    //    });
 
-                                                                                                                            //};
+                                                                                                                                                    //};
 
 
 

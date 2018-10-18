@@ -3,6 +3,16 @@
 @{
     ViewData["Title"] = "Add Series";
 }
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+<input type="hidden" id="RequestVerificationToken"
+       name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -12,7 +22,7 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <form asp-action="Create">
+        <form id="SeriesForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="col-md-6">
                 <div class="form-group">
@@ -50,13 +60,12 @@
         </form>
 
     </div>
-
+    <div id="snackbar"></div>
     <div class="footer">
-        <div class="container text-center">
-            <div>
-                <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
-            </div>
-        </div>
+        <ul class="list-inline">
+            <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
+            <li><input type="button" value="Add" class="btn btn-primary" onclick="return SeriesCreate(this.form)"></li>
+        </ul>
     </div>
 
 </div>
@@ -81,6 +90,37 @@
                 window.location = '/MatchSeries/Index'
             });
         });
+
+        function myFunction(data) {
+            var snackBar = document.getElementById('snackbar');
+            snackBar.textContent = data;
+            snackBar.className = "show";
+            setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+        }
+
+        function SeriesCreate(form) {
+            try {
+                var formData = $("#SeriesForm").serialize();
+                $.ajax(`/MatchSeries/Create`, {
+                    data: formData,
+                    headers: {
+                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                    },
+                    method: "POST"
+                }).done(function (data) {
+                    window.location = '/MatchSeries/Index'
+                    myFunction(data);
+                }).fail(function (data) {
+                    myFunction(data);
+                });
+
+
+            } catch (ex) {
+                console.error(ex);
+            }
+
+        }
+
     </script>
 }
 

@@ -141,7 +141,7 @@
     <div class="footer">
         <ul class="list-inline">
             <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-            <li><input type="button" value="Save" class="btn btn-primary" onclick="return MatchCreate(this.form)"></li>
+            <li><input type="button" value="Add" class="btn btn-primary" onclick="return MatchCreate(this.form)"></li>
         </ul>
     </div>
 </div>
@@ -174,26 +174,26 @@
         $('#datepicker').datepicker({
             autoclose: true
         })
-        $("#TournamentId").attr("disabled", true);
-        $("#MatchSeriesId").attr("disabled", true);
-        $("#MatchTypeId").change(function () {
-            if ($('#MatchTypeId').val() === "2") {
-                $("#MatchSeriesId").val('').trigger('change');
-                $("#TournamentId").attr("disabled", false);
-                $("#MatchSeriesId").attr("disabled", true);
-            }
-            else if ($('#MatchTypeId').val() === "3") {
-                $("#MatchSeriesId").attr("disabled", false);
-                $("#TournamentId").attr("disabled", true);
-                $("#TournamentId").val('').trigger('change');
-            }
-            else if ($('#MatchTypeId').val() === "1") {
-                $("#TournamentId").attr("disabled", true);
-                $("#MatchSeriesId").attr("disabled", true);
-                $("#TournamentId").val('').trigger('change');
-                $("#MatchSeriesId").val('').trigger('change');
-            }
-        });
+            $("#TournamentId").attr("disabled", true);
+            $("#MatchSeriesId").attr("disabled", true);
+            $("#MatchTypeId").change(function () {
+                if ($('#MatchTypeId').val() === "2") {
+                    $("#MatchSeriesId").val('').trigger('change');
+                    $("#TournamentId").attr("disabled", false);
+                    $("#MatchSeriesId").attr("disabled", true);
+                }
+                else if ($('#MatchTypeId').val() === "3") {
+                    $("#MatchSeriesId").attr("disabled", false);
+                    $("#TournamentId").attr("disabled", true);
+                    $("#TournamentId").val('').trigger('change');
+                }
+                else if ($('#MatchTypeId').val() === "1") {
+                    $("#TournamentId").attr("disabled", true);
+                    $("#MatchSeriesId").attr("disabled", true);
+                    $("#TournamentId").val('').trigger('change');
+                    $("#MatchSeriesId").val('').trigger('change');
+                }
+            });
 
         $(function () {
             $('#BackBtn').click(function () {

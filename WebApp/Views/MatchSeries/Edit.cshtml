@@ -3,6 +3,16 @@
 @{
     ViewData["Title"] = "Edit MatchSeries";
 }
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+<input type="hidden" id="RequestVerificationToken"
+       name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -14,48 +24,47 @@
     <div class="row">
 
 
-        <form asp-action="Edit">
+        <form id="SeriesForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MatchSeriesId" />
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Series<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Organizor" class="control-label"></label>
-                        <input asp-for="Organizor" class="form-control" />
-                        <span asp-validation-for="Organizor" class="text-danger"></span>
-                    </div>
-                </div>
 
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Starting Date</label>
-                        <div class="input-group date">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" asp-for="StartingDate" class="form-control pull-right" id="datepicker">
-                        </div>
-                        <!-- /.input group -->
-                    </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Series<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Organizor" class="control-label"></label>
+                    <input asp-for="Organizor" class="form-control" />
+                    <span asp-validation-for="Organizor" class="text-danger"></span>
+                </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Starting Date</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" asp-for="StartingDate" class="form-control pull-right" id="datepicker">
+                    </div>
+                    <!-- /.input group -->
+                </div>
+            </div>
+
         </form>
 
     </div>
+    <div id="snackbar"></div>
     <div class="footer">
-        <div class="container text-center">
-            <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
-        </div>
+        <ul class="list-inline">
+            <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
+            <li><input type="button" value="Save" class="btn btn-primary" onclick="return SeriesCreate(this.form)"></li>
+        </ul>
     </div>
 </div>
 
@@ -77,5 +86,35 @@
                 window.location = '/MatchSeries/Index'
             });
         });
+
+        function myFunction(data) {
+            var snackBar = document.getElementById('snackbar');
+            snackBar.textContent = data;
+            snackBar.className = "show";
+            setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+        }
+
+        function SeriesCreate(form) {
+            try {
+                var formData = $("#SeriesForm").serialize();
+                $.ajax(`/MatchSeries/Edit`, {
+                    data: formData,
+                    headers: {
+                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                    },
+                    method: "POST"
+                }).done(function (data) {
+                    window.location = '/MatchSeries/Index'
+                    myFunction(data);
+                }).fail(function (data) {
+                    myFunction(data);
+                });
+
+
+            } catch (ex) {
+                console.error(ex);
+            }
+
+        }
     </script>
 }

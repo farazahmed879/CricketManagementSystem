@@ -1,10 +1,12 @@
-﻿alter PROCEDURE [usp_GetAllBattingStatistics]
+﻿Alter PROCEDURE [usp_GetAllBattingStatistics]
 @paramTeamId AS INT,
 @paramSeason As Int,
 @paramOvers As Int,
 @paramPosition As Int, 
 @paramMatchType As Int,
-@paramTournamentId As Int
+@paramTournamentId As Int,
+@paramMatchseriesId As Int,
+@paramPlayerRoleId As Int
 AS
 BEGIN
 	SELECT  count (PlayerScores.MatchId) as 'TotalMatch',
@@ -46,6 +48,7 @@ BEGIN
 	Inner join Teams ON Players.TeamId = Teams.TeamId
 	Inner join Matches ON PlayerScores.MatchId = Matches.MatchId
 	left join Tournaments On Matches.TournamentId = Tournaments.TournamentId
+	left join MatchSeries On Matches.MatchSeriesId = MatchSeries.MatchSeriesId
 	left join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
 	
 	
@@ -54,7 +57,9 @@ BEGIN
 		  (@paramOvers IS NUll OR Matches.MatchOvers = @paramOvers)	And
 		  (@paramPosition IS NULL OR PlayerScores.Position = @paramPosition) And 
 		  (@paramMatchType IS NULL OR Matches.MatchTypeId = @paramMatchType) And 
-		  (@paramTournamentId IS NUll OR Tournaments.TournamentId = @paramTournamentId)
+		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
+		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
+		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId)
 	
 	GROUP BY PlayerScores.PlayerId,
 			Players.Player_Name,
@@ -62,4 +67,3 @@ BEGIN
 			 Players.TeamId
 END
 go
-exec [usp_GetAllBattingStatistics] null,null,null,null,null,null

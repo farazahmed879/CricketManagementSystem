@@ -1,0 +1,122 @@
+﻿@model WebApp.ViewModels.Matchdto
+
+@{
+    ViewData["Title"] = "Match Detail";
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="Matches" asp-action="Index">Home</a></li>
+        <li><a>Detail</a></li>
+    </ol>
+</div>
+<div class="container-fluid">
+    <div class="box-footer">
+
+        <div class="col-md-12 bg-light-blue-active">
+            <h3>Match Details<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BattingModal"><i title="More" data-toggle="tooltip" class="ion ion-more"></i></a></h3>
+        </div>
+        <dl class="dl-horizontal table-bordered">
+            <dt>
+                Ground
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.GroundName)
+            </dd>
+            <dt>
+                Location
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Place)
+            </dd>
+            <dt>
+                Overs
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.MatchOvers)
+            </dd>
+
+            <dt>
+                Season
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Season)
+            </dd>
+
+
+            <dt>
+                Match Type
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.MatchType)
+            </dd>
+
+            <dt>
+                Series
+            </dt>
+            @if (Model.Series != null)
+                    {
+            <dd>
+                @Html.DisplayFor(model => model.Series)
+            </dd>
+                    }
+                    else
+                    {
+            <dd>
+                N/A
+            </dd>
+                    }
+            <dt>
+                Tournament
+            </dt>
+            @if (Model.Tournament != null)
+                    {
+            <dd>
+                @Html.DisplayFor(model => model.Tournament)
+            </dd>
+                    }
+                    else
+                    {
+            <dd>
+                N/A
+            </dd>
+                    }
+            <dt>
+                1st Inning
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.HomeTeam)
+            </dd>
+            <dt>
+                2nd Inning
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.OppponentTeam)
+            </dd>
+
+            <dt>
+                Summary
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Result)
+            </dd>
+        </dl>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+@section Scripts{
+
+    <script>
+                            ]
+    </script>
+    <style>
+    </style>
+}
