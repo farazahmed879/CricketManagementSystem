@@ -113,7 +113,14 @@ namespace WebApp.Controllers
 
             var tournament = await _context.Tournaments
                 .AsNoTracking()
-                .ProjectTo<Tournamentdto>(_mapper.ConfigurationProvider)
+                .Select(i => new ViewModels.Tournamentdto
+                {
+                    TournamentId = i.TournamentId,
+                    TournamentName = i.TournamentName,
+                    Organizor = i.Organizor,
+                    StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToShortDateString() : "",
+
+                })
                 .SingleOrDefaultAsync(m => m.TournamentId == id);
             if (tournament == null)
             {

@@ -59,5 +59,3 @@ BEGIN
 			 Players.TeamId
 END
 go
-
-select * from PlayerRole

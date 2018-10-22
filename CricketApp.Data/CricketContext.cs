@@ -11,8 +11,7 @@ namespace CricketApp.Data
         public CricketContext(DbContextOptions<CricketContext> options)
             : base(options)
         { }
-
-
+        
         public DbSet<Team> Teams { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Match> Matches { get; set; }
@@ -31,6 +30,7 @@ namespace CricketApp.Data
         public DbSet<ClubAdmin> ClubAdmins { get; set; }
         public DbSet<PlayerPastRecord> PlayerPastRecord { get; set; }
         public DbSet<MatchSeries> MatchSeries { get; set; }
+        public DbSet<MatchSchedule> MatchSchedule { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

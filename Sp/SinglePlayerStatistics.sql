@@ -138,10 +138,3 @@ BEGIN
 	) AS data
 END
 GO
-
-exec [usp_GetSinglePlayerStatistics] 5,null
-
-select * from PlayerPastRecord
-
-delete from Tournaments
-delete from Matches

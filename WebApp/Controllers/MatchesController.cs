@@ -37,8 +37,8 @@ namespace WebApp.Controllers
         // GET: Matches
         [Route("Matches/Index")]
         public async Task<IActionResult> Index(int? teamId, int? matchTypeId,
-                                               int? tournamentId,
-                                                int? season, int? overs, int? userId, int? page)
+                                               int? tournamentId, int? matchSeriesId,
+                                                int? season, int? matchOvers, int? userId, int? page)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -56,14 +56,18 @@ namespace WebApp.Controllers
                 .Select(i => i.Season)
                 .ToList().Distinct(), "Season");
 
-            ViewBag.MatchTypeId = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
+            ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
             int pageSize = 20;
 
-
-            ViewBag.TournamentId = new SelectList(_context.Tournaments
+            ViewBag.Tournament = new SelectList(_context.Tournaments
                 .Where(i => (!userId.HasValue || i.UserId == userId))
                 .Select(i => new { i.TournamentId, i.TournamentName })
            , "TournamentId", "TournamentName");
+
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+                .Where(i => (!userId.HasValue || i.UserId == userId))
+                .Select(i => new { i.MatchSeriesId, i.Name })
+           , "MatchSeriesId", "Name");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .Where(i => (!userId.HasValue || i.clubAdmin.UserId == userId))
@@ -76,7 +80,8 @@ namespace WebApp.Controllers
                .Where(i => (!matchTypeId.HasValue || i.MatchTypeId == matchTypeId) &&
                            (!teamId.HasValue || i.HomeTeamId == teamId || i.OppponentTeamId == teamId) &&
                            (!tournamentId.HasValue || i.TournamentId == tournamentId) && (!season.HasValue || i.Season == season) &&
-                           (!overs.HasValue || i.MatchOvers == overs) && (!userId.HasValue || i.UserId == userId))
+                           (!matchSeriesId.HasValue || i.MatchSeriesId == matchSeriesId) && (!matchOvers.HasValue || i.MatchOvers == matchOvers) && 
+                           (!userId.HasValue || i.UserId == userId))
                 .Select(i => new ViewModels.Matchdto
                 {
                     MatchId = i.MatchId,
@@ -128,7 +133,7 @@ namespace WebApp.Controllers
                     MatchOvers = i.MatchOvers,
                     Place = i.Place,
                     Result = i.Result
-                   
+
                 })
                 .SingleOrDefaultAsync(m => m.MatchId == matchId);
             if (match == null)

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using WebApp.ViewModels;
 using AutoMapper.QueryableExtensions;
+using WebApp.Helper;
 
 namespace WebApp.Controllers
 {
@@ -34,7 +35,7 @@ namespace WebApp.Controllers
 
         // GET: Teams
 
-        public async Task<IActionResult> Index(string zone, string city, int? page, int? userId)
+        public async Task<IActionResult> Index(string zone, string place, int? page, int? userId)
         {
 
             var users = await _userManager.GetUserAsync(HttpContext.User);
@@ -42,12 +43,21 @@ namespace WebApp.Controllers
             int pageSize = 20;
             if (users != null)
                 userId = users.Id;
+            ViewBag.Zone = new SelectList(_context.Teams
+                .Where(i => !userId.HasValue || i.clubAdmin.UserId == userId)
+                .Select(i => i.Zone)
+                .ToList().Distinct(), "Zone");
+
+            ViewBag.Location = new SelectList(_context.Teams
+               .Where(i => !userId.HasValue || i.clubAdmin.UserId == userId)
+               .Select(i => i.Place)
+               .ToList().Distinct(), "Place");
 
             return View(await PaginatedList<ViewModels.Teamdto>.CreateAsync(
             _context.Teams
             .AsNoTracking()
             .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone)
-                    && (string.IsNullOrEmpty(city) || i.City == city)
+                    && (string.IsNullOrEmpty(place) || i.Place == place)
                     && (!userId.HasValue || i.clubAdmin.UserId == userId)
             )
             .Select(i => new ViewModels.Teamdto
@@ -173,9 +183,9 @@ namespace WebApp.Controllers
 
                 });
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Json(ResponseHelper.Success());
             }
-            return View(team);
+            return Json(ResponseHelper.UnSuccess());
         }
         public static byte[] ReadStream(Stream input)
         {
@@ -218,44 +228,26 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Edit(int id, Teamdto team)
+        public async Task<IActionResult> Edit(Teamdto team)
         {
-            if (id != team.TeamId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+
+                var form = Request.Form;
+                byte[] fileBytes = null;
+                if (team.TeamImage != null)
                 {
-                    var form = Request.Form;
-                    byte[] fileBytes = null;
-                    if (team.TeamImage != null)
+                    using (var stream = team.TeamImage.OpenReadStream())
                     {
-                        using (var stream = team.TeamImage.OpenReadStream())
-                        {
-                            fileBytes = ReadStream(stream);
-                        }
-                    }
-                    team.TeamLogo = fileBytes ?? null;
-                    _context.Teams.Update(_mapper.Map<Team>(team));
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TeamExists(team.TeamId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        fileBytes = ReadStream(stream);
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                team.TeamLogo = fileBytes ?? null;
+                _context.Teams.Update(_mapper.Map<Team>(team));
+                await _context.SaveChangesAsync();
+                return Json(ResponseHelper.UpdateSuccess());
             }
-            return View(team);
+            return Json(ResponseHelper.UnSuccess());
         }
 
 

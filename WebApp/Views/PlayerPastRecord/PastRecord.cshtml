@@ -239,7 +239,7 @@
     <div class="footer">
         <ul class="list-inline">
             <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-            <li><input type="button" value="Save" class="btn btn-primary" onclick="return PlayerPastCreate(this.form)"></li>
+            <li><input id="PlayerPastCreate" type="button" value="Save" class="btn btn-primary"></li>
         </ul>
     </div>
 </div>
@@ -257,28 +257,28 @@
             snackBar.className = "show";
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
+        $(function () {
+            $('#PlayerPastCreate').click(function () {
+                try {
+                    var formData = $("#PlayerPastRecordId").serialize();
+                    $.ajax(`/PlayerPastRecord/PastRecordSave`, {
+                        data: formData,
+                        headers: {
+                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                        },
+                        method: "POST"
+                    }).done(function (data) {
+                        myFunction(data);
+                    }).fail(function (data) {
+                        myFunction(data);
+                    });
 
-        function PlayerPastCreate(form) {
-            try {
-                var formData = $("#PlayerPastRecordId").serialize();
-                $.ajax(`/PlayerPastRecord/PastRecordSave`, {
-                    data: formData,
-                    headers: {
-                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                    },
-                    method: "POST"
-                }).done(function (data) {
-                    window.location = '/Players/Index'
-                    myFunction(data);
-                }).fail(function (data) {
-                    myFunction(data);
-                });
 
-
-            } catch (ex) {
-                console.error(ex);
-            }
-
-        }
+                } catch (ex) {
+                    console.error(ex);
+                }
+            });
+        });
+     
     </script>
 }

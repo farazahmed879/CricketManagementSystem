@@ -54,9 +54,6 @@
                     <!-- /.input group -->
                 </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
         </form>
 
     </div>
@@ -64,7 +61,7 @@
     <div class="footer">
         <ul class="list-inline">
             <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
-            <li><input type="button" value="Add" class="btn btn-primary" onclick="return SeriesCreate(this.form)"></li>
+            <li><input id="SeriesCreate" type="button" value="Add" class="btn btn-primary"></li>
         </ul>
     </div>
 
@@ -97,29 +94,29 @@
             snackBar.className = "show";
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
+        $(function () {
+            $('#SeriesCreate').click(function () {
+                try {
+                    var formData = $("#SeriesForm").serialize();
+                    $.ajax(`/MatchSeries/Create`, {
+                        data: formData,
+                        headers: {
+                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                        },
+                        method: "POST"
+                    }).done(function (data) {
+                        window.location = '/MatchSeries/Index'
+                        myFunction(data);
+                    }).fail(function (data) {
+                        myFunction(data);
+                    });
 
-        function SeriesCreate(form) {
-            try {
-                var formData = $("#SeriesForm").serialize();
-                $.ajax(`/MatchSeries/Create`, {
-                    data: formData,
-                    headers: {
-                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                    },
-                    method: "POST"
-                }).done(function (data) {
-                    window.location = '/MatchSeries/Index'
-                    myFunction(data);
-                }).fail(function (data) {
-                    myFunction(data);
-                });
 
-
-            } catch (ex) {
-                console.error(ex);
-            }
-
-        }
+                } catch (ex) {
+                    console.error(ex);
+                }
+            });
+        });
 
     </script>
 }

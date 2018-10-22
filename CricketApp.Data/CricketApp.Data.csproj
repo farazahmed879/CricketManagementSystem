@@ -6,6 +6,12 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20180928102618_PlayerPastRecord.cs" />
+    <Compile Remove="Migrations\20181019101324_MatchSchedule.cs" />
+    <Compile Remove="Migrations\20181019101934_MatchSchedule1.cs" />
+    <Compile Remove="Migrations\20181019102952_MatchSchedule.cs" />
+    <Compile Remove="Migrations\20181019110124_MatchSchedulepk.cs" />
+    <Compile Remove="Migrations\20181019110808_TeamMatchSchedule.cs" />
+    <Compile Remove="Migrations\20181019111029_MatchScheduleBothRelation.cs" />
   </ItemGroup>
 
   <ItemGroup>

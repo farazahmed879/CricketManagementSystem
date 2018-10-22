@@ -23,7 +23,7 @@ namespace WebApp.Controllers
         }
 
         [Route("PlayerScores/Index")]
-        public IActionResult Index(int? matchId, int? homeTeamId, int? oppTeamId, int? playerScoreId)
+        public IActionResult Index(int? matchId, int? homeTeamId, int? oppTeamId, long? playerScoreId)
         {
             ViewBag.Name = "Score Card";
             var scoreDto = new ScoreCarddto();
@@ -701,9 +701,9 @@ namespace WebApp.Controllers
         }
         // Add: PlayerScores/AddBating/
 
-        private bool PlayerScoreExists(int id)
-        {
-            return _context.PlayerScores.Any(e => e.PlayerScoreId == id);
-        }
+        //private bool PlayerScoreExists(int id)
+        //{
+        //    return _context.PlayerScores.Any(e => e.PlayerScoreId == id);
+        //}
     }
 }

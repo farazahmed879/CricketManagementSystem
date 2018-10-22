@@ -1,0 +1,129 @@
+﻿@model WebApp.ViewModels.MatchScheduledto
+
+@{
+    ViewData["Title"] = "Edit Team";
+}
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="Teams" asp-action="Index">Team</a></li>
+        <li><a>Edit</a></li>
+    </ol>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <form id="ScheduleForm" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MatchScheduleId" />
+            <input type="hidden" asp-for="TeamId" />
+
+            <div class="col-md-6">
+                <div class="form-group label-floating">
+                    <label class="control-label">Ground Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                    <input asp-for="GroundName" required class="form-control" />
+                    <span asp-validation-for="GroundName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group label-floating">
+                    <label class="control-label">Opponent Team</label>
+                    <input asp-for="OpponentTeam" class="form-control" />
+                    <span asp-validation-for="OpponentTeam" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group label-floating">
+                    <label class="control-label">Day<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                    <input asp-for="Day" required class="form-control" />
+                    <span asp-validation-for="Day" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group label-floating">
+                    <label class="control-label">Month</label>
+                    <input asp-for="Month" class="form-control" />
+                    <span asp-validation-for="Month" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group label-floating">
+                    <label class="control-label">Year</label>
+                    <input asp-for="Year" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div id="snackbar"></div>
+    <div class="footer">
+        <ul class="list-inline">
+            <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
+            <li><input id="ScheduleCreate" type="button" value="Save" class="btn btn-primary"></li>
+        </ul>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link rel="stylesheet" href="../../plugins/iCheck/square/Blue.css">
+    <script src="../../plugins/iCheck/icheck.min.js"></script>
+
+    <style>
+    </style>
+    <script>
+        $(function () {
+            $('#BackBtn').click(function () {
+                window.location = '/Teams/Index'
+            });
+        });
+
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
+            });
+        });
+
+
+        function myFunction(data) {
+            var snackBar = document.getElementById('snackbar');
+            snackBar.textContent = data;
+            snackBar.className = "show";
+            setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+        }
+        $(function () {
+            $('#ScheduleCreate').click(function () {
+                try {
+                    var formData = $("#ScheduleForm").serialize();
+                    $.ajax(`/Schedule/Edit`, {
+                        data: formData,
+                        headers: {
+                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                        },
+                        method: "POST"
+                    }).done(function (data) {
+                        window.location = '/Schedule/Index'
+                        myFunction(data);
+                    }).fail(function (data) {
+                        myFunction(data);
+                    });
+
+
+                } catch (ex) {
+                    console.error(ex);
+                }
+            });
+        });
+    </script>
+}

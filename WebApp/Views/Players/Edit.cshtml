@@ -22,7 +22,7 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <form id="playerForm" enctype="multipart/form-data">
+        <form id="PlayerForm" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="PlayerId" />
             <div class="col-md-8">
@@ -151,28 +151,13 @@
                     </li>
                 </ul>
             </div>
-            @*<div class="col-md-4">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                @{
-                                    var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
-                                    <div class="img-responsive" id="PlayerImg" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
-                                }
-                                <label asp-for="PlayerImage" class="btn btn-primary">
-                                    <i class="far fa-images"> Upload</i> <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
         </form>
     </div>
     <div id="snackbar"></div>
     <div class="footer">
         <ul class="list-inline">
             <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-            <li><input type="button" value="Save" class="btn btn-primary" onclick="return PlayerCreate(this.form)"></li>
+            <li><input id="PlayerCreate" type="button" value="Save" class="btn btn-primary"></li>
         </ul>
     </div>
 </div>
@@ -249,26 +234,27 @@
             $('#BackBtn').click(function () {
                 window.location = '/Players/Index'
             });
-            function readURL(input) {
-
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        //$('#PlayerImg').attr('src', e.target.result);
-                        const PlayerImg = document.getElementById('PlayerImg');
-                        PlayerImg.style.backgroundImage = "url(" + e.target.result + ")";
-                        PlayerImg.style.backgroundPosition = "cover";
-                    }
-
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-
-            $("#PlayerImage").change(function () {
-                readURL(this);
-            });
         });
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    //$('#PlayerImg').attr('src', e.target.result);
+                    const PlayerImg = document.getElementById('PlayerImg');
+                    PlayerImg.style.backgroundImage = "url(" + e.target.result + ")";
+                    PlayerImg.style.backgroundPosition = "cover";
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#PlayerImage").change(function () {
+            readURL(this);
+        });
+
         function myFunction(data) {
             var snackBar = document.getElementById('snackbar');
             snackBar.textContent = data;
@@ -276,32 +262,33 @@
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
 
-        function PlayerCreate(form) {
-            try {
-                var image = $('#PlayerImg').css('background-image');
-                image = image.substr(27, image.length - 1)
-                var blob = base64ToBlob(image, 'image/png');
-                var formData = new FormData(document.querySelector('#playerForm'))
-                formData.append('playerImage', blob);
-                $.ajax(`/Players/Edit`, {
-                    data: formData,
-                    headers: {
-                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                    },
-                    method: "POST"
-                }).done(function (data) {
-                    window.location = '/Players/Index'
-                    myFunction(data);
-                }).fail(function (data) {
-                    myFunction(data);
-                });
+        $(function () {
+            $('PlayerCreate').click(function () {
+                try {
+                    var image = $('#PlayerImg').css('background-image');
+                    image = image.substr(27, image.length - 1)
+                    var blob = base64ToBlob(image, 'image/png');
+                    var formData = new FormData(document.querySelector('#PlayerForm'))
+                    formData.append('playerImage', blob);
+                    $.ajax(`/Players/Edit`, {
+                        data: formData,
+                        headers: {
+                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                        },
+                        method: "POST"
+                    }).done(function (data) {
+                        window.location = '/Players/Index'
+                        myFunction(data);
+                    }).fail(function (data) {
+                        myFunction(data);
+                    });
 
 
-            } catch (ex) {
-                console.error(ex);
-            }
-
-        }
+                } catch (ex) {
+                    console.error(ex);
+                }
+            });
+        });
 
         $('[data-mask]').inputmask()
     </script>

@@ -22,8 +22,6 @@
 </div>
 <div class="container-fluid wizard">
     <div class="row">
-
-
         <form id="SeriesForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MatchSeriesId" />
@@ -63,7 +61,7 @@
     <div class="footer">
         <ul class="list-inline">
             <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
-            <li><input type="button" value="Save" class="btn btn-primary" onclick="return SeriesCreate(this.form)"></li>
+            <li><input id="SeriesCreate" type="button" value="Save" class="btn btn-primary"></li>
         </ul>
     </div>
 </div>
@@ -93,28 +91,29 @@
             snackBar.className = "show";
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
+        $(function () {
+            $('#SeriesCreate').click(function () {
+                try {
+                    var formData = $("#SeriesForm").serialize();
+                    $.ajax(`/MatchSeries/Edit`, {
+                        data: formData,
+                        headers: {
+                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                        },
+                        method: "POST"
+                    }).done(function (data) {
+                        window.location = '/MatchSeries/Index'
+                        myFunction(data);
+                    }).fail(function (data) {
+                        myFunction(data);
+                    });
 
-        function SeriesCreate(form) {
-            try {
-                var formData = $("#SeriesForm").serialize();
-                $.ajax(`/MatchSeries/Edit`, {
-                    data: formData,
-                    headers: {
-                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                    },
-                    method: "POST"
-                }).done(function (data) {
-                    window.location = '/MatchSeries/Index'
-                    myFunction(data);
-                }).fail(function (data) {
-                    myFunction(data);
-                });
 
+                } catch (ex) {
+                    console.error(ex);
+                }
+            });
+        });
 
-            } catch (ex) {
-                console.error(ex);
-            }
-
-        }
     </script>
 }

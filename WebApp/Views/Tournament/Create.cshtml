@@ -60,7 +60,7 @@
     <div class="footer">
         <ul class="list-inline">
             <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
-            <li><input type="button" value="Add" class="btn btn-primary" onclick="return TournamentCreate(this.form)"></li>
+            <li><input id="TournamentCreate" type="button" value="Add" class="btn btn-primary"></li>
         </ul>
     </div>
 
@@ -93,29 +93,29 @@
             snackBar.className = "show";
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
+        $(function () {
+            $('#TournamentCreate').click(function () {
+                try {
+                    var formData = $("#TournamentForm").serialize();
+                    $.ajax(`/Tournament/Create`, {
+                        data: formData,
+                        headers: {
+                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                        },
+                        method: "POST"
+                    }).done(function (data) {
+                        window.location = '/Tournament/Index'
+                        myFunction(data);
+                    }).fail(function (data) {
+                        myFunction(data);
+                    });
 
-        function TournamentCreate(form) {
-            try {
-                var formData = $("#TournamentForm").serialize();
-                $.ajax(`/Tournament/Create`, {
-                    data: formData,
-                    headers: {
-                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                    },
-                    method: "POST"
-                }).done(function (data) {
-                    window.location = '/Tournament/Index'
-                    myFunction(data);
-                }).fail(function (data) {
-                    myFunction(data);
-                });
 
-
-            } catch (ex) {
-                console.error(ex);
-            }
-
-        }
+                } catch (ex) {
+                    console.error(ex);
+                }
+            });
+        });
 
     </script>
 }

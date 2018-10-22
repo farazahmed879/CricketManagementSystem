@@ -168,6 +168,31 @@ namespace CricketApp.Data.Migrations
                     b.ToTable("Matches");
                 });
 
+            modelBuilder.Entity("CricketApp.Domain.MatchSchedule", b =>
+                {
+                    b.Property<long>("MatchScheduleId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("Day");
+
+                    b.Property<string>("GroundName");
+
+                    b.Property<string>("Month");
+
+                    b.Property<string>("OpponentTeam");
+
+                    b.Property<int>("TeamId");
+
+                    b.Property<int?>("Year");
+
+                    b.HasKey("MatchScheduleId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("MatchSchedule");
+                });
+
             modelBuilder.Entity("CricketApp.Domain.MatchSeries", b =>
                 {
                     b.Property<int>("MatchSeriesId")
@@ -690,6 +715,14 @@ namespace CricketApp.Data.Migrations
                     b.HasOne("CricketApp.Domain.Tournament", "Tournament")
                         .WithMany("Matches")
                         .HasForeignKey("TournamentId");
+                });
+
+            modelBuilder.Entity("CricketApp.Domain.MatchSchedule", b =>
+                {
+                    b.HasOne("CricketApp.Domain.Team", "Team")
+                        .WithMany("MatchSchedules")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CricketApp.Domain.MatchSeries", b =>

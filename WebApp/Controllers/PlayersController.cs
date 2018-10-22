@@ -42,11 +42,11 @@ namespace WebApp.Controllers
 
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Players";
-            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+            ViewBag.PlayerRoleId = new SelectList(_context.PlayerRole
                 .AsNoTracking()
                 .Select(i => new { i.Name, i.PlayerRoleId }), "PlayerRoleId", "Name");
 
-            int pageSize = 10;
+            int pageSize = 20;
             if (users != null)
                 userId = users.Id;
 

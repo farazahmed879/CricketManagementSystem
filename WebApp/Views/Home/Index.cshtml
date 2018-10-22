@@ -3,7 +3,21 @@
         ViewData["Title"] = "";
     }*@
 <div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a>Home /</a></li>
+    </ol>
+</div>
+<div class="container-fluid">
     <div class="row">
+        <div class="col-md-12">
+            <div class="callout callout-info">
+                <h2>Score Exec</h2>
+                <p>
+                    Score Executive is a complete ERP solution for your cricket record maintaining. We are commited to secure and protect your data
+                    and give you the best result. You can find complete statistics of any player.
+                </p>
+            </div>
+        </div>
         <div class="dl-horizontal">
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
@@ -13,7 +27,7 @@
                         <p>Tournaments</p>
                     </div>
                     <div class="icon">
-                        <i class="far fa-calendar-alt"></i>
+                        <i class="flaticon-cricket-ground-1"></i>
                     </div>
                     <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="Tournament" asp-action="Index" class="small-box-footer">
                         Tournaments List <i class="fa fa-arrow-circle-right"></i>
@@ -43,7 +57,7 @@
                         <p>Players</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="flaticon-cricket-helmet"></i>
                     </div>
                     <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="Players" asp-action="Index" class="small-box-footer">
                         Players List <i class="fa fa-arrow-circle-right"></i>
@@ -58,7 +72,7 @@
                         <p>Cricket Match</p>
                     </div>
                     <div class="icon">
-                        <i class="ion-ios-partlysunny"></i>
+                        <i class="flaticon-cricket-4"></i>
                     </div>
                     <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="Matches" asp-action="Index" class="small-box-footer">
                         Matches List <i class="fa fa-arrow-circle-right"></i>
@@ -73,7 +87,7 @@
                         <p>Series</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-android-apps"></i>
+                        <i class="flaticon-cricket-ground"></i>
                     </div>
                     <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="MatchSeries" asp-action="Index" class="small-box-footer">
                         Match Series List <i class="fa fa-arrow-circle-right"></i>
@@ -88,55 +102,19 @@
                         <p>Records</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
+                        <i class="flaticon-bar-chart"></i>
                     </div>
                     <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="Records" asp-action="Index" class="small-box-footer">
                         Statistics <i class="fa fa-arrow-circle-right"></i>
                     </a>
                 </div>
             </div>
-            @*<div class="col-md-3">
-                    <div class="box box-success box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">New Feed</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            </div>
-                            <!-- /.box-tools -->
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            The body of the box
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>*@
 
-            @*<div class="col-md-3">
-                    <div class="box box-warning box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">New Feed</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                            <!-- /.box-tools -->
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            The body of the box
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>*@
 
             <div class="col-md-3">
                 <div class="box box-warning box-solid">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@Model.Summary</h3>
+                        <h3 class="box-title">Last Match Summary</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
@@ -190,7 +168,7 @@
                                 </li>
                             </ul>
                             <div class="col-md-12">
-                                <p></p>
+                                <p>@Model.Summary</p>
                             </div>
 
                             <!-- /.box-body -->
@@ -201,17 +179,28 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <ul class="list-inline">
+                <li>
+                    <div class="img-responsive" style='background-size:cover; background-image: url("/images/poc copy.png");' id="Img"></div>
+                </li>
+                <li>
+
+                    <h3>Pole of Cricket Official Partners of Score Exec</h3>
+
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 @section Scripts{
     <style>
-
         #Img {
             background-image: url('');
             background-size: cover;
             background-position: center;
-            height: 20px;
-            width: 25px;
+            height: 80px;
+            width: 80px;
         }
     </style>
 }

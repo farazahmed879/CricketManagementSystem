@@ -14,7 +14,7 @@ namespace CricketApp.Domain
             HomeTeamMatches = new List<Match>();
             TeamScores = new List<TeamScore>();
             FallOfWickets = new List<FallOfWicket>();
-
+            MatchSchedules = new List<MatchSchedule>();
         }
 
         public int TeamId { get; set; }
@@ -37,7 +37,6 @@ namespace CricketApp.Domain
         public List<Match> HomeTeamMatches { get; set; }
         public List<TeamScore> TeamScores { get; set; }
         public List<FallOfWicket> FallOfWickets { get; set; }
-        
-
+        public List<MatchSchedule> MatchSchedules { get; set; }
     }
 }

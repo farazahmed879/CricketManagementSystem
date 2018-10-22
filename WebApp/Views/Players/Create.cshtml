@@ -138,7 +138,7 @@
             </div>
             <div class="col-md-4">
                 <ul class="gallery">
-                    <li><a href="" title="Player Image"><img class="img-responsive" id="PlayerImg" style="background-size:cover"/></a></li>
+                    <li><a href="" title="Player Image"><img class="img-responsive" id="PlayerImg" style="background-size:cover" /></a></li>
                     <li>
                         <label asp-for="PlayerImage" class="btn btn-primary" style="width:50%">
                             <i class="far fa-images"> Upload</i> <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
@@ -152,7 +152,7 @@
     <div class="footer">
         <ul class="list-inline">
             <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-            <li><input type="button" value="Add" class="btn btn-primary" onclick="return PlayerCreate(this.form)"></li>
+            <li><input id="PlayerCreate" type="button" value="Add" class="btn btn-primary"></li>
         </ul>
     </div>
 </div>
@@ -218,25 +218,27 @@
             $('#BackBtn').click(function () {
                 window.location = '/Players/Index'
             });
-            function readURL(input) {
 
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+        });
 
-                    reader.onload = function (e) {
-                        //$('#PlayerImg').attr('src', e.target.result);
-                        const PlayerImg = document.getElementById('PlayerImg');
-                        PlayerImg.style.backgroundImage = "url(" + e.target.result + ")";
-                        PlayerImg.style.backgroundPosition = "cover";
-                    }
+        function readURL(input) {
 
-                    reader.readAsDataURL(input.files[0]);
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    //$('#PlayerImg').attr('src', e.target.result);
+                    const PlayerImg = document.getElementById('PlayerImg');
+                    PlayerImg.style.backgroundImage = "url(" + e.target.result + ")";
+                    PlayerImg.style.backgroundPosition = "cover";
                 }
-            }
 
-            $("#PlayerImage").change(function () {
-                readURL(this);
-            });
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#PlayerImage").change(function () {
+            readURL(this);
         });
         function myFunction(data) {
             var snackBar = document.getElementById('snackbar');
@@ -244,30 +246,27 @@
             snackBar.className = "show";
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
-
-        function PlayerCreate(form) {
-            try {
-                var formData = $("#PlayerForm").serialize();
-                $.ajax(`/Players/Edit`, {
-                    data: formData,
-                    headers: {
-                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                    },
-                    method: "POST"
-                }).done(function (data) {
-                    window.location = '/Players/Index'
-                    myFunction(data);
-                }).fail(function (data) {
-                    myFunction(data);
-                });
-
-
-            } catch (ex) {
-                console.error(ex);
-            }
-
-        }
-
+        $(function () {
+            $('#PlayerCreate').click(function () {
+                try {
+                    var formData = $("#PlayerForm").serialize();
+                    $.ajax(`/Players/Create`, {
+                        data: formData,
+                        headers: {
+                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                        },
+                        method: "POST"
+                    }).done(function (data) {
+                        window.location = '/Players/Index'
+                        myFunction(data);
+                    }).fail(function (data) {
+                        myFunction(data);
+                    });
+                } catch (ex) {
+                    console.error(ex);
+                }
+            });
+        });
 
     </script>
 }

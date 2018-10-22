@@ -113,7 +113,14 @@ namespace WebApp.Controllers
 
             var matchSeries = await _context.MatchSeries
                 .AsNoTracking()
-                .ProjectTo<MatchSeriesdto>(_mapper.ConfigurationProvider)
+                .Select(i => new MatchSeriesdto
+                {
+                    MatchSeriesId = i.MatchSeriesId,
+                    Name = i.Name,
+                    Organizor = i.Organizor,
+                    StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToShortDateString() : "",
+
+                })
                 .SingleOrDefaultAsync(m => m.MatchSeriesId == id);
             if (matchSeries == null)
             {
