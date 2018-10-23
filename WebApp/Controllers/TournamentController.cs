@@ -161,10 +161,5 @@ namespace WebApp.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-
-        private bool TournamentExists(int id)
-        {
-            return _context.Tournaments.Any(e => e.TournamentId == id);
-        }
     }
 }

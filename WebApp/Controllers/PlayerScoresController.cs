@@ -258,7 +258,15 @@ namespace WebApp.Controllers
 
             for (int i = 0; i < 12; i++)
             {
-                model.MatchScore.Add(new MatchScoreDto
+                model.HomeTeamScoreCard.Add(new MatchSummarydto
+                {
+                    MatchId = matchId,
+
+                });
+            }
+            for (int i = 0; i < 12; i++)
+            {
+                model.OpponentTeamScoreCard.Add(new MatchSummarydto
                 {
                     MatchId = matchId,
 
@@ -266,20 +274,45 @@ namespace WebApp.Controllers
             }
 
 
-
             return View(model);
         }
 
-        // POST: PlayerScores/Create
+        // POST: PlayerScores/HomeTeamSave
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Save([FromForm] TeamMatchScoredto Matchplayers, int teamId)
+        public async Task<IActionResult> HomeTeamSave([FromForm] TeamMatchScoredto HomeTeamplayers, int teamId)
         {
             if (ModelState.IsValid)
             {
 
-                _context.AddRange(Matchplayers.MatchScore.Select(i => new PlayerScore
+                _context.AddRange(HomeTeamplayers.HomeTeamScoreCard.Select(i => new PlayerScore
+                {
+                    Position = i.Position,
+                    IsPlayedInning = i.IsPlayedInning,
+                    PlayerId = i.PlayerId,
+                    HowOutId = i.HowOutId,
+                    Bowler = i.Bowler,
+                    MatchId = i.MatchId,
+                    TeamId = i.TeamId
+                }
+                ));
+
+                await _context.SaveChangesAsync();
+                return Json(ResponseHelper.Success());
+                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
+            }
+            return Json(ResponseHelper.UnSuccess());
+        }
+
+        // POST: PlayerScores/OpponentTeamSave
+        [HttpPost]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<IActionResult> OpponentTeamSave([FromForm] TeamMatchScoredto OpponentTeamplayers, int teamId)
+        {
+            if (ModelState.IsValid)
+            {
+
+                _context.AddRange(OpponentTeamplayers.OpponentTeamScoreCard.Select(i => new PlayerScore
                 {
                     Position = i.Position,
                     IsPlayedInning = i.IsPlayedInning,
@@ -433,7 +466,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [Route("PlayerScores/PlayerScoreModal")]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> PlayerScoreModal([FromBody]MatchScoreDto playerScores)
+        public async Task<IActionResult> PlayerScoreModal([FromBody]MatchSummarydto playerScores)
         {
             try
             {
@@ -453,7 +486,7 @@ namespace WebApp.Controllers
                     playercoreCard.Wickets = playerScores.Wickets;
                     playercoreCard.Maiden = playerScores.Maiden;
                     playercoreCard.RunOut = playerScores.RunOut;
-                    playercoreCard.Catches = playerScores.Catch;
+                    playercoreCard.Catches = playerScores.Catches;
                     playercoreCard.Stump = playerScores.Stump;
                     _context.Update(playercoreCard);
                     await _context.SaveChangesAsync();
@@ -657,15 +690,15 @@ namespace WebApp.Controllers
             return View(scoreDto);
         }
 
-        // POST: PlayerScores/Edit/5
+        // POST: PlayerScores/OpponentTeamUpdate/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Edit([FromForm] TeamMatchScoredto Matchplayers, int teamId)
+        public async Task<IActionResult> OpponentTeamUpdate([FromForm] TeamMatchScoredto Matchplayers, int teamId)
         {
             if (ModelState.IsValid)
             {
-                foreach (var mp in Matchplayers.MatchScore)
+                foreach (var mp in Matchplayers.OpponentTeamScoreCard)
                 {
                     var matchScore = new PlayerScore { PlayerScoreId = mp.PlayerScoreId };
 
@@ -687,6 +720,35 @@ namespace WebApp.Controllers
             return Json(ResponseHelper.UpdateUnSuccess());
         }
 
+        // POST: PlayerScores/HomeTeamUpdate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<IActionResult> HomeTeamUpdate([FromForm] TeamMatchScoredto Matchplayers, int teamId)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (var mp in Matchplayers.HomeTeamScoreCard)
+                {
+                    var matchScore = new PlayerScore { PlayerScoreId = mp.PlayerScoreId };
+
+                    _context.PlayerScores.Attach(matchScore);
+                    matchScore.PlayerScoreId = mp.PlayerScoreId;
+                    matchScore.Position = mp.Position;
+                    matchScore.IsPlayedInning = mp.IsPlayedInning;
+                    matchScore.PlayerId = mp.PlayerId;
+                    matchScore.HowOutId = mp.HowOutId;
+                    matchScore.Bowler = mp.Bowler;
+                    matchScore.MatchId = mp.MatchId;
+                    matchScore.TeamId = mp.TeamId;
+                    await _context.SaveChangesAsync();
+
+                }
+                return Json(ResponseHelper.UpdateSuccess());
+                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
+            }
+            return Json(ResponseHelper.UpdateUnSuccess());
+        }
 
         // POST: PlayerScores/Delete/5
         [HttpPost, ActionName("Delete")]

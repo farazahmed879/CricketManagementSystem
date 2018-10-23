@@ -1,4 +1,4 @@
-﻿Create procedure [usp_HomeScreen]
+﻿Alter procedure [usp_HomeScreen]
 AS
 begin
 	SELECT *
@@ -23,6 +23,10 @@ begin
 		SELECT	COUNT(1) as 'Matches'
 		FROM Matches
 	) AS Matches,
+	(
+		SELECT	COUNT(1) as 'Series'
+		FROM MatchSeries
+	) AS Series,
 
 		(
 		SELECT	top 1

@@ -44,25 +44,25 @@
             </div>
 
         </div>
-        <br />
-        <div class="row">
-            <div class="col-md-10 col-sm-10">
-                <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
-                    Advanced Search
-                </button>
-            </div>
-            <div class="col-md-2 col-sm-2">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <div class="form-group">
-                        <a asp-controller="Players" class="btn btn-primary" asp-action="Create">Add</a>
-                    </div>
-
-                }
-            </div>
-        </div>
-
     </div>
+    <ul class="list-inline">
+        <li>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="form-group">
+                    <a asp-controller="Players" class="btn btn-primary" asp-action="Create">Add</a>
+                </div>
+
+            }
+        </li>
+        <li>
+            <button class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
+                Advanced Search
+            </button>
+        </li>
+    </ul>
+
+
 
 
 
@@ -165,7 +165,7 @@
         </form>
     </nav>
 </div>
-
+<div id="snackbar"></div>
 <div id="DeleteModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -225,6 +225,14 @@
             });
         });
 
+        //TOaster
+        function myFunction(data) {
+            var snackBar = document.getElementById('snackbar');
+            snackBar.textContent = data;
+            snackBar.className = "show";
+            setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+        }
+
         $(function () {
             $('#AddBtn').click(function () {
                 window.location = '/Players/Create'
@@ -255,31 +263,33 @@
             });
 
             if (response.ok) {
+                var data = "Record is deleted successfully";
                 window.location.reload();
-                alert("Record is deleted successfully");
+                myFunction(data);
 
                 return;
             } else {
-                alert("Record is not deleted");
+                var data = "Record could not be deleted";
+                myFunction(data);
             }
         };
-                                                                                                                                                    //async function FilterData() {
-                                                                                                                                                    //    var formElement = document.getElementById("Filters");
-                                                                                                                                                    //    var formData = new FormData(formElement);
+                                        //async function FilterData() {
+                                        //    var formElement = document.getElementById("Filters");
+                                        //    var formData = new FormData(formElement);
 
-                                                                                                                                                    //    var teamId = formData.get("teamId")
-                                                                                                                                                    //    var role = formData.get("role")
+                                        //    var teamId = formData.get("teamId")
+                                        //    var role = formData.get("role")
 
 
 
-                                                                                                                                                    //    // var header = new Headers();
-                                                                                                                                                    //    //header.append("content-type");
+                                        //    // var header = new Headers();
+                                        //    //header.append("content-type");
 
-                                                                                                                                                    //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
-                                                                                                                                                    //        credentials: 'same-origin'
-                                                                                                                                                    //    });
+                                        //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
+                                        //        credentials: 'same-origin'
+                                        //    });
 
-                                                                                                                                                    //};
+                                      //  };
 
 
 

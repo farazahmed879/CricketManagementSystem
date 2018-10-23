@@ -1,5 +1,4 @@
 ﻿@model PaginatedList<WebApp.ViewModels.Matchdto>
-@model PaginatedList<WebApp.ViewModels.Matchdto>
 
 @{
     ViewData["Title"] = "Matches";
@@ -72,22 +71,24 @@
             </div>
 
         </div>
-        <br />
 
-        <div class="list-inline">
-            <div>
-                <button class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
-                    Advanced Search
-                </button>
-            </div>
-            <div>
+    </div>
+    <ul class="list-inline">
+        <li>
+            @if (User.Identity.IsAuthenticated)
+            {
                 <div class="form-group">
                     <a asp-controller="Matches" class="btn btn-primary" asp-action="Create">Add</a>
                 </div>
-            </div>
-        </div>
-    </div>
-    @*Filter*@
+
+            }
+        </li>
+        <li>
+            <button class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
+                Advanced Search
+            </button>
+        </li>
+    </ul>
 
 
 
@@ -199,7 +200,7 @@
                             {
 
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                    <button  type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
@@ -251,10 +252,9 @@
                 <i style="font-size:30px" class="far fa-hand-point-right"></i>
             </a>
         </form>
-
     </nav>
-
 </div>
+<div id="snackbar"></div>
 <div id="DeleteModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -368,11 +368,13 @@
             });
 
             if (response.ok) {
+                var data = "Record is deleted successfully";
                 window.location.reload();
-                alert("Record is deleted successfully");
+                myFunction(data);
                 return;
             } else {
-                alert("Record is not deleted");
+                var data = "Record could not be deleted";
+                myFunction(data);
             }
         };
         $("#tournamentId").attr("disabled", true);
@@ -395,6 +397,13 @@
                 $("#matchSeriesId").val('').trigger('change');
             }
         });
+
+        function myFunction(data) {
+            var snackBar = document.getElementById('snackbar');
+            snackBar.textContent = data;
+            snackBar.className = "show";
+            setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+        }
 
     </script>
     <style>

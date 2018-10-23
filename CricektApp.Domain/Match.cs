@@ -17,9 +17,9 @@ namespace CricketApp.Domain
         }
 
         public int MatchId { get; set; }
-        [Required]
+
         public string GroundName { get; set; }
-        [Required]
+
         public string Place { get; set; }
         [Required]
         public int MatchOvers { get; set; }
@@ -33,7 +33,7 @@ namespace CricketApp.Domain
         [Required]
         public int OppponentTeamId { get; set; }
         public Team OppponentTeam { get; set; }
-        public Team HomeTeam { get; set; }        
+        public Team HomeTeam { get; set; }
         public Tournament Tournament { get; set; }
         [Column(TypeName = "varbinary(max)")]
         public byte[] MatchLogo { get; set; }
@@ -44,7 +44,7 @@ namespace CricketApp.Domain
         public List<TeamScore> TeamScores { get; set; }
         public List<FallOfWicket> FallOfWickets { get; set; }
         public int UserId { get; set; }
-        public MatchType MatchType { get; set;}
+        public MatchType MatchType { get; set; }
         public int MatchTypeId { get; set; }
         public MatchSeries MatchSeries { get; set; }
         public int? MatchSeriesId { get; set; }

@@ -74,57 +74,6 @@ namespace WebApp.Controllers
             , page ?? 1, pageSize));
 
         }
-        // GET: RoleManagement/
-        [Route("Teams/RoleManagement")]
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> RoleManagement(int? page)
-        {
-
-            ViewBag.ClubUsers = new SelectList(_context.UserRole
-              .AsNoTracking()
-               .Where(i => i.RoleId == 17)
-               .Select(i => new
-               {
-                   i.User.UserName,
-                   i.User.Id
-               }), "Id", "UserName");
-
-
-            //   ViewBag.ClubUsers = new SelectList(_context.User, "Id", "UserName");
-            var users = await _userManager.GetUserAsync(HttpContext.User);
-            ViewBag.Name = "Role Management";
-            var RoleManagement = _context.Teams
-                .Where(i => i.clubAdmin.UserId == users.Id)
-                .Select(i => new { i.TeamId, i.Team_Name, i.IsRegistered, i.clubAdmin.UserId })
-                .ToList();
-            return View(RoleManagement);
-        }
-
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> RoleManagementUpdate(int id, Team team)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(team);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TeamExists(team.TeamId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return Ok();
-        }
 
         // GET: Teams/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -261,9 +210,6 @@ namespace WebApp.Controllers
             return Ok();
         }
 
-        private bool TeamExists(int id)
-        {
-            return _context.Teams.Any(e => e.TeamId == id);
-        }
+
     }
 }

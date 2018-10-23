@@ -6,6 +6,7 @@
         public int Players { get; set; }
         public int Teams { get; set; }
         public int Matches { get; set; }
+        public int Series { get; set; }
         public int Records { get; set; }
         public string Summary { get; set; }
         public string HomeTeam { get; set; }

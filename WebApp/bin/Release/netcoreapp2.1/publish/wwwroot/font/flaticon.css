@@ -3,6 +3,7 @@
   	Creation date: 16/10/2018 13:45
   	*/
 
+
 @font-face {
   font-family: "Flaticon";
   src: url("./Flaticon.eot");
@@ -24,7 +25,6 @@
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
   font-family: Flaticon;
-        font-size: 20px;
 font-style: normal;
 margin-left: 20px;
 }

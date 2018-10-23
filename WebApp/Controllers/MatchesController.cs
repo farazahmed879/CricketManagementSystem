@@ -80,7 +80,7 @@ namespace WebApp.Controllers
                .Where(i => (!matchTypeId.HasValue || i.MatchTypeId == matchTypeId) &&
                            (!teamId.HasValue || i.HomeTeamId == teamId || i.OppponentTeamId == teamId) &&
                            (!tournamentId.HasValue || i.TournamentId == tournamentId) && (!season.HasValue || i.Season == season) &&
-                           (!matchSeriesId.HasValue || i.MatchSeriesId == matchSeriesId) && (!matchOvers.HasValue || i.MatchOvers == matchOvers) && 
+                           (!matchSeriesId.HasValue || i.MatchSeriesId == matchSeriesId) && (!matchOvers.HasValue || i.MatchOvers == matchOvers) &&
                            (!userId.HasValue || i.UserId == userId))
                 .Select(i => new ViewModels.Matchdto
                 {
@@ -102,8 +102,7 @@ namespace WebApp.Controllers
                     HasFilledOpponentTeamData = i.PlayerScores.Any() && i.PlayerScores.Any(o => o.Player != null && o.Player.TeamId == i.OppponentTeamId),
                     HasFilledTeamScoreData = i.TeamScores.Any() && i.TeamScores.Any(o => i.MatchId == i.MatchId)
                 })
-               .OrderBy(i => i.MatchId)
-               .AsQueryable()
+               .OrderByDescending(i => i.MatchId)
                                  , page ?? 1, pageSize));
 
         }

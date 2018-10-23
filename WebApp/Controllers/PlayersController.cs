@@ -102,7 +102,9 @@ namespace WebApp.Controllers
                                Place = i.Place,
                                City = i.City,
                                TeamPlayers = i.Players != null && i.Players.Any() ?
-                                               i.Players.Select(o => new TeamPlayersdto
+                                               i.Players
+                                               .Where(p => !p.IsDeactivated)
+                                               .Select(o => new TeamPlayersdto
                                                {
                                                    PlayerId = o.PlayerId,
                                                    Player_Name = o.Player_Name,

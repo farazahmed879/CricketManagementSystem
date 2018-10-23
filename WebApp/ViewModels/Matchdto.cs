@@ -13,7 +13,6 @@ namespace WebApp.ViewModels
         public int MatchId { get; set; }
         [Required]
         public string GroundName { get; set; }
-        [Required]
         public string Place { get; set; }
         [Required]
         public int MatchOvers { get; set; }

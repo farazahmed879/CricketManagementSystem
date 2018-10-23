@@ -109,6 +109,7 @@
         </form>
     </nav>
 </div>
+<div id="snackbar"></div>
 <div id="DeleteModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -164,6 +165,13 @@
             });
         });
 
+        function myFunction(data) {
+            var snackBar = document.getElementById('snackbar');
+            snackBar.textContent = data;
+            snackBar.className = "show";
+            setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+        }
+
         $(document).ready(function () {
             $('#TournamentTable').DataTable({
                 "paging": false,
@@ -181,8 +189,8 @@
         });
 
 
-        function Delete(MatchId) {
-            document.getElementById("MatchId").value = MatchId;
+        function Delete(TournamentId) {
+            document.getElementById("TournamentId").value = TournamentId;
         }
 
         $("#deleteBtn")
@@ -205,10 +213,13 @@
             });
 
             if (response.ok) {
+                var data = "Record is deleted successfully";
                 window.location.reload();
+                myFunction(data);
                 return;
             } else {
-                alert("Record is not deleted");
+                var data = "Record could not be deleted";
+                myFunction(data);
             }
         };
 

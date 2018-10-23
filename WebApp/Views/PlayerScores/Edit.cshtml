@@ -25,7 +25,7 @@
 <div class="container-fluid">
     <div class="row">
 
-        <div class="col-sm-12" style="background-color:powderblue;">
+        <div class="col-sm-12 bg-blue-gradient">
             <ul class="list-inline pull-center">
                 <li>
                     <h4>@ViewBag.HomeTeam</h4>
@@ -45,28 +45,28 @@
                         <li role="presentation" class="active">
                             <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="First Inning">
                                 <span class="round-tab">
-                                    <i class="ion ion-flag"></i>
+                                    <i class="flaticon-number-one-in-a-circle"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
                             <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Second Inning">
                                 <span class="round-tab">
-                                    <i class="ion ion-ios-flag"></i>
+                                    <i class="flaticon-number-two-in-a-circle"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
                             <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Match Summary">
                                 <span class="round-tab">
-                                    <i class="ion ion-reply-all"></i>
+                                    <i class="flaticon-schedule"></i>
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
                             <a href="#fallOfWicket" data-toggle="tab" aria-controls="fallOfWicket" role="tab" title="Fall of Wickets">
                                 <span class="round-tab">
-                                    <i class="ion ion-eject"></i>
+                                    <i class="fas fa-check"></i>
                                 </span>
                             </a>
                         </li>
@@ -74,10 +74,11 @@
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane active" role="tabpanel" id="step1">
+                        <div class="col-md-12 bg-blue-active">
+                            <h4>@ViewBag.HomeTeam Players</h4>
+                        </div>
                         <div class="container-fluid">
-                            <div class="col-md-12" style="background-color:powderblue;">
-                                <h4>@ViewBag.HomeTeam</h4>
-                            </div>
+
                             <form class="form-inline" role="form" id="HomeTeamData">
 
                                 <div class="form-inline">
@@ -153,18 +154,19 @@
                                 <hr />
 
                                 <ul class="list-inline pull-right">
-                                    <li><input type="button" id="HomeTeamBtn" value="Save and Continue" class="btn btn-primary next-step" onclick="return HomeTeam(this.form)"></li>
+                                    <li><input type="button" id="BackBtn" value="Back" class="btn btn-default"></li>
+                                    <li><input type="button" id="HomeTeamBtn" value="Save and Continue" class="btn btn-primary next-step"></li>
                                 </ul>
 
                             </form>
                         </div>
                     </div>
                     <div class="tab-pane" role="tabpanel" id="step2">
-
+                        <div class="col-md-12 bg-blue-active">
+                            <h4>@ViewBag.OpponentTeam Players</h4>
+                        </div>
                         <div class="container-fluid">
-                            <div class="col-md-12" style="background-color:powderblue;">
-                                <h4>@ViewBag.OpponentTeam</h4>
-                            </div>
+
                             <form class="form-inline" role="form" id="OpponentTeamData">
 
                                 <div class="form-inline">
@@ -240,14 +242,14 @@
                                 <hr />
                                 <ul class="list-inline pull-right">
                                     <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
-                                    <li><input type="button" id="OpponentTeamBtn" value="Save and Continue" class="btn btn-primary next-step" onclick="return OpponentTeam(this.form)"></li>
+                                    <li><input type="button" id="OpponentTeamBtn" value="Save and Continue" class="btn btn-primary next-step"></li>
                                 </ul>
                             </form>
                         </div>
 
                     </div>
                     <div class="tab-pane" role="tabpanel" id="complete">
-                        <div class="col-md-12" style="background-color:powderblue;">
+                        <div class="col-md-12 bg-blue-active">
                             <h4>Match Summary</h4>
                         </div>
                         <form class="form-inline" role="form" id="MatchSummary">
@@ -354,20 +356,15 @@
                                     </div>
                                 }
                             }
+                            <hr />
                             <ul class="list-inline pull-right">
                                 <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
-                                <li><input type="button" id="TeamScorebtn" value="Finish" class="btn btn-primary next-step" onclick="return TeamScoreData(this.form)"></li>
+                                <li><input type="button" id="TeamScorebtn" value="Finish" class="btn btn-primary next-step"></li>
                             </ul>
                         </form>
-
-                        <div class="container text-center">
-                            <div>
-                                <button id="BackBtn" class="btn btn-primary btn-xs">Finish</button>
-                            </div>
-                        </div>
                     </div>
                     <div class="tab-pane" role="tabpanel" id="fallOfWicket">
-                        <div class="col-md-12" style="background-color:powderblue;">
+                        <div class="col-md-12 bg-blue-active">
                             <h4>Fall Of Wickets</h4>
                         </div>
                         <form class="form-inline" role="form" id="FallOfWicket">
@@ -472,18 +469,12 @@
                                 }
                             }
                             <hr />
-                            <hr />
+                         
                             <ul class="list-inline pull-right">
                                 <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
-                                <li><input type="button" value="Save and Continue" class="btn btn-primary" onclick="return FallOfWicketData(this.form)"></li>
+                                <li><input id="FallofWicketBtn" type="button" value="Save and Continue" class="btn btn-primary"></li>
                             </ul>
                         </form>
-                        <div class="container text-center">
-                            <div>
-                                <button id="BackBtn" class="btn btn-primary btn-xs">Back</button>
-                            </div>
-                        </div>
-
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -528,156 +519,160 @@
             snackBar.className = "show";
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
+        $(function () {
+            $('#HomeTeamBtn').click(function () {
+                try {
+                    var formData = $("#HomeTeamData").serializeArray();
+                    var model = {
+                        matchScore: []
+                    };
 
-        function HomeTeam() {
-            try {
-                var formData = $("#HomeTeamData").serializeArray();
-                var model = {
-                    matchScore: []
-                };
-
-                for (let index = 0; index < 12; index++) {
-                    const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
-                    var matchScore = {};
-                    for (let i = 0; i < currentModel.length; i++) {
-                        const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
-                        const name = currentModel[i].name.substring(indexOfBracket);
-                        if (name == "IsPlayedInning")
-                            matchScore[name] = $(".checked input[name='" + currentModel[i].name + "']").val();
-                        else
-                            matchScore[name] = currentModel[i].value;
+                    for (let index = 0; index < 12; index++) {
+                        const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
+                        var matchScore = {};
+                        for (let i = 0; i < currentModel.length; i++) {
+                            const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
+                            const name = currentModel[i].name.substring(indexOfBracket);
+                            if (name == "IsPlayedInning")
+                                matchScore[name] = $(".checked input[name='" + currentModel[i].name + "']").val();
+                            else
+                                matchScore[name] = currentModel[i].value;
+                        }
+                        model.matchScore.push(matchScore);
                     }
-                    model.matchScore.push(matchScore);
+
+                    console.log(model);
+                    $.ajax(`/PLayerScores/HomeTeamUpdate`, {
+                        data: model,
+                        headers: {
+                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                        },
+                        method: "POST"
+                    }).done(function (data) {
+                        myFunction(data);
+                        $('#HomeTeamBtn').attr('disabled', true);
+                    }).fail(function (data) {
+                        myFunction(data);
+                    });
+
+
+                } catch (ex) {
+                    console.error(ex);
                 }
+            });
+        });
+        $(function () {
+            $('#OpponentTeamBtn').click(function () {
+                try {
 
-                console.log(model);
-                $.ajax(`/PLayerScores/Edit`, {
-                    data: model,
-                    headers: {
-                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                    },
-                    method: "POST"
-                }).done(function (data) {
-                    myFunction(data);
-                    $('#HomeTeamBtn').attr('disabled', true);
-                }).fail(function (data) {
-                    myFunction(data);
-                });
-
-
-            } catch (ex) {
-                console.error(ex);
-            }
-
-        }
-        function OpponentTeam() {
-            try {
-
-                var formData = $("#OpponentTeamData").serializeArray();
-                var model = {
-                    matchScore: []
-                };
-                for (let index = 0; index < 12; index++) {
-                    const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
-                    var matchScore = {};
-                    for (let i = 0; i < currentModel.length; i++) {
-                        const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
-                        const name = currentModel[i].name.substring(indexOfBracket);
-                        if (name == "IsPlayedInning")
-                            matchScore[name] = $(".checked input[name='" + currentModel[i].name + "']").val();
-                        else
-                            matchScore[name] = currentModel[i].value;
+                    var formData = $("#OpponentTeamData").serializeArray();
+                    var model = {
+                        matchScore: []
+                    };
+                    for (let index = 0; index < 12; index++) {
+                        const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
+                        var matchScore = {};
+                        for (let i = 0; i < currentModel.length; i++) {
+                            const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
+                            const name = currentModel[i].name.substring(indexOfBracket);
+                            if (name == "IsPlayedInning")
+                                matchScore[name] = $(".checked input[name='" + currentModel[i].name + "']").val();
+                            else
+                                matchScore[name] = currentModel[i].value;
+                        }
+                        model.matchScore.push(matchScore);
                     }
-                    model.matchScore.push(matchScore);
+                    console.log(model);
+                    $.ajax(`/PLayerScores/OpponentTeamUpdate`, {
+                        data: model,
+                        headers: {
+                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                        },
+                        method: "POST"
+                    }).done(function (data) {
+                        myFunction(data);
+                        $('#OpponentTeamBtn').attr('disabled', true);
+                    }).fail(function (data) {
+                        myFunction(data);
+                    });
+
+                } catch (ex) {
+                    console.error(ex);
                 }
-                console.log(model);
-                $.ajax(`/PLayerScores/Edit`, {
-                    data: model,
-                    headers: {
-                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                    },
-                    method: "POST"
-                }).done(function (data) {
-                    myFunction(data);
-                    $('#OpponentTeamBtn').attr('disabled', true);
-                }).fail(function (data) {
-                    myFunction(data);
-                });
-
-            } catch (ex) {
-                console.error(ex);
-            }
-
-        }
-        function TeamScoreData() {
-            try {
-                var formData = $("#MatchSummary").serializeArray();
-                var model = {
-                    teamScore: []
-                };
-                for (let index = 0; index < 2; index++) {
-                    const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
-                    var teamScore = {};
-                    for (let i = 0; i < currentModel.length; i++) {
-                        const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
-                        teamScore[currentModel[i].name.substring(indexOfBracket)] = currentModel[i].value;
+            });
+        });
+        $(function () {
+            $('#TeamScorebtn').click(function () {
+                try {
+                    var formData = $("#MatchSummary").serializeArray();
+                    var model = {
+                        teamScore: []
+                    };
+                    for (let index = 0; index < 2; index++) {
+                        const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
+                        var teamScore = {};
+                        for (let i = 0; i < currentModel.length; i++) {
+                            const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
+                            teamScore[currentModel[i].name.substring(indexOfBracket)] = currentModel[i].value;
+                        }
+                        model.teamScore.push(teamScore);
                     }
-                    model.teamScore.push(teamScore);
+                    console.log(model);
+                    $.ajax(`/PLayerScores/UpdateTeamScore`, {
+                        data: model,
+                        headers: {
+                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                        },
+                        method: "POST"
+                    }).done(function (data) {
+                        myFunction(data);
+                        $('#TeamScorebtn').attr('disabled', true);
+
+                    }).fail(function (data) {
+                        myFunction(data);
+                    });
+
+                } catch (ex) {
+                    console.error(ex);
                 }
-                console.log(model);
-                $.ajax(`/PLayerScores/UpdateTeamScore`, {
-                    data: model,
-                    headers: {
-                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                    },
-                    method: "POST"
-                }).done(function (data) {
-                    myFunction(data);
-                    $('#TeamScorebtn').attr('disabled', true);
-
-                }).fail(function (data) {
-                    myFunction(data);
-                });
-
-            } catch (ex) {
-                console.error(ex);
-            }
-
-        }
-        function FallOfWicketData() {
-            try {
-                var formData = $("#FallOfWicket").serializeArray();
-                var model = {
-                    fallOfWicket: []
-                };
-                for (let index = 0; index < 2; index++) {
-                    const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
-                    var fallOfWicket = {};
-                    for (let i = 0; i < currentModel.length; i++) {
-                        const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
-                        fallOfWicket[currentModel[i].name.substring(indexOfBracket)] = currentModel[i].value;
+            });
+        });
+        $(function () {
+            $('#FallofWicketBtn').click(function () {
+                try {
+                    var formData = $("#FallOfWicket").serializeArray();
+                    var model = {
+                        fallOfWicket: []
+                    };
+                    for (let index = 0; index < 2; index++) {
+                        const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
+                        var fallOfWicket = {};
+                        for (let i = 0; i < currentModel.length; i++) {
+                            const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
+                            fallOfWicket[currentModel[i].name.substring(indexOfBracket)] = currentModel[i].value;
+                        }
+                        model.fallOfWicket.push(fallOfWicket);
                     }
-                    model.fallOfWicket.push(fallOfWicket);
+                    console.log(model);
+                    $.ajax(`/PLayerScores/UpdateFallOfWicket`, {
+                        data: model,
+                        headers: {
+                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                        },
+                        method: "POST"
+                    }).done(function (data) {
+                        myFunction(data);
+                        window.location = "/Matches/Index";
+                    }).fail(function (data) {
+                        myFunction(data);
+                    });
+
+                } catch (ex) {
+                    console.error(ex);
                 }
-                console.log(model);
-                $.ajax(`/PLayerScores/UpdateFallOfWicket`, {
-                    data: model,
-                    headers: {
-                        'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                    },
-                    method: "POST"
-                }).done(function (data) {
-                    myFunction(data);
-                    windows.location = "/Matches/Index";
-                }).fail(function (data) {
-                    myFunction(data);
-                });
+            });
+        });
 
-            } catch (ex) {
-                console.error(ex);
-            }
-
-        }
         //Initialize tooltips
         $(document).ready(function () {
 

@@ -3,10 +3,9 @@ using AutoMapper.QueryableExtensions;
 using CricketApp.Data;
 using CricketApp.Domain;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Helper;
@@ -30,19 +29,25 @@ namespace WebApp.Controllers
 
         // GET: Teams
 
-        public async Task<IActionResult> Index(int? day, string month, int? page, int? teamId)
+        public async Task<IActionResult> Index(int? day, string month, int? year, int? page, int? teamId)
         {
             ViewBag.Name = "Schedule";
             ViewBag.TeamId = teamId;
+            ViewBag.Year = new SelectList(_context.MatchSchedule
+                .AsNoTracking()
+                .Select(i => i.Year)
+                .ToList().Distinct(), "Year");
+
             int pageSize = 20;
             return View(await PaginatedList<ViewModels.MatchScheduledto>.CreateAsync(
             _context.MatchSchedule
             .AsNoTracking()
             .Where(i => (!day.HasValue || i.Day >= day)
                     && (string.IsNullOrEmpty(month) || i.Month == month)
+                    && (!year.HasValue || i.Year == year)
                     && (!teamId.HasValue || i.TeamId == teamId)
             )
-            .Select(i => new ViewModels.MatchScheduledto
+            .Select(i => new MatchScheduledto
             {
                 TeamId = i.TeamId,
                 GroundName = i.GroundName,
@@ -61,12 +66,12 @@ namespace WebApp.Controllers
         // Post: Schedule/CreateSchedule
         [Route("Schedule/CreateSchedule")]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> CreateSchedule(MatchScheduledto matchSchedule)
+        public async Task<IActionResult> CreateSchedule([FromBody]MatchScheduledto matchSchedule)
         {
             if (ModelState.IsValid)
             {
                 var model = _mapper.Map<MatchSchedule>(matchSchedule);
-                _context.MatchSchedule.Add(model);
+                _context.MatchSchedule.Update(model);
                 await _context.SaveChangesAsync();
                 return Json(ResponseHelper.Success());
             }
@@ -79,8 +84,17 @@ namespace WebApp.Controllers
         {
             var matchSchedule = _context.MatchSchedule
                 .AsNoTracking()
-                .ProjectTo<MatchScheduledto>(_mapper.ConfigurationProvider)
-                .SingleOrDefaultAsync(m => m.MatchScheduleId == matchScheduleId);
+                .Select(i => new MatchScheduledto
+                {
+                    MatchScheduleId = i.MatchScheduleId,
+                    GroundName = i.GroundName,
+                    OpponentTeam = i.OpponentTeam,
+                    Day = i.Day,
+                    Month = i.Month,
+                    Year = i.Year,
+                    TeamId = i.TeamId
+                })
+                .SingleOrDefault(m => m.MatchScheduleId == matchScheduleId);
             if (matchSchedule == null)
             {
                 return NotFound();
@@ -88,27 +102,10 @@ namespace WebApp.Controllers
             return Json(matchSchedule);
         }
 
-        // POST: Schedule/Update/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> Update(int id, MatchScheduledto dto)
-        {
-            if (ModelState.IsValid)
-            {
-
-                _context.MatchSchedule.Update(_mapper.Map<MatchSchedule>(dto));
-                await _context.SaveChangesAsync();
-
-                return Json(ResponseHelper.UpdateSuccess());
-            }
-            return Json(ResponseHelper.UpdateUnSuccess());
-        }
-
 
         [Route("Schedule/DeleteConfirmed")]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> DeleteConfirmed(long matchScheduleId)
+        public async Task<IActionResult> DeleteConfirmed(int matchScheduleId)
         {
             var model = await _context.MatchSchedule.SingleOrDefaultAsync(m => m.MatchScheduleId == matchScheduleId);
             _context.MatchSchedule.Remove(model);

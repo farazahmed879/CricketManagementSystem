@@ -172,7 +172,6 @@ namespace WebApp.Controllers
 
         // POST: MatchSeries/Delete/5
         [Authorize(Roles = "Club Admin,Administrator")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int matchSeriesId)
         {
             var matchSeries = await _context.MatchSeries.SingleOrDefaultAsync(m => m.MatchSeriesId == matchSeriesId);
@@ -181,9 +180,5 @@ namespace WebApp.Controllers
             return Ok();
         }
 
-        private bool MatchSeriesExists(int id)
-        {
-            return _context.MatchSeries.Any(e => e.MatchSeriesId == id);
-        }
     }
 }

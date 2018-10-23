@@ -128,8 +128,8 @@
                                 var base64 = Model.MatchLogo == null || !Model.MatchLogo.Any() ? "" : Convert.ToBase64String(Model.MatchLogo);
                                 <div class="img-responsive" id="Img" style='margin-bottom: 1em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
                             }
-                            <label asp-for="MatchImage" class="btn btn-primary">
-                                <i class="far fa-images"> Upload</i> <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
+                            <label asp-for="MatchImage" class="btn btn-box-tool">
+                                <i class="far fa-picture-o"> Upload</i> <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
                             </label>
                         </div>
                     </div>
