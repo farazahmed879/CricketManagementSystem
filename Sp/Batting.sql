@@ -10,7 +10,7 @@
 AS
 BEGIN
 	SELECT  count (PlayerScores.MatchId) as 'TotalMatch',
-			count (IsPlayedInning) as 'TotalInnings',
+			count (case when IsPlayedInning = 1 then 1 else null end) as 'TotalInnings',
 			sum (Bat_Runs) as 'TotalBatRuns',
 			sum (Bat_Balls) as 'TotalBatBalls',
 			sum (Four) as 'TotalFours',

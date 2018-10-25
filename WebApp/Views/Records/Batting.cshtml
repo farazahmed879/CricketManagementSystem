@@ -110,6 +110,9 @@
                         Match
                     </th>
                     <th>
+                        Inning
+                    </th>
+                    <th>
                         Runs
                     </th>
                     <th>
@@ -141,6 +144,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.TotalMatch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalInnings)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.TotalBatRuns)
@@ -253,6 +259,7 @@
                             tr.innerHTML = `
 <td> ${i.playerName} </td>
 <td>${i.totalMatch}</td>
+<td>${i.totalInnings}</td>
 <td>${i.totalBatRuns}</td>
 <td> ${i.battingAverage} </td>
 <td> ${i.strikeRate}</td>

@@ -469,7 +469,7 @@
                                 }
                             }
                             <hr />
-                         
+
                             <ul class="list-inline pull-right">
                                 <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
                                 <li><input id="FallofWicketBtn" type="button" value="Save and Continue" class="btn btn-primary"></li>
@@ -524,21 +524,21 @@
                 try {
                     var formData = $("#HomeTeamData").serializeArray();
                     var model = {
-                        matchScore: []
+                        homeTeamScoreCard: []
                     };
 
                     for (let index = 0; index < 12; index++) {
                         const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
-                        var matchScore = {};
+                        var homeTeamScoreCard = {};
                         for (let i = 0; i < currentModel.length; i++) {
                             const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
                             const name = currentModel[i].name.substring(indexOfBracket);
                             if (name == "IsPlayedInning")
-                                matchScore[name] = $(".checked input[name='" + currentModel[i].name + "']").val();
+                                homeTeamScoreCard[name] = $(".checked input[name='" + currentModel[i].name + "']").val();
                             else
-                                matchScore[name] = currentModel[i].value;
+                                homeTeamScoreCard[name] = currentModel[i].value;
                         }
-                        model.matchScore.push(matchScore);
+                        model.homeTeamScoreCard.push(homeTeamScoreCard);
                     }
 
                     console.log(model);
@@ -567,20 +567,20 @@
 
                     var formData = $("#OpponentTeamData").serializeArray();
                     var model = {
-                        matchScore: []
+                        opponentTeamScoreCard: []
                     };
                     for (let index = 0; index < 12; index++) {
                         const currentModel = formData.filter(i => i.name.includes(`[${index}]`));
-                        var matchScore = {};
+                        var opponentTeamScoreCard = {};
                         for (let i = 0; i < currentModel.length; i++) {
                             const indexOfBracket = currentModel[i].name.indexOf(']') + 2;
                             const name = currentModel[i].name.substring(indexOfBracket);
                             if (name == "IsPlayedInning")
-                                matchScore[name] = $(".checked input[name='" + currentModel[i].name + "']").val();
+                                opponentTeamScoreCard[name] = $(".checked input[name='" + currentModel[i].name + "']").val();
                             else
-                                matchScore[name] = currentModel[i].value;
+                                opponentTeamScoreCard[name] = currentModel[i].value;
                         }
-                        model.matchScore.push(matchScore);
+                        model.opponentTeamScoreCard.push(opponentTeamScoreCard);
                     }
                     console.log(model);
                     $.ajax(`/PLayerScores/OpponentTeamUpdate`, {

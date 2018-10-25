@@ -2,10 +2,10 @@
 
 namespace WebApp.ViewModels
 {
-    public class TeamMatchScoredto    {
+    public class TeamMatchScoredto
+    {
         public TeamMatchScoredto()
         {
-            //MatchScore = new List<MatchScoreDto>(12);
             HomeTeamScoreCard = new List<MatchSummarydto>(12);
             OpponentTeamScoreCard = new List<MatchSummarydto>(12);
             TeamScore = new List<TeamScoredto>(2);

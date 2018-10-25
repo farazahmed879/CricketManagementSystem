@@ -313,7 +313,7 @@ namespace WebApp.Controllers
             return Ok();
         }
         // GET: PlayerStatistics
-        public IActionResult PlayerStatistics(int playerId, int? matchOvers)
+        public IActionResult PlayerStatistics(int playerId)
         {
             ViewBag.Name = "Players / Profile";
             ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
@@ -324,8 +324,7 @@ namespace WebApp.Controllers
                     "[usp_GetSinglePlayerStatistics]",
                     new
                     {
-                        @paramPlayerId = playerId,
-                        @paramOvers = matchOvers
+                        @paramPlayerId = playerId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new PlayerStatisticsdto

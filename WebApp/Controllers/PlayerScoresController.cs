@@ -42,6 +42,11 @@ namespace WebApp.Controllers
             //    .Count(i => i.HowOutId)
             //    .Single();
 
+            ViewBag.GroundName = _context.Matches
+              .AsNoTracking()
+              .Where(i => i.MatchId == matchId)
+              .Select(i => i.GroundName)
+              .Single();
 
             ViewBag.HomeTeam = _context.Teams
                .AsNoTracking()
@@ -61,79 +66,47 @@ namespace WebApp.Controllers
 
             ViewBag.HomeTeamOut = _context.PlayerScores
                 .AsNoTracking()
-                .Count(i => i.HowOutId != 7 && i.TeamId == oppTeamId && i.MatchId == matchId);
+                .Count(i => i.HowOutId != 7 && i.TeamId == homeTeamId && i.MatchId == matchId);
 
             ViewBag.OpponenetTeamOut = _context.PlayerScores
                .AsNoTracking()
-               .Count(i => i.HowOutId != 7 && i.TeamId == oppTeamId && i.MatchId == matchId);
+               .Where(i => i.HowOutId != 7 && i.TeamId == oppTeamId && i.MatchId == matchId)
+               .Count();
 
-            scoreDto.HomeTeamScoreCard = _context.PlayerScores
+
+            var matchSummary = _context.PlayerScores
                 .AsNoTracking()
-                .Where(i => i.Player.TeamId == homeTeamId && i.MatchId == matchId)
-                .Include(i => i.HowOut)
-                .Select(i => new MatchSummarydto
-                {
-                    PlayerScoreId = i.PlayerScoreId,
-                    PlayerId = i.PlayerId,
-                    Position = i.Position,
-                    MatchId = i.MatchId,
-                    Bowler = i.Bowler,
-                    Catches = i.Catches,
-                    IsPlayedInning = i.IsPlayedInning,
-                    Ball_Runs = i.Ball_Runs,
-                    Bat_Balls = i.Bat_Balls,
-                    Bat_Runs = i.Bat_Runs,
-                    Four = i.Four,
-                    HowOutId = i.HowOutId,
-                    Maiden = i.Maiden,
-                    Overs = i.Overs,
-                    RunOut = i.RunOut,
-                    Six = i.Six,
-                    Stump = i.Stump,
-                    Wickets = i.Wickets,
-                    Player = i.Player,
-                    HowOutName = i.HowOut.Name
-
-
-
-                })
+                .Where(i => (i.TeamId == homeTeamId || i.TeamId == oppTeamId) && i.MatchId == matchId)
+                             .Select(i => new MatchSummarydto
+                             {
+                                 PlayerScoreId = i.PlayerScoreId,
+                                 PlayerId = i.PlayerId,
+                                 Position = i.Position,
+                                 MatchId = i.MatchId,
+                                 Bowler = i.Bowler,
+                                 Catches = i.Catches,
+                                 IsPlayedInning = i.IsPlayedInning,
+                                 Ball_Runs = i.Ball_Runs,
+                                 Bat_Balls = i.Bat_Balls,
+                                 Bat_Runs = i.Bat_Runs,
+                                 Four = i.Four,
+                                 HowOutId = i.HowOutId,
+                                 Maiden = i.Maiden,
+                                 Overs = i.Overs,
+                                 RunOut = i.RunOut,
+                                 Six = i.Six,
+                                 Stump = i.Stump,
+                                 Wickets = i.Wickets,
+                                 Player = i.Player,
+                                 HowOutName = i.HowOut.Name,
+                                 TeamId = i.TeamId
+                             })
                 .OrderBy(i => i.Position)
                 .ToList();
 
+            scoreDto.HomeTeamScoreCard = matchSummary.Where(i => i.TeamId == homeTeamId).ToList();
 
-            scoreDto.OpponentTeamScoreCard = _context.PlayerScores
-               .AsNoTracking()
-               .Where(i => i.Player.TeamId == oppTeamId && i.MatchId == matchId)
-               .Include(i => i.HowOut)
-               .Select(i => new MatchSummarydto
-               {
-                   PlayerScoreId = i.PlayerScoreId,
-                   PlayerId = i.PlayerId,
-                   Position = i.Position,
-                   MatchId = i.MatchId,
-                   Bowler = i.Bowler,
-                   Catches = i.Catches,
-                   IsPlayedInning = i.IsPlayedInning,
-                   Ball_Runs = i.Ball_Runs,
-                   Bat_Balls = i.Bat_Balls,
-                   Bat_Runs = i.Bat_Runs,
-                   Four = i.Four,
-                   HowOutId = i.HowOutId,
-                   Maiden = i.Maiden,
-                   Overs = i.Overs,
-                   RunOut = i.RunOut,
-                   Six = i.Six,
-                   Stump = i.Stump,
-                   Wickets = i.Wickets,
-                   Player = i.Player,
-                   HowOutName = i.HowOut.Name
-
-
-               })
-               .OrderBy(i => i.Position)
-               .ToList();
-
-
+            scoreDto.OpponentTeamScoreCard = matchSummary.Where(i => i.TeamId == oppTeamId).ToList();
 
             scoreDto.TeamScoreCard = _context.TeamScores
                 .AsNoTracking()
@@ -154,27 +127,30 @@ namespace WebApp.Controllers
                 .OrderBy(i => i.TeamScoreId)
                 .ToList();
 
-            scoreDto.FallOfWicket = _context.FallOFWickets
-              .AsNoTracking()
-              .Include(i => i.Team)
-              .Where(i => i.MatchId == matchId)
-              .Select(i => new FallOfWicketdto
-              {
-                  TeamId = i.TeamId,
-                  MatchId = i.MatchId,
-                  First = i.First,
-                  Second = i.Second,
-                  Third = i.Third,
-                  Fourth = i.Fourth,
-                  Fifth = i.Fifth,
-                  Sixth = i.Sixth,
-                  Seventh = i.Seventh,
-                  Eight = i.Eight,
-                  Ninth = i.Ninth,
-                  Tenth = i.Tenth
+            var graph = _context.FallOFWickets
+               .AsNoTracking()
+               .Where(i => i.MatchId == matchId && (i.TeamId == homeTeamId || i.TeamId == oppTeamId))
+               .Select(i => new FallOfWicketdto
+               {
+                   TeamId = i.TeamId,
+                   MatchId = i.MatchId,
+                   First = i.First,
+                   Second = i.Second,
+                   Third = i.Third,
+                   Fourth = i.Fourth,
+                   Fifth = i.Fifth,
+                   Sixth = i.Sixth,
+                   Seventh = i.Seventh,
+                   Eight = i.Eight,
+                   Ninth = i.Ninth,
+                   Tenth = i.Tenth
 
 
-              }).ToList();
+               }).ToList();
+
+
+            scoreDto.HomeTeamFOW = graph.Where(i => i.TeamId == homeTeamId).ToList();
+            scoreDto.OpponentTeamFOW = graph.Where(i => i.TeamId == oppTeamId).ToList();
 
             return View(scoreDto);
 
@@ -565,20 +541,25 @@ namespace WebApp.Controllers
              .AsNoTracking()
              .Where(i => i.TeamId == oppTeamId), "PlayerId", "Player_Name");
 
-            scoreDto.HomeTeamScoreCard = _context.PlayerScores
-                .AsNoTracking()
-                .Where(m => m.MatchId == matchId && m.TeamId == homeTeamId)
-                .Select(i => new MatchSummarydto
-                {
-                    PlayerScoreId = i.PlayerScoreId,
-                    IsPlayedInning = i.IsPlayedInning,
-                    PlayerId = i.PlayerId,
-                    HowOutId = i.HowOutId,
-                    Bowler = i.Bowler,
-                    MatchId = i.MatchId,
-                    TeamId = i.TeamId
-                })
-                .ToList();
+            var matchPlayers = _context.PlayerScores
+              .AsNoTracking()
+              .Where(m => m.MatchId == matchId && (m.TeamId == homeTeamId || m.TeamId == oppTeamId))
+              .Select(i => new MatchSummarydto
+              {
+                  PlayerScoreId = i.PlayerScoreId,
+                  IsPlayedInning = i.IsPlayedInning,
+                  PlayerId = i.PlayerId,
+                  HowOutId = i.HowOutId,
+                  Bowler = i.Bowler,
+                  MatchId = i.MatchId,
+                  TeamId = i.TeamId
+              })
+              .ToList();
+
+            scoreDto.HomeTeamScoreCard = matchPlayers.Where(i => i.TeamId == homeTeamId).ToList();
+            scoreDto.OpponentTeamScoreCard = matchPlayers.Where(i => i.TeamId == oppTeamId).ToList();
+
+
 
             if (matchId.HasValue)
                 for (var index = 0; index < 12; index++)
@@ -592,20 +573,6 @@ namespace WebApp.Controllers
                     }
                 }
 
-            scoreDto.OpponentTeamScoreCard = _context.PlayerScores
-             .AsNoTracking()
-             .Where(m => m.MatchId == matchId && m.TeamId == oppTeamId)
-             .Select(i => new MatchSummarydto
-             {
-                 PlayerScoreId = i.PlayerScoreId,
-                 IsPlayedInning = i.IsPlayedInning,
-                 PlayerId = i.PlayerId,
-                 HowOutId = i.HowOutId,
-                 Bowler = i.Bowler,
-                 MatchId = i.MatchId,
-                 TeamId = i.TeamId
-             })
-             .ToList();
 
             if (matchId.HasValue)
                 for (var index = 0; index < 12; index++)
@@ -649,7 +616,7 @@ namespace WebApp.Controllers
                     }
                 }
 
-            scoreDto.FallOfWicket = _context.FallOFWickets
+           scoreDto.FallOfWicket = _context.FallOFWickets
           .AsNoTracking()
           .Where(m => m.MatchId == matchId)
           .Select(i => new FallOfWicketdto
@@ -683,8 +650,6 @@ namespace WebApp.Controllers
                         });
                     }
                 }
-
-
 
 
             return View(scoreDto);

@@ -147,7 +147,7 @@ namespace WebApp.Controllers
                 .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
-            
+
             ViewBag.PlayerRole = new SelectList(_context.PlayerRole
               .AsNoTracking()
               , "PlayerRoleId", "Name");
@@ -190,6 +190,515 @@ namespace WebApp.Controllers
             }
 
         }
+        // Get: MostRuns
+        public async Task<IActionResult> MostRuns(int? teamId, int? season, int? overs,
+          int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+        {
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.Name = "Most Runs";
+
+
+            if (users != null)
+                userId = users.Id;
+
+            ViewBag.Season = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.Season).ToList().Distinct(), "Season");
+
+
+            ViewBag.Overs = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+
+            ViewBag.TeamId = new SelectList(_context.Teams
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
+                .Select(i => new { i.TeamId, i.Team_Name })
+                  , "TeamId", "Team_Name", teamId);
+
+            ViewBag.Tournament = new SelectList(_context.Tournaments
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => new { i.TournamentId, i.TournamentName })
+                , "TournamentId", "TournamentName");
+
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+               .AsNoTracking()
+               .Where(i => (!userId.HasValue || i.UserId == users.Id))
+               .Select(i => new { i.MatchSeriesId, i.Name })
+               , "MatchSeriesId", "Name");
+
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+                .AsNoTracking()
+                , "PlayerRoleId", "Name");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType
+                .AsNoTracking(), "MatchTypeId", "MatchTypeName");
+
+            try
+            {
+                var connection = _context.Database.GetDbConnection();
+                var model = connection.Query<MostRunsdto>(
+                    "[usp_GetMostRuns]",
+                    new
+                    {
+                        paramTeamId = teamId,
+                        paramSeason = season,
+                        paramOvers = overs,
+                        paramPosition = position,
+                        paramMatchType = matchTypeId,
+                        paramTournamentId = tournamentId,
+                        paramMatchseriesId = matchseriesId,
+                        paramPlayerRoleId = playerRoleId
+
+                    },
+                    commandType: CommandType.StoredProcedure) ?? new List<MostRunsdto>();
+                if (isApi)
+                {
+                    return Json(model);
+                }
+                return View(model);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (teamId != null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+        }
+
+        // Get: MostFours
+        public async Task<IActionResult> MostFours(int? teamId, int? season, int? overs,
+          int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+        {
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.Name = "Most Fours";
+
+
+            if (users != null)
+                userId = users.Id;
+
+            ViewBag.Season = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.Season).ToList().Distinct(), "Season");
+
+
+            ViewBag.Overs = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+
+            ViewBag.TeamId = new SelectList(_context.Teams
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
+                .Select(i => new { i.TeamId, i.Team_Name })
+                  , "TeamId", "Team_Name", teamId);
+
+            ViewBag.Tournament = new SelectList(_context.Tournaments
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => new { i.TournamentId, i.TournamentName })
+                , "TournamentId", "TournamentName");
+
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+               .AsNoTracking()
+               .Where(i => (!userId.HasValue || i.UserId == users.Id))
+               .Select(i => new { i.MatchSeriesId, i.Name })
+               , "MatchSeriesId", "Name");
+
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+                .AsNoTracking()
+                , "PlayerRoleId", "Name");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType
+                .AsNoTracking(), "MatchTypeId", "MatchTypeName");
+
+            try
+            {
+                var connection = _context.Database.GetDbConnection();
+                var model = connection.Query<MostFoursdto>(
+                    "[usp_GetMostFours]",
+                    new
+                    {
+                        paramTeamId = teamId,
+                        paramSeason = season,
+                        paramOvers = overs,
+                        paramPosition = position,
+                        paramMatchType = matchTypeId,
+                        paramTournamentId = tournamentId,
+                        paramMatchseriesId = matchseriesId,
+                        paramPlayerRoleId = playerRoleId
+
+                    },
+                    commandType: CommandType.StoredProcedure) ?? new List<MostFoursdto>();
+                if (isApi)
+                {
+                    return Json(model);
+                }
+                return View(model);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (teamId != null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+        }
+
+
+        // Get: MostSixes
+        public async Task<IActionResult> MostSixes(int? teamId, int? season, int? overs,
+          int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+        {
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.Name = "Most Six";
+
+
+            if (users != null)
+                userId = users.Id;
+
+            ViewBag.Season = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.Season).ToList().Distinct(), "Season");
+
+
+            ViewBag.Overs = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+
+            ViewBag.TeamId = new SelectList(_context.Teams
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
+                .Select(i => new { i.TeamId, i.Team_Name })
+                  , "TeamId", "Team_Name", teamId);
+
+            ViewBag.Tournament = new SelectList(_context.Tournaments
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => new { i.TournamentId, i.TournamentName })
+                , "TournamentId", "TournamentName");
+
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+               .AsNoTracking()
+               .Where(i => (!userId.HasValue || i.UserId == users.Id))
+               .Select(i => new { i.MatchSeriesId, i.Name })
+               , "MatchSeriesId", "Name");
+
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+                .AsNoTracking()
+                , "PlayerRoleId", "Name");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType
+                .AsNoTracking(), "MatchTypeId", "MatchTypeName");
+
+            try
+            {
+                var connection = _context.Database.GetDbConnection();
+                var model = connection.Query<MostSixesdto>(
+                    "[usp_GetMostSixes]",
+                    new
+                    {
+                        paramTeamId = teamId,
+                        paramSeason = season,
+                        paramOvers = overs,
+                        paramPosition = position,
+                        paramMatchType = matchTypeId,
+                        paramTournamentId = tournamentId,
+                        paramMatchseriesId = matchseriesId,
+                        paramPlayerRoleId = playerRoleId
+
+                    },
+                    commandType: CommandType.StoredProcedure) ?? new List<MostSixesdto>();
+                if (isApi)
+                {
+                    return Json(model);
+                }
+                return View(model);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (teamId != null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+        }
+
+
+        // Get: MostWickets
+        public async Task<IActionResult> MostWickets(int? teamId, int? season, int? overs,
+            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+        {
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.Name = "Most Runs";
+
+
+            if (users != null)
+                userId = users.Id;
+
+            ViewBag.Season = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.Season).ToList().Distinct(), "Season");
+
+
+            ViewBag.Overs = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+
+            ViewBag.TeamId = new SelectList(_context.Teams
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
+                .Select(i => new { i.TeamId, i.Team_Name })
+                  , "TeamId", "Team_Name", teamId);
+
+            ViewBag.Tournament = new SelectList(_context.Tournaments
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => new { i.TournamentId, i.TournamentName })
+                , "TournamentId", "TournamentName");
+
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+               .AsNoTracking()
+               .Where(i => (!userId.HasValue || i.UserId == users.Id))
+               .Select(i => new { i.MatchSeriesId, i.Name })
+               , "MatchSeriesId", "Name");
+
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+                .AsNoTracking()
+                , "PlayerRoleId", "Name");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType
+                .AsNoTracking(), "MatchTypeId", "MatchTypeName");
+
+            try
+            {
+                var connection = _context.Database.GetDbConnection();
+                var model = connection.Query<MostWicketsdto>(
+                    "[usp_GetMostWickets]",
+                    new
+                    {
+                        paramTeamId = teamId,
+                        paramSeason = season,
+                        paramOvers = overs,
+                        paramMatchType = matchTypeId,
+                        paramTournamentId = tournamentId,
+                        paramMatchseriesId = matchseriesId,
+                        paramPlayerRoleId = playerRoleId
+
+                    },
+                    commandType: CommandType.StoredProcedure) ?? new List<MostWicketsdto>();
+                if (isApi)
+                {
+                    return Json(model);
+                }
+                return View(model);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (teamId != null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+        }
+
+        // Get: MostCatches
+        public async Task<IActionResult> MostCatches(int? teamId, int? season, int? overs,
+            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+        {
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.Name = "Most Catch";
+
+
+            if (users != null)
+                userId = users.Id;
+
+            ViewBag.Season = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.Season).ToList().Distinct(), "Season");
+
+
+            ViewBag.Overs = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+
+            ViewBag.TeamId = new SelectList(_context.Teams
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
+                .Select(i => new { i.TeamId, i.Team_Name })
+                  , "TeamId", "Team_Name", teamId);
+
+            ViewBag.Tournament = new SelectList(_context.Tournaments
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => new { i.TournamentId, i.TournamentName })
+                , "TournamentId", "TournamentName");
+
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+               .AsNoTracking()
+               .Where(i => (!userId.HasValue || i.UserId == users.Id))
+               .Select(i => new { i.MatchSeriesId, i.Name })
+               , "MatchSeriesId", "Name");
+
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+                .AsNoTracking()
+                , "PlayerRoleId", "Name");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType
+                .AsNoTracking(), "MatchTypeId", "MatchTypeName");
+
+            try
+            {
+                var connection = _context.Database.GetDbConnection();
+                var model = connection.Query<MostCatchesdto>(
+                    "[usp_GetMostCatches]",
+                    new
+                    {
+                        paramTeamId = teamId,
+                        paramSeason = season,
+                        paramOvers = overs,
+                        paramMatchType = matchTypeId,
+                        paramTournamentId = tournamentId,
+                        paramMatchseriesId = matchseriesId,
+                        paramPlayerRoleId = playerRoleId
+
+                    },
+                    commandType: CommandType.StoredProcedure) ?? new List<MostCatchesdto>();
+                if (isApi)
+                {
+                    return Json(model);
+                }
+                return View(model);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (teamId != null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+        }
+
+        // Get: MostStumps
+        public async Task<IActionResult> MostStumps(int? teamId, int? season, int? overs,
+            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+        {
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.Name = "Most Catch";
+
+
+            if (users != null)
+                userId = users.Id;
+
+            ViewBag.Season = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.Season).ToList().Distinct(), "Season");
+
+
+            ViewBag.Overs = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+
+            ViewBag.TeamId = new SelectList(_context.Teams
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
+                .Select(i => new { i.TeamId, i.Team_Name })
+                  , "TeamId", "Team_Name", teamId);
+
+            ViewBag.Tournament = new SelectList(_context.Tournaments
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => new { i.TournamentId, i.TournamentName })
+                , "TournamentId", "TournamentName");
+
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+               .AsNoTracking()
+               .Where(i => (!userId.HasValue || i.UserId == users.Id))
+               .Select(i => new { i.MatchSeriesId, i.Name })
+               , "MatchSeriesId", "Name");
+
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+                .AsNoTracking()
+                , "PlayerRoleId", "Name");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType
+                .AsNoTracking(), "MatchTypeId", "MatchTypeName");
+
+            try
+            {
+                var connection = _context.Database.GetDbConnection();
+                var model = connection.Query<MostStumpsdto>(
+                    "[usp_GetMostStumps]",
+                    new
+                    {
+                        paramTeamId = teamId,
+                        paramSeason = season,
+                        paramOvers = overs,
+                        paramMatchType = matchTypeId,
+                        paramTournamentId = tournamentId,
+                        paramMatchseriesId = matchseriesId,
+                        paramPlayerRoleId = playerRoleId
+
+                    },
+                    commandType: CommandType.StoredProcedure) ?? new List<MostStumpsdto>();
+                if (isApi)
+                {
+                    return Json(model);
+                }
+                return View(model);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (teamId != null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+        }
+
 
     }
 }
