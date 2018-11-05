@@ -76,15 +76,21 @@ namespace WebApp.Controllers
         }
 
         // GET: Teams/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? teamId)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var team = await _context.Teams
-                .SingleOrDefaultAsync(m => m.TeamId == id);
+                .Select(i => new Teamdto
+                {
+                    TeamId = i.TeamId,
+                    Team_Name = i.Team_Name,
+                    TeamLogo = i.TeamLogo,
+                    Place = i.Place,
+                    Zone = i.Zone,
+                    Contact = i.Contact,
+                    IsRegistered = i.IsRegistered,
+                    City = i.City,
+                })
+            .SingleOrDefaultAsync(m => m.TeamId == teamId);
             if (team == null)
             {
                 return NotFound();

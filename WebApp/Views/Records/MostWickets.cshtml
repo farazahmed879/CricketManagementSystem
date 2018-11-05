@@ -92,9 +92,6 @@
             <thead class="bg-blue-active">
                 <tr>
                     <th>
-                        S.No
-                    </th>
-                    <th>
                         Name
                     </th>
                     <th>
@@ -112,7 +109,7 @@
                 @for (int i = 0; i < @Model.Count(); i++)
                 {
                     var item = Model[i];
-                    
+
                     <tr>
                         <td>
 
@@ -202,7 +199,7 @@
 <td> ${i.mostWickets} </td>
 
 
-                                                                                                                                                                                                                                                                        `;
+                                                                                                                                                                                                                                                                            `;
                             tbody.appendChild(tr);
                             return tr;
                         });

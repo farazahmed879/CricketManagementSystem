@@ -73,15 +73,9 @@
                     <th>
                         Player Name
                     </th>
-                    <th>
-                        Role
-                    </th>
-                    <th>
-                        Bat. Style
-                    </th>
-                    <th>
-                        Bowl. Style
-                    </th>
+
+
+
                     <th>
                         Birth
                     </th>
@@ -98,15 +92,6 @@
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Player_Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PlayerRole)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.BattingStyle)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.BowlingStyle)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.DOB)
@@ -273,25 +258,6 @@
                 myFunction(data);
             }
         };
-                                        //async function FilterData() {
-                                        //    var formElement = document.getElementById("Filters");
-                                        //    var formData = new FormData(formElement);
-
-                                        //    var teamId = formData.get("teamId")
-                                        //    var role = formData.get("role")
-
-
-
-                                        //    // var header = new Headers();
-                                        //    //header.append("content-type");
-
-                                        //    const response = await fetch(`/Players/Index?teamId=${teamId}&role=${role}`, {
-                                        //        credentials: 'same-origin'
-                                        //    });
-
-                                      //  };
-
-
 
     </script>
     <style>
@@ -307,9 +273,6 @@
             }
         }
 
-        td {
-            text-align: center !important;
-        }
 
         th {
             text-align: center !important;
@@ -317,15 +280,6 @@
 
 
         #filter-panel {
-            border: 1px solid #bbb;
-        }
-
-        #PlayerImg {
-            background-image: url('');
-            background-size: cover;
-            background-position: center;
-            height: 60px;
-            width: 100px;
             border: 1px solid #bbb;
         }
     </style>

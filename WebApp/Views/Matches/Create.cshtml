@@ -127,7 +127,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="img-responsive" id="Img" style="background-size:cover;  margin-bottom: 1em;"></div>
+                            <img class="img-responsive" id="Img" style="background-size:cover;  margin-bottom: 1em;"/>
                             <label asp-for="MatchImage" class="btn btn-box-tool">
                                 <i class="far fa-picture-o"> Upload</i> <input asp-for="MatchImage" type="file" class="hidden" />
                             </label>
@@ -160,7 +160,7 @@
             background-size: cover;
             background-position: center;
             height: 160px;
-            width: 140px;
+            width: 170px;
             border: 1px solid #bbb;
         }
     </style>
@@ -206,30 +206,31 @@
             snackBar.className = "show";
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
-        $(function () {
-            $('#MatchCreate').click(function () {
-                try {
-                    var formData = $("#MatchForm").serialize();
-                    $.ajax(`/Matches/Create`, {
-                        data: formData,
-                        headers: {
-                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                        },
-                        method: "POST"
-                    }).done(function (data) {
-                        window.location = '/Matches/Index'
-                        myFunction(data);
-                    }).fail(function (data) {
-                        myFunction(data);
-                    });
 
-
-                } catch (ex) {
-                    console.error(ex);
+        $(document).on('click', '#MatchCreate', function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var form = $("#MatchForm").closest("form");
+            var formData = new FormData(form[0]);
+            $.ajax({
+                type: "POST",
+                data: formData,
+                headers: {
+                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                },
+                dataType: "json",
+                url: "/Matches/Create",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    window.location = '/Matches/Index'
+                    myFunction(data);
+                },
+                fail: function (data) {
+                    myFunction(data);
                 }
-            });
+            })
         });
-
 
         function readURL(input) {
 

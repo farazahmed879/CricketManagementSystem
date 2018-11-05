@@ -37,6 +37,12 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Batting.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Bowling.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Index.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostCatches.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostFours.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostRuns.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostSixes.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostStumps.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostWickets.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Schedule\Create.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Schedule\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Schedule\Index.cshtml
@@ -46,6 +52,7 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Shared\_LoginLayout.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Shared\_ValidationScriptsPartial.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Teams\Create.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Teams\Details.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Teams\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Teams\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Tournament\Create.cshtml

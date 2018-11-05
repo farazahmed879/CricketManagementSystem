@@ -11,6 +11,7 @@ namespace WebApp.Extentions
     {
         public static async Task Execute(string email, string userName, string htmlString, string subject)
         {
+            //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
             // var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
             var client = new SendGridClient("");
             var from = new EmailAddress("scoreexec@gmail.com", "ScoreExec");

@@ -70,7 +70,8 @@ BEGIN
 				Players.TeamId As 'TeamId',					
 				Teams.Team_Name As 'TeamName',
 				Players.PlayerLogo As 'PlayerImage',
-				Convert(varchar(10), Players.DOB) as 'DOB',
+				Players.DOB AS 'DOB',
+				--Convert(varchar(10), Players.DOB) as 'DOB',
 				BattingStyle.Name As 'BattingStyle',
 				BowlingStyle.Name As 'BowlingStyle',
 				PlayerRole.Name As 'PlayerRole'
@@ -135,3 +136,4 @@ BEGIN
 	) AS data
 END
 GO
+exec [usp_GetSinglePlayerStatistics] 5

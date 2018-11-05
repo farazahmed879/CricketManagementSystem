@@ -92,9 +92,6 @@
             <thead class="bg-blue-active">
                 <tr>
                     <th>
-                        S.No
-                    </th>
-                    <th>
                         Name
                     </th>
                     <th>
@@ -113,26 +110,21 @@
             <tbody id="myTable">
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>
-                        @{
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PlayerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalMatch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalInnings)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MostFours)
+                        </td>
 
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PlayerName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalMatch)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalInnings)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MostFours)
-                    </td>
-
-                </tr>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -206,7 +198,7 @@
 <td> ${i.mostFours} </td>
 
 
-                                                                                                                                                                                                                                                            `;
+                                                                                                                                                                                                                                                                    `;
                             tbody.appendChild(tr);
                             return tr;
                         });

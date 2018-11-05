@@ -12,12 +12,12 @@
     <div class="box box-widget widget-user-2">
         <!-- Add the bg color to the header using any of the bg-* classes -->
         <div class="widget-user-header bg-light-blue-gradient">
-            <div class="col-md-4">
+            <div class="col-md-4 gallery">
 
                 @{ if (Model.PlayerImage != null)
                     {
                         var base64 = (Model.PlayerImage == null || !Model.PlayerImage.Any()) ? "" : Convert.ToBase64String(@Model.PlayerImage);
-                        <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' id="PlayerImg"></div>
+                        <a style='background-image: url("data:image/png;base64,@base64");'  href="data:image/png;base64,@base64" title="@Model.PlayerName" ><img class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' id="PlayerImg" /></a>
                     }
                     else
                     {
@@ -55,12 +55,24 @@
                     @Html.DisplayFor(model => model.BowlingStyle)
                 </dd>
                 <dt>
-                    Born
+                    Age
                 </dt>
+                @{
+                    var CRD = DateTime.Now.Date;
+                    var DOB = Model.DOB;
+                    var totalMonths = (CRD.Year - DOB.Year) * 12 + CRD.Month - DOB.Month;
+                    totalMonths += CRD.Day < DOB.Day ? -1 : 0;
+                    var years = totalMonths / 12;
+                    var months = totalMonths % 12;
+                    var days = CRD.Subtract(DOB.AddMonths(totalMonths)).Days;
+                    <dd style="width: 100%">
 
-                <dd style="width: 100%">
-                    @Html.DisplayFor(model => model.DOB)
-                </dd>
+                        @years years @months months @days days
+                    </dd>
+
+                }
+
+
                 <dt>
                     Major Team
                 </dt>
@@ -358,9 +370,13 @@
 @section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css" />
+    <link rel="stylesheet" href="~/css/photobox.css">
+    <script src="~/js/photobox.js"></script>
     <script>
         $('[data-toggle="tooltip"]').tooltip();
-
+        $(function () {
+            $('.gallery a').photobox();
+        });
 
     </script>
     <style>

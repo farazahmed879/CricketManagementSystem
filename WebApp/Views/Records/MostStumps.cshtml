@@ -92,9 +92,6 @@
             <thead class="bg-blue-active">
                 <tr>
                     <th>
-                        S.No
-                    </th>
-                    <th>
                         Name
                     </th>
                     <th>
@@ -112,11 +109,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @{
 
-                            }
-                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.PlayerName)
                         </td>
@@ -201,7 +194,7 @@
 <td> ${i.mostStumps} </td>
 
 
-                                                                                                                                                                                                                                                        `;
+                                                                                                                                                                                                                                                                `;
                             tbody.appendChild(tr);
                             return tr;
                         });

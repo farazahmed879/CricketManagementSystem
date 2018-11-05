@@ -53,7 +53,7 @@ namespace WebApp.Controllers
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => userId.HasValue || i.clubAdmin.UserId == userId)
+                .Where(i=> (!userId.HasValue || i.clubAdmin.UserId == userId))
                 .Select(i => new { i.TeamId, i.Team_Name })
            , "TeamId", "Team_Name");
 
@@ -277,7 +277,7 @@ namespace WebApp.Controllers
 
         // POST: Players/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+      //  [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(Playersdto player)
         {

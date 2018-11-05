@@ -126,7 +126,7 @@
                         <div class="col-md-6">
                             @{
                                 var base64 = Model.MatchLogo == null || !Model.MatchLogo.Any() ? "" : Convert.ToBase64String(Model.MatchLogo);
-                                <div class="img-responsive" id="Img" style='margin-bottom: 1em; background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                                <img class="img-responsive" id="Img" style='margin-bottom: 1em; background-size:cover; background-image: url("data:image/png;base64,@base64");' />
                             }
                             <label asp-for="MatchImage" class="btn btn-box-tool">
                                 <i class="far fa-picture-o"> Upload</i> <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
@@ -226,28 +226,29 @@
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
 
-        $(function () {
-            $('#MatchCreate').click(function () {
-                try {
-                    var formData = $("#MatchForm").serialize();
-                    $.ajax(`/Matches/Edit`, {
-                        data: formData,
-                        headers: {
-                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                        },
-                        method: "POST"
-                    }).done(function (data) {
-                        window.location = '/Matches/Index'
-                        myFunction(data);
-                    }).fail(function (data) {
-                        myFunction(data);
-                    });
-
-
-                } catch (ex) {
-                    console.error(ex);
+        $(document).on('click', '#MatchCreate', function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var form = $("#MatchForm").closest("form");
+            var formData = new FormData(form[0]);
+            $.ajax({
+                type: "POST",
+                data: formData,
+                headers: {
+                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                },
+                dataType: "json",
+                url: "/Matches/Edit",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    window.location = '/Matches/Index'
+                    myFunction(data);
+                },
+                fail: function (data) {
+                    myFunction(data);
                 }
-            });
+            })
         });
 
     </script>

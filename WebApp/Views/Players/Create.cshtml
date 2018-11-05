@@ -137,14 +137,11 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <ul class="gallery">
-                    <li><a href="" title="Player Image"><img class="img-responsive" id="PlayerImg" style="background-size:cover" /></a></li>
-                    <li>
-                        <div asp-for="PlayerImage" class="btn btn-box-tool">
-                            <i class="far fa-picture-o"> Browse</i> <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
-                        </div>
-                    </li>
-                </ul>
+                <img class="img-responsive" id="PlayerImg" style="background-size:cover" />
+
+                <label asp-for="PlayerImage" class="btn btn-box-tool">
+                    <i class="far fa-picture-o"> Upload</i> <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
+                </label>
             </div>
         </form>
     </div>
@@ -246,26 +243,26 @@
             snackBar.className = "show";
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
-        $(function () {
-            $('#PlayerCreate').click(function () {
-                try {
-                    var formData = $("#PlayerForm").serialize();
-                    $.ajax(`/Players/Create`, {
-                        data: formData,
-                        headers: {
-                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                        },
-                        method: "POST"
-                    }).done(function (data) {
-                        window.location = '/Players/Index'
-                        myFunction(data);
-                    }).fail(function (data) {
-                        myFunction(data);
-                    });
-                } catch (ex) {
-                    console.error(ex);
+
+        $(document).on('click', '#PlayerCreate', function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var form = $("#PlayerForm").closest("form");
+            var formData = new FormData(form[0]);
+            $.ajax({
+                type: "POST",
+                data: formData,
+                headers: {
+                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                },
+                dataType: "json",
+                url: "/Players/Create",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    alert('Sucess! Form data posted with file type of input also!');
                 }
-            });
+            })
         });
 
     </script>

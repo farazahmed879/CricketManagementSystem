@@ -1,0 +1,77 @@
+﻿@model WebApp.ViewModels.Teamdto
+
+@{
+    ViewData["Title"] = "Match Detail";
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="Teams" asp-action="Index">Team</a></li>
+        <li><a>Details</a></li>
+    </ol>
+</div>
+<div class="container-fluid">
+    <div class="box-footer">
+
+        <div class="col-md-12 bg-light-blue-active">
+            <h3>Team Details<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BattingModal"><i title="More" data-toggle="tooltip" class="ion ion-more"></i></a></h3>
+        </div>
+        <dl class="dl-horizontal table-bordered">
+            <dt>
+                Ground
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Team_Name)
+            </dd>
+            <dt>
+                Location
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Place)
+            </dd>
+            <dt>
+                Overs
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Zone)
+            </dd>
+
+            <dt>
+                Season
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Contact)
+            </dd>
+
+
+            <dt>
+                Match Type
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsRegistered)
+            </dd>
+
+            <dt>
+                Series
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.City)
+            </dd>
+
+
+
+</div>
+
+
+</div>
+
+
+@section Scripts{
+
+    <script>
+                            ]
+    </script>
+    <style>
+    </style>
+}

@@ -14,8 +14,6 @@
     <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="~/font/flaticon.css">
     <link rel="stylesheet" href="~/dist/css/skins/_all-skins.min.css">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link href="~/css/boostrap-wizard.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/datatables.responsive.css" />
@@ -25,12 +23,12 @@
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css" />
     <link rel="stylesheet" href="~/css/style.css" />
-    @* <link href= "~/css/Icheck.css" rel="stylesheet" />
+    @* <link href= "~/css/Icheck.css" rel="stylesheet" /> font-family: 'Playfair Display', serif;
     *@
 
     @RenderSection("styles", false)
 </head>
-<body class="skin-blue" style="font-family: 'Playfair Display', serif;">
+<body class="skin-blue" style=" font-size: 13px;">
     <div class="wrapper fixed">
         <header class="main-header">
             <!-- Logo -->
@@ -159,10 +157,10 @@
                         </a>
                     </li>
                     @*<li>
-                        <a asp-controller="Others" asp-action="TestMatch">
-                            <i class="flaticon-cricket-3"></i> <span>Test Match</span>
-                        </a>
-                    </li>*@
+                            <a asp-controller="Others" asp-action="TestMatch">
+                                <i class="flaticon-cricket-3"></i> <span>Test Match</span>
+                            </a>
+                        </li>*@
                     <li>
                         <a asp-controller="Players" asp-action="Index">
                             <i class="flaticon-cricket-helmet"></i> <span>Players</span>

@@ -72,14 +72,11 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <ul class="gallery">
-                    <li><a href="" title="Team Logo"><img class="img-responsive" id="Img" style="background-size:cover" /></a></li>
-                    <li>
-                        <label asp-for="TeamImage" class="btn btn-box-tool">
-                            <i class="far fa-picture-o"> Upload</i> <input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
-                        </label>
-                    </li>
-                </ul>
+                <img class="img-responsive" id="Img" style="background-size:cover" />
+                <label asp-for="TeamImage" class="btn btn-box-tool">
+                    <i class="far fa-picture-o"> Upload</i> <input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
+                </label>
+                
             </div>
         </form>
     </div>
@@ -103,8 +100,6 @@
     <script src="~/plugins/input-mask/jquery.inputmask.extensions.js"></script>
     <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
     <script src="~/plugins/iCheck/icheck.min.js"></script>
-    <link rel="stylesheet" href="~/css/photobox.css">
-    <script src="~/js/photobox.js"></script>
     <style>
         #Img {
             background-image: url('');
@@ -125,9 +120,7 @@
         });
 
         $('[data-mask]').inputmask()
-        $(function () {
-            $('.gallery a').photobox();
-        });
+     
         $(function () {
             $('#BackBtn').click(function () {
                 window.location = '/Teams/Index'
@@ -160,30 +153,32 @@
             snackBar.className = "show";
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
-
-        $(function () {
-            $('#TeamCreate').click(function () {
-                try {
-                    var formData = $("#TeamForm").serialize();
-                    $.ajax(`/Teams/Create`, {
-                        data: formData,
-                        headers: {
-                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                        },
-                        method: "POST"
-                    }).done(function (data) {
-                        window.location = '/Teams/Index'
-                        myFunction(data);
-                    }).fail(function (data) {
-                        myFunction(data);
-                    });
-
-
-                } catch (ex) {
-                    console.error(ex);
+        $(document).on('click', '#TeamCreate', function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var form = $("#TeamForm").closest("form");
+            var formData = new FormData(form[0]);
+            $.ajax({
+                type: "POST",
+                data: formData,
+                headers: {
+                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                },
+                dataType: "json",
+                url: "/Teams/Create",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    window.location = '/Teams/Index'
+                    myFunction(data);
+                },
+                fail: function (data) {
+                    myFunction(data);
                 }
-            });
+            })
         });
+
+
 
     </script>
 }

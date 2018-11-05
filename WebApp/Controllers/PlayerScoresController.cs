@@ -153,7 +153,7 @@ namespace WebApp.Controllers
             scoreDto.OpponentTeamFOW = graph.Where(i => i.TeamId == oppTeamId).ToList();
 
             return View(scoreDto);
-
+         
         }
 
         // GET: PlayerScores/Details/5
