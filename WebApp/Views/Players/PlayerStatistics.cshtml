@@ -17,7 +17,7 @@
                 @{ if (Model.PlayerImage != null)
                     {
                         var base64 = (Model.PlayerImage == null || !Model.PlayerImage.Any()) ? "" : Convert.ToBase64String(@Model.PlayerImage);
-                        <a style='background-image: url("data:image/png;base64,@base64");'  href="data:image/png;base64,@base64" title="@Model.PlayerName" ><img class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' id="PlayerImg" /></a>
+                        <a style='background-image: url("data:image/png;base64,@base64");'  href="data:image/png;base64,@base64" title="@Model.PlayerName" data-toggle="tooltip"><img class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' id="PlayerImg" /></a>
                     }
                     else
                     {

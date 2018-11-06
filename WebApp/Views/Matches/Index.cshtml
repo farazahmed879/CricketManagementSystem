@@ -337,7 +337,7 @@
                 var matchOvers = document.getElementById("matchOvers").value;
                 // var matchOvers = formData.get("matchOvers")
 
-                const response = await fetch(`/Matches/Index?homeTeamId=${homeTeamId}&opponentTeamId=${opponentTeamId}&matchTypeId=${matchTypeId}&result=${result}&tournamentId=${tournamentId}&matchOvers=${matchOvers}&season=${season}`, {
+                 await fetch(`/Matches/Index?homeTeamId=${homeTeamId}&matchTypeId=${matchTypeId}&result=${result}&tournamentId=${tournamentId}&matchOvers=${matchOvers}&season=${season}`, {
                     credentials: 'same-origin'
                 });
             }
@@ -417,6 +417,7 @@
             }
         }
 
+       
         td {
             text-align: center !important;
         }

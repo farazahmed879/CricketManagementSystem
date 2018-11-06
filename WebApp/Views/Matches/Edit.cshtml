@@ -180,18 +180,24 @@
         })
 
         function readURL(input) {
+            var size = input.files[0].size / 1021 / 1024;
+            if (size <= 2) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
 
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    //$('#PlayerImg').attr('src', e.target.result);
-                    const MatchImg = document.getElementById('Img');
-                    MatchImg.style.backgroundImage = "url(" + e.target.result + ")";
-                    MatchImg.style.backgroundPosition = "cover";
+                    reader.onload = function (e) {
+                        //$('#PlayerImg').attr('src', e.target.result);
+                        const MatchImg = document.getElementById('Img');
+                        MatchImg.style.backgroundImage = "url(" + e.target.result + ")";
+                        MatchImg.style.backgroundPosition = "cover";
+                    }
                 }
 
                 reader.readAsDataURL(input.files[0]);
+            }
+            else {
+                var data = "image size must be less than 2mb";
+                myFunction(data);
             }
         }
         $("#TournamentId").attr("disabled", true);
@@ -227,8 +233,8 @@
         }
 
         $(document).on('click', '#MatchCreate', function (e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
+            //e.preventDefault();
+            //e.stopImmediatePropagation();
             var form = $("#MatchForm").closest("form");
             var formData = new FormData(form[0]);
             $.ajax({

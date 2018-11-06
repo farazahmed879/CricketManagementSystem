@@ -11,7 +11,32 @@
     </ol>
 </div>
 <div class="container-fluid">
-    <div class="box-footer">
+    <div class="box box-widget widget-user-2">
+        <div class="widget-user-header bg-light-blue-gradient">
+            <div class="col-md-4 gallery">
+
+                @{ if (Model.MatchLogo != null)
+                    {
+                        var base64 = (Model.MatchLogo == null || !Model.MatchLogo.Any()) ? "" : Convert.ToBase64String(@Model.MatchLogo);
+                        <a href="data:image/png;base64,@base64" title="@Model.MatchLogo"><img class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' id="Img" /></a>
+                    }
+                    else
+                    {
+                        <a href="/images/no-user-profile-picture-whatsapp.jpg" title="@Model.GroundName"><img class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("/images/no-user-profile-picture-whatsapp.jpg");' id="Img" /></a>
+                        // <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("/images/no-user-profile-picture-whatsapp.jpg");' id="Img"></div>
+
+                    }
+                }
+
+            </div>
+            <!-- /.widget-user-image -->
+            <h4>@Html.DisplayFor(model => model.HomeTeam)</h4>
+            <label>vs</label>
+            <h4>@Html.DisplayFor(i => i.OppponentTeam)</h4>
+            <h4>@Html.DisplayFor(i => i.DateOfMatch)</h4>
+
+
+        </div>
 
         <div class="col-md-12 bg-light-blue-active">
             <h3>Match Details<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BattingModal"><i title="More" data-toggle="tooltip" class="ion ion-more"></i></a></h3>
@@ -56,32 +81,32 @@
                 Series
             </dt>
             @if (Model.Series != null)
-                    {
-            <dd>
-                @Html.DisplayFor(model => model.Series)
-            </dd>
-                    }
-                    else
-                    {
-            <dd>
-                N/A
-            </dd>
-                    }
+            {
+                <dd>
+                    @Html.DisplayFor(model => model.Series)
+                </dd>
+            }
+            else
+            {
+                <dd>
+                    N/A
+                </dd>
+            }
             <dt>
                 Tournament
             </dt>
             @if (Model.Tournament != null)
-                    {
-            <dd>
-                @Html.DisplayFor(model => model.Tournament)
-            </dd>
-                    }
-                    else
-                    {
-            <dd>
-                N/A
-            </dd>
-                    }
+            {
+                <dd>
+                    @Html.DisplayFor(model => model.Tournament)
+                </dd>
+            }
+            else
+            {
+                <dd>
+                    N/A
+                </dd>
+            }
             <dt>
                 1st Inning
             </dt>
@@ -106,17 +131,26 @@
 
 
 
+
     </div>
-
-
 </div>
 
-
 @section Scripts{
-
+    <link rel="stylesheet" href="~/css/photobox.css">
+    <script src="~/js/photobox.js"></script>
     <script>
-                            ]
+        $(function () {
+            $('.gallery a').photobox();
+        });
     </script>
     <style>
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 120px;
+            width: 130px;
+            border: 1px solid #bbb;
+        }
     </style>
 }
