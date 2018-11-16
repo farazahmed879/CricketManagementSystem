@@ -127,7 +127,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-
+                <span id="span" style="color: red"></span>
                 @{
                     var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
                     <img class="img-responsive" id="PlayerImg" style='background-size:cover; background-image: url("data:image/png;base64,@base64");' />
@@ -136,6 +136,9 @@
 
                 <label asp-for="PlayerImage" class="btn btn-box-tool">
                     <i class="far fa-picture-o"> Upload</i> <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
+                </label>
+                <label id="RemoveImage" class="btn btn-box-tool">
+                    <i class="far fa-trash-alt"> Remove</i>
                 </label>
 
             </div>
@@ -213,13 +216,22 @@
                     }
 
                     reader.readAsDataURL(input.files[0]);
+                    document.getElementById("span").innerHTML = ""
                 }
             } else {
-                var data = "image size must be less than 2mb";
-                myFunction(data);
+                document.getElementById("span").innerHTML = "max 2mb"
+                const PlayerImg = document.getElementById('PlayerImg');
+                PlayerImg.style.backgroundImage = "";
             }
         }
 
+        $(function () {
+            $('#RemoveImage').click(function () {
+                const PlayerImg = document.getElementById('PlayerImg');
+                PlayerImg.style.backgroundImage = "";
+            });
+
+        });
 
         $("#PlayerImage").change(function () {
             readURL(this);

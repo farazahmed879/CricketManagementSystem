@@ -41,6 +41,8 @@ namespace WebApp.ViewModels
         public bool HasFilledHomeTeamData { get; set; }
         public bool HasFilledOpponentTeamData { get; set; }
         public bool HasFilledTeamScoreData { get; set; }
+        public int? PlayerOTM { get; set; }
+        public string PlayerOfTheMatch { get; set; }
 
     }
 }

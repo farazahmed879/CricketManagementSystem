@@ -35,7 +35,7 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> Index(int? page, int? userId)
         {
-            ViewBag.Name = "Match Series";
+            ViewBag.Name = "Series";
             int pageSize = 20;
             var users = await _userManager.GetUserAsync(HttpContext.User);
             if (users != null)

@@ -6,7 +6,8 @@
 @paramMatchType As Int,
 @paramTournamentId As Int,
 @paramMatchseriesId As Int,
-@paramPlayerRoleId As Int
+@paramPlayerRoleId As Int,
+@paramUserId AS int
 AS
 BEGIN
 	SELECT  count (PlayerScores.MatchId) as 'TotalMatch',
@@ -59,7 +60,8 @@ BEGIN
 		  (@paramMatchType IS NULL OR Matches.MatchTypeId = @paramMatchType) And 
 		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
 		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
-		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId)
+		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId) And
+		  (@paramUserId IS NUll OR Tournament.UserId = @paramUserId)
 	
 	GROUP BY PlayerScores.PlayerId,
 			Players.Player_Name,

@@ -37,17 +37,6 @@
                 <span id="PhoneNumber"></span>
             </div>
 
-            <div class="form-group has-feedback">
-                <select asp-for="RoleName" id="RoleName" asp-items="ViewBag.RoleName" required style="width: 100%" id="RoleId" class="js-example-basic-single">
-                    <option value="">Select Role</option>
-                </select>
-            </div>
-            <div class="form-group has-feedback" id="Team">
-                <select asp-for="TeamId" asp-items="ViewBag.Teams" hidden style="width: 100%" id="TeamId" class="js-example-basic-single">
-                    <option value="">Select Team</option>
-                </select>
-            </div>
-
             <div class="row">
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
@@ -106,8 +95,6 @@
             $('.js-example-basic-single').select2();
         });
 
-        document.getElementById('Team').style.visibility = 'hidden';
-
         $('#AlreadyAccount').click(function () {
             $(function () {
                 window.location = '/Account/Login'
@@ -121,18 +108,6 @@
 
         })
 
-        $("#RoleName").change(function () {
-            if ($('#RoleName').val() === "Club User") {
-                document.getElementById('Team').style.visibility = 'visible';
-
-            }
-            else {
-                document.getElementById('Team').style.visibility = 'hidden';
-                document.getElementById('Team').value = "";
-            }
-        });
-
-        
 
         var Already = function () {
 
@@ -142,7 +117,7 @@
         var header = new Headers();
         header.append("content-type", "application/json");
 
-       
+
 
         function validateUserName(userName) {
             var re = /^(?=.*[0-9].)(?=.*[a-z].*[a-z].*[a-z]).{6,}$/;
@@ -246,6 +221,7 @@
                             state.isEmailValid = false;
                             updateState(state);
                         }
+
                         else {
 
                             document.getElementById("EmailError").innerHTML = "Available";
@@ -255,7 +231,7 @@
                             return;
                         }
 
-                    })
+                    });
                 });
 
                 return;

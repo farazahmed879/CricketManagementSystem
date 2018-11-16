@@ -125,8 +125,7 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<DateTime?>("DateOfMatch");
 
-                    b.Property<string>("GroundName")
-                        .IsRequired();
+                    b.Property<string>("GroundName");
 
                     b.Property<int>("HomeTeamId");
 
@@ -141,8 +140,11 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int>("OppponentTeamId");
 
-                    b.Property<string>("Place")
-                        .IsRequired();
+                    b.Property<string>("Place");
+
+                    b.Property<int?>("PlayerId");
+
+                    b.Property<int?>("PlayerOTM");
 
                     b.Property<string>("Result")
                         .IsRequired();
@@ -162,6 +164,8 @@ namespace CricketApp.Data.Migrations
                     b.HasIndex("MatchTypeId");
 
                     b.HasIndex("OppponentTeamId");
+
+                    b.HasIndex("PlayerId");
 
                     b.HasIndex("TournamentId");
 
@@ -711,6 +715,10 @@ namespace CricketApp.Data.Migrations
                         .WithMany("OpponentTeamMatches")
                         .HasForeignKey("OppponentTeamId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("CricketApp.Domain.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId");
 
                     b.HasOne("CricketApp.Domain.Tournament", "Tournament")
                         .WithMany("Matches")

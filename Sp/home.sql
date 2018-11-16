@@ -1,4 +1,5 @@
 ﻿Alter procedure [usp_HomeScreen]
+@paramUserId AS INT
 AS
 begin
 	SELECT *
@@ -6,10 +7,16 @@ begin
 	(
 		SELECT COUNT(1) as 'Tournaments'
 		FROM Tournaments
+		WHERE (@paramUserId Is NUll or Tournaments.UserId = @paramUserId)
 	) AS Tournaments,
 	(
 		SELECT	COUNT(1) as 'Players'
-		FROM Players
+		FROM Players	
+		inner join Teams on  Players.TeamId = Teams.TeamId
+		inner join Matches on  Teams.TeamId = Matches.OppponentTeamId
+		inner join Matches homeTeamMatches on  Teams.TeamId = homeTeamMatches.HomeTeamId
+		inner join Tournaments on  Matches.TournamentId = Tournaments.TournamentId
+		where(@paramUserId Is NUll or Tournaments.UserId = @paramUserId)
 	) AS players,
 		(
 		SELECT	COUNT(1) as 'Teams'
@@ -54,10 +61,13 @@ begin
 		FROM Matches		
 		inner join Teams on  Teams.TeamId = Matches.OppponentTeamId
 		inner join TeamScores on TeamScores.TeamId = Teams.TeamId
-
 		inner join Teams homeTeam on  homeTeam.TeamId = Matches.HomeTeamId
 		inner join TeamScores homeTeamScore on homeTeamScore.TeamId = homeTeam.TeamId
 		order by Matches.MatchId Desc
 	) AS LastMatch
 end
 go
+
+exec [usp_HomeScreen] null
+exec [usp_HomeScreen] 57
+select * from AspNetUsers

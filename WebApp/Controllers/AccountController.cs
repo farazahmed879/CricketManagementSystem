@@ -57,7 +57,7 @@ namespace WebApp.Controllers
                 return RedirectToAction("Index", "Home");
             }
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
+            ViewBag.Name = "Login";
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -236,6 +236,7 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
+            ViewBag.Name = "Register";
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home");
@@ -285,27 +286,27 @@ namespace WebApp.Controllers
                         Message = " <p>Assalam-o-Alaikum</p> <p>Hello Admin</p> <p>Please confirm, if this user " + model.UserName + " with the email " + model.Email + " belongs to you</P>"
 
                     });
-                    string adminEmail;
+                    string adminEmail = "takecarebudy@gmail.com";
                     string subject = "Email Confirmation";
-                    if (model.RoleName == "Club User")
-                    {
-                        adminEmail = _context.ClubAdmins
-                         .AsNoTracking()
-                         .Where(i => i.TeamId == model.TeamId)
-                         .Select(i => i.User.Email)
-                         .Single();
-                    }
-                    else
-                    {
-                      
-                        adminEmail = "takecarebudy@gmail.com";
-                    }
+                    //if (model.RoleName == "Club User")
+                    //{
+                    //    adminEmail = _context.ClubAdmins
+                    //     .AsNoTracking()
+                    //     .Where(i => i.TeamId == model.TeamId)
+                    //     .Select(i => i.User.Email)
+                    //     .Single();
+                    //}
+                    //else
+                    //{
+
+                    //    adminEmail = "farazahmed879@yahoo.com";
+                    //}
                    
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
 
-                    await _userManager.AddToRoleAsync(user, model.RoleName);
+                   // await _userManager.AddToRoleAsync(user, model.RoleName);
 
                     await EmailExtensions.Execute(adminEmail, model.UserName, htmlString, subject);
 

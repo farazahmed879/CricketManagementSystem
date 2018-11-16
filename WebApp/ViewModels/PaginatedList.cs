@@ -34,6 +34,20 @@ namespace WebApp.Models
                 return (PageIndex > 1);
             }
         }
+        public bool HasPreviousTwo
+        {
+            get
+            {
+                return (PageIndex > 2);
+            }
+        }
+        public bool HasPreviousThree
+        {
+            get
+            {
+                return (PageIndex > 3);
+            }
+        }
 
         public bool HasNextPage
         {
@@ -42,7 +56,20 @@ namespace WebApp.Models
                 return (PageIndex < TotalPages);
             }
         }
-
+        public bool HasNext2
+        {
+            get
+            {
+                return ( PageIndex + 1 < TotalPages);
+            }
+        }
+         public bool HasNext3
+        {
+            get
+            {
+                return (PageIndex + 2 < TotalPages);
+            }
+        }
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
             try

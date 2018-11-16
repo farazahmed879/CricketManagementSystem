@@ -17,7 +17,7 @@
                 @{ if (Model.PlayerImage != null)
                     {
                         var base64 = (Model.PlayerImage == null || !Model.PlayerImage.Any()) ? "" : Convert.ToBase64String(@Model.PlayerImage);
-                        <a style='background-image: url("data:image/png;base64,@base64");'  href="data:image/png;base64,@base64" title="@Model.PlayerName" data-toggle="tooltip"><img class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' id="PlayerImg" /></a>
+                        <a style='background-image: url("data:image/png;base64,@base64");' href="data:image/png;base64,@base64" title="@Model.PlayerName" data-toggle="tooltip"><img class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' id="PlayerImg" /></a>
                     }
                     else
                     {
@@ -28,8 +28,18 @@
 
             </div>
             <!-- /.widget-user-image -->
-            <h2>@Html.DisplayFor(model => model.PlayerName)</h2>
-            <h4>@Html.DisplayFor(i => i.TeamName)</h4>
+            <ul class="list-inline">
+                <li><h2>@Html.DisplayFor(model => model.PlayerName)</h2></li>
+
+                <li><h4>@Html.DisplayFor(i => i.TeamName)</h4></li>
+                <li>
+                    <div align="center" valign="top" class="textContent">
+                        <img id="logo" style="margin-bottom: 2em;" alt="ScoreExec" src="~/images/ScoreExec copy.png" />
+                    </div>
+                </li>
+            </ul>
+            
+
 
         </div>
         <br />
@@ -393,6 +403,14 @@
             height: 160px;
             width: 140px;
             border: 1px solid #bbb;
+        }
+
+        #logo {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 55px;
+            width: 170px;
         }
     </style>
 }

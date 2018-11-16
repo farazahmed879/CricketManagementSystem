@@ -90,14 +90,14 @@ namespace WebApp.Controllers
                     MatchOvers = i.MatchOvers,
                     Result = i.Result,
                     MatchType = i.MatchType.MatchTypeName,
-                    TournamentId = i.TournamentId,
+                    //TournamentId = i.TournamentId,
                     MatchTypeId = i.MatchTypeId,
-                    Tournament = i.Tournament.TournamentName,
+                    //Tournament = i.Tournament.TournamentName,
                     HomeTeam = i.HomeTeam.Team_Name,
                     OppponentTeam = i.OppponentTeam.Team_Name,
                     HomeTeamId = i.HomeTeamId,
                     OppponentTeamId = i.OppponentTeamId,
-                    MatchLogo = i.MatchLogo,
+                    //MatchLogo = i.MatchLogo,
                     HasFilledHomeTeamData = i.PlayerScores.Any() && i.PlayerScores.Any(o => o.Player != null && o.Player.TeamId == i.HomeTeamId),
                     HasFilledOpponentTeamData = i.PlayerScores.Any() && i.PlayerScores.Any(o => o.Player != null && o.Player.TeamId == i.OppponentTeamId),
                     HasFilledTeamScoreData = i.TeamScores.Any() && i.TeamScores.Any(o => i.MatchId == i.MatchId)
@@ -131,7 +131,9 @@ namespace WebApp.Controllers
                     Series = i.MatchSeries.Name,
                     MatchOvers = i.MatchOvers,
                     Place = i.Place,
-                    Result = i.Result
+                    Result = i.Result,
+                    PlayerOfTheMatch = i.Player.Player_Name
+                    
 
                 })
                 .SingleOrDefaultAsync(m => m.MatchId == matchId);
@@ -155,6 +157,11 @@ namespace WebApp.Controllers
                 .Where(i => i.clubAdmin.UserId == users.Id)
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
+
+            ViewBag.PlayerOTM = new SelectList(_context.Players
+                        .Where(i => i.Team.clubAdmin.UserId == users.Id)
+                      .Select(i => new { i.PlayerId, i.Player_Name })
+                      , "PlayerId", "Player_Name");
 
             if (tournamentId != null && matchSeriesId == null)
             {
@@ -247,15 +254,23 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
+           
+
             ViewBag.Name = "Edit Match";
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewData["TeamId"] = new SelectList(_context.Teams
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
+
+            ViewBag.PlayerOTM = new SelectList(_context.Players
+                     .Where(i => i.Team.clubAdmin.UserId == users.Id)
+                   .Select(i => new { i.PlayerId, i.Player_Name })
+                   , "PlayerId", "Player_Name");
 
             ViewBag.MatchType = new SelectList(_context.MatchType
                     .Select(i => new { i.MatchTypeId, i.MatchTypeName })
@@ -289,6 +304,7 @@ namespace WebApp.Controllers
                     Result = i.Result,
                     Season = i.Season,
                     TournamentId = i.TournamentId,
+                    PlayerOTM = i.PlayerOTM,
 
 
                 })

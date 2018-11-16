@@ -72,9 +72,13 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <span id="span" style="color: red"></span>
                 <img class="img-responsive" id="Img" style="background-size:cover" />
                 <label asp-for="TeamImage" class="btn btn-box-tool">
                     <i class="far fa-picture-o"> Upload</i> <input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
+                </label>
+                <label id="RemoveImage" class="btn btn-box-tool">
+                    <i class="far fa-trash-alt"> Remove</i>
                 </label>
 
             </div>
@@ -126,6 +130,13 @@
                 window.location = '/Teams/Index'
             });
         });
+        $(function () {
+            $('#RemoveImage').click(function () {
+                const PlayerImg = document.getElementById('Img');
+                PlayerImg.style.backgroundImage = "";
+            });
+
+        });
 
         function readURL(input) {
             var size = input.files[0].size / 1021 / 1024;
@@ -140,10 +151,12 @@
                     }
 
                     reader.readAsDataURL(input.files[0]);
+                    document.getElementById("span").innerHTML = ""
                 }
             } else {
-                var data = "image size must be less than 2mb";
-                myFunction(data);
+                document.getElementById("span").innerHTML = "max 2mb"
+                const PlayerImg = document.getElementById('Img');
+                PlayerImg.style.backgroundImage = "";
             }
         }
 

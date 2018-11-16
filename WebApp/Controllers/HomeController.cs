@@ -33,6 +33,7 @@ namespace WebApp.Controllers
                 {
 
                 };
+            ViewBag.Name = "Home";
 
             return View(model);
         }
