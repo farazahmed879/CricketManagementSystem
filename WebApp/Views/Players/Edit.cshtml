@@ -114,13 +114,19 @@
                         <li>
                             <label>
                                 Guest
-                                <input type="checkbox" asp-for="IsGuestPlayer" value="true" class="flat-red">
+                                <input type="radio" asp-for="IsGuestorRegistered" value="Guest" class="flat-red">
                             </label>
                         </li>
                         <li>
                             <label>
-                                Deactivate
-                                <input type="checkbox" asp-for="IsDeactivated" value="true" class="flat-red">
+                                Registered
+                                <input type="radio" asp-for="IsGuestorRegistered" value="Registered" class="flat-red">
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                Deactivated
+                                <input type="checkbox" asp-for="IsGuestorRegistered" value="True" class="flat-red">
                             </label>
                         </li>
                     </ul>

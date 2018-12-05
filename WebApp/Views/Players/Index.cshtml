@@ -33,7 +33,7 @@
                     <br />
                     <div class=" col-xs-6 col-md-6">
                         <div class="form-group row">
-                            <button type="submit" class="btn btn-primary filter-col">
+                            <button type="button" id="SearchBtn" class="btn btn-primary filter-col">
                                 <span><i class="fas fa-search"></i></span> Search
                             </button>
                         </div>
@@ -72,6 +72,7 @@
     }
 
     <div class="table-responsive">
+
         <table id="PlayerTable" class="table table-bordered table-striped">
             <thead class="bg-blue-active">
                 <tr>
@@ -104,7 +105,10 @@
                         <td>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <a data-placement="top" data-toggle="tooltip" title="Player Profile" asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId"><i class="fa fa-user"></i></a>
+
+                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" onclick="statistics(@item.PlayerId)" title="Statistics">
+                                    <i data-toggle="modal" data-target="#playerStatistics" class="fas fa-user"></i>
+                                </a>
                                 <a data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.PlayerId"><i class="fas fa-edit"></i></a>
                                 <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" onclick="Delete(@item.PlayerId)"></i></a>
                                 <a data-placement="top" data-toggle="tooltip" title="Past Record" asp-controller="PlayerPastRecord" asp-action="PastRecord" asp-route-playerId="@item.PlayerId"><i class="fa fa-history"></i></a>
@@ -112,8 +116,10 @@
                             }
                             else
                             {
-                                <a data-placement="top" data-toggle="tooltip" title="Player Profile" asp-controller="Players" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId"><i class="fa fa-user"></i></a>
 
+                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" onclick="statistics(@item.PlayerId)" title="Statistics">
+                                    <i data-toggle="modal" data-target="#playerStatistics" class="fas fa-user"></i>
+                                </a>
                             }
 
 
@@ -122,7 +128,9 @@
                 }
             </tbody>
         </table>
-
+        @*@{
+                await Html.RenderPartialAsync("_PlayerPartial", Model);
+            }*@
     </div>
 
     <nav class="navbar navbar-light bg-light">
@@ -138,7 +146,8 @@
             </div>
             <div class="row pull-right">
                 <a data-placement="top" data-toggle="tooltip" title="First Page" asp-action="Index" class="btn btn-primary @prevDisabled"
-                   asp-route-page="@(1)">First
+                   asp-route-page="@(1)">
+                    First
                 </a>
 
                 <a asp-action="Index" class="btn btn-default @prev3Disabled"
@@ -169,6 +178,269 @@
     </nav>
 </div>
 <div id="snackbar"></div>
+<div id="playerStatistics" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="screen">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="widget-user-header bg-aqua-active">
+                            <h3 class="widget-user-username" id="name"></h3>
+                            <h5 class="widget-user-desc" id="teamName"></h5>
+                            <h5 class="widget-user-desc" id="age"></h5>
+                        </div>
+                        <div class="widget-user-image">
+                            <img class="img-circle" id="target">
+                        </div>
+                        <div class="box-footer">
+                            <div class="row">
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Batting Style</h5>
+                                        <span class="description-text" id="battingStyle"></span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Playing Role</h5>
+                                        <span class="description-text" id="playingRole"></span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Bowling Style</h5>
+                                        <span class="description-text" id="bowlingStyle"></span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                    </div>
+                    <!-- /.widget-user -->
+                    <div class="col-md-12 bg-light-blue-active">
+                        <h3>Batting<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BattingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h3>
+                    </div>
+                    <div class="">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Match</th>
+                                    <th>Inn</th>
+                                    <th>Runs</th>
+                                    <th>Balls</th>
+                                    <th>50s</th>
+                                    <th>100s</th>
+                                    <th>Avg</th>
+                                    <th>St.R</th>
+                                    <th>Best</th>
+                                    <th>4s</th>
+                                    <th>6s</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td><span id="totalMatch"></span></td>
+                                    <td><span id="totalInnings"></span></td>
+                                    <td><span id="totalBatRuns"></span></td>
+                                    <td><span id="totalBatBalls"></span></td>
+                                    <td><span id="numberOf50s"></span></td>
+                                    <td><span id="numberOf100s"></span></td>
+                                    <td><span id="battingAverage"></span></td>
+                                    <td><span id="strikeRate"></span></td>
+                                    <td><span id="bestScore"></span></td>
+                                    <td><span id="totalFours"></span></td>
+                                    <td><span id="totalSixes"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12 bg-light-blue-active">
+                        <h3>Bowling<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BowlingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h3>
+                    </div>
+                    <div class="">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Overs</th>
+                                    <th>Wickets</th>
+                                    <th>Runs</th>
+                                    <th>5ws</th>
+                                    <th>Maiden</th>
+                                    <th>Avg</th>
+                                    <th>Econ</th>
+                                    <th>Best</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span id="totalOvers"></span></td>
+                                    <td><span id="totalWickets"></span></td>
+                                    <td><span id="totalBallRuns"></span></td>
+                                    <td><span id="fiveWickets"></span></td>
+                                    <td><span id="totalMaidens"></span></td>
+                                    <td><span id="bowlingAvg"></span></td>
+                                    <td><span id="economy"></span></td>
+                                    <td><span id="bestBowling"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-12 bg-light-blue-active">
+                        <h3>Fielding</h3>
+                    </div>
+                    <div class="">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Catches</th>
+                                    <th>Stumps</th>
+                                    <th>Run Out</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span id="onFieldCatch"></span></td>
+                                    <td><span id="onFieldStump"></span></td>
+                                    <td><span id="onFieldRunOut"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <button data-toggle="modal" data-target="#screenShot" class="btn btn-primary" data-dismiss="modal" id="Capture"><i class="fa fa-camera"></i></button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="screenShot" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header  bg-light-blue-active">
+                <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="container-canvas">
+                    <div id="screenShotBody"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="BattingModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  bg-light-blue-active">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Bowling</h4>
+            </div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        Bowled
+                    </dt>
+                    <dd>
+                        <span id="getBowled"></span>
+                    </dd>
+                    <dt>
+                        Catch
+                    </dt>
+                    <dd>
+                        <span id="getCatch"></span>
+                    </dd>
+                    <dt>
+                        Hit Wicket
+                    </dt>
+                    <dd>
+                        <span id="getHitWicket"></span>
+                    </dd>
+                    <dt>
+                        Lbw
+                    </dt>
+                    <dd>
+                        <span id="getLBW"></span>
+                    </dd>
+                    <dt>
+                        Stump
+                    </dt>
+                    <dd>
+                        <span id="getStump"></span>
+                    </dd>
+                    <dt>
+                        Run Out
+                    </dt>
+                    <dd>
+                        <span id="getRunOut"></span>
+                    </dd>
+                    <dt>
+                        Not Out
+                    </dt>
+                    <dd>
+                        <span id="totalNotOut"></span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="BowlingModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  bg-light-blue-active">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Batting</h4>
+            </div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        Bowled
+                    </dt>
+                    <dd>
+                        <span id="doBowled"></span>
+                    </dd>
+                    <dt>
+                        Catch
+                    </dt>
+                    <dd>
+                        <span id="doCatch"></span>
+                    </dd>
+                    <dt>
+                        Hit Wicket
+                    </dt>
+                    <dd>
+                        <span id="doHitWicket"></span>
+                    </dd>
+                    <dt>
+                        Lbw
+                    </dt>
+                    <dd>
+                        <span id="doLBW"></span>
+                    </dd>
+                    <dt>
+                        Stump
+                    </dt>
+                    <dd>
+                        <span id="doStump"></span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="DeleteModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -207,28 +479,25 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script src="~/js/html2convas-min.js"></script>
     <script>
-        //Select2
-        $(document).ready(function () {
-            $('.js-example-basic-single').select2();
+
+        $('.js-example-basic-single').select2();
+
+        $('#PlayerTable').DataTable({
+            "paging": false,
+            dom: 'Bfrt',
+            buttons: [
+                {
+                    extend: 'pdfHtml5',
+
+                    //orientation: 'landscape',
+                    //pageSize: 'LEGAL'
+                }
+            ]
         });
 
-        $(document).ready(function () {
-            $('#PlayerTable').DataTable({
-                "paging": false,
-                dom: 'Bfrt',
-                buttons: [
-                    {
-                        extend: 'pdfHtml5',
-
-                        //orientation: 'landscape',
-                        //pageSize: 'LEGAL'
-                    }
-                ]
-            });
-        });
-
-        //TOaster
+        //Toaster
         function myFunction(data) {
             var snackBar = document.getElementById('snackbar');
             snackBar.textContent = data;
@@ -236,46 +505,190 @@
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
 
-        $(function () {
-            $('#AddBtn').click(function () {
-                window.location = '/Players/Create'
-            });
+        $('#AddBtn').click(function () {
+            window.location = '/Players/Create'
         });
 
-        function Delete(PlayerId) {
-            document.getElementById("PlayerId").value = PlayerId;
-        }
+        $('#Capture').click(function () {
+            html2canvas(document.querySelector("#screen")).then(canvas => {
+                //document.body.appendChild(canvas)
+                document.getElementById("screenShotBody").appendChild(canvas);
+            });
+        });
+        $('#close').click(function () {
+          
+            document.getElementById("screenShotBody").innerHTML  = "";
+        });
+
+
+
+        $('#SearchBtn').click(async function () {
+            // datatable.clear();
+            // datatable.destroy();
+            window.location = `/Players/Index?teamId=${$("#teamId").val()}&playerRoleId=${$("#playerRoleId").val()}`;
+            //await fetch(, {
+            //    credentials: 'same-origin'
+            //});
+        });
+
 
         $("#deleteBtn")
             .off()
-            .on("click", async () => await DeleteData());
+            .on("click", async () => {
+                const playerId = document.getElementById('PlayerId').value;
+                const model = {
+                    playerId: Number(playerId),
+                };
+                var header = new Headers();
+                header.append("content-type", "application/json");
 
-        const DeleteData = async () => {
-            const playerId = document.getElementById('PlayerId').value;
-            const model = {
-                playerId: Number(playerId),
-            };
+                const response = await fetch(`/Players/DeleteConfirmed?playerId=${playerId}`, {
+                    method: "POST",
+                    body: JSON.stringify(model),
+                    credentials: 'same-origin',
+                    headers: header
+                });
+
+                if (response.ok) {
+                    var data = "Record is deleted successfully";
+                    window.location.reload();
+                    myFunction(data);
+
+                    return;
+                } else {
+                    var data = "Record could not be deleted";
+                    myFunction(data);
+                }
+            });
+
+
+
+        let statistics = function (playerId) {
             var header = new Headers();
             header.append("content-type", "application/json");
 
-            const response = await fetch(`/Players/DeleteConfirmed?playerId=${playerId}`, {
-                method: "POST",
-                body: JSON.stringify(model),
+            fetch(`/Players/PlayerStatistics?playerId=${playerId}&Api=true`, {
                 credentials: 'same-origin',
                 headers: header
-            });
+            })
+                .then(response => {
+                    if (response.ok) {
+                        response.json()
+                            .then(json => {
+                                document.getElementById("name").innerHTML = json.playerName;
+                                document.getElementById("teamName").innerHTML = json.teamName;
 
-            if (response.ok) {
-                var data = "Record is deleted successfully";
-                window.location.reload();
-                myFunction(data);
+                                document.getElementById("battingStyle").innerHTML = json.battingStyle;
+                                document.getElementById("playingRole").innerHTML = json.playerRole;
+                                document.getElementById("bowlingStyle").innerHTML = json.bowlingStyle;
 
-                return;
-            } else {
-                var data = "Record could not be deleted";
-                myFunction(data);
-            }
+                                var today = new Date();
+                                var DOB = new Date(json.dob);
+                                var totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
+                                totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
+                                var years = today.getFullYear() - DOB.getFullYear();
+                                var days;
+                                var months;
+
+                                if (DOB.getDate() > today.getDate()) {
+                                    months = (totalMonths % 12);
+                                    var x = today.getMonth();
+                                    switch (x) {
+                                        case 1:
+                                        case 3:
+                                        case 5:
+                                        case 7:
+                                        case 8:
+                                        case 10:
+                                        case 12:
+                                            {
+                                                var a = DOB.getDate() - today.getDate();
+                                                days = 31 - a;
+                                                break;
+                                            }
+                                        default: {
+                                            var a = DOB.getDate() - today.getDate();
+                                            days = 30 - a;
+                                            break;
+                                        }
+
+                                    }
+
+                                }
+                                else {
+                                    days = today.getDate() - DOB.getDate();
+                                    months = (totalMonths % 12) + 1;
+                                }
+
+                                document.getElementById("age").innerHTML = years + ' years ' + months + ' months ' + days + ' days';
+
+                                //batting
+                                document.getElementById("totalMatch").innerHTML = json.totalMatch;
+                                document.getElementById("totalInnings").innerHTML = json.totalInnings;
+                                document.getElementById("totalBatRuns").innerHTML = json.totalBatRuns;
+                                document.getElementById("totalBatBalls").innerHTML = json.totalBatBalls;
+                                document.getElementById("numberOf50s").innerHTML = json.numberOf50s;
+                                document.getElementById("numberOf100s").innerHTML = json.numberOf100s;
+                                document.getElementById("battingAverage").innerHTML = json.battingAverage || 'N/A';
+                                document.getElementById("strikeRate").innerHTML = json.strikeRate || 'N/A';
+                                document.getElementById("bestScore").innerHTML = json.bestScore;
+                                document.getElementById("totalFours").innerHTML = json.totalFours;
+                                document.getElementById("totalSixes").innerHTML = json.totalSixes;
+
+                                //Bowling
+                                document.getElementById("totalOvers").innerHTML = json.totalOvers;
+                                document.getElementById("totalWickets").innerHTML = json.totalWickets;
+                                document.getElementById("totalBallRuns").innerHTML = json.totalBallRuns;
+                                document.getElementById("fiveWickets").innerHTML = json.fiveWickets;
+                                document.getElementById("totalMaidens").innerHTML = json.totalMaidens;
+                                document.getElementById("bowlingAvg").innerHTML = json.bowlingAvg || 'N/A';
+                                document.getElementById("economy").innerHTML = json.economy || 'N/A';
+                                document.getElementById("bestBowling").innerHTML = json.bestBowling || 'N/A';
+
+                                //Fielding
+                                document.getElementById("onFieldCatch").innerHTML = json.onFieldCatch;
+                                document.getElementById("onFieldStump").innerHTML = json.onFieldStump;
+                                document.getElementById("onFieldRunOut").innerHTML = json.onFieldRunOut;
+
+                                //MoreBating
+                                document.getElementById("getBowled").innerHTML = json.getBowled;
+                                document.getElementById("getCatch").innerHTML = json.getCatch;
+                                document.getElementById("getHitWicket").innerHTML = json.getHitWicket;
+                                document.getElementById("getLBW").innerHTML = json.getLBW;
+                                document.getElementById("getStump").innerHTML = json.getStump;
+                                document.getElementById("getRunOut").innerHTML = json.getRunOut;
+                                document.getElementById("totalNotOut").innerHTML = json.totalNotOut;
+
+                                //MoreBowling
+                                document.getElementById("doBowled").innerHTML = json.doBowled;
+                                document.getElementById("doCatch").innerHTML = json.doCatch;
+                                document.getElementById("doHitWicket").innerHTML = json.doHitWicket;
+                                document.getElementById("doLBW").innerHTML = json.doLBW;
+                                document.getElementById("doStump").innerHTML = json.doCatch;
+
+                                if (json.playerImage != null) {
+                                    $('#target').attr('src', `data:image/png;base64,${json.playerImage}`);
+                                } else {
+                                    $('#target').attr('src', `/images/user.png`);
+                                }
+
+
+
+                            })
+                            .catch(err => {
+                                console.error(err);
+                            })
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+
         };
+
+        let Delete = new function (PlayerId) {
+            document.getElementById("PlayerId").value = PlayerId;
+        }
 
     </script>
     <style>
@@ -299,6 +712,14 @@
 
         #filter-panel {
             border: 1px solid #bbb;
+        }
+
+        .container-canvas {
+            /* This could be done in one single declaration. See the extended sample. */
+            margin-right: auto;
+            margin-left: auto;
+            width: 800px;
+            height: 500px;
         }
     </style>
 

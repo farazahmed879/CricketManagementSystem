@@ -25,13 +25,17 @@ namespace CricketApp.Domain
         public int MatchOvers { get; set; }
         [Required]
         public string Result { get; set; }
+        public string MatchDescription { get; set; }
         public int? Season { get; set; }
         public int? TournamentId { get; set; }
+        public int? TossWinningTeam { get; set; }
         public DateTime? DateOfMatch { get; set; }
         [Required]
         public int HomeTeamId { get; set; }
         [Required]
         public int OppponentTeamId { get; set; }
+        public float HomeTeamOvers { get; set; }
+        public float OppTeamOvers { get; set; }    
         public Team OppponentTeam { get; set; }
         public Team HomeTeam { get; set; }
         public Tournament Tournament { get; set; }
@@ -46,6 +50,8 @@ namespace CricketApp.Domain
         public int UserId { get; set; }
         public MatchType MatchType { get; set; }
         public int MatchTypeId { get; set; }
+        public TournamentStage TournamentStage { get; set; }
+        public int? TournamentStageId { get; set; }
         public MatchSeries MatchSeries { get; set; }
         public int? MatchSeriesId { get; set; }
         public int? PlayerOTM { get; set; }

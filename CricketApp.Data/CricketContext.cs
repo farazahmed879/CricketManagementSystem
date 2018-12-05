@@ -31,6 +31,7 @@ namespace CricketApp.Data
         public DbSet<PlayerPastRecord> PlayerPastRecord { get; set; }
         public DbSet<MatchSeries> MatchSeries { get; set; }
         public DbSet<MatchSchedule> MatchSchedule { get; set; }
+        public DbSet<TournamentStage> TournamentStages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

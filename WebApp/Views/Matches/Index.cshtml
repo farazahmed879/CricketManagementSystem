@@ -61,7 +61,7 @@
                     <div class="row">
                         <div class="col-xs-6 col-md-4">
                             <div class="form-group">
-                                <button type="submit" id="filterdata" class="btn btn-primary filter-col">
+                                <button type="button" id="filterdata" class="btn btn-primary filter-col">
                                     <span><i class="fas fa-search"></i></span> Search
                                 </button>
                             </div>
@@ -203,14 +203,14 @@
                                 <a data-placement="top" data-toggle="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId"><i class="fas fa-edit"></i></a>
                                 <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.MatchId)" class="fas fa-trash-alt"></i></a>
                                 <a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-matchId="@item.MatchId"><i class="fas fa-info-circle"></i></a>
-
+                                <a asp-action="Summary" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Match Summary"><i class="fas fa-baseball-ball"></i></a>
 
                             }
                             else
                             {
-
+                                <a asp-action="Summary" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId"  data-placement="top" data-toggle="tooltip" title="Match Summary"><i class="fas fa-baseball-ball"></i></a>
                                 <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="flaticon-cricket-18"></i></a>
-
+                                @*<a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Summary"><i data-toggle="modal" data-target="#SummaryModal" class="fas fa-align-justify"></i></a>*@
                             }
 
                         </td>
@@ -236,7 +236,7 @@
                 <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
             </span>
         </div>
-        <form class="form-inline">
+        <form class="form-inline pull-right">
             <a data-placement="top" data-toggle="tooltip" title="First Page" asp-action="Index" class="btn btn-primary @prevDisabled"
                asp-route-page="@(1)">
                 First
@@ -289,6 +289,152 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="SummaryModal" class="modal fade" role="dialog">
+    <div class="modal-body">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header bg-teal-active">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Match Summary</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <h4>Pole of cricket champions trophy</h4>
+                </div>
+                <br>
+                <div class="col-md-7 bg-blue-active">
+                    <h4>Gulzar Cricket Club</h4>
+                </div>
+                <div class="col-md-3 bg-blue-active">
+                    <h4>18 Overs</h4>
+                </div>
+                <div class="col-md-2 bg-blue-gradient">
+                    <h4>120/5</h4>
+                </div>
+
+
+                <div class="col-md-6">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>Ahmed</td>
+                                <td>57</td>
+                            </tr>
+                            <tr>
+                                <td>Osama</td>
+                                <td>44</td>
+                            </tr>
+                            <tr>
+                                <td>Bilal</td>
+                                <td>32</td>
+                            </tr>
+                            <tr>
+                                <td>Javed</td>
+                                <td>12</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td class="pull-right">Ali</td>
+                                <td>2-44</td>
+                            </tr>
+                            <tr>
+                                <td class="pull-right">Osama</td>
+                                <td>2-35</td>
+                            </tr>
+                            <tr>
+                                <td class="pull-right">Bilal</td>
+                                <td>1-12</td>
+                            </tr>
+                            <tr>
+                                <td class="pull-right">Javed</td>
+                                <td>1-25</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="col-md-7 bg-green-active">
+                    <h4>Pak Shaheen Cricket Club</h4>
+                </div>
+                <div class="col-md-3 bg-green-active">
+                    <h4>18 Overs</h4>
+                </div>
+                <div class="col-md-2 bg-green-gradient">
+                    <h4>120/5</h4>
+                </div>
+
+                <div class="col-md-6">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>Ahmed</td>
+                                <td>57</td>
+                            </tr>
+                            <tr>
+                                <td>Osama</td>
+                                <td>44</td>
+                            </tr>
+                            <tr>
+                                <td>Bilal</td>
+                                <td>32</td>
+                            </tr>
+                            <tr>
+                                <td>Javed</td>
+                                <td>12</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+               
+
+
+
+                <div class="col-md-6">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Ahmed</td>
+                                <td>57</td>
+                            </tr>
+                            <tr>
+                                <td>Osama</td>
+                                <td>44</td>
+                            </tr>
+                            <tr>
+                                <td>Bilal</td>
+                                <td>32</td>
+                            </tr>
+                            <tr>
+                                <td>Javed</td>
+                                <td>12</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+                <div class="col-md-12 bg-teal">
+                    <h4>Man of the Match Ahmed</h4>
+                </div>
+
+                <div class="wizard footer col-md-12 bg-purple-gradient">
+                    <h4>Pak Shaheen won by 20 runs</h4>
+                </div>
+
             </div>
 
         </div>
@@ -430,9 +576,9 @@
         }
 
 
-        td {
+        /*td {
             text-align: center !important;
-        }
+        }*/
 
         th {
             text-align: center !important;

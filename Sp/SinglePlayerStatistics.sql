@@ -38,9 +38,9 @@ BEGIN
 						  (Cast((COALESCE(PlayerPastRecord.TotalNotOut,0) + COALESCE(Count(case when HowOutId = 7 then 1 else null end),0)) as float)) = 0
 					THEN null
 				    ELSE CAST(
-								Cast((COALESCE(PlayerPastRecord.TotalBatRuns,0) + COALESCE(sum (Bat_Runs),0)) as float) / 
-								(cast((COALESCE(PlayerPastRecord.TotalInnings,0) + COALESCE(COUNT(Case When IsPlayedInning = 1 Then 1 else null end),0))as float)) - 
-								(cast((COALESCE(PlayerPastRecord.TotalNotOut,0) + COALESCE(COUNT (case when HowOutId = 7 then 1 else null end),0))as float))
+								(Cast((COALESCE(PlayerPastRecord.TotalBatRuns,0) + COALESCE(sum (Bat_Runs),0)) as float)) / 
+								((cast((COALESCE(PlayerPastRecord.TotalInnings,0) + COALESCE(COUNT(Case When IsPlayedInning = 1 Then 1 else null end),0))as float)) - 
+								(cast((COALESCE(PlayerPastRecord.TotalNotOut,0) + COALESCE(COUNT (case when HowOutId = 7 then 1 else null end),0))as float)))
 							   AS numeric(36,2))
 				END As 'BattingAverage',
 				(COALESCE(PlayerPastRecord.TotalOvers,0) + COALESCE(sum (Overs),0)) as 'TotalOvers',
@@ -136,4 +136,4 @@ BEGIN
 	) AS data
 END
 GO
-exec [usp_GetSinglePlayerStatistics] 5
+

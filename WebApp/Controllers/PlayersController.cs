@@ -53,18 +53,17 @@ namespace WebApp.Controllers
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i=> (!userId.HasValue || i.clubAdmin.UserId == userId))
+                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == userId))
                 .Select(i => new { i.TeamId, i.Team_Name })
            , "TeamId", "Team_Name");
-
-            return View(await PaginatedList<ViewModels.Playersdto>.CreateAsync(
+            var model = await PaginatedList<Playersdto>.CreateAsync(
                             _context.Players
                           .AsNoTracking()
                           .Where(i => (!teamId.HasValue || i.TeamId == teamId)
                                         && (!playerRoleId.HasValue || i.PlayerRoleId == playerRoleId)
                                         && (!userId.HasValue || i.Team.clubAdmin.UserId == userId)
                                        )
-                        .Select(i => new ViewModels.Playersdto
+                        .Select(i => new Playersdto
                         {
                             PlayerId = i.PlayerId,
                             Player_Name = i.Player_Name,
@@ -77,8 +76,12 @@ namespace WebApp.Controllers
 
                         })
                           .OrderByDescending(i => i.PlayerId)
-                            , page ?? 1, pageSize));
-
+                            , page ?? 1, pageSize);
+            //if (partialView)
+            //    return PartialView("_PlayerPartial", model);
+            //else
+                return View(model);
+            
 
 
         }
@@ -262,7 +265,7 @@ namespace WebApp.Controllers
                     CNIC = i.CNIC,
                     DOB = i.DOB.HasValue ? i.DOB.Value.ToShortDateString() : "",
                     Address = i.Address,
-                    IsGuestPlayer = i.IsGuestPlayer,
+                    IsGuestorRegistered = i.IsGuestorRegistered,
                     IsDeactivated = i.IsDeactivated,
                     TeamId = i.TeamId
 
@@ -277,7 +280,7 @@ namespace WebApp.Controllers
 
         // POST: Players/Edit/5
         [HttpPost]
-      //  [ValidateAntiForgeryToken]
+        //  [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(Playersdto player)
         {
@@ -313,7 +316,7 @@ namespace WebApp.Controllers
             return Ok();
         }
         // GET: PlayerStatistics
-        public IActionResult PlayerStatistics(int playerId)
+        public IActionResult PlayerStatistics(int playerId,bool Api)
         {
             ViewBag.Name = "Players / Profile";
             ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
@@ -332,6 +335,10 @@ namespace WebApp.Controllers
 
                     };
 
+                if (Api)
+                {
+                    return Json(model);
+                }
                 return View(model);
             }
             catch (DbUpdateConcurrencyException)

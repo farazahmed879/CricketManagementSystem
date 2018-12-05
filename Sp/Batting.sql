@@ -10,7 +10,7 @@
 @paramUserId AS int
 AS
 BEGIN
-	SELECT  count (PlayerScores.MatchId) as 'TotalMatch',
+	SELECT  COALESCE( PlayerPastRecord.TotalMatch,0) + count (PlayerScores.MatchId) as 'TotalMatch',
 			count (case when IsPlayedInning = 1 then 1 else null end) as 'TotalInnings',
 			sum (Bat_Runs) as 'TotalBatRuns',
 			sum (Bat_Balls) as 'TotalBatBalls',
@@ -51,7 +51,7 @@ BEGIN
 	left join Tournaments On Matches.TournamentId = Tournaments.TournamentId
 	left join MatchSeries On Matches.MatchSeriesId = MatchSeries.MatchSeriesId
 	left join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
-	
+	left join PlayerPastRecord On Players.PlayerId = PlayerPastRecord.PlayerId
 	
 	WHERE (@paramTeamId Is NUll or Players.TeamId = @paramTeamId or Matches.OppponentTeamId = @paramTeamId ) And 
 		  (@paramSeason IS NUll OR Matches.Season = @paramSeason)	And
@@ -69,3 +69,5 @@ BEGIN
 			 Players.TeamId
 END
 go
+
+select * from PlayerPastRecord

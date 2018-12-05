@@ -36,16 +36,17 @@ namespace WebApp.Controllers
                 .Where(i => i.TeamId == oppTeamId)
                 .Select(i => i.Team_Name)
                 .Single();
-            //ViewBag.HomeTeamOut = _context.PlayerScores
-            //    .AsNoTracking()
-            //    .Where(i => i.TeamId == homeTeamId && i.MatchId == matchId)
-            //    .Count(i => i.HowOutId)
-            //    .Single();
-
+            
             ViewBag.GroundName = _context.Matches
               .AsNoTracking()
               .Where(i => i.MatchId == matchId)
               .Select(i => i.GroundName)
+              .Single();
+
+            ViewBag.Overs = _context.Matches
+              .AsNoTracking()
+              .Where(i => i.MatchId == matchId)
+              .Select(i => i.MatchOvers)
               .Single();
 
             ViewBag.HomeTeam = _context.Teams
@@ -66,11 +67,11 @@ namespace WebApp.Controllers
 
             ViewBag.HomeTeamOut = _context.PlayerScores
                 .AsNoTracking()
-                .Count(i => i.HowOutId != 7 && i.TeamId == homeTeamId && i.MatchId == matchId);
+                .Count(i => i.HowOutId != 7 && i.HowOutId != null && i.TeamId == homeTeamId && i.MatchId == matchId);
 
             ViewBag.OpponenetTeamOut = _context.PlayerScores
                .AsNoTracking()
-               .Where(i => i.HowOutId != 7 && i.TeamId == oppTeamId && i.MatchId == matchId)
+               .Where(i => i.HowOutId != 7 && i.HowOutId != null && i.TeamId == oppTeamId && i.MatchId == matchId)
                .Count();
 
 
@@ -726,11 +727,6 @@ namespace WebApp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        // Add: PlayerScores/AddBating/
-
-        //private bool PlayerScoreExists(int id)
-        //{
-        //    return _context.PlayerScores.Any(e => e.PlayerScoreId == id);
-        //}
+        
     }
 }

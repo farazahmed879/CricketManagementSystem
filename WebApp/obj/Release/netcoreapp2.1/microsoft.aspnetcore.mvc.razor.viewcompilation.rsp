@@ -18,6 +18,7 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\MatchChart.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Summary.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\MatchSeries\Create.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\MatchSeries\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\MatchSeries\Index.cshtml
@@ -34,6 +35,7 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\PlayerProfile.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\PlayerStatistics.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\_PlayerPartial.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Batting.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Bowling.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Index.cshtml

@@ -1,49 +1,25 @@
-﻿Alter procedure [usp_HomeScreen]
-@paramUserId AS INT
+﻿Alter procedure [usp_Summary2]
+@paramMatchId AS INT
 AS
 begin
 	SELECT *
 	FROM
-	(
-		SELECT COUNT(1) as 'Tournaments'
-		FROM Tournaments
-		WHERE (@paramUserId Is NUll or Tournaments.UserId = @paramUserId)
-	) AS Tournaments,
-	(
-		SELECT	COUNT(1) as 'Players'
-		FROM Players	
-		inner join Teams on  Players.TeamId = Teams.TeamId
-		inner join Matches on  Teams.TeamId = Matches.OppponentTeamId
-		inner join Matches homeTeamMatches on  Teams.TeamId = homeTeamMatches.HomeTeamId
-		inner join Tournaments on  Matches.TournamentId = Tournaments.TournamentId
-		where(@paramUserId Is NUll or Tournaments.UserId = @paramUserId)
-	) AS players,
-		(
-		SELECT	COUNT(1) as 'Teams'
-		FROM Teams
-	) AS Teams,
-		(
-		SELECT	COUNT(1) as 'Records'
-		FROM PlayerScores
-	) AS PlayerScores,
-		(
-		SELECT	COUNT(1) as 'Matches'
-		FROM Matches
-	) AS Matches,
-	(
-		SELECT	COUNT(1) as 'Series'
-		FROM MatchSeries
-	) AS Series,
-
 		(
 		SELECT	top 1
 				homeTeam.Team_Name as 'HomeTeam',
 				Teams.Team_Name as 'OppponentTeam',
 				homeTeamScore.TotalScore as 'HomeTeamScore',
 				TeamScores.TotalScore as 'OpponentsTeamScore',
-				Result as 'Summary',
+				Result as 'Result',
 				Teams.TeamLogo as 'OpponentTeamLogo',
 				homeTeam.TeamLogo as 'HomeTeamTeamLogo',
+				Matches.GroundName as 'GroundName',
+				MatchType.MatchTypeName as 'Type',
+				TournamentStages.Name as 'Stage',
+				Matches.PlayerOTM as 'ManOfTheMatch',
+				Matches.Place as 'Place',
+				Tournaments.TournamentName as 'TournamentName',
+				Matches.DateOfMatch as 'DateOfMatch',
 				 (
 					select top 1 count (case when HomeTeamWickets.HowOutId != '7' then 1 else null end) over()  as 'HomeTeamWickets'
 					FROM Players
@@ -58,16 +34,20 @@ begin
 				) as 'OppenentTeamWickets'
 			
 		
-		FROM Matches		
+		FROM Matches	
 		inner join Teams on  Teams.TeamId = Matches.OppponentTeamId
 		inner join TeamScores on TeamScores.TeamId = Teams.TeamId
 		inner join Teams homeTeam on  homeTeam.TeamId = Matches.HomeTeamId
 		inner join TeamScores homeTeamScore on homeTeamScore.TeamId = homeTeam.TeamId
-		order by Matches.MatchId Desc
+		left join TournamentStages on  TournamentStages.TournamentStageId = Matches.TournamentStageId
+		inner join MatchType on  MatchType.MatchTypeId = Matches.MatchTypeId
+		left join Tournaments on  Tournaments.TournamentId = Matches.TournamentId
+		
+		where Matches.MatchId = @paramMatchId
+	
+	order by Matches.MatchId 
 	) AS LastMatch
 end
 go
-
-exec [usp_HomeScreen] null
-exec [usp_HomeScreen] 57
-select * from AspNetUsers
+--select * from Matches
+exec [usp_Summary2] 1025

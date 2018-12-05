@@ -14,6 +14,8 @@ using WebApp.ViewModels;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using WebApp.Helper;
+using System.Data;
+using Dapper;
 
 namespace WebApp.Controllers
 {
@@ -107,6 +109,39 @@ namespace WebApp.Controllers
 
         }
 
+        // GET: MatchSummary
+        public IActionResult Summary(int matchId, int homeTeamId, int oppTeamId, bool isApi)
+        {
+            ViewBag.Name = "Match Summary";
+            var connection = _context.Database.GetDbConnection();
+            var matchSummary = new Summary();
+
+            var listOfPlayers = connection.Query<MatchSummaryPlayerList>(
+               "[usp_MatchSummaryPlayerList]",
+               new
+               {
+                   paramMatchId = matchId,
+                   paramHomeTeamId = homeTeamId,
+                   paramOpponentTeamId = oppTeamId
+
+               },
+               commandType: CommandType.StoredProcedure) ?? new List<MatchSummaryPlayerList>();
+
+            var s = connection.Query<Summary2dto>(
+                "[usp_Summary2]",
+                new
+                {
+                    paramMatchId = matchId
+                },
+                commandType: CommandType.StoredProcedure) ?? new List<Summary2dto>();
+            matchSummary.MatchSummaryPlayerList = listOfPlayers.ToList();
+            matchSummary.Summary2dto = s.SingleOrDefault();
+            if (isApi)
+            {
+                return Json(matchSummary);
+            }
+            return View(matchSummary);
+        }
 
         // GET: Matches/Details/5
         public async Task<IActionResult> Details(int? matchId)
@@ -133,7 +168,7 @@ namespace WebApp.Controllers
                     Place = i.Place,
                     Result = i.Result,
                     PlayerOfTheMatch = i.Player.Player_Name
-                    
+
 
                 })
                 .SingleOrDefaultAsync(m => m.MatchId == matchId);
@@ -230,8 +265,8 @@ namespace WebApp.Controllers
                 var users = await _userManager.GetUserAsync(HttpContext.User);
                 match.UserId = users.Id;
                 match.MatchLogo = fileBytes ?? null;
-                _context.Matches.Add(_mapper.Map<Match>(match));
-                await _context.SaveChangesAsync();
+                    _context.Matches.Add(_mapper.Map<Match>(match));
+                    await _context.SaveChangesAsync();
                 return Json(ResponseHelper.Success());
             }
             return Json(ResponseHelper.UnSuccess());
@@ -259,7 +294,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-           
+
 
             ViewBag.Name = "Edit Match";
             var users = await _userManager.GetUserAsync(HttpContext.User);

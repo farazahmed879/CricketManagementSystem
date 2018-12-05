@@ -42,192 +42,198 @@
             </ul>
             <div class="tab-content clearfix">
                 <div class="tab-pane" id="tab_1">
-                    <div class="col-md-12">
-                        <div class="col-md-12 bg-blue-active">
-                            <h4>@ViewBag.HomeTeam Batting @ViewBag.HomeTeamScore/@ViewBag.HomeTeamOut</h4>
-                        </div>
-                        @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
-                        {
 
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            S.No
-                                        </th>
-                                        <th>
-                                            Batsman
-                                        </th>
-                                        <th>
-                                            Runs
-                                        </th>
-                                        <th>
-                                            Balls
-                                        </th>
-                                        <th>
-                                            St. Rate
-                                        </th>
-                                        <th>
-                                            How Out
-                                        </th>
-                                        <th>
-                                            Stump
-                                        </th>
-                                        <th>
-                                            Catch
-                                        </th>
-                                        <th>
-                                            Maiden
-                                        </th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.HomeTeamScoreCard)
-                                    {
-                                        if (item.PlayerId.HasValue && item.PlayerId != 0)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Position)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Player.Player_Name)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Bat_Runs)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Bat_Balls)
-                                                </td>
-                                                <td>
-                                                    @{
-
-                                                        var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
-
-                                                        <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
-                                                    }
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.HowOutName)
-                                                </td>
-
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Stump)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Catches)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Maiden)
-                                                </td>
-                                                <td>
-                                                    @if (User.Identity.IsAuthenticated)
-                                                    {
-
-                                                        <a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
-
-                                                    }
-                                                </td>
-                                            </tr>}
-                                    }
-                                </tbody>
-                            </table>
-                        }
-                        else
-                        {
-                            <div class="wizard-header">
-                                <h5 class="wizard-title">
-                                    No Record Found
-                                </h5>
-                            </div>
-
-                        }
-                        <div class="col-md-12 bg-blue-active">
-                            <h4>@ViewBag.OpponentTeam Bowling</h4>
-                        </div>
-                        @if (Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any())
-                        {
-
-
-
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-
-                                        <th>
-                                            Bowler
-                                        </th>
-                                        <th>
-                                            Overs
-                                        </th>
-                                        <th>
-                                            Runs
-                                        </th>
-                                        <th>
-                                            Wickets
-                                        </th>
-                                        <th>
-                                            Econ
-                                        </th>
-
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.OpponentTeamScoreCard)
-                                    {
-                                        if (item.Overs.HasValue && item.Overs != 0)
-                                        {
-                                            <tr>
-
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Player.Player_Name)
-                                                </td>
-
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Overs)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Ball_Runs)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Wickets)
-                                                </td>
-                                                <td>
-                                                    @{
-
-                                                        var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
-
-                                                        <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
-                                                    }
-                                                </td>
-
-                                                <td>
-                                                    @if (User.Identity.IsAuthenticated)
-                                                    {
-
-                                                        <a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
-
-                                                    }
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-
-                        }
-                        else
-                        {
-                            <div class="wizard-header">
-                                <h5 class="wizard-title">
-                                    No Record Found
-                                </h5>
-                            </div>
-
-                        }
+                    <div class="col-md-12 bg-blue-active">
+                        <h4>@ViewBag.HomeTeam Batting @ViewBag.HomeTeamScore/@ViewBag.HomeTeamOut</h4>
                     </div>
+                    @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
+                    {
+
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        S.No
+                                    </th>
+                                    <th>
+                                        Batsman
+                                    </th>
+                                    <th>
+                                        Runs
+                                    </th>
+                                    <th>
+                                        Balls
+                                    </th>
+                                    <th>
+                                        St. Rate
+                                    </th>
+                                    <th>
+                                        How Out
+                                    </th>
+                                    <th>
+                                        Stump
+                                    </th>
+                                    <th>
+                                        Catch
+                                    </th>
+                                    <th>
+                                        Maiden
+                                    </th>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <th>Action</th>
+                                    }
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.HomeTeamScoreCard)
+                                {
+                                    if (item.PlayerId.HasValue && item.PlayerId != 0)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Position)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Bat_Runs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Bat_Balls)
+                                            </td>
+                                            <td>
+                                                @{
+
+                                                    var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
+
+                                                    <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HowOutName)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Stump)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Catches)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Maiden)
+                                            </td>
+
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <td>
+                                                    <a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
+                                                </td>
+                                            }
+
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="wizard-header">
+                            <h5 class="wizard-title">
+                                No Record Found
+                            </h5>
+                        </div>
+
+                    }
+                    <div class="col-md-12 bg-blue-active">
+                        <h4>@ViewBag.OpponentTeam Bowling</h4>
+                    </div>
+                    @if (Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any())
+                    {
+
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                        Bowler
+                                    </th>
+                                    <th>
+                                        Overs
+                                    </th>
+                                    <th>
+                                        Runs
+                                    </th>
+                                    <th>
+                                        Wickets
+                                    </th>
+                                    <th>
+                                        Econ
+                                    </th>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <th>Action</th>
+                                    }
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.OpponentTeamScoreCard)
+                                {
+                                    if (item.Overs.HasValue && item.Overs != 0)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Overs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Ball_Runs)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Wickets)
+                                            </td>
+                                            <td>
+                                                @{
+
+                                                    var econ = Convert.ToDouble(item.Ball_Runs) / Convert.ToDouble(item.Overs);
+
+                                                    <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
+                                                }
+                                            </td>
+
+
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <td>
+                                                    <a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
+                                                </td>
+                                            }
+
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    }
+                    else
+                    {
+                        <div class="wizard-header">
+                            <h5 class="wizard-title">
+                                No Record Found
+                            </h5>
+                        </div>
+
+                    }
+
                 </div>
                 <div class="tab-pane" id="tab_2">
                     <div class="col-md-12 bg-blue-active">
@@ -267,7 +273,11 @@
                                     <th>
                                         Maiden
                                     </th>
-                                    <th>Action</th>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <th>Action</th>
+                                    }
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -309,15 +319,16 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Maiden)
                                             </td>
-                                            <td>
-                                                @if (User.Identity.IsAuthenticated)
-                                                {
 
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <td>
                                                     <a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
+                                                </td>
+                                            }
 
-                                                }
-                                            </td>
-                                        </tr>}
+                                        </tr>
+                                    }
                                 }
                             </tbody>
                         </table>
@@ -357,8 +368,11 @@
                                     <th>
                                         Econ
                                     </th>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <th>Action</th>
+                                    }
 
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -390,15 +404,16 @@
                                                 }
                                             </td>
 
-                                            <td>
-                                                @if (User.Identity.IsAuthenticated)
-                                                {
 
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <td>
                                                     <a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(@item.PlayerScoreId)"><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></a>
+                                                </td>
+                                            }
 
-                                                }
-                                            </td>
-                                        </tr>}
+                                        </tr>
+                                    }
                                 }
                             </tbody>
                         </table>
@@ -513,7 +528,195 @@
                             </div>
                             <!-- /.box-body -->
                         </div>
+                        <div class="col-md-12 bg-blue-active">
+                            <h4>@ViewBag.HomeTeam</h4>
+                        </div>
+                        <div>
+                            @if (Model.HomeTeamFOW != null && Model.HomeTeamFOW.Any())
+                            {
 
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                1st
+                                            </th>
+                                            <th>
+                                                2nd
+                                            </th>
+                                            <th>
+                                                3rd
+                                            </th>
+                                            <th>
+                                                4th
+                                            </th>
+                                            <th>
+                                                5th
+                                            </th>
+                                            <th>
+                                                6th
+                                            </th>
+                                            <th>
+                                                7th
+                                            </th>
+                                            <th>
+                                                8th
+                                            </th>
+                                            <th>
+                                                9th
+                                            </th>
+                                            <th>
+                                                10th
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.HomeTeamFOW)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.First)
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Second)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Third)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Fourth)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Fifth)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Sixth)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Seventh)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Eight)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Ninth)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Tenth)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            }
+                            else
+                            {
+                                <div class="wizard-header">
+                                    <h3 class="wizard-title">
+                                        No Record Found
+                                    </h3>
+                                </div>
+
+                            }
+
+                        </div>
+                        <div class="col-md-12 bg-blue-active">
+                            <h4>@ViewBag.OpponentTeam</h4>
+                        </div>
+                        <div>
+                            @if (Model.OpponentTeamFOW != null && Model.OpponentTeamFOW.Any())
+                            {
+
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                1st
+                                            </th>
+                                            <th>
+                                                2nd
+                                            </th>
+                                            <th>
+                                                3rd
+                                            </th>
+                                            <th>
+                                                4th
+                                            </th>
+                                            <th>
+                                                5th
+                                            </th>
+                                            <th>
+                                                6th
+                                            </th>
+                                            <th>
+                                                7th
+                                            </th>
+                                            <th>
+                                                8th
+                                            </th>
+                                            <th>
+                                                9th
+                                            </th>
+                                            <th>
+                                                10th
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.OpponentTeamFOW)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.First)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Second)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Third)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Fourth)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Fifth)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Sixth)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Seventh)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Eight)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Ninth)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Tenth)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            }
+                            else
+                            {
+                                <div class="wizard-header">
+                                    <h3 class="wizard-title">
+                                        No Record Found
+                                    </h3>
+                                </div>
+
+                            }
+
+                        </div>
                     </div>
 
                 </div>
@@ -712,7 +915,7 @@
                 ball_Runs: Number(bowlingRun) || 0,
                 wickets: Number(bowlingWicket) || 0,
                 maiden: Number(bowlingMaiden) || 0,
-                catch: Number(fieldingCatch) || 0,
+                catches: Number(fieldingCatch) || 0,
                 runOut: Number(fieldingRunOut) || 0,
                 stump: Number(fieldingStump) || 0,
                 PlayerScoreId: Number(PlayerScoreId),

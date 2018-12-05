@@ -14,27 +14,34 @@
         <form asp-action="Register" enctype="multipart/form-data">
             <div class="form-group has-feedback">
                 <input type="text" id="UserName" required class="form-control" asp-for="UserName" placeholder="Aamir123">
-                <span id="userNameMessage"></span>
+
             </div>
             <div class="form-group has-feedback">
                 <input type="email" id="Email" required class="form-control" asp-for="Email" placeholder="Email">
-                <span id="EmailError"></span>
+
             </div>
             <div class="form-group has-feedback">
                 <input type="email" id="ConfirmEmail" required class="form-control" placeholder="Confirm Email">
-                <span id="ConfirmEmailError"></span>
+
             </div>
             <div class="form-group has-feedback">
                 <input type="password" id="Password" required class="form-control" asp-for="Password" placeholder="Password">
-                <span id="PasswordError"></span>
+
             </div>
             <div class="form-group has-feedback">
                 <input type="password" id="ConfirmPass" required class="form-control" placeholder="Retype password" asp-for="ConfirmPassword">
-                <span id="ConfirmPassError"></span>
+
             </div>
             <div class="form-group has-feedback">
                 <input id="PhoneNumber" class="form-control" required placeholder="Phone" asp-for="PhoneNumber" data-inputmask='"mask": "9999-9999999"' data-mask>
-                <span id="PhoneNumber"></span>
+
+            </div>
+            <div class="form-group">
+                <label>User Name</label><span id="userNameMessage"></span><br />
+                <label>Email</label><span id="EmailError"></span><br />
+                <label>Confirm Email</label><span id="ConfirmEmailError"></span><br />
+                <label>Password</label><span id="PasswordError"></span><br />
+                <label>Confirm Password</label><span id="ConfirmPassError"></span>
             </div>
 
             <div class="row">

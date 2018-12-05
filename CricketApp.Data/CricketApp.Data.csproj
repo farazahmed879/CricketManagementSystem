@@ -12,6 +12,8 @@
     <Compile Remove="Migrations\20181019110124_MatchSchedulepk.cs" />
     <Compile Remove="Migrations\20181019110808_TeamMatchSchedule.cs" />
     <Compile Remove="Migrations\20181019111029_MatchScheduleBothRelation.cs" />
+    <Compile Remove="Migrations\20181203133756_TournamentStages.cs" />
+    <Compile Remove="Migrations\20181203150017_TournamentStages2.cs" />
   </ItemGroup>
 
   <ItemGroup>

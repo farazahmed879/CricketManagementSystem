@@ -21,7 +21,7 @@ namespace CricketApp.Domain
         public int? BowlingStyleId { get; set; }
         public int? PlayerRoleId { get; set; }
         public DateTime? DOB { get; set; }
-        public bool IsGuestPlayer { get; set; }
+        public string IsGuestorRegistered { get; set; }
         public bool IsDeactivated { get; set; }
         public int TeamId { get; set; }
         public BattingStyle BattingStyle { get; set; }

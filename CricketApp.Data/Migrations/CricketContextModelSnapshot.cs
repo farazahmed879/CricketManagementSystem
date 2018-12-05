@@ -129,6 +129,10 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int>("HomeTeamId");
 
+                    b.Property<float>("HomeTeamOvers");
+
+                    b.Property<string>("MatchDescription");
+
                     b.Property<byte[]>("MatchLogo")
                         .HasColumnType("varbinary(max)");
 
@@ -137,6 +141,8 @@ namespace CricketApp.Data.Migrations
                     b.Property<int?>("MatchSeriesId");
 
                     b.Property<int>("MatchTypeId");
+
+                    b.Property<float>("OppTeamOvers");
 
                     b.Property<int>("OppponentTeamId");
 
@@ -151,7 +157,11 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int?>("Season");
 
+                    b.Property<int?>("TossWinningTeam");
+
                     b.Property<int?>("TournamentId");
+
+                    b.Property<int?>("TournamentStageId");
 
                     b.Property<int>("UserId");
 
@@ -168,6 +178,8 @@ namespace CricketApp.Data.Migrations
                     b.HasIndex("PlayerId");
 
                     b.HasIndex("TournamentId");
+
+                    b.HasIndex("TournamentStageId");
 
                     b.ToTable("Matches");
                 });
@@ -257,7 +269,7 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<bool>("IsDeactivated");
 
-                    b.Property<bool>("IsGuestPlayer");
+                    b.Property<string>("IsGuestorRegistered");
 
                     b.Property<byte[]>("PlayerLogo")
                         .HasColumnType("varbinary(max)");
@@ -502,6 +514,19 @@ namespace CricketApp.Data.Migrations
                     b.ToTable("Tournaments");
                 });
 
+            modelBuilder.Entity("CricketApp.Domain.TournamentStage", b =>
+                {
+                    b.Property<int>("TournamentStageId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("TournamentStageId");
+
+                    b.ToTable("TournamentStages");
+                });
+
             modelBuilder.Entity("CricketApp.Domain.UserRole", b =>
                 {
                     b.Property<int>("UserId");
@@ -723,6 +748,10 @@ namespace CricketApp.Data.Migrations
                     b.HasOne("CricketApp.Domain.Tournament", "Tournament")
                         .WithMany("Matches")
                         .HasForeignKey("TournamentId");
+
+                    b.HasOne("CricketApp.Domain.TournamentStage", "TournamentStage")
+                        .WithMany()
+                        .HasForeignKey("TournamentStageId");
                 });
 
             modelBuilder.Entity("CricketApp.Domain.MatchSchedule", b =>

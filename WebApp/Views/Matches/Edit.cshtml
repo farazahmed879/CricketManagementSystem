@@ -30,7 +30,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="form-group label-floating">
-                                <label asp-for="GroundName" class="control-label">Ground Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                                <label asp-for="GroundName" class="control-label">Vanue<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                                 <input asp-for="GroundName" required class="form-control" />
                                 <span asp-validation-for="GroundName" class="text-danger"></span>
                             </div>
@@ -40,23 +40,22 @@
                         <div class="form-group">
                             <div class="form-group label-floating">
                                 <label asp-for="Place" class="control-label">Place<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                                <input asp-for="Place" required class="form-control" />
-                                <span asp-validation-for="Place" class="text-danger"></span>
+                                <input asp-for="Place" class="form-control" />
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <div class="form-group label-floating">
                                 <label asp-for="Season" class="control-label">Season</label>
-                                <input asp-for="Season" type="number" class="form-control" />
+                                <input asp-for="Season" placeholder="1/2/3" type="number" class="form-control" />
                                 <span asp-validation-for="Season" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <div class="form-group label-floating">
                                 <label asp-for="MatchOvers" class="control-label">Overs<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
@@ -65,44 +64,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6">
-                        <label>First Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" style="width: 100%" placeholder="--Select Team--" class="js-example-basic-single">
-                            <option value="">--Select Team--</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Second Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" style="width: 100%" placeholder="--Select Team--" class="js-example-basic-single">
-                            <option value="">--Select--</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4" style="margin-top: 10px">
-                        <label>Match Type<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select id="MatchTypeId" asp-for="MatchTypeId" asp-items="ViewBag.MatchType" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                            <option value="">--Select--</option>
-                        </select>
-                    </div>
-                    <div id="tourSection" class="col-md-4" style="margin-top: 10px">
-                        <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select id="TournamentId" asp-for="TournamentId" asp-items="ViewBag.TournamentId" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
-                            <option value="">--Select--</option>
-                        </select>
-                    </div>
-                    <div id="matchSeriesSection" class="col-md-4" style="margin-top: 10px">
-                        <label>Series<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select id="MatchSeriesId" asp-for="MatchSeriesId" asp-items="ViewBag.MatchSeries" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
-                            <option value="">--Select--</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6" style="margin-top: 10px">
-                        <label>Man of the match</label>
-                        <select asp-for="PlayerOTM" asp-items="ViewBag.PlayerOTM" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
-                            <option value="">--Select--</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6" style="margin-top: 10px">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Date of Match</label>
                             <div class="input-group date">
@@ -114,6 +76,60 @@
                             <!-- /.input group -->
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <hr />
+
+                    <div class="col-md-6">
+                        <label>First Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
+                            <option value="">--Select Team--</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Secong Inning Player By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <hr />
+
+                    <div class="col-md-4" style="margin-top: 10px">
+                        <label>Match Type<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <select id="MatchTypeId" asp-for="MatchTypeId" asp-items="ViewBag.MatchType" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4" style="margin-top: 10px" id="tourSection">
+                        <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <select id="TournamentId" asp-for="TournamentId" asp-items="ViewBag.TournamentId" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div id="matchSeriesSection" class="col-md-4" style="margin-top: 10px">
+                        <label>Series<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <select id="MatchSeriesId" asp-for="MatchSeriesId" asp-items="ViewBag.MatchSeries" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div id="tournamentStageSection" class="col-md-4" style="margin-top: 10px">
+                        <label>Tournament Stage<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                        <select id="TournamentStageId" asp-for="TournamentStageId" asp-items="ViewBag.TournamentStage" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <hr />
+                    <div class="col-md-6">
+                        <label>Man of the match</label>
+                        <select asp-for="PlayerOTM" asp-items="ViewBag.PlayerOTM" style="display:none; width: 100%" placeholder="--Select--" class="js-example-basic-single">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                 
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="form-group label-floating">
@@ -221,22 +237,28 @@
             }
         }
         $("#TournamentId").attr("disabled", true);
+        $("#TournamentStageId").attr("disabled", true);
         $("#MatchSeriesId").attr("disabled", true);
         $("#MatchTypeId").change(function () {
             if ($('#MatchTypeId').val() === "2") {
                 $("#MatchSeriesId").val('').trigger('change');
-                $("#TournamentId").attr("disabled", false);
+                $("#TournamentId").attr("disabled", false)
+                $("#TournamentStageId").attr("disabled", false);
                 $("#MatchSeriesId").attr("disabled", true);
             }
             else if ($('#MatchTypeId').val() === "3") {
                 $("#MatchSeriesId").attr("disabled", false);
                 $("#TournamentId").attr("disabled", true);
+                $("#TournamentStageId").attr("disabled", true);
                 $("#TournamentId").val('').trigger('change');
+                $("#TournamentStageId").val('').trigger('change');
             }
             else if ($('#MatchTypeId').val() === "1") {
                 $("#TournamentId").attr("disabled", true);
+                $("#TournamentStageId").attr("disabled", true);
                 $("#MatchSeriesId").attr("disabled", true);
                 $("#TournamentId").val('').trigger('change');
+                $("#TournamentStageId").val('').trigger('change');
                 $("#MatchSeriesId").val('').trigger('change');
             }
         });

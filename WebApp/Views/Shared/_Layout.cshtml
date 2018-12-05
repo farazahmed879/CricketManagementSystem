@@ -37,7 +37,7 @@
                 <span class="logo-mini"><b>A</b>LT</span>
                 <!-- logo for regular state and mobile devices -->
                 <div align="center" valign="top" class="textContent">
-                    <img id="logo" alt="ScoreExec" src="~/images/ScoreExec copy.png" />
+                    <img id="logo" alt="ScoreExec" src="~/images/ScoreExec Red .png" />
                 </div>
                 @*<span class="logo-lg">Score<b>Exec</b></span>*@
             </a>
@@ -63,11 +63,11 @@
                                     <ul class="dropdown-menu">
                                         <!-- User image -->
                                         @*<li class="user-header">
-                                            <img src="/" class="img-circle" alt="User Image">
-                                            <p>
-                                                @User.GetEmail()
-                                            </p>
-                                        </li>*@
+                                                <img src="/" class="img-circle" alt="User Image">
+                                                <p>
+                                                    @User.GetEmail()
+                                                </p>
+                                            </li>*@
                                         <!-- Menu Body -->
                                         <!-- Menu Footer-->
 
@@ -214,18 +214,7 @@
         </aside>
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            @*<ol class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">@ViewBag.Name</a></li>
-                </ol>*@
-            <!-- Content Header (Page header) -->
-            @*<section class="content-header">
-                    <h1>
-                        @ViewBag.Name
-                    </h1>
 
-                </section>*@
-            <!-- Main content -->
             <section class="content wizard">
 
                 @RenderBody()
@@ -256,7 +245,8 @@
     <script src="~/dist/js/adminlte.min.js"></script>
 
     <script src="~/js/jquery.bootstrap.js"></script>
-
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
     @* <script src="~/js/datatables.responsive.js"></script>*@
 
     @RenderSection("Scripts", required: false)
@@ -272,7 +262,6 @@
             height: 55px;
             width: 170px;
         }
-     
     </style>
     <script>
         $(function () {

@@ -125,15 +125,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
+                    <ul class="list-inline">
+                        <li>
                             <label>
-                                <input type="checkbox" asp-for="IsGuestPlayer" value="true" class="flat-red">
-                                IsGuest
+                                Guest
+                                <input type="radio" asp-for="IsGuestorRegistered" value="Guest" class="flat-red">
                             </label>
-                        </div>
-                    </div>
-
+                        </li>
+                        <li>
+                            <label>
+                                Registered
+                                <input type="radio" asp-for="IsGuestorRegistered" value="Registered" class="flat-red">
+                            </label>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="col-md-4">
@@ -144,7 +149,7 @@
                     <i class="far fa-picture-o"> Upload</i> <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
                 </label>
                 <label id="RemoveImage" class="btn btn-box-tool">
-                    <i class="far fa-trash-alt"> Remove</i> 
+                    <i class="far fa-trash-alt"> Remove</i>
                 </label>
             </div>
         </form>
