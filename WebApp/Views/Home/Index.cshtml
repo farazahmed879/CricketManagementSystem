@@ -1,205 +1,480 @@
-﻿@model WebApp.ViewModels.HomeScreendto
-@*@{
-        ViewData["Title"] = "";
-    }*@
-<div class="container-fluid">
-    <ol class="breadcrumb">
-        <li><a>Home /</a></li>
-    </ol>
-</div>
-<div class="container-fluid">
-    <div class="col-md-12 row">
-        <div class="callout callout-info">
-            <h2>Score Exec</h2>
-            <p>
-                Score Executive is a complete ERP solution for your cricket record maintaining. We are commited to secure and protect your data
-                and give you the best result. You can find complete statistics of any player. Score Exec is cricket management web app portal where we market the local clubs and different cricket teams to maintain their records and statistics
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="dl-horizontal">
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3>@Model.Tournaments</h3>
-                        <p>Tournaments</p>
-                    </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-ground-1"></i>
-                    </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="Tournament" asp-action="Index" class="small-box-footer">
-                        Tournaments List <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>@Model.Teams</h3>
-                        <p>Teams</p>
-                    </div>
-                    <div class="icon">
-                        <i class="far fa-flag"></i>
-                    </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="Teams" asp-action="Index" class="small-box-footer">
-                        Teams List <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>@Model.Players</h3>
-                        <p>Players</p>
-                    </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-helmet"></i>
-                    </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="Players" asp-action="Index" class="small-box-footer">
-                        Players List <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>@Model.Matches</h3>
-                        <p>Cricket Match</p>
-                    </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-4"></i>
-                    </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="Matches" asp-action="Index" class="small-box-footer">
-                        Matches List <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>@Model.Series</h3>
-                        <p>Series</p>
-                    </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-ground"></i>
-                    </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="MatchSeries" asp-action="Index" class="small-box-footer">
-                        Match Series List <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3>@Model.Records+</h3>
-                        <p>Records</p>
-                    </div>
-                    <div class="icon">
-                        <i class="flaticon-bar-chart"></i>
-                    </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-controller="Records" asp-action="Index" class="small-box-footer">
-                        Statistics <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-xs-6">
-                <div class="box box-warning box-solid">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Last Match Summary</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <!-- /.box-tools -->
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <div class="form-inline">
-                            <ul class="list-inline">
-                                <li>
-                                    @{
-                                        if (Model.HomeTeamTeamLogo != null)
-                                        {
-                                            var base64 = Model.HomeTeamTeamLogo == null || !Model.HomeTeamTeamLogo.Any() ? "" : Convert.ToBase64String(Model.HomeTeamTeamLogo);
-                                            <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
-
-                                        }
-                                        else
-                                        {
-                                            <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
-
-                                        }
-                                    }
-                                </li>
-                                <li>  <strong> @Model.HomeTeam </strong> @Model.HomeTeamScore/@Model.HomeTeamWickets</li>
-
-
-
-                            </ul>
-                            <ul class="list-inline">
-
-                                <li>
-                                    @{
-                                        if (Model.OpponentTeamLogo != null)
-                                        {
-                                            var base64 = Model.OpponentTeamLogo == null || !Model.OpponentTeamLogo.Any() ? "" : Convert.ToBase64String(Model.OpponentTeamLogo);
-                                            <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
-
-                                        }
-                                        else
-                                        {
-                                            <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
-
-                                        }
-                                    }
-                                </li>
-                                <li>
-                                    <strong> @Model.OppponentTeam </strong> @Model.OpponentsTeamScore/@Model.OppenentTeamWickets
-                                </li>
-                            </ul>
-                            <div class="col-md-12">
-                                <p>@Model.Summary</p>
-                            </div>
-
-                            <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-                    </div>
-
-                </div>
-            </div>
-        </div>
-       
-        <div class="col-md-12">
-            <ul class="list-inline">
-                <li>
-                    <div class="img-responsive" style='background-size:cover; background-image: url("/images/poc copy.png");' id="Img"></div>
-                </li>
-                <li>
-
-                    <h3>Pole of Cricket Official Partners of Score Exec</h3>
-
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-@section Scripts{
-    <style>
-        #Img {
-            background-image: url('');
-            background-size: cover;
-            background-position: center;
-            height: 30px;
-            width: 30px;
-        }
-    </style>
+﻿
+@{
+    Layout = "_LoginLayout";
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | Impact By Distinctive Themes</title>
+    <link href="Home/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Home/css/font-awesome.min.css" rel="stylesheet">
+    <link href="Home/css/pe-icons.css" rel="stylesheet">
+    <link href="Home/css/prettyPhoto.css" rel="stylesheet">
+    <link href="Home/css/animate.css" rel="stylesheet">
+    <link href="Home/css/style.css" rel="stylesheet">
+    <script src="Home/js/jquery.js"></script>
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" href="Home/images/ico/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="Home/images/ico/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="Home/images/ico/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" href="Home/images/ico/apple-touch-icon-57x57.png">
+</head><!--/head-->
+<body>
+    @*<div id="preloader"></div>*@
+    <section id="main-slider" class="no-margin">
+        <div class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="carousel-content center centered">
+                                    <h2><img src="~/images/ScoreExec.png" /></h2>
+                                    <p class="boxed animation animated-item-2 fade-up">Next Stop Cricket</p>
+                                    <br>
+                                    <a class="btn btn-danger animation bounce-in" asp-controller="Home" asp-action="Home">Get Started</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.item-->
+            </div><!--/.carousel-inner-->
+        </div><!--/.carousel-->
+    </section><!--/#main-slider-->
+
+    <div id="content-wrapper">
+        <section id="services" class="white">
+            <div class="container">
+                <div class="gap"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="center gap fade-down section-heading">
+                            <h2 class="main-title">Stuff We Do</h2>
+                            <hr>
+                            <p>What we provide</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-block">
+                            <div class="pull-left bounce-in">
+                                <i class="fa fa-camera fa fa-md"></i>
+                            </div>
+                            <div class="media-body fade-up">
+                                <h3 class="media-heading">Record Maintaing</h3>
+                                <p>Score Exececutive provide you an interactive and user friendly environment to maintain your cricket matches record. Now play digital cricket.</p>
+                            </div>
+                        </div>
+                    </div><!--/.col-md-4-->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-block">
+                            <div class="pull-left bounce-in">
+                                <i class="fa fa-thumbs-o-up fa fa-md"></i>
+                            </div>
+                            <div class="media-body fade-up">
+                                <h3 class="media-heading">Statistics</h3>
+                                <p>You can find complete statistics of any player.</p>
+                            </div>
+                        </div>
+                    </div><!--/.col-md-4-->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-block">
+                            <div class="pull-left bounce-in">
+                                <i class="fa fa-ticket fa fa-md"></i>
+                            </div>
+                            <div class="media-body fade-up">
+                                <h3 class="media-heading">Live Scoring</h3>
+                                <p>Ignore you scoring book or anything else, Score Exececutive will provide live scoring app soon.</p>
+                            </div>
+                        </div>
+                    </div><!--/.col-md-4-->
+                </div><!--/.row-->
+                <div class="gap"></div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-block">
+                            <div class="pull-left bounce-in">
+                                <i class="fa fa-star fa fa-md"></i>
+                            </div>
+                            <div class="media-body fade-up">
+                                <h3 class="media-heading">Live Streaming</h3>
+                                <p>You can find live scoring</p>
+                            </div>
+                        </div>
+                    </div><!--/.col-md-4-->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-block">
+                            <div class="pull-left bounce-in">
+                                <i class="fa fa-cogs fa fa-md"></i>
+                            </div>
+                            <div class="media-body fade-up">
+                                <h3 class="media-heading">Software Support</h3>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div><!--/.col-md-4-->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-block">
+                            <div class="pull-left bounce-in">
+                                <i class="fa fa-google-plus fa fa-md"></i>
+                            </div>
+                            <div class="media-body fade-up">
+                                <h3 class="media-heading">SEO Services</h3>
+                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                            </div>
+                        </div>
+                    </div><!--/.col-md-4-->
+                </div><!--/.row-->
+            </div>
+            <div class="gap"></div>
+        </section>
+
+
+        <section id="single-quote" class="divider-section">
+            <div class="container">
+                <div class="gap"></div>
+                <div class="row">
+                    <div class='col-md-offset-2 col-md-8 fade-up'>
+                        <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                   
+                                        <div class="row">
+                                            <div class="col-sm-3 text-center">
+                                                <img class="img-responsive" src="~/images/Faraz 2.png" style="width: 100px;height:100px;">
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <blockquote> <p>Everyday is a new day and this could be your day</p></blockquote>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gap"></div>
+            </div>
+        </section>
+
+        <section id="about-us" class="white">
+            <div class="container">
+                <div class="gap"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="center gap fade-down section-heading">
+                            <h2 class="main-title">A Little About Us</h2>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 fade-up">
+                        <p>Score Executive is a complete ERP solution for your cricket record maintaining. We are commited to secure and protect your data and give you the best result. You can find complete statistics of any player. Score Exec is cricket management web app portal where we market the local clubs and different cricket teams to maintain their records and statistics</p>
+                    </div>
+                </div>
+                <div class="gap"></div>
+
+                <div class="gap"></div>
+                <div class="center gap fade-down section-heading">
+                    <h2 class="main-title">Meet The Team</h2>
+                    <hr>
+                    <p>Here you can find us</p>
+                </div>
+                <div class="gap"></div>
+
+                <div id="meet-the-team" class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <div class="center team-member">
+                            <div class="team-image">
+                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Khalil copy.png" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Khalil copy.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="team-content fade-up">
+                                <h5>Khalil Muhammad Mirza<small class="role muted">CEO/Lead Developer</small></h5>
+                                <p>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor.</p>
+                                <a class="btn btn-social btn-facebook" href="#"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="center team-member">
+                            <div class="team-image">
+                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Faraz 2.png" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Faraz 2.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="team-content fade-up">
+                                <h5>Faraz Ahmed Shaikh<small class="role muted">Senior Software Developer</small></h5>
+                                <p>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor.</p>
+                                <a class="btn btn-social btn-facebook" href="https://www.facebook.com/faraz.ahmed879"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="center team-member">
+                            <div class="team-image">
+                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Bilal 2.png" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Bilal 2.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="team-content fade-up">
+                                <h5>Muhammad Bilal Moosani<small class="role muted">Web Designer</small></h5>
+                                <p>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor.</p>
+                                <a class="btn btn-social btn-facebook" href="#"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="center team-member">
+                            <div class="team-image">
+                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Arslan 2.png" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Arslan 2.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="team-content fade-up">
+                                <h5>Muhammad Arsalan<small class="role muted">Software Developer</small></h5>
+                                <p>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor.</p>
+                                <a class="btn btn-social btn-facebook" href="#"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/#meet-the-team-->
+                <div class="gap"></div>
+                <div class="gap"></div>
+            </div>
+        </section>
+
+
+
+        <section id="testimonial-carousel" class="divider-section">
+            <div class="gap"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="center gap fade-down section-heading">
+                        <h2 class="main-title">What They Have Been Saying</h2>
+                        <hr>
+                        <p>Their views about cricket</p>
+                        <div class="gap"></div>
+                    </div>
+                    <div class='col-md-offset-2 col-md-8 fade-up'>
+                        <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+                            <!-- Bottom Carousel Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#quote-carousel" data-slide-to="1"></li>
+                                <li data-target="#quote-carousel" data-slide-to="2"></li>
+                            </ol>
+                            <!-- Carousel Slides / Quotes -->
+                            <div class="carousel-inner">
+                                <!-- Quote 1 -->
+                                <div class="item active">
+                                    <blockquote>
+                                        <div class="row">
+                                            <div class="col-sm-3 text-center">
+                                                <img class="img-responsive" src="~/images/Khalil copy.png" style="width: 100px;height:100px;">
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p>Cricket is to me, a way to exploring my skills in a term of Score Executive</p>
+                                                <small>Someone famous</small>
+                                            </div>
+                                        </div>
+                                    </blockquote>
+                                </div>
+                                <!-- Quote 2 -->
+                                <div class="item">
+                                    <blockquote>
+                                        <div class="row">
+                                            <div class="col-sm-3 text-center">
+                                                <img class="img-responsive" src="~/images/Faraz 2.png" style="width: 100px;height:100px;">
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p>There is no difference between cricket and love for me</p>
+                                                <small>Someone famous</small>
+                                            </div>
+                                        </div>
+                                    </blockquote>
+                                </div>
+                                <!-- Quote 3 -->
+                                <div class="item">
+                                    <blockquote>
+                                        <div class="row">
+                                            <div class="col-sm-3 text-center">
+                                                <img class="img-responsive" src="~/images/Bilal 2.png" style="width: 100px;height:100px;">
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p>A gun is no more dangerous than a cricket bat in the hands of a madman</p>
+                                                <small>Someone famous</small>
+                                            </div>
+                                        </div>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gap"></div>
+            </div>
+        </section>
+
+
+        <section id="pricing" class="white">
+            <div class="container">
+                <div class="center gap fade-down section-heading">
+                    <h2 class="main-title">So, How Much?</h2>
+                    <hr>
+                </div>
+                <div class="gap"></div>
+                <div id="pricing-table" class="row">
+                    <div class="col-md-3 col-xs-6 flip-in">
+                        <ul class="plan plan1">
+                            <li class="plan-name">
+                                <h3>Basic</h3>
+                            </li>
+                            <li class="plan-price">
+                                <div>
+                                    <span class="price">Free</span>
+
+                                </div>
+                            </li>
+                            <li>
+                                <strong>Matches</strong> Limited
+                            </li>
+                            <li>
+                                <strong>No Sharing</strong> Social Media
+                            </li>
+                            <li>
+                                <strong>No Mobile App</strong> Android/IOS
+                            </li>
+                            <li>
+                                <strong>No Live Streaming</strong>
+                            </li>
+
+                            <li class="plan-action">
+                                <a href="#" class="btn btn-outlined btn-primary btn-md btn-white">Signup</a>
+                            </li>
+                        </ul>
+                    </div><!--/.col-md-3-->
+                    <div class="col-md-3 col-xs-6 flip-in">
+                        <ul class="plan plan2 featured">
+                            <li class="plan-name">
+                                <h3>Standard</h3>
+                            </li>
+                            <li class="plan-price">
+                                <div>
+                                    <span class="price"><sup>$</sup>10</span>
+                                    <small>month</small>
+                                </div>
+                            </li>
+                            <li>
+                                <strong>Matches</strong> Unlimited
+                            </li>
+                            <li>
+                                <strong>Sharing</strong> Social Media
+                            </li>
+                            <li>
+                                <strong>Mobile App</strong> Android/IOS
+                            </li>
+                            <li>
+                                <strong>Live Streaming</strong>
+                            </li>
+                            <li class="plan-action">
+                                <a href="#" class="btn btn-outlined btn-primary btn-md">Signup</a>
+                            </li>
+                        </ul>
+                    </div><!--/.col-md-3-->
+
+                </div>
+                <div class="gap"></div>
+            </div>
+        </section>
+
+        <div id="mapwrapper">
+            <div class="gap"></div>
+        </div>
+        <div class="gap"></div>
+        <section id="contact" class="white">
+            <div class="container">
+                <div class="gap"></div>
+                <div class="center gap fade-down section-heading">
+                    <h2 class="main-title">Get In Touch</h2>
+                    <hr>
+                </div>
+                <div class="gap"></div>
+                <div class="row">
+                    <div class="col-md-4 fade-up">
+                        <h3>Contact Information</h3>
+                        <p>
+                            <span class="icon icon-home"></span>A-15 block-20 Ancholi Karachi<br />
+                            <span class="icon icon-phone"></span>+92342-2181946<br />
+                            <span class="icon icon-envelop"></span> <a href="#">scoreexec@gmail.com</a> <br />
+                            <span class="icon icon-facebook"></span> <a href="#">Friends Bit</a> <br />
+                        </p>
+                    </div><!-- col -->
+
+                    <div class="col-md-8 fade-up">
+                        <h3>Drop Us A Message</h3>
+                        <br>
+                        <br>
+                        <div id="message"></div>
+                        <form method="post" action="sendemail.php" id="contactform">
+                            <input type="text" name="name" id="name" placeholder="Name" />
+                            <input type="text" name="email" id="email" placeholder="Email" />
+                            <input type="text" name="website" id="website" placeholder="Website" />
+                            <textarea name="comments" id="comments" placeholder="Comments"></textarea>
+                            <input class="btn btn-outlined btn-primary" type="submit" name="submit" value="Submit" />
+                        </form>
+                    </div><!-- col -->
+                </div><!-- row -->
+                <div class="gap"></div>
+            </div>
+        </section>
+    </div>
+
+    <div id="footer-wrapper">
+        <section>
+            <img src="~/images/bg2.jpg" />
+        </section>
+
+
+
+        <footer id="footer" class="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        &copy; 2018 <a target="_blank" href="http://www.friendsbit.com" title="Premium Themes and Templates">Friends Bit . All Rights Reserved.</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="pull-right">
+                            <li><a id="gototop" class="gototop" href="#"><i class="fa fa-chevron-up"></i></a></li><!--#gototop-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer><!--/#footer-->
+    </div>
+
+
+    <script src="Home/js/plugins.js"></script>
+    <script src="Home/js/bootstrap.min.js"></script>
+    <script src="Home/js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWDPCiH080dNCTYC-uprmLOn2mt2BMSUk&amp;sensor=true"></script>
+</body>
+</html>

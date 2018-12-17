@@ -22,7 +22,10 @@ BEGIN
 				(COALESCE(PlayerPastRecord.GetRunOut,0) + COALESCE(count(case when HowOutId = 4 then 1 else null end),0)) as 'GetRunOut',
 				(COALESCE(PlayerPastRecord.GetHitWicket,0)+ COALESCE(count(case when HowOutId = 6 then 1 else null end),0)) as 'GetHitWicket',
 				(COALESCE(PlayerPastRecord.GetLBW,0) + COALESCE(count(case when HowOutId = 5 then 1 else null end),0)) as 'GetLBW',
-				COALESCE(max (Bat_Runs),0) as 'BestScore',
+				case when COALESCE(PlayerPastRecord.BestScore,0) > COALESCE(max (Bat_Runs),0)
+				then COALESCE(PlayerPastRecord.BestScore,0)
+				else COALESCE(max (Bat_Runs),0)
+				End as 'BestScore',
 				COALESCE(max (Wickets),0) as 'MostWickets',		
 				(COALESCE(PlayerPastRecord.NumberOf50s,0) + COALESCE(COUNT(CASE WHEN Bat_Runs >= 50 THEN 1 ELSE NULL END),0)) AS 'NumberOf50s',
 				(COALESCE(PlayerPastRecord.NumberOf100s,0) + COALESCE(COUNT(CASE WHEN Bat_Runs >= 100 THEN 1 ELSE NULL END),0)) AS 'NumberOf100s',
@@ -131,9 +134,9 @@ BEGIN
 				 PlayerPastRecord.DoStump,
 				 PlayerPastRecord.TotalBallRuns,
 				 PlayerPastRecord.TotalWickets,
-				 PlayerPastRecord.TotalMaidens
+				 PlayerPastRecord.TotalMaidens,
+				 PlayerPastRecord.BestScore
 
 	) AS data
 END
 GO
-

@@ -12,6 +12,7 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\ResetPassword.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\ResetPasswordConfirmation.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\UserProfile.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\Home.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Create.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Details.cshtml
@@ -34,7 +35,6 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\PlayerProfile.cshtml
---file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\PlayerStatistics.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\_PlayerPartial.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Batting.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Bowling.cshtml

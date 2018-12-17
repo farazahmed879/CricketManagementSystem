@@ -20,6 +20,7 @@ namespace WebApp.ViewModels
         public int? GetCatch { get; set; }
         public int? GetStump { get; set; }
         public int? GetRunOut { get; set; }
+        public int? BestScore { get; set; }
         public int? TotalBatRuns { get; set; }
         public int? TotalBatBalls { get; set; }
         public int? TotalFours { get; set; }

@@ -24,6 +24,12 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+
+            return View();
+        }
+        [AllowAnonymous]
+        public IActionResult Home()
+        {
             var connection = _context.Database.GetDbConnection();
             var model = connection.QuerySingleOrDefault<HomeScreendto>(
                 "[usp_HomeScreen]",
@@ -37,7 +43,6 @@ namespace WebApp.Controllers
 
             return View(model);
         }
-
         [Route("home/HomePage")]
         [AllowAnonymous]
         public IActionResult HomePage()

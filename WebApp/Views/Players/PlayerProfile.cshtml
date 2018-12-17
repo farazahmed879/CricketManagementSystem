@@ -38,8 +38,8 @@
             <div class="box-footer">
                 <nav class="navbar navbar-light bg-light">
                     @*<div class="form-group">
-                        
-                    </div>*@
+
+                        </div>*@
 
 
                     @if (Model != null && Model.TeamPlayers.Any())
@@ -48,12 +48,12 @@
                         {
                             <div class="dl-horizontal">
                                 <div class="col-md-2">
-                                    <a asp-controller="Players" data-placement="top" data-toggle="tooltip" title="@item.Player_Name" asp-action="PlayerStatistics" asp-route-playerId="@item.PlayerId">
+                                    <a  data-placement="top" data-toggle="tooltip" title="@item.Player_Name" >
                                         @{
                                             if (item.PlayerLogo != null)
                                             {
                                                 var base64 = @item.PlayerLogo == null || !item.PlayerLogo.Any() ? "" : Convert.ToBase64String(@item.PlayerLogo);
-                                                <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' onclick="playerStatistics" id="PlayerImg">
+                                                <div class="img-responsive" style='cursor:pointer margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' data-toggle="modal" data-target="#playerStatistics" onclick="statistics" id="PlayerImg">
                                                 </div>
                                             }
                                             else
@@ -83,8 +83,172 @@
         <!-- /.widget-user -->
     </div>
 </div>
+<div id="screenShot" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header  bg-light-blue-active">
+                <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="container-canvas">
+                    <div id="screenShotBody"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="playerStatistics" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="screen">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="widget-user-header bg-aqua-active">
+                            <h3 class="widget-user-username" id="name"></h3>
+                            <h5 class="widget-user-desc" id="teamName"></h5>
+                            <h5 class="widget-user-desc" id="age"></h5>
+                        </div>
+                        <div class="widget-user-image">
+                            <img class="img-circle" id="target">
+                        </div>
+                        <div class="box-footer">
+                            <div class="row">
+                                <!-- /.col -->
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Batting Style</h5>
+                                        <span class="description-text" id="battingStyle"></span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <div class="col-sm-4 border-right">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Playing Role</h5>
+                                        <span class="description-text" id="playingRole"></span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4">
+                                    <div class="description-block">
+                                        <h5 class="description-header">Bowling Style</h5>
+                                        <span class="description-text" id="bowlingStyle"></span>
+                                    </div>
+                                    <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                    </div>
+                    <!-- /.widget-user -->
+                    <div class="col-md-12 bg-light-blue-active">
+                        <h3>Batting<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BattingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h3>
+                    </div>
+                    <div class="">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Match</th>
+                                    <th>Inn</th>
+                                    <th>Runs</th>
+                                    <th>Balls</th>
+                                    <th>50s</th>
+                                    <th>100s</th>
+                                    <th>Avg</th>
+                                    <th>St.R</th>
+                                    <th>Best</th>
+                                    <th>4s</th>
+                                    <th>6s</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td><span id="totalMatch"></span></td>
+                                    <td><span id="totalInnings"></span></td>
+                                    <td><span id="totalBatRuns"></span></td>
+                                    <td><span id="totalBatBalls"></span></td>
+                                    <td><span id="numberOf50s"></span></td>
+                                    <td><span id="numberOf100s"></span></td>
+                                    <td><span id="battingAverage"></span></td>
+                                    <td><span id="strikeRate"></span></td>
+                                    <td><span id="bestScore"></span></td>
+                                    <td><span id="totalFours"></span></td>
+                                    <td><span id="totalSixes"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12 bg-light-blue-active">
+                        <h3>Bowling<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BowlingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h3>
+                    </div>
+                    <div class="">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Overs</th>
+                                    <th>Wickets</th>
+                                    <th>Runs</th>
+                                    <th>5ws</th>
+                                    <th>Maiden</th>
+                                    <th>Avg</th>
+                                    <th>Econ</th>
+                                    <th>Best</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span id="totalOvers"></span></td>
+                                    <td><span id="totalWickets"></span></td>
+                                    <td><span id="totalBallRuns"></span></td>
+                                    <td><span id="fiveWickets"></span></td>
+                                    <td><span id="totalMaidens"></span></td>
+                                    <td><span id="bowlingAvg"></span></td>
+                                    <td><span id="economy"></span></td>
+                                    <td><span id="bestBowling"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-12 bg-light-blue-active">
+                        <h3>Fielding</h3>
+                    </div>
+                    <div class="">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Catches</th>
+                                    <th>Stumps</th>
+                                    <th>Run Out</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span id="onFieldCatch"></span></td>
+                                    <td><span id="onFieldStump"></span></td>
+                                    <td><span id="onFieldRunOut"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <button data-toggle="modal" data-target="#screenShot" class="btn btn-primary" data-dismiss="modal" id="Capture"><i class="fa fa-camera"></i></button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @section Scripts{
+    <script src="~/js/html2convas-min.js"></script>
     <script>
         $(function () {
             $('#AddBtn').click(function () {
@@ -92,11 +256,139 @@
             });
         });
 
-        $(function () {
-            $('#playerStatistics').click(function () {
-                window.location = '/Players/PlayerStatistics'
+
+        $('#Capture').click(function () {
+            html2canvas(document.querySelector("#screen")).then(canvas => {
+                document.getElementById("screenShotBody").appendChild(canvas);
             });
         });
+        $('#close').click(function () {
+
+            document.getElementById("screenShotBody").innerHTML = "";
+        });
+
+        let statistics = function (playerId) {
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            fetch(`/Players/PlayerStatistics?playerId=${playerId}&Api=true`, {
+                credentials: 'same-origin',
+                headers: header
+            })
+                .then(response => {
+                    if (response.ok) {
+                        response.json()
+                            .then(json => {
+                                document.getElementById("name").innerHTML = json.playerName;
+                                document.getElementById("teamName").innerHTML = json.teamName;
+
+                                document.getElementById("battingStyle").innerHTML = json.battingStyle;
+                                document.getElementById("playingRole").innerHTML = json.playerRole;
+                                document.getElementById("bowlingStyle").innerHTML = json.bowlingStyle;
+
+                                var today = new Date();
+                                var DOB = new Date(json.dob);
+                                var totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
+                                totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
+                                var years = today.getFullYear() - DOB.getFullYear();
+                                var days;
+                                var months;
+
+                                if (DOB.getDate() > today.getDate()) {
+                                    months = (totalMonths % 12);
+                                    var x = today.getMonth();
+                                    switch (x) {
+                                        case 1:
+                                        case 3:
+                                        case 5:
+                                        case 7:
+                                        case 8:
+                                        case 10:
+                                        case 12:
+                                            {
+                                                var a = DOB.getDate() - today.getDate();
+                                                days = 31 - a;
+                                                break;
+                                            }
+                                        default: {
+                                            var a = DOB.getDate() - today.getDate();
+                                            days = 30 - a;
+                                            break;
+                                        }
+
+                                    }
+
+                                }
+                                else {
+                                    days = today.getDate() - DOB.getDate();
+                                    months = (totalMonths % 12) + 1;
+                                }
+
+                                document.getElementById("age").innerHTML = years + ' years ' + months + ' months ' + days + ' days';
+
+                                //batting
+                                document.getElementById("totalMatch").innerHTML = json.totalMatch;
+                                document.getElementById("totalInnings").innerHTML = json.totalInnings;
+                                document.getElementById("totalBatRuns").innerHTML = json.totalBatRuns;
+                                document.getElementById("totalBatBalls").innerHTML = json.totalBatBalls;
+                                document.getElementById("numberOf50s").innerHTML = json.numberOf50s;
+                                document.getElementById("numberOf100s").innerHTML = json.numberOf100s;
+                                document.getElementById("battingAverage").innerHTML = json.battingAverage || 'N/A';
+                                document.getElementById("strikeRate").innerHTML = json.strikeRate || 'N/A';
+                                document.getElementById("bestScore").innerHTML = json.bestScore;
+                                document.getElementById("totalFours").innerHTML = json.totalFours;
+                                document.getElementById("totalSixes").innerHTML = json.totalSixes;
+
+                                //Bowling
+                                document.getElementById("totalOvers").innerHTML = json.totalOvers;
+                                document.getElementById("totalWickets").innerHTML = json.totalWickets;
+                                document.getElementById("totalBallRuns").innerHTML = json.totalBallRuns;
+                                document.getElementById("fiveWickets").innerHTML = json.fiveWickets;
+                                document.getElementById("totalMaidens").innerHTML = json.totalMaidens;
+                                document.getElementById("bowlingAvg").innerHTML = json.bowlingAvg || 'N/A';
+                                document.getElementById("economy").innerHTML = json.economy || 'N/A';
+                                document.getElementById("bestBowling").innerHTML = json.bestBowling || 'N/A';
+
+                                //Fielding
+                                document.getElementById("onFieldCatch").innerHTML = json.onFieldCatch;
+                                document.getElementById("onFieldStump").innerHTML = json.onFieldStump;
+                                document.getElementById("onFieldRunOut").innerHTML = json.onFieldRunOut;
+
+                                //MoreBating
+                                document.getElementById("getBowled").innerHTML = json.getBowled;
+                                document.getElementById("getCatch").innerHTML = json.getCatch;
+                                document.getElementById("getHitWicket").innerHTML = json.getHitWicket;
+                                document.getElementById("getLBW").innerHTML = json.getLBW;
+                                document.getElementById("getStump").innerHTML = json.getStump;
+                                document.getElementById("getRunOut").innerHTML = json.getRunOut;
+                                document.getElementById("totalNotOut").innerHTML = json.totalNotOut;
+
+                                //MoreBowling
+                                document.getElementById("doBowled").innerHTML = json.doBowled;
+                                document.getElementById("doCatch").innerHTML = json.doCatch;
+                                document.getElementById("doHitWicket").innerHTML = json.doHitWicket;
+                                document.getElementById("doLBW").innerHTML = json.doLBW;
+                                document.getElementById("doStump").innerHTML = json.doCatch;
+
+                                if (json.playerImage != null) {
+                                    $('#target').attr('src', `data:image/png;base64,${json.playerImage}`);
+                                } else {
+                                    $('#target').attr('src', `/images/user.png`);
+                                }
+
+
+
+                            })
+                            .catch(err => {
+                                console.error(err);
+                            })
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+
+        };
     </script>
     <style>
         #PlayerImg {

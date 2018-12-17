@@ -16,10 +16,12 @@ begin
 				Matches.GroundName as 'GroundName',
 				MatchType.MatchTypeName as 'Type',
 				TournamentStages.Name as 'Stage',
-				Matches.PlayerOTM as 'ManOfTheMatch',
+				Players.Player_Name as 'ManOfTheMatch',
 				Matches.Place as 'Place',
 				Tournaments.TournamentName as 'TournamentName',
 				Matches.DateOfMatch as 'DateOfMatch',
+				Matches.HomeTeamOvers as 'HomeTeamOvers',
+				Matches.OppTeamOvers as 'OppTeamOvers',
 				 (
 					select top 1 count (case when HomeTeamWickets.HowOutId != '7' then 1 else null end) over()  as 'HomeTeamWickets'
 					FROM Players
@@ -36,6 +38,7 @@ begin
 		
 		FROM Matches	
 		inner join Teams on  Teams.TeamId = Matches.OppponentTeamId
+		left join Players on  Players.PlayerId = Matches.PlayerOTM
 		inner join TeamScores on TeamScores.TeamId = Teams.TeamId
 		inner join Teams homeTeam on  homeTeam.TeamId = Matches.HomeTeamId
 		inner join TeamScores homeTeamScore on homeTeamScore.TeamId = homeTeam.TeamId
@@ -49,5 +52,5 @@ begin
 	) AS LastMatch
 end
 go
---select * from Matches
+
 exec [usp_Summary2] 1025

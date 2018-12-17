@@ -11,6 +11,8 @@
         public string TournamentName { get; set; }
         public string Type { get; set; }
         public string Place { get; set; }
+        public float HomeTeamOvers { get; set; }
+        public float OppTeamOvers { get; set; }
         public string DateOfMatch { get; set; }
         public string GroundName { get; set; }
         public string ManOfTheMatch { get; set; }

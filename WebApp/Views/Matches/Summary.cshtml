@@ -10,8 +10,8 @@
         </ol>
     </div>*@
 <div class="container-fluid">
-    <div class="container-fluid">
-        <div class="modal-header bg-teal-active">
+    <div class="container-fluid" id="MatchSummary">
+        <div class="modal-header bg-primary">
             <h4 class="modal-title">Match Summary</h4>
         </div>
         <div class="modal-body">
@@ -21,20 +21,20 @@
                     <h4>@Model.Summary2dto.Type Match: Ground :@Model.Summary2dto.GroundName @Model.Summary2dto.Place</h4>
                 </div>
             }
-            else 
+            else
             {
                 <div class="col-md-12">
-                    <h4>@Model.Summary2dto.TournamentName @Model.Summary2dto.Stage : Ground :@Model.Summary2dto.GroundName</h4>
+                    <h4>@Model.Summary2dto.TournamentName @Model.Summary2dto.Stage  Ground :@Model.Summary2dto.GroundName</h4>
                 </div>
             }
-           
+
 
             <br>
             <div class="col-md-7 bg-blue-active">
                 <h4>@Model.Summary2dto.HomeTeam</h4>
             </div>
             <div class="col-md-3 bg-blue-active">
-                <h4> Overs</h4>
+                <h4>@Model.Summary2dto.HomeTeamOvers Overs</h4>
             </div>
             <div class="col-md-2 bg-blue-gradient">
                 <h4>@Model.Summary2dto.HomeTeamScore/@Model.Summary2dto.HomeTeamWickets</h4>
@@ -74,7 +74,7 @@
                 <h4>@Model.Summary2dto.OppponentTeam</h4>
             </div>
             <div class="col-md-3 bg-green-active">
-                <h4>Overs</h4>
+                <h4>@Model.Summary2dto.OppTeamOvers Overs</h4>
             </div>
             <div class="col-md-2 bg-green-gradient">
                 <h4>@Model.Summary2dto.OpponentsTeamScore/@Model.Summary2dto.OppenentTeamWickets</h4>
@@ -108,20 +108,42 @@
                 </table>
             </div>
 
-
-
-            <div class="col-md-12 bg-teal">
+            <div class="col-md-12 bg-primary">
                 <h4>@Model.Summary2dto.ManOfTheMatch</h4>
             </div>
 
-            <div class="wizard footer col-md-12 bg-teal-active">
+            <div class="wizard footer col-md-12 bg-primary">
                 <h4>@Model.Summary2dto.Result</h4>
             </div>
 
         </div>
-
-
-
+        <button data-toggle="modal" data-target="#screenShot" class="btn btn-primary" data-dismiss="modal" id="Capture"><i class="fa fa-camera"></i></button>
     </div>
 </div>
+<div id="screenShot" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header  bg-light-blue-active">
+                <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="container-canvas">
+                    <div id="screenShotBody"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/html2convas-min.js"></script>
+    <script>
+        $('#Capture').click(function () {
+            html2canvas(document.querySelector("#MatchSummary")).then(canvas => {
+                document.getElementById("screenShotBody").appendChild(canvas);
+            });
+        });
+    </script>
+}

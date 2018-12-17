@@ -38,13 +38,15 @@ namespace WebApp.Controllers
 
         // GET: PlayerPastRecord
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> PastRecord(int? playerId)
+        public async Task<IActionResult> PastRecord(int? playerId,string PlayerName)
         {
             ViewBag.Name = "Past Record";
             if (playerId == null)
             {
                 return NotFound();
             }
+
+            ViewBag.PlayerName = PlayerName;
 
             var playerPastRecord = await _context.PlayerPastRecord
                 .AsNoTracking()
@@ -79,7 +81,8 @@ namespace WebApp.Controllers
                     DoStump = i.DoStump,
                     OnFieldCatch = i.OnFieldCatch,
                     OnFieldRunOut = i.OnFieldRunOut,
-                    OnFieldStump = i.OnFieldStump
+                    OnFieldStump = i.OnFieldStump,
+                    BestScore = i.BestScore,
 
 
                 })

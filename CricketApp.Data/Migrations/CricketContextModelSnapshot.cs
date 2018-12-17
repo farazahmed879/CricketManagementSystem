@@ -300,6 +300,8 @@ namespace CricketApp.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("BestScore");
+
                     b.Property<int?>("DoBowled");
 
                     b.Property<int?>("DoCatch");
