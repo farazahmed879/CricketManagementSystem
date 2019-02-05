@@ -11,8 +11,7 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\Register.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\ResetPassword.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\ResetPasswordConfirmation.cshtml
---file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\UserProfile.cshtml
---file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\Home.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\DashBoard.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Create.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Details.cshtml
@@ -34,12 +33,14 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\Create.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\Edit.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\Index.cshtml
---file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\PlayerProfile.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\PlayersList.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Players\_PlayerPartial.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Batting.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Bowling.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostCatches.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostCenturies.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostFifties.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostFours.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostRuns.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Records\MostSixes.cshtml

@@ -1,4 +1,4 @@
-﻿Create PROCEDURE [usp_MatchSummaryPlayerList]
+﻿Alter PROCEDURE [usp_MatchSummaryPlayerList]
 @paramHomeTeamId AS INT,
 @paramOpponentTeamId AS INT,
 @paramMatchId AS INT
@@ -90,3 +90,6 @@ WHERE HomeTeam.RunsRank <= 3;
 
 END
 go
+
+
+exec  [usp_MatchSummaryPlayerList]

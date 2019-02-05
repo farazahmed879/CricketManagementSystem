@@ -93,6 +93,7 @@
         }
         $(function () {
             $('#SeriesCreate').click(function () {
+                $('#SeriesCreate').attr("disabled", "disabled");
                 try {
                     var formData = $("#SeriesForm").serialize();
                     $.ajax(`/MatchSeries/Edit`, {

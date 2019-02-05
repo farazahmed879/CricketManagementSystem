@@ -126,7 +126,7 @@
                         <li>
                             <label>
                                 Deactivated
-                                <input type="checkbox" asp-for="IsGuestorRegistered" value="True" class="flat-red">
+                                <input type="checkbox" asp-for="IsDeactivated" class="flat-red">
                             </label>
                         </li>
                     </ul>
@@ -250,8 +250,7 @@
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
         $(document).on('click', '#PlayerCreate', function (e) {
-            //e.preventDefault();
-            //e.stopImmediatePropagation();
+            $('#PlayerCreate').attr("disabled", "disabled");
             var form = $("#PlayerForm").closest("form");
             var formData = new FormData(form[0]);
             $.ajax({

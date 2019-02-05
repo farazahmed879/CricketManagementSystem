@@ -38,10 +38,10 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="carousel-content center centered">
-                                    <h2><img src="~/images/ScoreExec.png" /></h2>
+                                    <h2><img id="ScoreExecImg" src="~/images/ScoreExec.png" /></h2>
                                     <p class="boxed animation animated-item-2 fade-up">Next Stop Cricket</p>
                                     <br>
-                                    <a class="btn btn-danger animation bounce-in" asp-controller="Home" asp-action="Home">Get Started</a>
+                                    <a class="btn btn-danger animation bounce-in" asp-controller="Home" asp-action="DashBoard">Get Started</a>
                                 </div>
                             </div>
                         </div>
@@ -149,16 +149,16 @@
                         <div class="carousel slide" data-ride="carousel" id="quote-carousel">
                             <div class="carousel-inner">
                                 <div class="item active">
-                                   
-                                        <div class="row">
-                                            <div class="col-sm-3 text-center">
-                                                <img class="img-responsive" src="~/images/Faraz 2.png" style="width: 100px;height:100px;">
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <blockquote> <p>Everyday is a new day and this could be your day</p></blockquote>
-                                            </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-3 text-center">
+                                            <img class="img-responsive" src="~/images/Faraz 2.png" style="width: 100px;height:100px;">
                                         </div>
-                                    
+                                        <div class="col-sm-9">
+                                            <blockquote> <p>Everyday is a new day and this could be your day</p></blockquote>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -205,7 +205,7 @@
                             </div>
                             <div class="team-content fade-up">
                                 <h5>Khalil Muhammad Mirza<small class="role muted">CEO/Lead Developer</small></h5>
-                                <p>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor.</p>
+                                <p>Morbi accumsan ipsum velit.</p>
                                 <a class="btn btn-social btn-facebook" href="#"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
@@ -450,7 +450,7 @@
 
     <div id="footer-wrapper">
         <section>
-            <img src="~/images/bg2.jpg" />
+            <img id="CricketImg" src="~/images/bg2.jpg" />
         </section>
 
 
@@ -477,4 +477,126 @@
     <script src="Home/js/jquery.prettyPhoto.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWDPCiH080dNCTYC-uprmLOn2mt2BMSUk&amp;sensor=true"></script>
 </body>
+
 </html>
+@section Scripts{
+    <style>
+        /*#Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 30px;
+            width: 30px;
+        }*/
+        @@media only screen and (min-width: 1300px) and (max-width: 1350px) {
+            /* For tablets: */
+            #ScoreExecImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 120px;
+                width: 330px;
+            }
+
+            #CricketImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 290px;
+                width: 1350px;
+            }
+        }
+        @@media only screen and (min-width: 1000px) and (max-width: 1299px) {
+            /* For tablets: */
+            #ScoreExecImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 90px;
+                width: 270px;
+            }
+
+            #CricketImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 250px;
+                width: 1050px;
+            }
+        }
+        @@media only screen and (min-width: 800px) and (max-width: 999px){
+            /* For tablets: */
+            #ScoreExecImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 90px;
+                width: 270px;
+            }
+
+            #CricketImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 180px;
+                width: 830px;
+            }
+        }
+
+        @@media only screen and (min-width: 600px) and (max-width: 799px) {
+            /* For tablets: */
+            #ScoreExecImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 90px;
+                width: 270px;
+            }
+            #CricketImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 170px;
+                width: 630px;
+            }
+        }
+
+        @@media only screen and (min-width: 360px) and (max-width: 599px) {
+            /* For desktop: */
+            #ScoreExecImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 70px;
+                width: 270px;
+            }
+            #CricketImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 90px;
+                width: 355px;
+            }
+        }
+
+        @@media only screen and (min-width: 320px) and (max-width: 359px) {
+            /* For desktop: */
+            #ScoreExecImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 70px;
+                width: 270px;
+            }
+
+            #CricketImg {
+                background-image: url('');
+                background-size: cover;
+                background-position: center;
+                height: 90px;
+                width: 320px;
+            }
+        }
+
+    </style>
+}

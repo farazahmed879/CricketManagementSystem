@@ -1,0 +1,242 @@
+﻿@model List<WebApp.ViewModels.MostFiftiesdto>
+
+@{
+    ViewData["Title"] = "Players Record";
+}
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a asp-controller="Records" asp-action="Index">Record</a></li>
+        <li><a>Most Wickets</a></li>
+    </ol>
+</div>
+<div class="container-fluid">
+    <div class="form-group">
+        <div id="filter-panel" class="collapse filter-panel">
+            <div class="panel-body">
+                <form class="form-inline" role="form" id="Filters">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <label>Home Team</label>
+                            <select id="homeTeamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <label>Season</label>
+                            <select id="season" name="season" asp-items="ViewBag.Season" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <label>Overs</label>
+                            <select id="overs" name="overs" asp-items="ViewBag.Overs" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-6 col-md-3">
+                            <label>Player Role</label>
+                            <select id="playerRoleId" name="playerRoleId" asp-items="ViewBag.PlayerRole" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-6 col-md-3">
+                            <label>Match Type</label>
+                            <select id="matchTypeId" name="matchTypeId" asp-items="ViewBag.MatchType" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-6 col-md-3">
+                            <label>Tournament</label>
+                            <select id="tournamentId" name="tournamentId" asp-items="ViewBag.Tournament" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <label>Series</label>
+                            <select id="matchSeriesId" name="matchSeriesId" asp-items="ViewBag.Matchseries" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="footer" style="margin-top : .5em">
+                    <ul class="list-inline">
+                        <li><input id="Clear" type="button" onclick="clearFilter()" value="Clear" class="btn btn-default"></li>
+                        <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <br />
+        <button id="advSearch" class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
+            Advanced Search
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <table id="RecordTable" class="table table-bordered table-striped">
+            <thead class="bg-blue-active">
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Match
+                    </th>
+                    <th>
+                        Innings
+                    </th>
+                    <th>
+                        50s
+                    </th>
+
+
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                @for (int i = 0; i < @Model.Count(); i++)
+                {
+                    var item = Model[i];
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PlayerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalMatch)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalInnings)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOf50s)
+                    </td>
+
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    @*<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet" />*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    @*
+        <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>*@
+    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script>
+
+        //Select2
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+
+        $(document).ready(function () {
+            $('#RecordTable').DataTable({
+                dom: 'B',
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "order": [],
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn btn-primary'
+                    }
+                ]
+            });
+        });
+
+
+
+        $(function () {
+            $('#filterdata').click(async function () {
+                try {
+                    const response = await fetch(`/Records/MostFifties?teamId=${$("#homeTeamId").val()}&season=${$("#season").val()}&overs=${$("#overs").val()}&playerRoleId=${$("#playerRoleId").val()}&matchTypeId=${$("#matchTypeId").val()}&tournamentId=${$("#tournamentId").val()}&matchSeriesId=${$("#matchSeriesId").val()}&isApi=true`, {
+                        method: "POST",
+                        credentials: 'same-origin'
+
+                    });
+                    if (response.ok) {
+                        const json = Array.from(await response.json());
+                        const tbody = document.getElementsByTagName('TBODY')[0];
+                        tbody.innerHTML = '';
+                        const trRows = json.map(i => {
+                            const tr = document.createElement("tr");
+                            tr.innerHTML = `
+                                <td> ${i.playerName} </td>
+                                <td>${i.totalMatch}</td>
+                                <td>${i.totalInnings}</td>
+                                <td> ${i.numberOf50s} </td>                                                                                                                                                                                                                                                                                `;
+                            tbody.appendChild(tr);
+                            return tr;
+                        });
+
+                        document.getElementById('advSearch').click();
+                        clearFilter();
+                    }
+
+
+                } catch (ex) {
+                    console.error(ex);
+                }
+            });
+        });
+        $("#tournamentId").attr("disabled", true);
+        $("#matchSeriesId").attr("disabled", true);
+        $("#matchTypeId").change(function () {
+            if ($('#matchTypeId').val() === "2") {
+                $("#matchSeriesId").val('').trigger('change');
+                $("#tournamentId").attr("disabled", false);
+                $("#matchSeriesId").attr("disabled", true);
+            }
+            else if ($('#matchTypeId').val() === "3") {
+                $("#matchSeriesId").attr("disabled", false);
+                $("#tournamentId").attr("disabled", true);
+                $("#tournamentId").val('').trigger('change');
+            }
+            else if ($('#matchTypeId').val() === "1") {
+                $("#tournamentId").attr("disabled", true);
+                $("#matchSeriesId").attr("disabled", true);
+                $("#tournamentId").val('').trigger('change');
+                $("#matchSeriesId").val('').trigger('change');
+            }
+        });
+        function clearFilter() {
+            $("#tournamentId").val('').trigger('change');
+            $("#matchSeriesId").val('').trigger('change');
+            $("#matchTypeId").val('').trigger('change');
+            $("#homeTeamId").val('').trigger('change');
+            $("#season").val('').trigger('change');
+            $("#overs").val('').trigger('change');
+            $("#playerRoleId").val('').trigger('change');
+        }
+
+    </script>
+    <style>
+        #filter-panel {
+            border: 1px solid #bbb;
+        }
+
+        td {
+            text-align: center !important;
+            font-size: 1em;
+        }
+
+        th {
+            text-align: center !important;
+            font-size: 1em;
+        }
+    </style>
+
+}

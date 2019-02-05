@@ -5,11 +5,12 @@
 @paramMatchType As Int,
 @paramTournamentId As Int,
 @paramMatchseriesId As Int,
-@paramPlayerRoleId As Int
+@paramPlayerRoleId As Int,
+@paramUserId as int
 AS
 BEGIN
 	SELECT  count (PlayerScores.MatchId) as 'TotalMatch',
-			count (IsPlayedInning) as 'TotalInnings',
+			count (case when Overs != null and Overs != 0 then 1 else null end) as 'TotalInnings',
 			sum (Overs) as 'TotalOvers',
 			sum (Ball_Runs) as 'TotalBallRuns',
 			sum (Wickets) as 'TotalWickets',
@@ -51,7 +52,9 @@ BEGIN
 		  (@paramMatchType IS NULL OR Matches.MatchTypeId = @paramMatchType) And 
 		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
 		  (@paramTournamentId IS NUll OR Tournaments.TournamentId = @paramTournamentId) And
-		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId)
+		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId) AND
+		  (@paramUserId IS NUll OR Matches.UserId = @paramUserId) And
+		  (Players.IsDeactivated != 1) And (Players.IsGuestorRegistered != 'Guest')
 	
 	GROUP BY PlayerScores.PlayerId,
 			Players.Player_Name,

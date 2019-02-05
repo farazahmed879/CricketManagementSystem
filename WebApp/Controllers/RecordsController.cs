@@ -92,7 +92,8 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId
+                        paramPlayerRoleId = playerRoleId,
+                        paramUserId = userId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<BattingRecorddto>();
@@ -167,7 +168,8 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId
+                        paramPlayerRoleId = playerRoleId,
+                        paramUserId = userId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<BowlingRecorddto>();
@@ -251,7 +253,8 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId
+                        paramPlayerRoleId = playerRoleId,
+                        paramUserId = userId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostRunsdto>();
@@ -336,7 +339,8 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId
+                        paramPlayerRoleId = playerRoleId,
+                        paramUserId = userId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostFoursdto>();
@@ -422,7 +426,8 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId
+                        paramPlayerRoleId = playerRoleId,
+                        paramUserId = userId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostSixesdto>();
@@ -507,7 +512,8 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId
+                        paramPlayerRoleId = playerRoleId,
+                        paramUserId = userId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostWicketsdto>();
@@ -591,7 +597,8 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId
+                        paramPlayerRoleId = playerRoleId,
+                        paramUserId = userId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostCatchesdto>();
@@ -675,7 +682,8 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId
+                        paramPlayerRoleId = playerRoleId,
+                        paramUserId = userId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostStumpsdto>();
@@ -699,6 +707,177 @@ namespace WebApp.Controllers
 
         }
 
+        // Get: MostFifties
+        public async Task<IActionResult> MostFifties(int? teamId, int? season, int? overs, int? position,
+            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+        {
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.Name = "Most 50s";
+
+
+            if (users != null)
+                userId = users.Id;
+
+            ViewBag.Season = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.Season).ToList().Distinct(), "Season");
+
+
+            ViewBag.Overs = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+
+            ViewBag.TeamId = new SelectList(_context.Teams
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
+                .Select(i => new { i.TeamId, i.Team_Name })
+                  , "TeamId", "Team_Name", teamId);
+
+            ViewBag.Tournament = new SelectList(_context.Tournaments
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => new { i.TournamentId, i.TournamentName })
+                , "TournamentId", "TournamentName");
+
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+               .AsNoTracking()
+               .Where(i => (!userId.HasValue || i.UserId == users.Id))
+               .Select(i => new { i.MatchSeriesId, i.Name })
+               , "MatchSeriesId", "Name");
+
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+                .AsNoTracking()
+                , "PlayerRoleId", "Name");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType
+                .AsNoTracking(), "MatchTypeId", "MatchTypeName");
+
+            try
+            {
+                var connection = _context.Database.GetDbConnection();
+                var model = connection.Query<MostFiftiesdto>(
+                    "[usp_GetMostFifties]",
+                    new
+                    {
+                        paramTeamId = teamId,
+                        paramSeason = season,
+                        paramOvers = overs,
+                        paramMatchType = matchTypeId,
+                        paramTournamentId = tournamentId,
+                        paramMatchseriesId = matchseriesId,
+                        paramPlayerRoleId = playerRoleId,
+                        paramUserId = userId,
+                        paramPosition = position
+
+                    },
+                    commandType: CommandType.StoredProcedure) ?? new List<MostFiftiesdto>();
+                if (isApi)
+                {
+                    return Json(model);
+                }
+                return View(model);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (teamId != null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+        }
+        // Get: MostFifties
+        public async Task<IActionResult> MostCenturies(int? teamId, int? season, int? overs, int? position,
+            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+        {
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.Name = "Most 50s";
+
+
+            if (users != null)
+                userId = users.Id;
+
+            ViewBag.Season = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.Season).ToList().Distinct(), "Season");
+
+
+            ViewBag.Overs = new SelectList(_context.Matches
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+
+            ViewBag.TeamId = new SelectList(_context.Teams
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
+                .Select(i => new { i.TeamId, i.Team_Name })
+                  , "TeamId", "Team_Name", teamId);
+
+            ViewBag.Tournament = new SelectList(_context.Tournaments
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.UserId == users.Id))
+                .Select(i => new { i.TournamentId, i.TournamentName })
+                , "TournamentId", "TournamentName");
+
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+               .AsNoTracking()
+               .Where(i => (!userId.HasValue || i.UserId == users.Id))
+               .Select(i => new { i.MatchSeriesId, i.Name })
+               , "MatchSeriesId", "Name");
+
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+                .AsNoTracking()
+                , "PlayerRoleId", "Name");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType
+                .AsNoTracking(), "MatchTypeId", "MatchTypeName");
+
+            try
+            {
+                var connection = _context.Database.GetDbConnection();
+                var model = connection.Query<MostCenturiesdto>(
+                    "[usp_GetMostCenturies]",
+                    new
+                    {
+                        paramTeamId = teamId,
+                        paramSeason = season,
+                        paramOvers = overs,
+                        paramMatchType = matchTypeId,
+                        paramTournamentId = tournamentId,
+                        paramMatchseriesId = matchseriesId,
+                        paramPlayerRoleId = playerRoleId,
+                        paramUserId = userId,
+                        paramPosition = position,
+
+
+                    },
+                    commandType: CommandType.StoredProcedure) ?? new List<MostCenturiesdto>();
+                if (isApi)
+                {
+                    return Json(model);
+                }
+                return View(model);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (teamId != null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+        }
 
     }
 }

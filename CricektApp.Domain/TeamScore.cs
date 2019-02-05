@@ -9,6 +9,7 @@
             get; set;
         }
         public int TotalScore { get; set; }
+        public int Wickets { get; set; }
         public int Wideballs { get; set; }
         public int NoBalls { get; set; }
         public int Byes { get; set; }

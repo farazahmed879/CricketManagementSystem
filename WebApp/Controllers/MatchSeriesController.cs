@@ -11,6 +11,7 @@ using AutoMapper;
 using WebApp.ViewModels;
 using AutoMapper.QueryableExtensions;
 using WebApp.Helper;
+using WebApp.IServices;
 
 namespace WebApp.Controllers
 {
@@ -20,14 +21,16 @@ namespace WebApp.Controllers
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
+        private readonly ISeries _series;
 
         public MatchSeriesController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager,
+            UserManager<IdentityUser<int>> userManager, ISeries series,
             IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
+            _series = series;
 
         }
 
@@ -36,24 +39,21 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Index(int? page, int? userId)
         {
             ViewBag.Name = "Series";
-            int pageSize = 20;
             var users = await _userManager.GetUserAsync(HttpContext.User);
             if (users != null)
                 userId = users.Id;
-
-            return View(await PaginatedList<MatchSeriesdto>.CreateAsync(
-              _context.MatchSeries
-               .Where(i => !userId.HasValue || i.UserId == users.Id)
-                .Select(i => new MatchSeriesdto
-                {
-                    MatchSeriesId = i.MatchSeriesId,
-                    Name = i.Name,
-                    Organizor = i.Organizor,
-                    StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToShortDateString() : "",
-
-                })
-                .OrderByDescending(i => i.MatchSeriesId)
-       , page ?? 1, pageSize));
+            var model = await _series.GetAllSeries(page, userId);
+            return View(model);
+           
+        }
+        public async Task<IActionResult> List(int? page, int? userId)
+        {
+            ViewBag.Name = "Series";
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            if (users != null)
+                userId = users.Id;
+            var model = await _series.GetAllSeries(page, userId);
+            return Json(model);
 
         }
 

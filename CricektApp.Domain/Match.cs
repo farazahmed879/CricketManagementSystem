@@ -34,8 +34,8 @@ namespace CricketApp.Domain
         public int HomeTeamId { get; set; }
         [Required]
         public int OppponentTeamId { get; set; }
-        public float HomeTeamOvers { get; set; }
-        public float OppTeamOvers { get; set; }    
+        public float? HomeTeamOvers { get; set; }
+        public float? OppTeamOvers { get; set; }    
         public Team OppponentTeam { get; set; }
         public Team HomeTeam { get; set; }
         public Tournament Tournament { get; set; }

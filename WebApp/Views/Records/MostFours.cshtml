@@ -41,6 +41,24 @@
                                 <option value="">--Select--</option>
                             </select>
                         </div>
+                        <div class="col-xs-6 col-md-3">
+                            <label>Position</label>
+                            <select id="position" name="position" placeholder="--Select--" style="width:100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                            </select>
+                        </div>
 
                         <div class="col-xs-6 col-md-3">
                             <label>Match Type</label>
@@ -74,7 +92,7 @@
                 </form>
                 <div class="footer" style="margin-top : .5em">
                     <ul class="list-inline">
-                        <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
+                        <li><input id="Clear" onclick="clearFilter()" type="button" value="Clear" class="btn btn-default"></li>
                         <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
                     </ul>
                 </div>
@@ -82,7 +100,7 @@
 
         </div>
         <br />
-        <button id="advSearch" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+        <button id="advSearch" class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
             Advanced Search
         </button>
     </div>
@@ -151,12 +169,13 @@
 
         $(document).ready(function () {
             $('#RecordTable').DataTable({
-                dom: 'Bfrt',
+                dom: 'B',
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "order": [],
                 buttons: [
                     {
                         extend: 'pdfHtml5',
-
+                        className: 'btn btn-primary'
                         //orientation: 'landscape',
                         //pageSize: 'LEGAL'
                     }
@@ -169,17 +188,7 @@
         $(function () {
             $('#filterdata').click(async function () {
                 try {
-                    var formelement = document.getElementById("Filters");
-                    var formData = new FormData(formelement);
-                    var homeTeamId = document.getElementById("homeTeamId").value
-                    var season = formData.get("season")
-                    var overs = formData.get("overs")
-                    var playerRoleId = document.getElementById("playerRoleId").value
-                    var matchTypeId = document.getElementById("matchTypeId").value
-                    var tournamentId = formData.get("tournamentId")
-                    var matchSeriesId = document.getElementById("matchSeriesId").value
-
-                    const response = await fetch(`/Records/MostFours?teamId=${homeTeamId}&season=${season}&overs=${overs}&playerRoleId=${playerRoleId}&matchTypeId=${matchTypeId}&tournamentId=${tournamentId}&matchSeriesId=${matchSeriesId}&isApi=true`, {
+                    const response = await fetch(`/Records/MostFours?teamId=${$("#homeTeamId").val()}&position=${$("#position").val()}&season=${$("#season").val()}&overs=${$("#overs").val()}&playerRoleId=${$("#playerRoleId").val()}&matchTypeId=${$("#matchTypeId").val()}&tournamentId=${$("#tournamentId").val()}&matchSeriesId=${$("#matchSeriesId").val()}&isApi=true`, {
                         method: "POST",
                         //     body: JSON.stringify(model),
                         credentials: 'same-origin'
@@ -192,17 +201,17 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-<td> ${i.playerName} </td>
-<td>${i.totalMatch}</td>
-<td> ${i.totalInnings} </td>
-<td> ${i.mostFours} </td>
+                        <td> ${i.playerName} </td>
+                        <td>${i.totalMatch}</td>
+                        <td> ${i.totalInnings} </td>
+                        <td> ${i.mostFours} </td>
 
 
-                                                                                                                                                                                                                                                                    `;
+                                                                                                                                                                                                                                                                        `;
                             tbody.appendChild(tr);
                             return tr;
                         });
-
+                        clearFilter();
                         document.getElementById('advSearch').click();
                     }
 
@@ -212,6 +221,8 @@
                 }
             });
         });
+
+
         $("#tournamentId").attr("disabled", true);
         $("#matchSeriesId").attr("disabled", true);
         $("#matchTypeId").change(function () {
@@ -232,6 +243,16 @@
                 $("#matchSeriesId").val('').trigger('change');
             }
         });
+        function clearFilter() {
+            $("#tournamentId").val('').trigger('change');
+            $("#matchSeriesId").val('').trigger('change');
+            $("#matchTypeId").val('').trigger('change');
+            $("#homeTeamId").val('').trigger('change');
+            $("#season").val('').trigger('change');
+            $("#overs").val('').trigger('change');
+            $("#playerRoleId").val('').trigger('change');
+            $("#position").val('').trigger('change');
+        }
 
     </script>
     <style>

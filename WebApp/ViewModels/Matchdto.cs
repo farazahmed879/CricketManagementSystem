@@ -26,8 +26,8 @@ namespace WebApp.ViewModels
         [Required]
         public int OppponentTeamId { get; set; }
         public string OppponentTeam { get; set; }
-        public float HomeTeamOvers { get; set; }
-        public float OppTeamOvers { get; set; }
+        public float? HomeTeamOvers { get; set; }
+        public float? OppTeamOvers { get; set; }
         public string HomeTeam { get; set; }
         public string Tournament { get; set; }
         public string Series { get; set; }

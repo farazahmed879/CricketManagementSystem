@@ -13,6 +13,7 @@ using AutoMapper;
 using WebApp.ViewModels;
 using AutoMapper.QueryableExtensions;
 using WebApp.Helper;
+using WebApp.IServices;
 
 namespace WebApp.Controllers
 {
@@ -20,59 +21,39 @@ namespace WebApp.Controllers
     {
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
-        private Task<IdentityUser<int>> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         private readonly IMapper _mapper;
+        private readonly ITeams _teams;
 
         public TeamsController(CricketContext context,
             UserManager<IdentityUser<int>> userManager,
-            IMapper mapper
+            IMapper mapper, ITeams teams
             )
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
+            _teams = teams;
         }
 
         // GET: Teams
 
-        public async Task<IActionResult> Index(string zone, string place, int? page, int? userId)
+        public async Task<IActionResult> Index(string zone, string location, string name, int? page, int? userId)
         {
-
             var users = await _userManager.GetUserAsync(HttpContext.User);
-            ViewBag.Name = "Team";
-            int pageSize = 20;
             if (users != null)
                 userId = users.Id;
-            ViewBag.Zone = new SelectList(_context.Teams
-                .Where(i => !userId.HasValue || i.clubAdmin.UserId == userId)
-                .Select(i => i.Zone)
-                .ToList().Distinct(), "Zone");
-
-            ViewBag.Location = new SelectList(_context.Teams
-               .Where(i => !userId.HasValue || i.clubAdmin.UserId == userId)
-               .Select(i => i.Place)
-               .ToList().Distinct(), "Place");
-
-            return View(await PaginatedList<ViewModels.Teamdto>.CreateAsync(
-            _context.Teams
-            .AsNoTracking()
-            .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone)
-                    && (string.IsNullOrEmpty(place) || i.Place == place)
-                    && (!userId.HasValue || i.clubAdmin.UserId == userId)
-            )
-            .Select(i => new ViewModels.Teamdto
-            {
-                TeamId = i.TeamId,
-                Team_Name = i.Team_Name,
-                Place = i.Place,
-                Zone = i.Zone,
-                City = i.City,
-                Contact = i.Contact,
-                TeamLogo = i.TeamLogo
-            })
-            .OrderByDescending(i => i.TeamId)
-            , page ?? 1, pageSize));
-
+            ViewBag.Name = "Team";
+            var model = await _teams.GetAllTeams(zone, location, name, page, userId);
+            return View(model);
+        }
+        public async Task<IActionResult> List(string zone, string location, string name, int? page, int? userId)
+        {
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            if (users != null)
+                userId = users.Id;
+            ViewBag.Name = "Team";
+            var model = await _teams.GetAllTeams(zone, location, name, page, userId);
+            return Json(model);
         }
 
         // GET: Teams/Details/5
@@ -130,11 +111,11 @@ namespace WebApp.Controllers
                 team.TeamLogo = fileBytes ?? null;
                 var teamModel = _mapper.Map<Team>(team);
                 _context.Teams.Add(teamModel);
-                var user = await GetCurrentUserAsync();
+                var users = await _userManager.GetUserAsync(HttpContext.User);
                 _context.ClubAdmins.Add(new ClubAdmin
                 {
                     TeamId = teamModel.TeamId,
-                    UserId = user?.Id
+                    UserId = users.Id
 
                 });
                 await _context.SaveChangesAsync();

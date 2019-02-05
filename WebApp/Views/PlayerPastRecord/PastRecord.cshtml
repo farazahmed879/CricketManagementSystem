@@ -254,6 +254,7 @@
         }
         $(function () {
             $('#PlayerPastCreate').click(function () {
+                $('#PlayerPastCreate').attr("disabled", "disabled");
                 try {
                     var formData = $("#PlayerPastRecordId").serialize();
                     $.ajax(`/PlayerPastRecord/PastRecordSave`, {
@@ -264,6 +265,7 @@
                         method: "POST"
                     }).done(function (data) {
                         myFunction(data);
+                        window.location = '/Players/Index'
                     }).fail(function (data) {
                         myFunction(data);
                     });

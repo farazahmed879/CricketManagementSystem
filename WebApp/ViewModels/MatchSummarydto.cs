@@ -14,7 +14,7 @@ namespace WebApp.ViewModels
         public int? HowOutId { get; set; }
         public string HowOutName { get; set; }
         public int? Ball_Runs { get; set; }
-        public int? Overs { get; set; }
+        public float? Overs { get; set; }
         public int? Wickets { get; set; }
         public int? Stump { get; set; }
         public int? Catches { get; set; }

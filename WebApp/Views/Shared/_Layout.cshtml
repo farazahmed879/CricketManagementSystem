@@ -61,15 +61,6 @@
                                         <span class="hidden-xs"> @User.GetDisplayName()</span>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <!-- User image -->
-                                        @*<li class="user-header">
-                                                <img src="/" class="img-circle" alt="User Image">
-                                                <p>
-                                                    @User.GetEmail()
-                                                </p>
-                                            </li>*@
-                                        <!-- Menu Body -->
-                                        <!-- Menu Footer-->
 
                                         <li class="user-footer">
                                             <div class="pull-right">
@@ -215,7 +206,7 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
 
-            <section class="content wizard">
+            <section class="wizard">
 
                 @RenderBody()
 
@@ -248,7 +239,8 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
     @* <script src="~/js/datatables.responsive.js"></script>*@
-
+    <script type="text/javascript">var infolinks_pid = 3158006; var infolinks_wsid = 0;</script>
+    <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
     @RenderSection("Scripts", required: false)
 
 
@@ -287,5 +279,6 @@
         });
         localStorage.setItem("Skin", "skin-blue")
     </script>
+
 </body>
 </html>

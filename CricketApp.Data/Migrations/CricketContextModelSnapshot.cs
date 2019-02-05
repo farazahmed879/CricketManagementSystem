@@ -129,7 +129,7 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int>("HomeTeamId");
 
-                    b.Property<float>("HomeTeamOvers");
+                    b.Property<float?>("HomeTeamOvers");
 
                     b.Property<string>("MatchDescription");
 
@@ -142,7 +142,7 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int>("MatchTypeId");
 
-                    b.Property<float>("OppTeamOvers");
+                    b.Property<float?>("OppTeamOvers");
 
                     b.Property<int>("OppponentTeamId");
 
@@ -354,7 +354,7 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int?>("TotalNotOut");
 
-                    b.Property<int?>("TotalOvers");
+                    b.Property<float?>("TotalOvers");
 
                     b.Property<int?>("TotalSixes");
 
@@ -406,7 +406,7 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int>("MatchId");
 
-                    b.Property<int?>("Overs");
+                    b.Property<float?>("Overs");
 
                     b.Property<int?>("PlayerId");
 
@@ -480,6 +480,8 @@ namespace CricketApp.Data.Migrations
                     b.Property<int>("TeamId");
 
                     b.Property<int>("TotalScore");
+
+                    b.Property<int>("Wickets");
 
                     b.Property<int>("Wideballs");
 

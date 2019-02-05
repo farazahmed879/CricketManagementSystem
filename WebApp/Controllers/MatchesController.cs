@@ -16,6 +16,7 @@ using AutoMapper.QueryableExtensions;
 using WebApp.Helper;
 using System.Data;
 using Dapper;
+using WebApp.IServices;
 
 namespace WebApp.Controllers
 {
@@ -25,15 +26,17 @@ namespace WebApp.Controllers
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
+        private readonly IMatches _matches;
 
         public MatchesController(
             CricketContext context,
-            UserManager<IdentityUser<int>> userManager,
+            UserManager<IdentityUser<int>> userManager,IMatches matches,
             IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
+            _matches = matches;
         }
 
         // GET: Matches
@@ -49,17 +52,16 @@ namespace WebApp.Controllers
                 userId = users.Id;
 
             ViewBag.Overs = new SelectList(_context.Matches
-                .Where(i => (userId.HasValue || i.UserId == userId))
+                .Where(i => (!userId.HasValue || i.UserId == userId))
                 .Select(i => i.MatchOvers)
                 .ToList().Distinct(), "MatchOvers");
 
             ViewBag.Season = new SelectList(_context.Matches
-                .Where(i => (userId.HasValue || i.UserId == userId))
+                .Where(i => (!userId.HasValue || i.UserId == userId))
                 .Select(i => i.Season)
                 .ToList().Distinct(), "Season");
 
             ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
-            int pageSize = 20;
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
                 .Where(i => (!userId.HasValue || i.UserId == userId))
@@ -76,37 +78,49 @@ namespace WebApp.Controllers
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
 
-            return View(await PaginatedList<ViewModels.Matchdto>.CreateAsync(
-                _context.Matches
-                .AsNoTracking()
-               .Where(i => (!matchTypeId.HasValue || i.MatchTypeId == matchTypeId) &&
-                           (!teamId.HasValue || i.HomeTeamId == teamId || i.OppponentTeamId == teamId) &&
-                           (!tournamentId.HasValue || i.TournamentId == tournamentId) && (!season.HasValue || i.Season == season) &&
-                           (!matchSeriesId.HasValue || i.MatchSeriesId == matchSeriesId) && (!matchOvers.HasValue || i.MatchOvers == matchOvers) &&
-                           (!userId.HasValue || i.UserId == userId))
-                .Select(i => new ViewModels.Matchdto
-                {
-                    MatchId = i.MatchId,
-                    GroundName = i.GroundName,
-                    DateOfMatch = i.DateOfMatch.HasValue ? i.DateOfMatch.Value.ToShortDateString() : "",
-                    MatchOvers = i.MatchOvers,
-                    Result = i.Result,
-                    MatchType = i.MatchType.MatchTypeName,
-                    //TournamentId = i.TournamentId,
-                    MatchTypeId = i.MatchTypeId,
-                    //Tournament = i.Tournament.TournamentName,
-                    HomeTeam = i.HomeTeam.Team_Name,
-                    OppponentTeam = i.OppponentTeam.Team_Name,
-                    HomeTeamId = i.HomeTeamId,
-                    OppponentTeamId = i.OppponentTeamId,
-                    //MatchLogo = i.MatchLogo,
-                    HasFilledHomeTeamData = i.PlayerScores.Any() && i.PlayerScores.Any(o => o.Player != null && o.Player.TeamId == i.HomeTeamId),
-                    HasFilledOpponentTeamData = i.PlayerScores.Any() && i.PlayerScores.Any(o => o.Player != null && o.Player.TeamId == i.OppponentTeamId),
-                    HasFilledTeamScoreData = i.TeamScores.Any() && i.TeamScores.Any(o => i.MatchId == i.MatchId)
-                })
-               .OrderByDescending(i => i.MatchId)
-                                 , page ?? 1, pageSize));
+            var model = await _matches.GetAllMatches(teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers, userId, page);
+            return View(model);
+        }
 
+        public async Task<IActionResult> List(int? teamId, int? matchTypeId,
+                                              int? tournamentId, int? matchSeriesId,
+                                               int? season, int? matchOvers, int? userId, int? page)
+        {
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+
+            ViewBag.Name = "Match";
+            if (users != null)
+                userId = users.Id;
+
+            ViewBag.Overs = new SelectList(_context.Matches
+                .Where(i => (!userId.HasValue || i.UserId == userId))
+                .Select(i => i.MatchOvers)
+                .ToList().Distinct(), "MatchOvers");
+
+            ViewBag.Season = new SelectList(_context.Matches
+                .Where(i => (!userId.HasValue || i.UserId == userId))
+                .Select(i => i.Season)
+                .ToList().Distinct(), "Season");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
+
+            ViewBag.Tournament = new SelectList(_context.Tournaments
+                .Where(i => (!userId.HasValue || i.UserId == userId))
+                .Select(i => new { i.TournamentId, i.TournamentName })
+           , "TournamentId", "TournamentName");
+
+            ViewBag.MatchSeries = new SelectList(_context.MatchSeries
+                .Where(i => (!userId.HasValue || i.UserId == userId))
+                .Select(i => new { i.MatchSeriesId, i.Name })
+           , "MatchSeriesId", "Name");
+
+            ViewBag.TeamId = new SelectList(_context.Teams
+                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == userId))
+                .Select(i => new { i.TeamId, i.Team_Name })
+                , "TeamId", "Team_Name");
+
+            var model = await _matches.GetAllMatches(teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers, userId, page);
+            return Json(model);
         }
 
         // GET: MatchSummary
@@ -116,25 +130,66 @@ namespace WebApp.Controllers
             var connection = _context.Database.GetDbConnection();
             var matchSummary = new Summary();
 
-            var listOfPlayers = connection.Query<MatchSummaryPlayerList>(
-               "[usp_MatchSummaryPlayerList]",
+            var HomeTeamBatting = connection.Query<HomeTeamBatting>(
+               "[usp_HomeTeamBatting]",
                new
                {
                    paramMatchId = matchId,
                    paramHomeTeamId = homeTeamId,
-                   paramOpponentTeamId = oppTeamId
 
                },
-               commandType: CommandType.StoredProcedure) ?? new List<MatchSummaryPlayerList>();
+               commandType: CommandType.StoredProcedure) ?? new List<HomeTeamBatting>()
+               {
+               };
+            var HomeTeamBowling = connection.Query<HomeTeamBowling>(
+              "[usp_HomeTeamBowling]",
+              new
+              {
+                  paramMatchId = matchId,
+                  paramHomeTeamId = homeTeamId,
+
+              },
+              commandType: CommandType.StoredProcedure) ?? new List<HomeTeamBowling>()
+              {
+              };
+            var OppTeamBatting = connection.Query<OppTeamBatting>(
+             "[usp_OppTeamBatting]",
+             new
+             {
+                 paramMatchId = matchId,
+                 paramOppTeamId = oppTeamId,
+
+             },
+             commandType: CommandType.StoredProcedure) ?? new List<OppTeamBatting>()
+             {
+             };
+            var OppTeamBowling = connection.Query<OppTeamBowling>(
+             "[usp_OppTeamBowling]",
+             new
+             {
+                 paramMatchId = matchId,
+                 paramOppTeamId = oppTeamId,
+
+             },
+             commandType: CommandType.StoredProcedure) ?? new List<OppTeamBowling>()
+             {
+             };
 
             var s = connection.Query<Summary2dto>(
                 "[usp_Summary2]",
                 new
                 {
-                    paramMatchId = matchId
+                    paramMatchId = matchId,
+                    paramHomeTeamId = homeTeamId,
+                    paramOpponentTeamId = oppTeamId
                 },
-                commandType: CommandType.StoredProcedure) ?? new List<Summary2dto>();
-            matchSummary.MatchSummaryPlayerList = listOfPlayers.ToList();
+                commandType: CommandType.StoredProcedure) ?? new List<Summary2dto>()
+                {
+                };
+            matchSummary.OppTeamBatting = OppTeamBatting.ToList();
+            matchSummary.OppTeamBowling = OppTeamBowling.ToList();
+            matchSummary.HomeTeamBatting = HomeTeamBatting.ToList();
+            matchSummary.HomeTeamBowling = HomeTeamBowling.ToList();
             matchSummary.Summary2dto = s.SingleOrDefault();
             if (isApi)
             {
@@ -265,8 +320,8 @@ namespace WebApp.Controllers
                 var users = await _userManager.GetUserAsync(HttpContext.User);
                 match.UserId = users.Id;
                 match.MatchLogo = fileBytes ?? null;
-                    _context.Matches.Add(_mapper.Map<Match>(match));
-                    await _context.SaveChangesAsync();
+                _context.Matches.Add(_mapper.Map<Match>(match));
+                await _context.SaveChangesAsync();
                 return Json(ResponseHelper.Success());
             }
             return Json(ResponseHelper.UnSuccess());
@@ -340,6 +395,8 @@ namespace WebApp.Controllers
                     Season = i.Season,
                     TournamentId = i.TournamentId,
                     PlayerOTM = i.PlayerOTM,
+                    HomeTeamOvers = i.HomeTeamOvers,
+                    OppTeamOvers = i.OppTeamOvers
 
 
                 })

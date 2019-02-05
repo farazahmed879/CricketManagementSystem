@@ -199,7 +199,7 @@
                             {
 
 
-                                <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="fas fa-baseball-ball"></i></a>
+                                <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="flaticon-cricket-18"></i></a>
                                 <a data-placement="top" data-toggle="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId"><i class="fas fa-edit"></i></a>
                                 <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.MatchId)" class="fas fa-trash-alt"></i></a>
                                 <a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-matchId="@item.MatchId"><i class="fas fa-info-circle"></i></a>
@@ -208,9 +208,9 @@
                             }
                             else
                             {
-                                <a asp-action="Summary" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId"  data-placement="top" data-toggle="tooltip" title="Match Summary"><i class="fas fa-baseball-ball"></i></a>
                                 <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="flaticon-cricket-18"></i></a>
-                                @*<a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Summary"><i data-toggle="modal" data-target="#SummaryModal" class="fas fa-align-justify"></i></a>*@
+                                <a asp-action="Summary" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Match Summary"><i class="fas fa-baseball-ball"></i></a>
+                                <a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-matchId="@item.MatchId"><i class="fas fa-info-circle"></i></a>
                             }
 
                         </td>
@@ -221,11 +221,13 @@
     </div>
     @{
         var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var prev2Disabled = !Model.HasPreviousTwo ? "disabled" : "";
-        var prev3Disabled = !Model.HasPreviousThree ? "disabled" : "";
+        var prev1Disabled = !Model.HasPreviousPage ? "hide" : "";
+        var prev2Disabled = !Model.HasPreviousTwo ? "hide" : "";
+        var prev3Disabled = !Model.HasPreviousThree ? "hide" : "";
         var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-        var next2Disabled = !Model.HasNext2 ? "disabled" : "";
-        var next3Disabled = !Model.HasNext3 ? "disabled" : "";
+        var next1Disabled = !Model.HasNextPage ? "hide" : "";
+        var next2Disabled = !Model.HasNext2 ? "hide" : "";
+        var next3Disabled = !Model.HasNext3 ? "hide" : "";
     }
     <nav class="navbar navbar-light bg-light">
         <div class="col-md-12">
@@ -237,31 +239,36 @@
             </span>
         </div>
         <form class="form-inline pull-right">
-            <a data-placement="top" data-toggle="tooltip" title="First Page" asp-action="Index" class="btn btn-primary @prevDisabled"
-               asp-route-page="@(1)">
-                First
-            </a>
-            <a asp-action="Index" class="btn btn-default @prev3Disabled"
-               asp-route-page="@(Model.PageIndex - 3)">@(Model.PageIndex - 3)</a>
-            <a asp-action="Index" class="btn btn-default @prev2Disabled"
-               asp-route-page="@(Model.PageIndex - 2)">@(Model.PageIndex - 2)</a>
-            <a asp-action="Index" class="btn btn-default @prevDisabled"
-               asp-route-page="@(Model.PageIndex - 1)">@(Model.PageIndex - 1)</a>
+            <div class="row pull-right">
+                <a data-placement="top" data-toggle="tooltip" title="First Page" asp-action="Index" class="btn btn-primary @prevDisabled"
+                   asp-route-page="@(1)">
+                    First
+                </a>
 
-            <a asp-action="Index" class="btn btn-primary disabled"
-               asp-route-page="@(Model.PageIndex)">@(Model.PageIndex)</a>
+                <a asp-action="Index" class="btn btn-default @prev3Disabled"
+                   asp-route-page="@(Model.PageIndex - 3)">@(Model.PageIndex - 3)</a>
+                <a asp-action="Index" class="btn btn-default @prev2Disabled"
+                   asp-route-page="@(Model.PageIndex - 2)">@(Model.PageIndex - 2)</a>
+                <a asp-action="Index" class="btn btn-default @prev1Disabled"
+                   asp-route-page="@(Model.PageIndex - 1)">@(Model.PageIndex - 1)</a>
 
-            <a asp-action="Index" class="btn btn-default @nextDisabled"
-               asp-route-page="@(Model.PageIndex + 1)">@(Model.PageIndex + 1)</a>
-            <a asp-action="Index" class="btn btn-default @next2Disabled"
-               asp-route-page="@(Model.PageIndex + 2)">@(Model.PageIndex + 2)</a>
-            <a asp-action="Index" class="btn btn-default @next3Disabled"
-               asp-route-page="@(Model.PageIndex + 3)">@(Model.PageIndex + 3)</a>
-            <a data-placement="top" data-toggle="tooltip" title="Last Page" asp-action="Index"
-               asp-route-page="@(Model.TotalPages)"
-               class="btn btn-primary @nextDisabled">
-                Last
-            </a>
+                <a asp-action="Index" class="btn btn-primary disabled"
+                   asp-route-page="@(Model.PageIndex)">@(Model.PageIndex)</a>
+
+                <a asp-action="Index" class="btn btn-default @next1Disabled"
+                   asp-route-page="@(Model.PageIndex + 1)">@(Model.PageIndex + 1)</a>
+                <a asp-action="Index" class="btn btn-default @next2Disabled"
+                   asp-route-page="@(Model.PageIndex + 2)">@(Model.PageIndex + 2)</a>
+                <a asp-action="Index" class="btn btn-default @next3Disabled"
+                   asp-route-page="@(Model.PageIndex + 3)">@(Model.PageIndex + 3)</a>
+
+                <a data-placement="top" data-toggle="tooltip" title="Last Page" asp-action="Index"
+                   asp-route-page="@(Model.TotalPages)"
+                   class="btn btn-primary @nextDisabled">
+                    Last
+                </a>
+
+            </div>
         </form>
     </nav>
 </div>
@@ -398,7 +405,7 @@
                     </table>
                 </div>
 
-               
+
 
 
 
@@ -469,10 +476,11 @@
             $('#MatchTable').DataTable({
                 "paging": false,
                 dom: 'Bfrt',
+                "order": [],
                 buttons: [
                     {
                         extend: 'pdfHtml5',
-
+                        className: 'btn btn-primary'
                         //orientation: 'landscape',
                         //pageSize: 'LEGAL'
                     }
@@ -480,26 +488,13 @@
             });
         });
 
-
-
-        $(function () {
-            $('#filterdata').click(async function () {
-                var formElement = document.getElementById("Filters");
-                var formData = new FormData(formElement);
-
-                var homeTeamId = formData.get("teamId")
-                var matchTypeId = formData.get("matchTypeId")
-                var tournamentId = formData.get("tournamentId")
-                var matchTypeId = formData.get("matchType")
-                var season = formData.get("season")
-                var matchOvers = document.getElementById("matchOvers").value;
-                // var matchOvers = formData.get("matchOvers")
-
-                await fetch(`/Matches/Index?homeTeamId=${homeTeamId}&matchTypeId=${matchTypeId}&result=${result}&tournamentId=${tournamentId}&matchOvers=${matchOvers}&season=${season}`, {
-                    credentials: 'same-origin'
-                });
-            }
-            )
+        $('#filterdata').click(async function () {
+            // datatable.clear();
+            // datatable.destroy();
+            window.location = `/Matches/Index?teamId=${$("#teamId").val()}&matchTypeId=${$("#matchTypeId").val()}&tournamentId=${$("#tournamentId").val()}&matchOvers=${$("#matchOvers").val()}&season=${$("#season").val()}&matchSeriesId=${$("#matchSeriesId").val()}`;
+            //await fetch(, {
+            //    credentials: 'same-origin'
+            //});
         });
         function Delete(MatchId) {
             document.getElementById("MatchId").value = MatchId;

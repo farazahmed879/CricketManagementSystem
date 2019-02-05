@@ -104,6 +104,7 @@
         }
         $(function () {
             $('#ScheduleCreate').click(function () {
+                $('#ScheduleCreate').attr("disabled", "disabled");
                 try {
                     var formData = $("#ScheduleForm").serialize();
                     $.ajax(`/Schedule/Edit`, {

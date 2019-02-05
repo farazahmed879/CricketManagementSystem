@@ -28,7 +28,7 @@ namespace WebApp.Controllers
             return View();
         }
         [AllowAnonymous]
-        public IActionResult Home()
+        public IActionResult DashBoard()
         {
             var connection = _context.Database.GetDbConnection();
             var model = connection.QuerySingleOrDefault<HomeScreendto>(

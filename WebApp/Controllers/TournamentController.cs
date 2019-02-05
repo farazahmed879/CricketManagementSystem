@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CricketApp.Data;
 using CricketApp.Domain;
-using WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using WebApp.ViewModels;
-using AutoMapper.QueryableExtensions;
 using WebApp.Helper;
+using WebApp.IServices;
 
 namespace WebApp.Controllers
 {
@@ -20,14 +19,16 @@ namespace WebApp.Controllers
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
+        private readonly ITournaments _tournaments;
 
         public TournamentController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager,
+            UserManager<IdentityUser<int>> userManager, ITournaments tournaments,
             IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
+            _tournaments = tournaments;
         }
 
         // GET: Tournaments
@@ -35,25 +36,23 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Index(int? page, int? userId)
         {
             ViewBag.Name = "Tournaments";
-            int pageSize = 20;
             var users = await _userManager.GetUserAsync(HttpContext.User);
             if (users != null)
                 userId = users.Id;
+            var model = await _tournaments.GetAllTournaments(page, userId);
 
-            return View(await PaginatedList<ViewModels.Tournamentdto>.CreateAsync(
-              _context.Tournaments
-               .Where(i => !userId.HasValue || i.UserId == users.Id)
-                .Select(i => new ViewModels.Tournamentdto
-                {
-                    TournamentId = i.TournamentId,
-                    TournamentName = i.TournamentName,
-                    Organizor = i.Organizor,
-                    StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToShortDateString() : "",
+            return View(model);
+        }
 
-                })
-                .OrderByDescending(i => i.TournamentId)
-       , page ?? 1, pageSize));
+        public async Task<IActionResult> List(int? page, int? userId)
+        {
+            ViewBag.Name = "Tournaments";
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            if (users != null)
+                userId = users.Id;
+            var model = await _tournaments.GetAllTournaments(page, userId);
 
+            return Json(model);
         }
 
         // GET: Tournaments/Details/5

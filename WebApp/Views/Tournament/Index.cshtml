@@ -17,79 +17,81 @@
         </div>
 
     }
-    <div class="table-responsive">
-        <table id="TournamentTable" class="table table-bordered table-striped">
-            <thead class="bg-blue-active">
-                <tr>
-                    <th>
-                        Tournament
-                    </th>
-                    <th>
-                        Organizor
-                    </th>
-                    <th>
-                        Starting Date
-                    </th>
-                    <th>
-                        Actions
-                    </th>
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+        <div class="table-responsive">
+            <table id="TournamentTable" class="table table-bordered table-striped">
+                <thead class="bg-blue-active">
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TournamentName)
+                        <th>
+                            Tournament
+                        </th>
+                        <th>
+                            Organizor
+                        </th>
+                        <th>
+                            Starting Date
+                        </th>
+                        <th>
+                            Actions
+                        </th>
 
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Organizor)
-
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StartingDate)
-
-                        </td>
-                        <td>
-                            @if (User.Identity.IsAuthenticated)
-                            {
-
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a asp-controller="Matches" asp-action="Create" asp-route-tournamentId="@item.TournamentId" data-placement="left" data-toggle="tooltip" title="Add a Match"><i class="flaticon-add-1"></i></a></li>
-                                        <li> <a asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId" data-placement="left" data-toggle="tooltip" title="Match List"><i class="flaticon-cricket-4"></i></a></li>
-                                    </ul>
-                                </div>
-                                <a data-toggle="tooltip" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TournamentId"><i class="fas fa-edit"></i></a>
-                                <a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(@item.TournamentId)"></i></a>
-
-                            }
-                            else
-                            {
-                                <div class="btn-group">
-                                    <a asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId" data-placement="top" data-toggle="tooltip" title="Matches"><i class="flaticon-cricket-4"></i></a>
-                                </div>
-                            }
-                        </td>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TournamentName)
 
-        @{
-            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-            var prev2Disabled = !Model.HasPreviousTwo ? "disabled" : "";
-            var prev3Disabled = !Model.HasPreviousThree ? "disabled" : "";
-            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-            var next2Disabled = !Model.HasNext2 ? "disabled" : "";
-            var next3Disabled = !Model.HasNext3 ? "disabled" : "";
-        }
-    </div>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Organizor)
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartingDate)
+
+                            </td>
+                            <td>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="Matches" asp-action="Create" asp-route-tournamentId="@item.TournamentId" data-placement="left" data-toggle="tooltip" title="New Match"><i class="flaticon-add-1"></i></a></li>
+                                            <li> <a asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId" data-placement="left" data-toggle="tooltip" title="Match List"><i class="flaticon-cricket-4"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <a data-toggle="tooltip" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TournamentId"><i class="fas fa-edit"></i></a>
+                                    <a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(@item.TournamentId)"></i></a>
+
+                                }
+                                else
+                                {
+                                    <div class="btn-group">
+                                        <a asp-controller="Matches" asp-action="Index" asp-route-tournamentId="@item.TournamentId" data-placement="top" data-toggle="tooltip" title="Matches"><i class="flaticon-cricket-4"></i></a>
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var prev1Disabled = !Model.HasPreviousPage ? "hide" : "";
+                var prev2Disabled = !Model.HasPreviousTwo ? "hide" : "";
+                var prev3Disabled = !Model.HasPreviousThree ? "hide" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                var next1Disabled = !Model.HasNextPage ? "hide" : "";
+                var next2Disabled = !Model.HasNext2 ? "hide" : "";
+                var next3Disabled = !Model.HasNext3 ? "hide" : "";
+            }
+        </div>
     <nav class="navbar navbar-light bg-light">
 
         <form class="form-inline">
@@ -106,27 +108,30 @@
                    asp-route-page="@(1)">
                     First
                 </a>
+
                 <a asp-action="Index" class="btn btn-default @prev3Disabled"
                    asp-route-page="@(Model.PageIndex - 3)">@(Model.PageIndex - 3)</a>
                 <a asp-action="Index" class="btn btn-default @prev2Disabled"
                    asp-route-page="@(Model.PageIndex - 2)">@(Model.PageIndex - 2)</a>
-                <a asp-action="Index" class="btn btn-default @prevDisabled"
+                <a asp-action="Index" class="btn btn-default @prev1Disabled"
                    asp-route-page="@(Model.PageIndex - 1)">@(Model.PageIndex - 1)</a>
 
                 <a asp-action="Index" class="btn btn-primary disabled"
                    asp-route-page="@(Model.PageIndex)">@(Model.PageIndex)</a>
 
-                <a asp-action="Index" class="btn btn-default @nextDisabled"
+                <a asp-action="Index" class="btn btn-default @next1Disabled"
                    asp-route-page="@(Model.PageIndex + 1)">@(Model.PageIndex + 1)</a>
                 <a asp-action="Index" class="btn btn-default @next2Disabled"
                    asp-route-page="@(Model.PageIndex + 2)">@(Model.PageIndex + 2)</a>
                 <a asp-action="Index" class="btn btn-default @next3Disabled"
                    asp-route-page="@(Model.PageIndex + 3)">@(Model.PageIndex + 3)</a>
+
                 <a data-placement="top" data-toggle="tooltip" title="Last Page" asp-action="Index"
                    asp-route-page="@(Model.TotalPages)"
                    class="btn btn-primary @nextDisabled">
                     Last
                 </a>
+
             </div>
         </form>
     </nav>
@@ -196,13 +201,12 @@
 
         $(document).ready(function () {
             $('#TournamentTable').DataTable({
-                "paging": false,
-                "info": false,
-                dom: 'Bfrtip',
+                dom: 'B',
+                "order": [],
                 buttons: [
                     {
                         extend: 'pdfHtml5',
-
+                        className: 'btn btn-primary'
                         //orientation: 'landscape',
                         //pageSize: 'LEGAL'
                     }

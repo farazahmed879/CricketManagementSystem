@@ -15,7 +15,7 @@
             <div class="panel-body">
                 <form class="form-inline" role="form" id="Filters">
                     <div class="row">
-                        <div class="col-xs-6 col-md-6">
+                        <div class="col-xs-6 col-md-3">
                             <label>Team</label>
                             <select id="teamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select--</option>
@@ -23,23 +23,39 @@
                         </div>
 
 
-                        <div class=" col-xs-6 col-md-6">
+                        <div class=" col-xs-6 col-md-3">
                             <label>Role</label>
                             <select id="playerRoleId" asp-items="ViewBag.PlayerRoleId" name="playerRoleId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
                         </div>
-                    </div>
-                    <br />
-                    <div class=" col-xs-6 col-md-6">
-                        <div class="form-group row">
-                            <button type="button" id="SearchBtn" class="btn btn-primary filter-col">
-                                <span><i class="fas fa-search"></i></span> Search
-                            </button>
+
+                        <div class=" col-xs-6 col-md-3">
+                            <label>Batting Style</label>
+                            <select id="battingStyleId" asp-items="ViewBag.BattingStyleId" name="battingStyleId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-6 col-md-3">
+                            <label>Bowling Style</label>
+                            <select id="bowlingStyleId" asp-items="ViewBag.BowlingStyleId" name="bowlingStyleId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6 col-md-3" style="margin-top: 20px">
+
+                            <label class="control-label">Player</label>
+                            <input name="name" id="name" placeholder="John" class="form-control" />
                         </div>
                     </div>
-
-
+                    <br />
+                    <div class="footer" style="margin-top : .5em">
+                        <ul class="list-inline">
+                            <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
+                            <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
+                        </ul>
+                    </div>
                 </form>
             </div>
 
@@ -64,11 +80,13 @@
 
     @{
         var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var prev2Disabled = !Model.HasPreviousTwo ? "disabled" : "";
-        var prev3Disabled = !Model.HasPreviousThree ? "disabled" : "";
+        var prev1Disabled = !Model.HasPreviousPage ? "hide" : "";
+        var prev2Disabled = !Model.HasPreviousTwo ? "hide" : "";
+        var prev3Disabled = !Model.HasPreviousThree ? "hide" : "";
         var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-        var next2Disabled = !Model.HasNext2 ? "disabled" : "";
-        var next3Disabled = !Model.HasNext3 ? "disabled" : "";
+        var next1Disabled = !Model.HasNextPage ? "hide" : "";
+        var next2Disabled = !Model.HasNext2 ? "hide" : "";
+        var next3Disabled = !Model.HasNext3 ? "hide" : "";
     }
 
     <div class="table-responsive">
@@ -154,13 +172,13 @@
                    asp-route-page="@(Model.PageIndex - 3)">@(Model.PageIndex - 3)</a>
                 <a asp-action="Index" class="btn btn-default @prev2Disabled"
                    asp-route-page="@(Model.PageIndex - 2)">@(Model.PageIndex - 2)</a>
-                <a asp-action="Index" class="btn btn-default @prevDisabled"
+                <a asp-action="Index" class="btn btn-default @prev1Disabled"
                    asp-route-page="@(Model.PageIndex - 1)">@(Model.PageIndex - 1)</a>
 
                 <a asp-action="Index" class="btn btn-primary disabled"
                    asp-route-page="@(Model.PageIndex)">@(Model.PageIndex)</a>
 
-                <a asp-action="Index" class="btn btn-default @nextDisabled"
+                <a asp-action="Index" class="btn btn-default @next1Disabled"
                    asp-route-page="@(Model.PageIndex + 1)">@(Model.PageIndex + 1)</a>
                 <a asp-action="Index" class="btn btn-default @next2Disabled"
                    asp-route-page="@(Model.PageIndex + 2)">@(Model.PageIndex + 2)</a>
@@ -200,14 +218,14 @@
                                 <!-- /.col -->
                                 <div class="col-sm-4 border-right">
                                     <div class="description-block">
-                                        <h5 class="description-header">Batting Style</h5>
+                                        <h6 class="description-header">Batting Style</h6>
                                         <span class="description-text" id="battingStyle"></span>
                                     </div>
                                     <!-- /.description-block -->
                                 </div>
                                 <div class="col-sm-4 border-right">
                                     <div class="description-block">
-                                        <h5 class="description-header">Playing Role</h5>
+                                        <h6 class="description-header">Playing Role</h6>
                                         <span class="description-text" id="playingRole"></span>
                                     </div>
                                     <!-- /.description-block -->
@@ -215,7 +233,7 @@
                                 <!-- /.col -->
                                 <div class="col-sm-4">
                                     <div class="description-block">
-                                        <h5 class="description-header">Bowling Style</h5>
+                                        <h6 class="description-header">Bowling Style</h6>
                                         <span class="description-text" id="bowlingStyle"></span>
                                     </div>
                                     <!-- /.description-block -->
@@ -227,100 +245,105 @@
                     </div>
                     <!-- /.widget-user -->
                     <div class="col-md-12 bg-light-blue-active">
-                        <h3>Batting<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BattingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h3>
+                        <h4>Batting<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BattingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h4>
                     </div>
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Match</th>
-                                        <th>Inn</th>
-                                        <th>Runs</th>
-                                        <th>Balls</th>
-                                        <th>50s</th>
-                                        <th>100s</th>
-                                        <th>Avg</th>
-                                        <th>St.R</th>
-                                        <th>Best</th>
-                                        <th>4s</th>
-                                        <th>6s</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>M</th>
+                                            <th>In</th>
+                                            <th>R</th>
+                                            <th>B</th>
+                                            <th>50</th>
+                                            <th>100</th>
+                                            <th>Avg</th>
+                                            <th>SR</th>
+                                            <th>Hs</th>
+                                            <th>4s</th>
+                                            <th>6s</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                    <tr>
-                                        <td><span id="totalMatch"></span></td>
-                                        <td><span id="totalInnings"></span></td>
-                                        <td><span id="totalBatRuns"></span></td>
-                                        <td><span id="totalBatBalls"></span></td>
-                                        <td><span id="numberOf50s"></span></td>
-                                        <td><span id="numberOf100s"></span></td>
-                                        <td><span id="battingAverage"></span></td>
-                                        <td><span id="strikeRate"></span></td>
-                                        <td><span id="bestScore"></span></td>
-                                        <td><span id="totalFours"></span></td>
-                                        <td><span id="totalSixes"></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        <tr>
+                                            <td><span id="totalMatch"></span></td>
+                                            <td><span id="totalInnings"></span></td>
+                                            <td><span id="totalBatRuns"></span></td>
+                                            <td><span id="totalBatBalls"></span></td>
+                                            <td><span id="numberOf50s"></span></td>
+                                            <td><span id="numberOf100s"></span></td>
+                                            <td><span id="battingAverage"></span></td>
+                                            <td><span id="strikeRate"></span></td>
+                                            <td><span id="bestScore"></span></td>
+                                            <td><span id="totalFours"></span></td>
+                                            <td><span id="totalSixes"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12 bg-light-blue-active">
-                        <h3>Bowling<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BowlingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h3>
+                        <h4>Bowling<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BowlingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h4>
                     </div>
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Overs</th>
-                                        <th>Wickets</th>
-                                        <th>Runs</th>
-                                        <th>5ws</th>
-                                        <th>Maiden</th>
-                                        <th>Avg</th>
-                                        <th>Econ</th>
-                                        <th>Best</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><span id="totalOvers"></span></td>
-                                        <td><span id="totalWickets"></span></td>
-                                        <td><span id="totalBallRuns"></span></td>
-                                        <td><span id="fiveWickets"></span></td>
-                                        <td><span id="totalMaidens"></span></td>
-                                        <td><span id="bowlingAvg"></span></td>
-                                        <td><span id="economy"></span></td>
-                                        <td><span id="bestBowling"></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>O</th>
+                                            <th>W</th>
+                                            <th>R</th>
+                                            <th>5w</th>
+                                            <th>M</th>
+                                            <th>Avg</th>
+                                            <th>Eco</th>
+                                            <th>BBI</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span id="totalOvers"></span></td>
+                                            <td><span id="totalWickets"></span></td>
+                                            <td><span id="totalBallRuns"></span></td>
+                                            <td><span id="fiveWickets"></span></td>
+                                            <td><span id="totalMaidens"></span></td>
+                                            <td><span id="bowlingAvg"></span></td>
+                                            <td><span id="economy"></span></td>
+                                            <td><span id="bestBowling"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-md-12 bg-light-blue-active">    
-                        <h3>Fielding</h3>
+                    <div class="col-md-12 bg-light-blue-active">
+                        <h4>Fielding</h4>
                     </div>
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Catches</th>
-                                        <th>Stumps</th>
-                                        <th>Run Out</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><span id="onFieldCatch"></span></td>
-                                        <td><span id="onFieldStump"></span></td>
-                                        <td><span id="onFieldRunOut"></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Catches</th>
+                                            <th>Stumps</th>
+                                            <th>Run Out</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span id="onFieldCatch"></span></td>
+                                            <td><span id="onFieldStump"></span></td>
+                                            <td><span id="onFieldRunOut"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -353,7 +376,7 @@
         <div class="modal-content">
             <div class="modal-header  bg-light-blue-active">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Bowling</h4>
+                <h4 class="modal-title">Batting</h4>
             </div>
             <div class="modal-body">
                 <dl class="dl-horizontal">
@@ -409,7 +432,7 @@
         <div class="modal-content">
             <div class="modal-header  bg-light-blue-active">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Batting</h4>
+                <h4 class="modal-title">Bowling</h4>
             </div>
             <div class="modal-body">
                 <dl class="dl-horizontal">
@@ -493,11 +516,12 @@
 
         $('#PlayerTable').DataTable({
             "paging": false,
-            dom: 'Bfrt',
+            dom: 'B',
+            "order": [],
             buttons: [
                 {
                     extend: 'pdfHtml5',
-
+                    className: 'btn btn-primary'
                     //orientation: 'landscape',
                     //pageSize: 'LEGAL'
                 }
@@ -517,6 +541,7 @@
         });
 
         $('#Capture').click(function () {
+            document.getElementById("screenShotBody").innerHTML = "";
             html2canvas(document.querySelector("#screen")).then(canvas => {
                 document.getElementById("screenShotBody").appendChild(canvas);
             });
@@ -528,10 +553,10 @@
 
 
 
-        $('#SearchBtn').click(async function () {
+        $('#filterdata').click(async function () {
             // datatable.clear();
             // datatable.destroy();
-            window.location = `/Players/Index?teamId=${$("#teamId").val()}&playerRoleId=${$("#playerRoleId").val()}`;
+            window.location = `/Players/Index?teamId=${$("#teamId").val()}&playerRoleId=${$("#playerRoleId").val()}&battingStyleId=${$("#battingStyleId").val()}&bowlingStyleId=${$("#bowlingStyleId").val()}&name=${$("#name").val()}`;
             //await fetch(, {
             //    credentials: 'same-origin'
             //});
@@ -593,11 +618,19 @@
                                 var totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
                                 totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
                                 var years = today.getFullYear() - DOB.getFullYear();
+                                if (DOB.getMonth() > today.getMonth())
+                                    years = years - 1;
+                                else if (DOB.getMonth() === today.getMonth())
+                                    if (DOB.getDate() > today.getDate())
+                                        years = years - 1;
+
                                 var days;
                                 var months;
 
                                 if (DOB.getDate() > today.getDate()) {
                                     months = (totalMonths % 12);
+                                    if (months == 0)
+                                        months = 11;
                                     var x = today.getMonth();
                                     switch (x) {
                                         case 1:
@@ -623,7 +656,10 @@
                                 }
                                 else {
                                     days = today.getDate() - DOB.getDate();
-                                    months = (totalMonths % 12) + 1;
+                                    if (DOB.getMonth() === today.getMonth())
+                                        months = (totalMonths % 12);
+                                    else
+                                        months = (totalMonths % 12) + 1;
                                 }
 
                                 document.getElementById("age").innerHTML = years + ' years ' + months + ' months ' + days + ' days';
@@ -637,7 +673,7 @@
                                 document.getElementById("numberOf100s").innerHTML = json.numberOf100s;
                                 document.getElementById("battingAverage").innerHTML = json.battingAverage || 'N/A';
                                 document.getElementById("strikeRate").innerHTML = json.strikeRate || 'N/A';
-                                document.getElementById("bestScore").innerHTML = json.bestScore;
+                                document.getElementById("bestScore").innerHTML = json.hightScore;
                                 document.getElementById("totalFours").innerHTML = json.totalFours;
                                 document.getElementById("totalSixes").innerHTML = json.totalSixes;
 
@@ -649,7 +685,7 @@
                                 document.getElementById("totalMaidens").innerHTML = json.totalMaidens;
                                 document.getElementById("bowlingAvg").innerHTML = json.bowlingAvg || 'N/A';
                                 document.getElementById("economy").innerHTML = json.economy || 'N/A';
-                                document.getElementById("bestBowling").innerHTML = json.bestBowling || 'N/A';
+                                document.getElementById("bestBowling").innerHTML = json.bestBowlingFigureRuns + '/' + json.mostWickets || 'N/A';
 
                                 //Fielding
                                 document.getElementById("onFieldCatch").innerHTML = json.onFieldCatch;
@@ -677,8 +713,6 @@
                                 } else {
                                     $('#target').attr('src', `/images/user.png`);
                                 }
-
-
 
                             })
                             .catch(err => {

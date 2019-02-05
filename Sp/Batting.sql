@@ -10,7 +10,7 @@
 @paramUserId AS int
 AS
 BEGIN
-	SELECT  COALESCE( PlayerPastRecord.TotalMatch,0) + count (PlayerScores.MatchId) as 'TotalMatch',
+	SELECT  count (PlayerScores.MatchId) as 'TotalMatch',
 			count (case when IsPlayedInning = 1 then 1 else null end) as 'TotalInnings',
 			sum (Bat_Runs) as 'TotalBatRuns',
 			sum (Bat_Balls) as 'TotalBatBalls',
@@ -31,12 +31,12 @@ BEGIN
 			END As 'StrikeRate',
 
 			CASE WHEN COUNT(cast (Case When IsPlayedInning ='1' Then 1 else null end as float)) - 
-					  COUNT (cast (case when HowOutId = '14' then 1 else null end as float)) = 0
+					  COUNT (cast (case when HowOutId = '7' or HowOutId = '8' then 1 else null end as float)) = 0
 				THEN null
 			    ELSE CAST(
 							sum(cast (Bat_Runs as float)) / 
 							(cast(COUNT(Case When IsPlayedInning ='1' Then 1 else null end)as float)) - 
-							(cast (COUNT (case when HowOutId = '14' then 1 else null end)as float))
+							(cast (COUNT (case when HowOutId = '7' or HowOutId = '8'  then 1 else null end)as float))
 						   AS numeric(36,2)
 						   )
 			END As 'BattingAverage',
@@ -61,13 +61,12 @@ BEGIN
 		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
 		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
 		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId) And
-		  (@paramUserId IS NUll OR Tournament.UserId = @paramUserId)
+		  (@paramUserId IS NUll OR Matches.UserId = @paramUserId) And
+		  (Players.IsDeactivated != 1) And (Players.IsGuestorRegistered != 'Guest')
 	
 	GROUP BY PlayerScores.PlayerId,
-			Players.Player_Name,
-			PlayerRole.Name,
+			 Players.Player_Name,
+			 PlayerRole.Name,
 			 Players.TeamId
 END
 go
-
-select * from PlayerPastRecord

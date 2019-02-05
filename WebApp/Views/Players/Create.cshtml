@@ -270,8 +270,7 @@
         }
 
         $(document).on('click', '#PlayerCreate', function (e) {
-            //e.preventDefault();
-            //e.stopImmediatePropagation();
+            $('#PlayerCreate').attr("disabled", "disabled");
             var form = $("#PlayerForm").closest("form");
             var formData = new FormData(form[0]);
             $.ajax({

@@ -2,30 +2,32 @@
 @paramPlayerId AS INT
 AS
 BEGIN
-
-
-	SELECT *,
-		  CONCAT(data.TotalBallRuns,'/',data.MostWickets) AS 'BestBowling'
-	FROM
-	(
-		SELECT  
+		SELECT  * 
+			from(
+				select
 				COALESCE( PlayerPastRecord.TotalMatch,0) + COALESCE(count (PlayerScores.MatchId),0) as 'TotalMatch',
 				COALESCE(PlayerPastRecord.TotalInnings,0) + COALESCE(count (CASE WHEN PlayerScores.IsPlayedInning = 1 THEN 1 ELSE NULL END),0) as 'TotalInnings',
 				(COALESCE(PlayerPastRecord.TotalBatRuns,0) + COALESCE(sum (PlayerScores.Bat_Runs),0)) as 'TotalBatRuns',
 				(COALESCE(PlayerPastRecord.TotalBatBalls,0) + COALESCE(sum (PlayerScores.Bat_Balls),0)) as 'TotalBatBalls',
 				(COALESCE(PlayerPastRecord.TotalFours,0) + COALESCE(sum (PlayerScores.Four),0)) as 'TotalFours',
 				(COALESCE(PlayerPastRecord.TotalSixes,0) + COALESCE(sum(PlayerScores.Six),0)) as 'TotalSixes',
-				(COALESCE(PlayerPastRecord.TotalNotOut,0) + COALESCE(count(case when HowOutId = 7 then 1 else null end),0)) as 'TotalNotOut',
+				(COALESCE(PlayerPastRecord.TotalNotOut,0) + COALESCE(count(case when HowOutId = 7 or howOutId = 8 then 1 else null end),0)) as 'TotalNotOut',
 				(COALESCE(PlayerPastRecord.GetBowled,0) + COALESCE(count(case when HowOutId = 2 then 1 else null end),0)) as 'GetBowled',
 				(COALESCE(PlayerPastRecord.GetCatch,0) + COALESCE(count(case when HowOutId = 1 then 1 else null end),0)) as 'GetCatch',
 				(COALESCE(PlayerPastRecord.GetStump,0) + COALESCE(count(case when HowOutId = 3 then 1 else null end),0)) as 'GetStump',
 				(COALESCE(PlayerPastRecord.GetRunOut,0) + COALESCE(count(case when HowOutId = 4 then 1 else null end),0)) as 'GetRunOut',
 				(COALESCE(PlayerPastRecord.GetHitWicket,0)+ COALESCE(count(case when HowOutId = 6 then 1 else null end),0)) as 'GetHitWicket',
 				(COALESCE(PlayerPastRecord.GetLBW,0) + COALESCE(count(case when HowOutId = 5 then 1 else null end),0)) as 'GetLBW',
-				case when COALESCE(PlayerPastRecord.BestScore,0) > COALESCE(max (Bat_Runs),0)
+				(
+				select top 1 (Ball_Runs) FROM PlayerScores where Wickets = (select max(wickets) from playerScores where playerId = @paramPlayerId)
+				) 
+				as 'BestBowlingFigureRuns',
+				
+				
+				case when (COALESCE(PlayerPastRecord.BestScore,0) >= COALESCE(max (Bat_Runs),0))
 				then COALESCE(PlayerPastRecord.BestScore,0)
 				else COALESCE(max (Bat_Runs),0)
-				End as 'BestScore',
+				End as 'HightScore',
 				COALESCE(max (Wickets),0) as 'MostWickets',		
 				(COALESCE(PlayerPastRecord.NumberOf50s,0) + COALESCE(COUNT(CASE WHEN Bat_Runs >= 50 THEN 1 ELSE NULL END),0)) AS 'NumberOf50s',
 				(COALESCE(PlayerPastRecord.NumberOf100s,0) + COALESCE(COUNT(CASE WHEN Bat_Runs >= 100 THEN 1 ELSE NULL END),0)) AS 'NumberOf100s',
@@ -38,15 +40,15 @@ BEGIN
 
 
 				CASE WHEN (CAST((COALESCE(PlayerPastRecord.TotalInnings,0) + COALESCE(cOUNT(Case When IsPlayedInning ='1' Then 1 else null end),0)) as float)) - 
-						  (Cast((COALESCE(PlayerPastRecord.TotalNotOut,0) + COALESCE(Count(case when HowOutId = 7 then 1 else null end),0)) as float)) = 0
+						  (Cast((COALESCE(PlayerPastRecord.TotalNotOut,0) + COALESCE(Count(case when HowOutId = 7 or howOutId = 8 then 1 else null end),0)) as float)) = 0
 					THEN null
 				    ELSE CAST(
 								(Cast((COALESCE(PlayerPastRecord.TotalBatRuns,0) + COALESCE(sum (Bat_Runs),0)) as float)) / 
 								((cast((COALESCE(PlayerPastRecord.TotalInnings,0) + COALESCE(COUNT(Case When IsPlayedInning = 1 Then 1 else null end),0))as float)) - 
-								(cast((COALESCE(PlayerPastRecord.TotalNotOut,0) + COALESCE(COUNT (case when HowOutId = 7 then 1 else null end),0))as float)))
+								(cast((COALESCE(PlayerPastRecord.TotalNotOut,0) + COALESCE(COUNT (case when HowOutId = 7 or howOutId= 8 then 1 else null end),0))as float)))
 							   AS numeric(36,2))
 				END As 'BattingAverage',
-				(COALESCE(PlayerPastRecord.TotalOvers,0) + COALESCE(sum (Overs),0)) as 'TotalOvers',
+				(cast(round(COALESCE(PlayerPastRecord.TotalOvers,0) + COALESCE(sum (Overs),0),1) as numeric(36,1))) as 'TotalOvers',
 				(COALESCE(PlayerPastRecord.TotalBallRuns,0) + COALESCE(sum (Ball_Runs),0)) as 'TotalBallRuns',
 				(COALESCE(PlayerPastRecord.TotalWickets,0) + COALESCE(sum (Wickets),0)) as 'TotalWickets',
 				(COALESCE(PlayerPastRecord.TotalMaidens,0) + COALESCE(sum (Maiden),0)) as 'TotalMaidens',
@@ -60,15 +62,22 @@ BEGIN
 					ELSE CAST((CAST((COALESCE(PlayerPastRecord.TotalBallRuns,0) + COALESCE(SUM(Ball_Runs),0))as float) / CAST((COALESCE(PlayerPastRecord.TotalWickets,0) + COALESCE(sum(Wickets),0)) as float)) AS numeric(36,2))
 					END As 'BowlingAvg',
 
-				CASE WHEN (COALESCE(PlayerPastRecord.TotalOvers,0) + COALESCE(sum(Overs),0)) IS NULL OR (COALESCE(PlayerPastRecord.TotalOvers,0) + COALESCE(sum(Overs),0)) = 0 
+				--CASE WHEN (COALESCE(PlayerPastRecord.TotalOvers,0) + COALESCE(sum(Overs),0)) IS NULL OR (COALESCE(PlayerPastRecord.TotalOvers,0) + COALESCE(sum(Overs),0)) = 0 
+				--	THEN null
+				--ELSE CAST((CAST((COALESCE(PlayerPastRecord.TotalBallRuns,0) + COALESCE(SUM(Ball_Runs),0))as float) / CAST((COALESCE(PlayerPastRecord.TotalOvers,0) + COALESCE(sum(Overs),0)) as float)) AS numeric(36,2))
+				--	END As 'Economy',
+
+					CASE WHEN (COALESCE(PlayerPastRecord.TotalOvers,0) + COALESCE(sum(Overs),0)) IS NULL OR (COALESCE(PlayerPastRecord.TotalOvers,0) + COALESCE(sum(Overs),0)) = 0 
 					THEN null
-				ELSE CAST((CAST((COALESCE(PlayerPastRecord.TotalBallRuns,0) + COALESCE(SUM(Ball_Runs),0))as float) / CAST((COALESCE(PlayerPastRecord.TotalOvers,0) + COALESCE(sum(Overs),0)) as float)) AS numeric(36,2))
-					END As 'Economy',
-									
+				ELSE 
+						cast(((COALESCE(PlayerPastRecord.TotalBallRuns,0) + COALESCE(SUM(Ball_Runs),0)) / (floor(COALESCE(sum(Overs),0) + COALESCE(PlayerPastRecord.TotalOvers,0)) * 6 + cast(replace(((COALESCE(sum(Overs),0) + COALESCE(PlayerPastRecord.TotalOvers,0))  - floor(COALESCE(sum(Overs),0) + COALESCE(PlayerPastRecord.TotalOvers,0))),'.','') as int)))*6  as numeric(36,2))		
+				END As 'Economy',
+				floor(COALESCE(sum(Overs),0) + COALESCE(PlayerPastRecord.TotalOvers,0)) * 6 + cast(replace(((COALESCE(sum(Overs),0) + COALESCE(PlayerPastRecord.TotalOvers,0))  - floor(COALESCE(sum(Overs),0) + COALESCE(PlayerPastRecord.TotalOvers,0))),'.','') as int) as 'TotalBalls',
 			    (COALESCE(PlayerPastRecord.FiveWickets,0) + COALESCE(count(Case When Wickets >=5 Then 1 Else Null End),0)) As 'FiveWickets',
 				(COALESCE(PlayerPastRecord.OnFieldCatch,0) + COALESCE(sum (Catches),0)) as 'OnFieldCatch',
 			 	(COALESCE(PlayerPastRecord.OnFieldRunOut,0) + COALESCE(sum (RunOut),0)) as 'OnFieldRunOut',
 				(COALESCE(PlayerPastRecord.OnFieldStump,0) + COALESCE(sum (Stump),0)) as 'OnFieldStump',
+				COALESCE(count (case when Overs != null and Overs != 0 then 1 else null end),0) as 'TotalBowlingInnings',
 				Players.Player_Name AS 'PlayerName',
 				Players.TeamId As 'TeamId',					
 				Teams.Team_Name As 'TeamName',
@@ -78,7 +87,7 @@ BEGIN
 				BattingStyle.Name As 'BattingStyle',
 				BowlingStyle.Name As 'BowlingStyle',
 				PlayerRole.Name As 'PlayerRole'
-		
+	
 		FROM Players
 		left join PlayerPastRecord On Players.PlayerId = PlayerPastRecord.PlayerId
 		left join PlayerScores ON PlayerScores.PlayerId = Players.PlayerId
@@ -136,7 +145,11 @@ BEGIN
 				 PlayerPastRecord.TotalWickets,
 				 PlayerPastRecord.TotalMaidens,
 				 PlayerPastRecord.BestScore
-
-	) AS data
+				 ) 
+				 as SinglePlayerStatistics
 END
-GO
+GO 
+
+
+
+

@@ -94,6 +94,7 @@
         }
         $(function () {
             $('#TournamentCreate').click(function () {
+                $('#TournamentCreate').attr("disabled", "disabled");
                 try {
                     var formData = $("#TournamentForm").serialize();
                     $.ajax(`/Tournament/Edit`, {

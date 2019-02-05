@@ -61,20 +61,12 @@
                                 <option value="">--Select--</option>
                             </select>
                         </div>
-
-                        @*<div class="col-xs-6 col-md-4" style="margin-top: 1em">
-                                <div class="form-group">
-                                    <button type="button" id="filterdata" class="btn btn-primary filter-col">
-                                        <span><i class="fas fa-search"></i></span> Search
-                                    </button>
-                                </div>
-                            </div>*@
                     </div>
 
                 </form>
                 <div class="footer" style="margin-top : .5em">
                     <ul class="list-inline">
-                        <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
+                        <li><input id="Clear" type="button" onclick="clearFilter()" value="Clear" class="btn btn-default"></li>
                         <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
                     </ul>
                 </div>
@@ -82,7 +74,7 @@
 
         </div>
         <br />
-        <button id="advSearch" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+        <button id="advSearch" class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
             Advanced Search
         </button>
     </div>
@@ -111,10 +103,6 @@
                     var item = Model[i];
 
                     <tr>
-                        <td>
-
-                            @i
-                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.PlayerName)
                         </td>
@@ -152,14 +140,13 @@
 
         $(document).ready(function () {
             $('#RecordTable').DataTable({
-                dom: 'Bfrt',
+                dom: 'B',
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "order": [],
                 buttons: [
                     {
                         extend: 'pdfHtml5',
-
-                        //orientation: 'landscape',
-                        //pageSize: 'LEGAL'
+                        className: 'btn btn-primary'
                     }
                 ]
             });
@@ -170,19 +157,8 @@
         $(function () {
             $('#filterdata').click(async function () {
                 try {
-                    var formelement = document.getElementById("Filters");
-                    var formData = new FormData(formelement);
-                    var homeTeamId = document.getElementById("homeTeamId").value
-                    var season = formData.get("season")
-                    var overs = formData.get("overs")
-                    var playerRoleId = document.getElementById("playerRoleId").value
-                    var matchTypeId = document.getElementById("matchTypeId").value
-                    var tournamentId = formData.get("tournamentId")
-                    var matchSeriesId = document.getElementById("matchSeriesId").value
-
-                    const response = await fetch(`/Records/MostWickets?teamId=${homeTeamId}&season=${season}&overs=${overs}&playerRoleId=${playerRoleId}&matchTypeId=${matchTypeId}&tournamentId=${tournamentId}&matchSeriesId=${matchSeriesId}&isApi=true`, {
+                    const response = await fetch(`/Records/MostWickets?teamId=${$("#homeTeamId").val()}&season=${$("#season").val()}&overs=${$("#overs").val()}&playerRoleId=${$("#playerRoleId").val()}&matchTypeId=${$("#matchTypeId").val()}&tournamentId=${$("#tournamentId").val()}&matchSeriesId=${$("#matchSeriesId").val()}&isApi=true`, {
                         method: "POST",
-                        //     body: JSON.stringify(model),
                         credentials: 'same-origin'
 
                     });
@@ -193,18 +169,15 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-<td> ${i.playerName} </td>
-<td>${i.totalMatch}</td>
-<td> ${i.totalInnings} </td>
-<td> ${i.mostWickets} </td>
-
-
-                                                                                                                                                                                                                                                                            `;
+                                <td> ${i.playerName} </td>
+                                <td>${i.totalMatch}</td>
+                                <td> ${i.mostWickets} </td>                                                                                                                                                                                                                                                                                `;
                             tbody.appendChild(tr);
                             return tr;
                         });
 
                         document.getElementById('advSearch').click();
+                        clearFilter();
                     }
 
 
@@ -233,6 +206,15 @@
                 $("#matchSeriesId").val('').trigger('change');
             }
         });
+        function clearFilter() {
+            $("#tournamentId").val('').trigger('change');
+            $("#matchSeriesId").val('').trigger('change');
+            $("#matchTypeId").val('').trigger('change');
+            $("#homeTeamId").val('').trigger('change');
+            $("#season").val('').trigger('change');
+            $("#overs").val('').trigger('change');
+            $("#playerRoleId").val('').trigger('change');
+        }
 
     </script>
     <style>

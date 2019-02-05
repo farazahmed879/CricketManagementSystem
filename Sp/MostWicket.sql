@@ -1,15 +1,17 @@
-﻿Create PROCEDURE [usp_GetMostWickets]
+﻿Alter PROCEDURE [usp_GetMostWickets]
 @paramTeamId AS INT,
 @paramSeason As Int,
 @paramOvers As Int,
 @paramMatchType As Int,
 @paramTournamentId As Int,
 @paramMatchseriesId As Int,
-@paramPlayerRoleId As Int
+@paramPlayerRoleId As Int,
+@paramUserId AS int
 AS
 BEGIN
 	SELECT  top 10
 			count (PlayerScores.MatchId) as 'TotalMatch',
+			count (case when Overs != null and Overs != 0 then 1 else null end) as 'TotalInnings',
 			sum (Wickets) as 'MostWickets',
 			Players.Player_Name AS 'PlayerName'
 			
@@ -30,7 +32,9 @@ BEGIN
 		  (@paramMatchType IS NULL OR Matches.MatchTypeId = @paramMatchType) And 
 		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
 		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
-		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId)
+		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId) ANd
+		  (@paramUserId IS NUll OR Matches.UserId = @paramUserId) And
+		  (Players.IsDeactivated != 1) And (Players.IsGuestorRegistered != 'Guest')
 	
 	
 	GROUP BY PlayerScores.PlayerId,
@@ -42,4 +46,6 @@ BEGIN
 	order by sum(Wickets) desc ;
 END
 go
+
+--exec [usp_GetMostWickets] null,null,null,null,null,null,null
 

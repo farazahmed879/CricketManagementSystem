@@ -74,7 +74,7 @@
                 </form>
                 <div class="footer" style="margin-top : .5em">
                     <ul class="list-inline">
-                        <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
+                        <li><input id="Clear" onclick="clearFilter()" type="button" value="Clear" class="btn btn-default"></li>
                         <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
                     </ul>
                 </div>
@@ -82,7 +82,7 @@
 
         </div>
         <br />
-        <button id="advSearch" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+        <button id="advSearch" class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
             Advanced Search
         </button>
     </div>
@@ -146,12 +146,13 @@
 
         $(document).ready(function () {
             $('#RecordTable').DataTable({
-                dom: 'Bfrt',
+                dom: 'B',
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "order": [],
                 buttons: [
                     {
                         extend: 'pdfHtml5',
-
+                        className: 'btn btn-primary'
                         //orientation: 'landscape',
                         //pageSize: 'LEGAL'
                     }
@@ -189,7 +190,6 @@
                             tr.innerHTML = `
 <td> ${i.playerName} </td>
 <td>${i.totalMatch}</td>
-<td> ${i.totalInnings} </td>
 <td> ${i.mostCatches} </td>
 
 
@@ -199,6 +199,8 @@
                         });
 
                         document.getElementById('advSearch').click();
+                        clearFilter();
+
                     }
 
 
@@ -228,6 +230,15 @@
             }
         });
 
+        function clearFilter() {
+            $("#tournamentId").val('').trigger('change');
+            $("#matchSeriesId").val('').trigger('change');
+            $("#matchTypeId").val('').trigger('change');
+            $("#homeTeamId").val('').trigger('change');
+            $("#season").val('').trigger('change');
+            $("#overs").val('').trigger('change');
+            $("#playerRoleId").val('').trigger('change');
+        }
     </script>
     <style>
         #filter-panel {

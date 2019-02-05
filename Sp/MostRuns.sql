@@ -1,4 +1,4 @@
-﻿Create PROCEDURE [usp_GetMostRuns]
+﻿Alter PROCEDURE [usp_GetMostRuns]
 @paramTeamId AS INT,
 @paramSeason As Int,
 @paramOvers As Int,
@@ -6,12 +6,13 @@
 @paramMatchType As Int,
 @paramTournamentId As Int,
 @paramMatchseriesId As Int,
-@paramPlayerRoleId As Int
+@paramPlayerRoleId As Int,
+@paramUserId AS int
 AS
 BEGIN
 	SELECT  top 10
 			count (PlayerScores.MatchId) as 'TotalMatch',
-			count (IsPlayedInning) as 'TotalInnings',
+			count (case when IsPlayedInning = 1 then 1 else null end) as 'TotalInnings',
 			sum (Bat_Runs) as 'TotalBatRuns',
 			Players.Player_Name AS 'PlayerName'
 			
@@ -33,7 +34,9 @@ BEGIN
 		  (@paramMatchType IS NULL OR Matches.MatchTypeId = @paramMatchType) And 
 		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
 		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
-		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId)
+		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId) And
+		  (@paramUserId IS NUll OR Matches.UserId = @paramUserId) And
+		  (Players.IsDeactivated != 1) And (Players.IsGuestorRegistered != 'Guest')
 	
 	
 	GROUP BY PlayerScores.PlayerId,
@@ -45,5 +48,3 @@ BEGIN
 	order by sum(Bat_Runs) desc ;
 END
 go
-
-

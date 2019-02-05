@@ -121,7 +121,8 @@ namespace WebApp.Controllers
                     NoBalls = i.NoBalls,
                     Byes = i.Byes,
                     LegByes = i.LegByes,
-                    TeamName = i.Team.Team_Name
+                    TeamName = i.Team.Team_Name,
+                    Wickets= i.Wickets
 
 
                 })
@@ -233,7 +234,7 @@ namespace WebApp.Controllers
                 });
 
 
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 15; i++)
             {
                 model.HomeTeamScoreCard.Add(new MatchSummarydto
                 {
@@ -241,7 +242,7 @@ namespace WebApp.Controllers
 
                 });
             }
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 15; i++)
             {
                 model.OpponentTeamScoreCard.Add(new MatchSummarydto
                 {
@@ -321,6 +322,7 @@ namespace WebApp.Controllers
                     TeamId = i.TeamId,
                     MatchId = i.MatchId,
                     TotalScore = i.TotalScore,
+                    Wickets = i.Wickets,
                     Wideballs = i.Wideballs,
                     NoBalls = i.NoBalls,
                     Byes = i.Byes,
@@ -385,6 +387,7 @@ namespace WebApp.Controllers
                     teamScoreDbModel.TeamId = teamScore.TeamId;
                     teamScoreDbModel.MatchId = teamScore.MatchId;
                     teamScoreDbModel.TotalScore = teamScore.TotalScore;
+                    teamScoreDbModel.Wickets = teamScore.Wickets;
                     teamScoreDbModel.Wideballs = teamScore.Wideballs;
                     teamScoreDbModel.NoBalls = teamScore.NoBalls;
                     teamScoreDbModel.Byes = teamScore.Byes;
@@ -553,7 +556,8 @@ namespace WebApp.Controllers
                   HowOutId = i.HowOutId,
                   Bowler = i.Bowler,
                   MatchId = i.MatchId,
-                  TeamId = i.TeamId
+                  TeamId = i.TeamId,
+                  Wickets = i.Wickets
               })
               .ToList();
 
@@ -563,7 +567,7 @@ namespace WebApp.Controllers
 
 
             if (matchId.HasValue)
-                for (var index = 0; index < 12; index++)
+                for (var index = 0; index < 15; index++)
                 {
                     if (scoreDto.HomeTeamScoreCard.Count == index)
                     {
@@ -576,7 +580,7 @@ namespace WebApp.Controllers
 
 
             if (matchId.HasValue)
-                for (var index = 0; index < 12; index++)
+                for (var index = 0; index < 15; index++)
                 {
                     if (scoreDto.OpponentTeamScoreCard.Count == index)
                     {

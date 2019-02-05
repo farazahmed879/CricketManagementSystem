@@ -14,7 +14,7 @@ namespace CricketApp.Domain
         public int? Bat_Balls { get; set; }
         public int? HowOutId { get; set; }
         public int? Ball_Runs { get; set; }
-        public int? Overs { get; set; }
+        public float? Overs { get; set; }
         public int? Wickets { get; set; }
         public int? Stump { get; set; }
         public int? Catches { get; set; }

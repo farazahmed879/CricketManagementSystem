@@ -61,20 +61,12 @@
                                 <option value="">--Select--</option>
                             </select>
                         </div>
-
-                        @*<div class="col-xs-6 col-md-4" style="margin-top: 1em">
-                                <div class="form-group">
-                                    <button type="button" id="filterdata" class="btn btn-primary filter-col">
-                                        <span><i class="fas fa-search"></i></span> Search
-                                    </button>
-                                </div>
-                            </div>*@
                     </div>
 
                 </form>
                 <div class="footer" style="margin-top : .5em">
                     <ul class="list-inline">
-                        <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
+                        <li><input id="Clear" onclick="clearFilter()" type="button" value="Clear" class="btn btn-default"></li>
                         <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
                     </ul>
                 </div>
@@ -82,7 +74,7 @@
 
         </div>
         <br />
-        <button id="advSearch" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+        <button id="advSearch" class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
             Advanced Search
         </button>
     </div>
@@ -212,7 +204,7 @@
                 buttons: [
                     {
                         extend: 'pdfHtml5',
-
+                        className: 'btn btn-primary'
                         //orientation: 'landscape',
                         //pageSize: 'LEGAL'
                     }
@@ -259,12 +251,13 @@
 <td> ${i.totalRunOuts}</td>
 <td>${i.totalStumps}</td>
 
-                                                                                                                                                                                                                                                `;
+                                                                                                                                                                                                                                                    `;
                             tbody.appendChild(tr);
                             return tr;
                         });
 
                         document.getElementById('advSearch').click();
+                        clearFilter();
                     }
 
 
@@ -293,6 +286,15 @@
                 $("#matchSeriesId").val('').trigger('change');
             }
         });
+        function clearFilter() {
+            $("#tournamentId").val('').trigger('change');
+            $("#matchSeriesId").val('').trigger('change');
+            $("#matchTypeId").val('').trigger('change');
+            $("#homeTeamId").val('').trigger('change');
+            $("#season").val('').trigger('change');
+            $("#overs").val('').trigger('change');
+            $("#playerRoleId").val('').trigger('change');
+        }
 
     </script>
     <style>

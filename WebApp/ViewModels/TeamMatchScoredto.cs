@@ -6,8 +6,8 @@ namespace WebApp.ViewModels
     {
         public TeamMatchScoredto()
         {
-            HomeTeamScoreCard = new List<MatchSummarydto>(12);
-            OpponentTeamScoreCard = new List<MatchSummarydto>(12);
+            HomeTeamScoreCard = new List<MatchSummarydto>(15);
+            OpponentTeamScoreCard = new List<MatchSummarydto>(15);
             TeamScore = new List<TeamScoredto>(2);
             FallOfWicket = new List<FallOfWicketdto>(2);
         }

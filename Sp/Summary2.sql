@@ -1,4 +1,6 @@
 ﻿Alter procedure [usp_Summary2]
+@paramHomeTeamId AS INT,
+@paramOpponentTeamId AS INT,
 @paramMatchId AS INT
 AS
 begin
@@ -8,8 +10,6 @@ begin
 		SELECT	top 1
 				homeTeam.Team_Name as 'HomeTeam',
 				Teams.Team_Name as 'OppponentTeam',
-				homeTeamScore.TotalScore as 'HomeTeamScore',
-				TeamScores.TotalScore as 'OpponentsTeamScore',
 				Result as 'Result',
 				Teams.TeamLogo as 'OpponentTeamLogo',
 				homeTeam.TeamLogo as 'HomeTeamTeamLogo',
@@ -23,17 +23,49 @@ begin
 				Matches.HomeTeamOvers as 'HomeTeamOvers',
 				Matches.OppTeamOvers as 'OppTeamOvers',
 				 (
-					select top 1 count (case when HomeTeamWickets.HowOutId != '7' then 1 else null end) over()  as 'HomeTeamWickets'
-					FROM Players
-					inner join PlayerScores HomeTeamWickets on Players.PlayerId = HomeTeamWickets.PlayerId
-					WHERE  Players.TeamId = homeTeam.TeamId					
+					select TotalScore as 'HomeTeamScore'
+					FROM TeamScores
+					WHERE TeamId = @paramHomeTeamId and MatchId = @paramMatchId
+					---make relation teamscore and matches	 
+						
+				) as 'HomeTeamScore',
+				 (
+					select TotalScore as 'OpponentsTeamScore'
+					FROM TeamScores
+					WHERE TeamId = @paramOpponentTeamId and MatchId = @paramMatchId
+					---make relation teamscore and matches	 
+						
+				) as 'OpponentsTeamScore',
+				 (
+					select Wickets as 'HomeTeamWickets'
+					FROM TeamScores
+					WHERE TeamId = @paramHomeTeamId and MatchId = @paramMatchId
+					---make relation teamscore and matches	 
+						
 				) as 'HomeTeamWickets',
-				(
-					select top 1 count (case when TeamWickets.HowOutId != '7' then 1 else null end) over()  as 'HomeTeamWickets'
-					FROM Players
-					inner join PlayerScores TeamWickets on Players.PlayerId = TeamWickets.PlayerId
-					WHERE  Players.TeamId = Teams.TeamId					
-				) as 'OppenentTeamWickets'
+				 (
+					select Wickets as 'OpponentTeamWickets'
+					FROM TeamScores
+					WHERE TeamId = @paramOpponentTeamId and MatchId = @paramMatchId
+					---make relation teamscore and matches	 
+						
+				) as 'OpponentTeamWickets'
+				-- (
+				--	select top 1 count (case when HomeTeamWickets.HowOutId != '7' then 1 else null end) over()  as 'HomeTeamWickets'
+				--	FROM Players
+				--	inner join PlayerScores HomeTeamWickets on Players.PlayerId = HomeTeamWickets.PlayerId
+				--	inner join Matches on HomeTeamWickets.MatchId = Matches.MatchId
+				--	WHERE  Players.TeamId = @paramHomeTeamId and 
+				--	Matches.MatchId = @paramMatchId			
+				--) as 'HomeTeamWickets',
+				--(
+				--	select top 1 count (case when TeamWickets.HowOutId != '7' then 1 else null end) over()  as 'OppenentTeamWickets'
+				--	FROM Players
+				--	inner join PlayerScores TeamWickets on Players.PlayerId = TeamWickets.PlayerId
+				--	inner join Matches on TeamWickets.MatchId = Matches.MatchId
+				--	WHERE  Players.TeamId = @paramOpponentTeamId and 
+				--	Matches.MatchId = @paramMatchId
+				--) as 'OppenentTeamWickets'
 			
 		
 		FROM Matches	
@@ -46,11 +78,14 @@ begin
 		inner join MatchType on  MatchType.MatchTypeId = Matches.MatchTypeId
 		left join Tournaments on  Tournaments.TournamentId = Matches.TournamentId
 		
-		where Matches.MatchId = @paramMatchId
+		where Matches.MatchId = @paramMatchId	
 	
 	order by Matches.MatchId 
 	) AS LastMatch
 end
 go
 
-exec [usp_Summary2] 1025
+--exec [usp_Summary2] 3,5,1026
+--select * from TeamScores where TeamId = 3 and MatchId = 1026
+
+--select * from TeamScores

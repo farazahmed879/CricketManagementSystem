@@ -175,8 +175,7 @@
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
         $(document).on('click', '#TeamCreate', function (e) {
-            //e.preventDefault();
-            //e.stopImmediatePropagation();
+            $('#TeamCreate').attr("disabled", "disabled");
             var form = $("#TeamForm").closest("form");
             var formData = new FormData(form[0]);
             $.ajax({

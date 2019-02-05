@@ -86,7 +86,7 @@
                 </form>
                 <div class="footer" style="margin-top : .5em">
                     <ul class="list-inline">
-                        <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
+                        <li><input id="Clear" onclick="clearFilter()" type="button" value="Clear" class="btn btn-default"></li>
                         <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
                     </ul>
                 </div>
@@ -94,7 +94,7 @@
 
         </div>
         <br />
-        <button id="advSearch" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+        <button id="advSearch" class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
             Advanced Search
         </button>
     </div>
@@ -219,7 +219,7 @@
                 buttons: [
                     {
                         extend: 'pdfHtml5',
-
+                        className: 'btn btn-primary'
                         //orientation: 'landscape',
                         //pageSize: 'LEGAL'
                     }
@@ -233,22 +233,12 @@
         $(function () {
             $('#filterdata').click(async function () {
                 try {
-                    var formelement = document.getElementById("Filters");
-                    var formData = new FormData(formelement);
-                    var homeTeamId = document.getElementById("homeTeamId").value
-                    var season = formData.get("season")
-                    var overs = formData.get("overs")
-                    var position = formData.get("position")
-                    var playerRoleId = document.getElementById("playerRoleId").value
-                    var matchTypeId = document.getElementById("matchTypeId").value
-                    var tournamentId = formData.get("tournamentId")
-                    var matchSeriesId = document.getElementById("matchSeriesId").value
 
-                    const response = await fetch(`/Records/Batting?teamId=${homeTeamId}&season=${season}&overs=${overs}&position=${position}&playerRoleId=${playerRoleId}&matchTypeId=${matchTypeId}&tournamentId=${tournamentId}&matchSeriesId=${matchSeriesId}&isApi=true`, {
+
+                    const response = await fetch(`/Records/Batting?teamId=${$("#homeTeamId").val()}&season=${$("#season").val()}&overs=${$("#overs").val()}&position=${$("#position").val()}&playerRoleId=${$("#playerRoleId").val()}&matchTypeId=${$("#matchTypeId").val()}&tournamentId=${$("#tournamentId").val()}&matchSeriesId=${$("#matchSeriesId").val()}&isApi=true`, {
                         method: "POST",
                         //     body: JSON.stringify(model),
                         credentials: 'same-origin'
-
                     });
                     if (response.ok) {
                         const json = Array.from(await response.json());
@@ -257,21 +247,22 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-<td> ${i.playerName} </td>
-<td>${i.totalMatch}</td>
-<td>${i.totalInnings}</td>
-<td>${i.totalBatRuns}</td>
-<td> ${i.battingAverage} </td>
-<td> ${i.strikeRate}</td>
-<td> ${i.totalFours} </td>
-<td> ${i.totalSixes}</td>
-<td> ${i.numberOf50s} </td>
-<td>${i.numberOf100s}</td>                                                                                                                                                                                                                    `;
+                            <td> ${i.playerName} </td>
+                            <td>${i.totalMatch}</td>
+                            <td>${i.totalInnings}</td>
+                            <td>${i.totalBatRuns}</td>
+                            <td> ${i.battingAverage} </td>
+                            <td> ${i.strikeRate}</td>
+                            <td> ${i.totalFours} </td>
+                            <td> ${i.totalSixes}</td>
+                            <td> ${i.numberOf50s} </td>
+                            <td>${i.numberOf100s}</td>                                                                                                                                                                                                                    `;
                             tbody.appendChild(tr);
                             return tr;
                         });
 
                         document.getElementById('advSearch').click();
+                        clearFilter();
                     }
 
 
@@ -300,7 +291,16 @@
                 $("#matchSeriesId").val('').trigger('change');
             }
         });
-
+        function clearFilter() {
+            $("#tournamentId").val('').trigger('change');
+            $("#matchSeriesId").val('').trigger('change');
+            $("#matchTypeId").val('').trigger('change');
+            $("#homeTeamId").val('').trigger('change');
+            $("#season").val('').trigger('change');
+            $("#overs").val('').trigger('change');
+            $("#playerRoleId").val('').trigger('change');
+            $("#position").val('').trigger('change');
+        }
 
     </script>
     <style>

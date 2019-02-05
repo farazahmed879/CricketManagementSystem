@@ -1,4 +1,6 @@
-﻿namespace WebApp.ViewModels
+﻿using System;
+
+namespace WebApp.ViewModels
 {
     public class Summary2dto
     {
@@ -13,11 +15,11 @@
         public string Place { get; set; }
         public float HomeTeamOvers { get; set; }
         public float OppTeamOvers { get; set; }
-        public string DateOfMatch { get; set; }
+        public DateTime DateOfMatch { get; set; }
         public string GroundName { get; set; }
         public string ManOfTheMatch { get; set; }
         public int HomeTeamWickets { get; set; }
-        public int OppenentTeamWickets { get; set; }
+        public int OpponentTeamWickets { get; set; }
         public byte[] OpponentTeamLogo { get; set; }
         public byte[] HomeTeamTeamLogo { get; set; }
 

@@ -46,9 +46,9 @@ namespace WebApp.ViewModels
         public int OnFieldStump { get; set; }
         public int OnFieldRunOut { get; set; }      
         public byte[] PlayerImage { get; set; }
-        public string BestBowling { get; set; }
-        public int BestScore { get; set; }
+        public int HightScore { get; set; }
         public int MostWickets { get; set; }
+        public int BestBowlingFigureRuns { get; set; }
         public Team Team { get; set; }
     }
 }

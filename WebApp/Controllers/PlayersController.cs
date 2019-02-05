@@ -9,13 +9,12 @@ using System.IO;
 using Dapper;
 using WebApp.ViewModels;
 using System.Data;
-using WebApp.Models;
 using CricketApp.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using WebApp.Helper;
+using WebApp.IServices;
 
 namespace WebApp.Controllers
 {
@@ -25,19 +24,21 @@ namespace WebApp.Controllers
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
+        private readonly IPlayers _players;
 
         public PlayersController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager,
+            UserManager<IdentityUser<int>> userManager, IPlayers players,
             IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
+            _players = players;
         }
 
         // GET: Players
 
-        public async Task<IActionResult> Index(int? teamId, int? playerRoleId, int? userId, int? page)
+        public async Task<IActionResult> Index(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
         {
 
             var users = await _userManager.GetUserAsync(HttpContext.User);
@@ -46,7 +47,13 @@ namespace WebApp.Controllers
                 .AsNoTracking()
                 .Select(i => new { i.Name, i.PlayerRoleId }), "PlayerRoleId", "Name");
 
-            int pageSize = 20;
+            ViewBag.BattingStyleId = new SelectList(_context.BattingStyle
+               .AsNoTracking()
+               .Select(i => new { i.Name, i.BattingStyleId }), "BattingStyleId", "Name");
+
+            ViewBag.BowlingStyleId = new SelectList(_context.BowlingStyle
+               .AsNoTracking()
+               .Select(i => new { i.Name, i.BowlingStyleId }), "BowlingStyleId", "Name");
             if (users != null)
                 userId = users.Id;
 
@@ -56,40 +63,52 @@ namespace WebApp.Controllers
                 .Where(i => (!userId.HasValue || i.clubAdmin.UserId == userId))
                 .Select(i => new { i.TeamId, i.Team_Name })
            , "TeamId", "Team_Name");
-            var model = await PaginatedList<Playersdto>.CreateAsync(
-                            _context.Players
-                          .AsNoTracking()
-                          .Where(i => (!teamId.HasValue || i.TeamId == teamId)
-                                        && (!playerRoleId.HasValue || i.PlayerRoleId == playerRoleId)
-                                        && (!userId.HasValue || i.Team.clubAdmin.UserId == userId)
-                                       )
-                        .Select(i => new Playersdto
-                        {
-                            PlayerId = i.PlayerId,
-                            Player_Name = i.Player_Name,
-                            BattingStyle = i.BattingStyle.Name,
-                            BowlingStyle = i.BowlingStyle.Name,
-                            PlayerRole = i.PlayerRole.Name,
-                            PlayerLogo = i.PlayerLogo,
-                            DOB = i.DOB.HasValue ? i.DOB.Value.ToShortDateString() : "",
-                            Team = i.Team.Team_Name,
+            var model = await _players.GetAllPlayers(teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId, page);
+            return View(model);
 
-                        })
-                          .OrderByDescending(i => i.PlayerId)
-                            , page ?? 1, pageSize);
-            //if (partialView)
-            //    return PartialView("_PlayerPartial", model);
-            //else
-                return View(model);
-            
 
 
         }
 
+        public async Task<IActionResult> List(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
+        {
 
-        // GET: PlayerProfile
+            var users = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.Name = "Players";
+            ViewBag.PlayerRoleId = new SelectList(_context.PlayerRole
+                .AsNoTracking()
+                .Select(i => new { i.Name, i.PlayerRoleId }), "PlayerRoleId", "Name");
 
-        public async Task<IActionResult> PlayerProfile(int? teamId)
+            ViewBag.BattingStyleId = new SelectList(_context.BattingStyle
+               .AsNoTracking()
+               .Select(i => new { i.Name, i.BattingStyleId }), "BattingStyleId", "Name");
+
+            ViewBag.BowlingStyleId = new SelectList(_context.BowlingStyle
+               .AsNoTracking()
+               .Select(i => new { i.Name, i.BowlingStyleId }), "BowlingStyleId", "Name");
+
+            if (users != null)
+                userId = users.Id;
+
+
+            ViewBag.TeamId = new SelectList(_context.Teams
+                .AsNoTracking()
+                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == userId))
+                .Select(i => new { i.TeamId, i.Team_Name })
+           , "TeamId", "Team_Name");
+            var model = await _players.GetAllPlayers(teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId, page);
+            //if (partialView)
+            //    return PartialView("_PlayerPartial", model);
+            //else
+            return Json(model);
+
+
+
+        }
+
+        // GET: PlayerList
+
+        public async Task<IActionResult> PlayersList(int? teamId)
         {
             ViewBag.Name = "Players";
 
@@ -316,7 +335,7 @@ namespace WebApp.Controllers
             return Ok();
         }
         // GET: PlayerStatistics
-        public IActionResult PlayerStatistics(int playerId,bool Api)
+        public IActionResult PlayerStatistics(int playerId, bool Api)
         {
             ViewBag.Name = "Players / Profile";
             ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");

@@ -89,7 +89,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <div class="form-group label-floating">
-                                <label asp-for="HomeTeamOvers" class="control-label">Played Overs<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                                <label asp-for="HomeTeamOvers" class="control-label">Played Overs</label>
                                 <input asp-for="HomeTeamOvers" type="number" class="form-control" />
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <div class="form-group label-floating">
-                                <label asp-for="OppTeamOvers" class="control-label">Played Overs<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                                <label asp-for="OppTeamOvers" class="control-label">Played Overs</label>
                                 <input asp-for="OppTeamOvers" type="number" class="form-control" />
                             </div>
                         </div>
@@ -273,8 +273,7 @@
         }
 
         $(document).on('click', '#MatchCreate', function (e) {
-            //e.preventDefault();
-            //e.stopImmediatePropagation();
+            $('#MatchCreate').attr("disabled", "disabled");
             var form = $("#MatchForm").closest("form");
             var formData = new FormData(form[0]);
             $.ajax({

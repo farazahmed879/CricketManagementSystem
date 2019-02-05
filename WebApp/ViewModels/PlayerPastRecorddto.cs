@@ -27,7 +27,7 @@ namespace WebApp.ViewModels
         public int? TotalSixes { get; set; }
         public int? NumberOf50s { get; set; }
         public int? NumberOf100s { get; set; }
-        public int? TotalOvers { get; set; }
+        public float? TotalOvers { get; set; }
         public int? TotalBallRuns { get; set; }
         public int? TotalWickets { get; set; }
         public int? TotalMaidens { get; set; }
