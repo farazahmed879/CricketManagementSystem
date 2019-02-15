@@ -1,4 +1,4 @@
-﻿Create PROCEDURE [usp_HomeTeamBowling]
+﻿Alter PROCEDURE [usp_HomeTeamBowling]
 @paramHomeTeamId AS INT,
 @paramMatchId AS INT
 AS
@@ -6,7 +6,8 @@ BEGIN
 SELECT TOP 3
          Players.Player_Name AS 'HomeTeamBowler',
          PlayerScores.Ball_Runs As 'Runs',
-		 PlayerScores.Wickets As 'Wicket'       
+		 PlayerScores.Wickets As 'Wicket',
+		 PlayerScores.Overs As 'Overs'
      FROM 
          PlayerScores
      INNER JOIN
@@ -21,7 +22,8 @@ SELECT TOP 3
      GROUP BY 
          Players.Player_Name,
          PlayerScores.Ball_Runs,
-		 PlayerScores.Wickets
+		 PlayerScores.Wickets,
+		 PlayerScores.Overs
      ORDER BY
          MAX(Wickets) DESC 
 

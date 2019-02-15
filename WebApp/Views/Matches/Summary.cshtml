@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Matches";
 }
+
 @*<div class="container-fluid">
         <ol class="breadcrumb">
             <li><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -25,7 +26,7 @@
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 bg-warning">
                             <h4 class="font">@Model.Summary2dto.Type Match </h4>
                             <h5>@Model.Summary2dto.GroundName</h5>
-                            <h5>@Model.Summary2dto.DateOfMatch.ToShortDateString()</h5>
+                            <h5 id="matchDate">@Model.Summary2dto.DateOfMatch.ToShortDateString()</h5>
                         </div>
                     }
                     else
@@ -48,7 +49,7 @@
 
             <div class="col-md-6">
                 <div class="col-md-12 bg-blue-gradient">
-                    <h2><i class="flaticon-cricket-14"></i>@Model.Summary2dto.HomeTeamScore/@Model.Summary2dto.HomeTeamWickets</h2>
+                    <h2><i class="flaticon-cricket-14"></i>@Model.Summary2dto.HomeTeamScore/@Model.Summary2dto.HomeTeamWickets</h2> RR
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -60,7 +61,16 @@
                                     {
                                         <tr>
                                             <td>@item.HomeTeamBatsman</td>
-                                            <td>@item.Runs (@item.Balls)</td>
+                                            @if (item.HowOut == 4 || item.HowOut == 8)
+                                            {
+                                                <td>@item.Runs<i class="fa fa-asterisk" style="color: black" aria-hidden="true"></i> (@item.Balls)</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.Runs (@item.Balls)</td>
+                                            }
+
+
                                         </tr>
                                     }
 
@@ -89,6 +99,7 @@
                                         <tr>
                                             <td>@item.OppTeamBowler</td>
                                             <td>@item.Wicket-@item.Runs</td>
+                                            <td>@item.Overs overs</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -119,7 +130,15 @@
                                     @foreach (var item in Model.OppTeamBatting)
                                     {
                                         <tr>
-                                            <td>@item.OppTeamBatsman</td>
+                                            @if (item.HowOut == 4 || item.HowOut == 8)
+                                            {
+                                                <td>@item.OppTeamBatsman</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.OppTeamBatsman</td>
+                                            }
+
                                             <td>@item.Runs (@item.Balls)</td>
                                         </tr>
                                     }
@@ -147,6 +166,7 @@
                                         <tr>
                                             <td>@item.HomeTeamBowler</td>
                                             <td>@item.Wicket-@item.Runs</td>
+                                            <td>@item.Overs overs</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -178,6 +198,7 @@
         </div>
     </div>
     <button data-toggle="modal" data-target="#screenShot" class="btn btn-primary" data-dismiss="modal" id="Capture"><i class="fa fa-camera"></i></button>
+
 </div>
 <div id="screenShot" class="modal fade" role="dialog">
     <div class="">
@@ -188,7 +209,7 @@
                 <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-
+                <a data-placement="top" onclick="ogShare();" data-toggle="tooltip" style="cursor:pointer" title="Share"><i class="fas fa-share-alt"></i> <i class="fab fa-facebook-square"></i></a>
                 <div class="container-canvas">
                     <div id="screenShotBody"></div>
                 </div>
@@ -198,9 +219,105 @@
         </div>
     </div>
 </div>
+
+
 @section Scripts{
     <script src="~/js/html2convas-min.js"></script>
+    <div id="fb-root"></div>
     <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=821635978177081&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
+
+        // Initialize the Facebook JS SDK.
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '821635978177081',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v3.1'
+            });
+
+            // Put additional init code here
+        };
+
+        // Load the Facebook JS SDK Asynchronously
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // Custom function to call when user initiates a share
+
+        function ogShare() {
+            var canvas = document.querySelector('#screenShotBody > canvas');
+            var dataURI = canvas.toDataURL();
+            debugger;   var imgdata = dataURI.match(/data:(image\/.+);base64,(.+)/);
+
+           // var fileName = document.getElementById("matchDate").innerText;
+            var fileName = "ABC";
+
+            $.ajax({
+                url: "/Matches/ScreenShot?",
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    baseUrl: imgdata[2],
+                    fileName: fileName
+                }),
+                success: function (url) {
+                fb(url)
+                },
+                fail: function () {
+                }
+            })
+
+
+            //$.ajax({
+            //    type: "POST",
+            //    //data: jQuery.param({ baseUrl: imgdata, fileName: fileName }) ,
+            //    //data: '{"baseUrl":"' + dataURI + '"}',
+            //    dataType: "json",
+            //    url: "/Matches/ScreenShot?" + $.param({
+            //        baseUrl: dataURI,
+            //        fileName: fileName
+            //    }),
+            //    processData: false,
+            //    contentType: false,
+            //    success: function (url) {
+            //        fb(url)
+            //    },
+            //    fail: function () {
+            //    }
+            //})
+
+
+        }
+
+        function fb(url) {
+            FB.ui({
+                method: 'share_open_graph',
+                action_type: 'og.likes',
+                //  picture: image.src,
+                action_properties: JSON.stringify({
+                    object: url
+                })
+            }, function (response) {
+                // Debug response (optional)
+                console.log(response);
+            });
+        }
+
         $('#Capture').click(function () {
             html2canvas(document.querySelector("#MatchSummary")).then(canvas => {
                 document.getElementById("screenShotBody").appendChild(canvas);

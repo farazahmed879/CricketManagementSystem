@@ -1,4 +1,4 @@
-﻿Create PROCEDURE [usp_OppTeamBatting]
+﻿Alter PROCEDURE [usp_OppTeamBatting]
 @paramOppTeamId AS INT,
 @paramMatchId AS INT
 AS
@@ -6,7 +6,8 @@ BEGIN
 SELECT TOP 3
          Players.Player_Name AS 'OppTeamBatsman',
          PlayerScores.Bat_Runs As 'Runs',
-		 PlayerScores.Bat_Balls As 'Balls'       
+		 PlayerScores.Bat_Balls As 'Balls',
+		  PlayerScores.HowOutId As 'HowOut' 
      FROM 
          PlayerScores
      INNER JOIN
@@ -21,7 +22,8 @@ SELECT TOP 3
      GROUP BY 
          Players.Player_Name,
          PlayerScores.Bat_Runs,
-		 PlayerScores.Bat_Balls
+		 PlayerScores.Bat_Balls,
+		 PlayerScores.HowOutId
      ORDER BY
          MAX(Bat_Runs) DESC 
 

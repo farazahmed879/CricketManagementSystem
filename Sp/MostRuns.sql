@@ -48,3 +48,5 @@ BEGIN
 	order by sum(Bat_Runs) desc ;
 END
 go
+
+exec [usp_GetMostRuns] null,null,null,null,null,null,null,null,null

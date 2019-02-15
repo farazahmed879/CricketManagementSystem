@@ -17,6 +17,8 @@ using WebApp.Helper;
 using System.Data;
 using Dapper;
 using WebApp.IServices;
+using Microsoft.AspNetCore.Hosting;
+using System;
 
 namespace WebApp.Controllers
 {
@@ -27,16 +29,18 @@ namespace WebApp.Controllers
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
         private readonly IMatches _matches;
+        private IHostingEnvironment _env;
 
         public MatchesController(
             CricketContext context,
             UserManager<IdentityUser<int>> userManager,IMatches matches,
-            IMapper mapper)
+            IMapper mapper, IHostingEnvironment env)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
             _matches = matches;
+            _env = env;
         }
 
         // GET: Matches
@@ -483,9 +487,19 @@ namespace WebApp.Controllers
 
         }
 
-        private bool MatchExists(int id)
+        public IActionResult ScreenShot([FromBody]ScreenShotdto screenShotdto)
         {
-            return _context.Matches.Any(e => e.MatchId == id);
+            screenShotdto.fileName = screenShotdto.fileName + ".png";
+            var directory = Path.Combine(_env.WebRootPath, "ScreenShots");
+            bool exists = Directory.Exists(directory);
+
+            if (!exists)
+                Directory.CreateDirectory(directory);
+            var filePath = Path.Combine(directory, screenShotdto.fileName);
+            byte[] bytes = Convert.FromBase64String(screenShotdto.baseUrl);
+            System.IO.File.WriteAllBytes(filePath, bytes);
+            return Json(filePath);
         }
+
     }
 }
