@@ -36,7 +36,8 @@ BEGIN
 		  (@paramMatchseriesId IS NULL OR MatchSeries.MatchSeriesId = @paramMatchseriesId) And 
 		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId) And
 		  (@paramUserId IS NUll OR Matches.UserId = @paramUserId) And
-		  (Players.IsDeactivated != 1) And (Players.IsGuestorRegistered != 'Guest')
+		 (Players.IsDeactivated != 1) and 
+		 (Players.IsGuestorRegistered != 'Guest' or Players.IsGuestorRegistered is null)
 	
 	
 	GROUP BY PlayerScores.PlayerId,
@@ -48,5 +49,3 @@ BEGIN
 	order by sum(Bat_Runs) desc ;
 END
 go
-
-exec [usp_GetMostRuns] null,null,null,null,null,null,null,null,null

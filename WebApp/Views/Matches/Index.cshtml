@@ -57,17 +57,13 @@
                             </select>
                         </div>
                     </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-xs-6 col-md-4">
-                            <div class="form-group">
-                                <button type="button" id="filterdata" class="btn btn-primary filter-col">
-                                    <span><i class="fas fa-search"></i></span> Search
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </form>
+                <div class="footer" style="margin-top : .5em">
+                    <ul class="list-inline">
+                        <li><input id="clear" type="button" onclick="clearFilter()" value="Clear" class="btn btn-default"></li>
+                        <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
+                    </ul>
+                </div>
             </div>
 
         </div>
@@ -84,10 +80,16 @@
             }
         </li>
         <li>
-            <button class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
+            <button id="advSearch" class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
                 Advanced Search
             </button>
         </li>
+        <li id="bteamId"></li>
+        <li id="bmatchOvers"></li>
+        <li id="bseason"></li>
+        <li id="bmatchTypeId"></li>
+        <li id="btournamentId"></li>
+        <li id="bmatchSeriesId"></li>
     </ul>
 
 
@@ -301,152 +303,6 @@
         </div>
     </div>
 </div>
-<div id="SummaryModal" class="modal fade" role="dialog">
-    <div class="modal-body">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header bg-teal-active">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Match Summary</h4>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12">
-                    <h4>Pole of cricket champions trophy</h4>
-                </div>
-                <br>
-                <div class="col-md-7 bg-blue-active">
-                    <h4>Gulzar Cricket Club</h4>
-                </div>
-                <div class="col-md-3 bg-blue-active">
-                    <h4>18 Overs</h4>
-                </div>
-                <div class="col-md-2 bg-blue-gradient">
-                    <h4>120/5</h4>
-                </div>
-
-
-                <div class="col-md-6">
-                    <table class="table table-striped">
-                        <tbody>
-                            <tr>
-                                <td>Ahmed</td>
-                                <td>57</td>
-                            </tr>
-                            <tr>
-                                <td>Osama</td>
-                                <td>44</td>
-                            </tr>
-                            <tr>
-                                <td>Bilal</td>
-                                <td>32</td>
-                            </tr>
-                            <tr>
-                                <td>Javed</td>
-                                <td>12</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-6">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td class="pull-right">Ali</td>
-                                <td>2-44</td>
-                            </tr>
-                            <tr>
-                                <td class="pull-right">Osama</td>
-                                <td>2-35</td>
-                            </tr>
-                            <tr>
-                                <td class="pull-right">Bilal</td>
-                                <td>1-12</td>
-                            </tr>
-                            <tr>
-                                <td class="pull-right">Javed</td>
-                                <td>1-25</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-
-                <div class="col-md-7 bg-green-active">
-                    <h4>Pak Shaheen Cricket Club</h4>
-                </div>
-                <div class="col-md-3 bg-green-active">
-                    <h4>18 Overs</h4>
-                </div>
-                <div class="col-md-2 bg-green-gradient">
-                    <h4>120/5</h4>
-                </div>
-
-                <div class="col-md-6">
-                    <table class="table table-striped">
-                        <tbody>
-                            <tr>
-                                <td>Ahmed</td>
-                                <td>57</td>
-                            </tr>
-                            <tr>
-                                <td>Osama</td>
-                                <td>44</td>
-                            </tr>
-                            <tr>
-                                <td>Bilal</td>
-                                <td>32</td>
-                            </tr>
-                            <tr>
-                                <td>Javed</td>
-                                <td>12</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-
-
-
-
-                <div class="col-md-6">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>Ahmed</td>
-                                <td>57</td>
-                            </tr>
-                            <tr>
-                                <td>Osama</td>
-                                <td>44</td>
-                            </tr>
-                            <tr>
-                                <td>Bilal</td>
-                                <td>32</td>
-                            </tr>
-                            <tr>
-                                <td>Javed</td>
-                                <td>12</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-
-
-                <div class="col-md-12 bg-teal">
-                    <h4>Man of the Match Ahmed</h4>
-                </div>
-
-                <div class="wizard footer col-md-12 bg-purple-gradient">
-                    <h4>Pak Shaheen won by 20 runs</h4>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
 
 @section Scripts{
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -456,7 +312,7 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script>
         //Select2
         $(document).ready(function () {
@@ -464,6 +320,30 @@
         });
 
         $('[data-toggle="tooltip"]').tooltip();
+
+        function GetURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+
+        var teamId = GetURLParameter('teamId');
+        var matchTypeId = GetURLParameter('matchTypeId');
+        var matchOvers = GetURLParameter('matchOvers');
+        var season = GetURLParameter('season');
+        var matchSeriesId = GetURLParameter('matchSeriesId');
+        var tournamentId = GetURLParameter('tournamentId');
+        document.getElementById("bteamId").innerHTML = teamId || "";
+        document.getElementById("bmatchOvers").innerHTML = matchOvers || "";
+        document.getElementById("bmatchTypeId").innerHTML = matchTypeId || "";
+        document.getElementById("bseason").innerHTML = season || "";
+        document.getElementById("bmatchSeriesId").innerHTML = matchSeriesId || "";
+        document.getElementById("btournamentId").innerHTML = tournamentId || "";
 
 
         $(function () {
@@ -489,13 +369,10 @@
         });
 
         $('#filterdata').click(async function () {
-            // datatable.clear();
-            // datatable.destroy();
             window.location = `/Matches/Index?teamId=${$("#teamId").val()}&matchTypeId=${$("#matchTypeId").val()}&tournamentId=${$("#tournamentId").val()}&matchOvers=${$("#matchOvers").val()}&season=${$("#season").val()}&matchSeriesId=${$("#matchSeriesId").val()}`;
-            //await fetch(, {
-            //    credentials: 'same-origin'
-            //});
         });
+     
+
         function Delete(MatchId) {
             document.getElementById("MatchId").value = MatchId;
         }
@@ -549,6 +426,17 @@
                 $("#matchSeriesId").val('').trigger('change');
             }
         });
+
+        function clearFilter() {
+            $("#teamId").val('').trigger('change');
+            $("#matchOvers").val('').trigger('change');
+            $("#matchTypeId").val('').trigger('change');
+            $("#homeTeamId").val('').trigger('change');
+            $("#season").val('').trigger('change');
+            $("#overs").val('').trigger('change');
+            $("#matchSeriesId").val('').trigger('change');
+            $("#tournamentId").val('').trigger('change');
+        }
 
         function myFunction(data) {
             var snackBar = document.getElementById('snackbar');

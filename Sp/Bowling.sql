@@ -54,7 +54,8 @@ BEGIN
 		  (@paramTournamentId IS NUll OR Tournaments.TournamentId = @paramTournamentId) And
 		  (@paramPlayerRoleId IS NUll OR PlayerRole.PlayerRoleId = @paramPlayerRoleId) AND
 		  (@paramUserId IS NUll OR Matches.UserId = @paramUserId) And
-		  (Players.IsDeactivated != 1) And (Players.IsGuestorRegistered != 'Guest')
+		  (Players.IsDeactivated != 1) and 
+		  (Players.IsGuestorRegistered != 'Guest' or Players.IsGuestorRegistered is null)
 	
 	GROUP BY PlayerScores.PlayerId,
 			Players.Player_Name,

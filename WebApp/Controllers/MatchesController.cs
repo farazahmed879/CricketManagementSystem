@@ -498,7 +498,7 @@ namespace WebApp.Controllers
             var filePath = Path.Combine(directory, screenShotdto.fileName);
             byte[] bytes = Convert.FromBase64String(screenShotdto.baseUrl);
             System.IO.File.WriteAllBytes(filePath, bytes);
-            return Json(filePath);
+            return Json($"http://{HttpContext.Request.Host}{(filePath.Substring(filePath.IndexOf(_env.WebRootPath) + _env.WebRootPath.Length)).Replace('\\', '/')}");
         }
 
     }

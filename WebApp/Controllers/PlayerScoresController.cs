@@ -36,7 +36,7 @@ namespace WebApp.Controllers
                 .Where(i => i.TeamId == oppTeamId)
                 .Select(i => i.Team_Name)
                 .Single();
-            
+
             ViewBag.GroundName = _context.Matches
               .AsNoTracking()
               .Where(i => i.MatchId == matchId)
@@ -122,7 +122,7 @@ namespace WebApp.Controllers
                     Byes = i.Byes,
                     LegByes = i.LegByes,
                     TeamName = i.Team.Team_Name,
-                    Wickets= i.Wickets
+                    Wickets = i.Wickets
 
 
                 })
@@ -155,7 +155,7 @@ namespace WebApp.Controllers
             scoreDto.OpponentTeamFOW = graph.Where(i => i.TeamId == oppTeamId).ToList();
 
             return View(scoreDto);
-         
+
         }
 
         // GET: PlayerScores/Details/5
@@ -599,6 +599,7 @@ namespace WebApp.Controllers
            .Select(i => new TeamScoredto
            {
                TeamScoreId = i.TeamScoreId,
+               Wickets = i.Wickets,
                TotalScore = i.TotalScore,
                Byes = i.Byes,
                LegByes = i.LegByes,
@@ -621,27 +622,27 @@ namespace WebApp.Controllers
                     }
                 }
 
-           scoreDto.FallOfWicket = _context.FallOFWickets
-          .AsNoTracking()
-          .Where(m => m.MatchId == matchId)
-          .Select(i => new FallOfWicketdto
-          {
-              FallOfWicketId = i.FallOfWicketId,
-              TeamId = i.TeamId,
-              MatchId = i.MatchId,
-              First = i.First,
-              Second = i.Second,
-              Third = i.Third,
-              Fourth = i.Fourth,
-              Fifth = i.Fifth,
-              Sixth = i.Sixth,
-              Seventh = i.Seventh,
-              Eight = i.Eight,
-              Ninth = i.Ninth,
-              Tenth = i.Tenth
+            scoreDto.FallOfWicket = _context.FallOFWickets
+           .AsNoTracking()
+           .Where(m => m.MatchId == matchId)
+           .Select(i => new FallOfWicketdto
+           {
+               FallOfWicketId = i.FallOfWicketId,
+               TeamId = i.TeamId,
+               MatchId = i.MatchId,
+               First = i.First,
+               Second = i.Second,
+               Third = i.Third,
+               Fourth = i.Fourth,
+               Fifth = i.Fifth,
+               Sixth = i.Sixth,
+               Seventh = i.Seventh,
+               Eight = i.Eight,
+               Ninth = i.Ninth,
+               Tenth = i.Tenth
 
-          })
-          .ToList();
+           })
+           .ToList();
 
             if (matchId.HasValue)
                 for (var index = 0; index < 2; index++)
@@ -731,6 +732,6 @@ namespace WebApp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        
+
     }
 }

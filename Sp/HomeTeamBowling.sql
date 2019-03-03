@@ -29,3 +29,5 @@ SELECT TOP 3
 
 END
 go
+
+exec 

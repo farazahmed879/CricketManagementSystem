@@ -49,7 +49,7 @@
 
             <div class="col-md-6">
                 <div class="col-md-12 bg-blue-gradient">
-                    <h2><i class="flaticon-cricket-14"></i>@Model.Summary2dto.HomeTeamScore/@Model.Summary2dto.HomeTeamWickets</h2> RR
+                    <h2><i class="flaticon-cricket-14"></i>@Model.Summary2dto.HomeTeamScore/@Model.Summary2dto.HomeTeamWickets</h2>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -130,16 +130,15 @@
                                     @foreach (var item in Model.OppTeamBatting)
                                     {
                                         <tr>
+                                            <td>@item.OppTeamBatsman</td>
                                             @if (item.HowOut == 4 || item.HowOut == 8)
                                             {
-                                                <td>@item.OppTeamBatsman</td>
+                                                <td>@item.Runs <i class="fa fa-asterisk" style="color: black" aria-hidden="true"></i> (@item.Balls)</td>
                                             }
                                             else
                                             {
-                                                <td>@item.OppTeamBatsman</td>
+                                                <td>@item.Runs (@item.Balls)</td>
                                             }
-
-                                            <td>@item.Runs (@item.Balls)</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -200,25 +199,29 @@
     <button data-toggle="modal" data-target="#screenShot" class="btn btn-primary" data-dismiss="modal" id="Capture"><i class="fa fa-camera"></i></button>
 
 </div>
-<div id="screenShot" class="modal fade" role="dialog">
-    <div class="">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header  bg-light-blue-active">
-                <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <a data-placement="top" onclick="ogShare();" data-toggle="tooltip" style="cursor:pointer" title="Share"><i class="fas fa-share-alt"></i> <i class="fab fa-facebook-square"></i></a>
-                <div class="container-canvas">
-                    <div id="screenShotBody"></div>
+
+<div class="hidden" id="screenShotBody"></div>
+@*<div id="screenShot" class="modal fade" role="dialog">
+
+        <div class="">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header  bg-light-blue-active">
+                    <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <a data-placement="top" onclick="ogShare();" data-dismiss="modal" data-toggle="tooltip" style="cursor:pointer" title="Share"><i class="fas fa-share-alt"></i> <i class="fab fa-facebook-square"></i></a>
+                    <div class="container-canvas">
+                        <div id="screenShotBody"></div>
+                    </div>
+
                 </div>
 
             </div>
-
         </div>
-    </div>
-</div>
+    </div>*@
 
 
 @section Scripts{
@@ -261,10 +264,17 @@
         function ogShare() {
             var canvas = document.querySelector('#screenShotBody > canvas');
             var dataURI = canvas.toDataURL();
-            debugger;   var imgdata = dataURI.match(/data:(image\/.+);base64,(.+)/);
+            debugger; var imgdata = dataURI.match(/data:(image\/.+);base64,(.+)/);
 
-           // var fileName = document.getElementById("matchDate").innerText;
-            var fileName = "ABC";
+            var date = document.getElementById("matchDate").innerText;
+            var mydate = new Date(date);
+            var month = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"][mydate.getMonth()];
+            var day = mydate.getDate();
+            var fileName = day + month + '' + mydate.getFullYear();
+
+
+            console.log(fileName);
 
             $.ajax({
                 url: "/Matches/ScreenShot?",
@@ -276,7 +286,8 @@
                     fileName: fileName
                 }),
                 success: function (url) {
-                fb(url)
+                    console.log(url);
+                    fb(url)
                 },
                 fail: function () {
                 }
@@ -321,6 +332,7 @@
         $('#Capture').click(function () {
             html2canvas(document.querySelector("#MatchSummary")).then(canvas => {
                 document.getElementById("screenShotBody").appendChild(canvas);
+                ogShare();
             });
         });
 

@@ -360,7 +360,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header  bg-light-blue-active">
-                <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" onclick="ogShare()" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="container-canvas">
@@ -508,7 +508,7 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script src="~/js/html2convas-min.js"></script>
     <script>
 
@@ -545,6 +545,7 @@
             html2canvas(document.querySelector("#screen")).then(canvas => {
                 document.getElementById("screenShotBody").appendChild(canvas);
             });
+           // ogShare();
         });
         $('#close').click(function () {
 
@@ -592,7 +593,67 @@
                 }
             });
 
+        function ogShare() {
+            var canvas = document.querySelector('#screenShotBody > canvas');
+            var dataURI = canvas.toDataURL();
+            var imgdata = dataURI.match(/data:(image\/.+);base64,(.+)/);
 
+            //var date = document.getElementById("matchDate").innerText;
+            //var mydate = new Date(date);
+            //var month = ["January", "February", "March", "April", "May", "June",
+            //    "July", "August", "September", "October", "November", "December"][mydate.getMonth()];
+            //var day = mydate.getDate();
+            //var fileName = day + month + '' + mydate.getFullYear();
+
+            var fileName = "PLayerName";
+
+
+            console.log(fileName);
+
+            $.ajax({
+                url: "/Matches/ScreenShot?",
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    baseUrl: imgdata[2],
+                    fileName: fileName
+                }),
+                success: function (url) {
+                    console.log(url);
+                    fb(url)
+                },
+                fail: function () {
+                }
+            })
+
+        }
+
+        // Initialize the Facebook JS SDK.
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '821635978177081',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v3.1'
+            });
+
+            // Put additional init code here
+        };
+
+        function fb(url) {
+            FB.ui({
+                method: 'share_open_graph',
+                action_type: 'og.likes',
+                //  picture: image.src,
+                action_properties: JSON.stringify({
+                    object: url
+                })
+            }, function (response) {
+                // Debug response (optional)
+                console.log(response);
+            });
+        }
 
         let statistics = function (playerId) {
             var header = new Headers();
@@ -728,6 +789,15 @@
 
         let Delete = new function (PlayerId) {
             document.getElementById("PlayerId").value = PlayerId;
+        }
+
+        function clearFilter() {
+            $("#teamId").val('').trigger('change');
+            $("#playerRoleId").val('').trigger('change');
+            $("#battingStyleId").val('').trigger('change');
+            $("#bowlingStyleId").val('').trigger('change');
+            document.getElementById("name").innerHTML = "";
+          
         }
 
     </script>

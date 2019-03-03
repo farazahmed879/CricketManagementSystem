@@ -797,7 +797,7 @@ namespace WebApp.Controllers
             int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
-            ViewBag.Name = "Most 50s";
+            ViewBag.Name = "Most 100s";
 
 
             if (users != null)

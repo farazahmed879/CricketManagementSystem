@@ -5,7 +5,7 @@ Create A blank project
 3) SomeUI (ConsoleApp.net core)
 4) WebApp(ASP.net Core) => MVC
 5) EmployeeManagaement.Data (install Microsoft.EntityFrameworkCore.SqlServer)
-6) Give Reference .Data Project .. => .domain
+6)  .Data Project .. => .domain (Give Reference)
 7) EmployeeManagaement.Data (install Microsoft.EntityFrameworkCore.Tools)
 8) EmployeeManagaement.Data (install Microsoft.Extensions.Logging.Console)
 

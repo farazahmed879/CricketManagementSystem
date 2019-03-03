@@ -149,9 +149,7 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    @*
-        <script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>*@
-    <script src="http://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script>
 
         //Select2
@@ -236,7 +234,8 @@
             }
         });
         function clearFilter() {
-            $("#tournamentId").val('').trigger('change');
+          //  $("#homeTeamId").select2("val", "CA");
+            $("#tournamentId").select('').trigger('change');
             $("#matchSeriesId").val('').trigger('change');
             $("#matchTypeId").val('').trigger('change');
             $("#homeTeamId").val('').trigger('change');
