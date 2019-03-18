@@ -296,6 +296,61 @@ namespace WebApp.Controllers
             }
             return View(player);
         }
+        // GET: Players/getPlayerbyId/5
+        //[Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<IActionResult> getPlayerbyId(int? id)
+        {
+            ViewBag.Name = "Edit Mode";
+            ViewBag.PlayerRole = new SelectList(_context.PlayerRole
+                .AsNoTracking()
+                .Select(i => new { i.PlayerRoleId, i.Name })
+                , "PlayerRoleId", "Name");
+
+            ViewBag.BattingStyle = new SelectList(_context.BattingStyle
+                .AsNoTracking()
+                .Select(i => new { i.BattingStyleId, i.Name })
+                , "BattingStyleId", "Name");
+
+            ViewBag.BowlingStyle = new SelectList(_context.BowlingStyle
+                .AsNoTracking()
+                .Select(i => new { i.BowlingStyleId, i.Name })
+                , "BowlingStyleId", "Name");
+
+            ViewBag.TeamId = new SelectList(_context.Teams
+                .AsNoTracking()
+                .Select(i => new { i.TeamId, i.Team_Name })
+                , "TeamId", "Team_Name");
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var player = await _context.Players
+                .AsNoTracking()
+                .Select(i => new Playersdto
+                {
+                    PlayerId = i.PlayerId,
+                    Player_Name = i.Player_Name,
+                    PlayerLogo = i.PlayerLogo,
+                    PlayerRoleId = i.PlayerRoleId,
+                    BattingStyleId = i.BattingStyleId,
+                    BowlingStyleId = i.BowlingStyleId,
+                    Contact = i.Contact,
+                    CNIC = i.CNIC,
+                    DOB = i.DOB.HasValue ? i.DOB.Value.ToShortDateString() : "",
+                    Address = i.Address,
+                    IsGuestorRegistered = i.IsGuestorRegistered,
+                    IsDeactivated = i.IsDeactivated,
+                    TeamId = i.TeamId
+
+                })
+                .SingleOrDefaultAsync(m => m.PlayerId == id);
+            if (player == null)
+            {
+                return NotFound();
+            }
+            return Json(player);
+        }
 
         // POST: Players/Edit/5
         [HttpPost]

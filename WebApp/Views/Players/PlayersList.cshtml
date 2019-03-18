@@ -9,7 +9,7 @@
         <!-- Widget: user widget style 1 -->
         <div class="box box-widget widget-user-2">
             <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-blue-gradient">
+            <div class="widget-user-header">
                 <div class="col-md-4">
 
                     @{ if (Model.TeamLogo != null)
@@ -361,6 +361,61 @@
 @section Scripts{
     <script src="~/js/html2convas-min.js"></script>
     <script>
+
+        $("#playerStatistics").on("hidden.bs.modal", function () {
+            document.getElementById("name").innerHTML = "";
+            document.getElementById("teamName").innerHTML = "";
+
+            document.getElementById("battingStyle").innerHTML = "";
+            document.getElementById("playingRole").innerHTML = "";
+            document.getElementById("bowlingStyle").innerHTML = "";
+            document.getElementById("age").innerHTML = "";
+            //batting
+            document.getElementById("totalMatch").innerHTML = "";
+            document.getElementById("totalInnings").innerHTML = "";
+            document.getElementById("totalBatRuns").innerHTML = "";
+            document.getElementById("totalBatBalls").innerHTML = "";
+            document.getElementById("numberOf50s").innerHTML = "";
+            document.getElementById("numberOf100s").innerHTML = "";
+            document.getElementById("battingAverage").innerHTML = "";
+            document.getElementById("strikeRate").innerHTML = "";
+            document.getElementById("bestScore").innerHTML = "";
+            document.getElementById("totalFours").innerHTML = "";
+            document.getElementById("totalSixes").innerHTML = "";
+
+            //Bowling
+            document.getElementById("totalOvers").innerHTML = "";
+            document.getElementById("totalWickets").innerHTML = "";
+            document.getElementById("totalBallRuns").innerHTML = "";
+            document.getElementById("fiveWickets").innerHTML = "";
+            document.getElementById("totalMaidens").innerHTML = "";
+            document.getElementById("bowlingAvg").innerHTML = "";
+            document.getElementById("economy").innerHTML = "";
+            document.getElementById("bestBowling").innerHTML = "";
+
+            //Fielding
+            document.getElementById("onFieldCatch").innerHTML = "";
+            document.getElementById("onFieldStump").innerHTML = "";
+            document.getElementById("onFieldRunOut").innerHTML = "";
+
+            //MoreBating
+            document.getElementById("getBowled").innerHTML = "";
+            document.getElementById("getCatch").innerHTML = "";
+            document.getElementById("getHitWicket").innerHTML = "";
+            document.getElementById("getLBW").innerHTML = "";
+            document.getElementById("getStump").innerHTML = "";
+            document.getElementById("getRunOut").innerHTML = "";
+            document.getElementById("totalNotOut").innerHTML = "";
+
+            //MoreBowling
+            document.getElementById("doBowled").innerHTML = "";
+            document.getElementById("doCatch").innerHTML = "";
+            document.getElementById("doHitWicket").innerHTML = "";
+            document.getElementById("doLBW").innerHTML = "";
+            document.getElementById("doStump").innerHTML = "";
+            $('#target').attr('src', `/images/user.png`);
+        });
+
         $(function () {
             $('#AddBtn').click(function () {
                 window.location = '/Players/Create'
