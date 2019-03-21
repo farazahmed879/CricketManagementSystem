@@ -1,208 +1,85 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> @ViewBag.Name | ScoreExec</title>
-    <link rel="shortcut icon" href="~/images/Logo.PNG" type="image/x-icon" />
-
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="~/font-awesome/css/font-awesome.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="~/font/flaticon.css">
-    <link rel="stylesheet" href="~/dist/css/skins/_all-skins.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | Score Executive</title>
+    @*<link href="~/css/boostrap-wizard.css" rel="stylesheet" />*@
+    <link href="Home/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Home/css/font-awesome.min.css" rel="stylesheet">
+    <link href="Home/css/pe-icons.css" rel="stylesheet">
+    <link href="Home/css/prettyPhoto.css" rel="stylesheet">
+    <link href="Home/css/animate.css" rel="stylesheet">
+    <link href="Home/css/style.css" rel="stylesheet">
+    <script src="Home/js/jquery.js"></script>
+    <!--ok-->
+    <script src="~/fastclick/lib/fastclick.js"></script> <!--Not Sure-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <link href="~/css/boostrap-wizard.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/datatables.responsive.css" />
     <link rel="stylesheet" href="~/css/Toast.css" />
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
-    @*OLD*@
-    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css" />
-    <link rel="stylesheet" href="~/css/style.css" />
-    @* <link href= "~/css/Icheck.css" rel="stylesheet" /> font-family: 'Playfair Display', serif;
-    *@
-
+    <link rel="stylesheet" href="~/font/flaticon.css">
+    <link rel="shortcut icon" href="Home/images/ico/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" href="Home/images/ico/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="Home/images/ico/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="Home/images/ico/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" href="Home/images/ico/apple-touch-icon-57x57.png">
     @RenderSection("styles", false)
 </head>
 <body class="skin-blue" style=" font-size: 13px;">
     <div class="wrapper fixed">
-        <header class="main-header">
-            <!-- Logo -->
-            <a href="/Home/DashBoard" class="logo">
-                <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>A</b>LT</span>
-                <!-- logo for regular state and mobile devices -->
-                <div align="center" valign="top" class="textContent">
-                    <img id="logo" alt="ScoreExec" src="~/images/ScoreExec Red .png" />
+        <div id="preloader"></div>
+        <header class="navbar navbar-inverse navbar-fixed-top " role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" asp-controller="Home" asp-action="Index"><h1><span class="bounce-in"></span> Score Executive</h1></a>
                 </div>
-                @*<span class="logo-lg">Score<b>Exec</b></span>*@
-            </a>
-            <!-- Header Navbar: style can be found in header.less -->
-            <nav class="navbar navbar-static-top">
-                <!-- Sidebar toggle button-->
-                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                    <span class="sr-only">Toggle navigation</span>
-                </a>
-                <!-- Navbar Right Menu -->
-                <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        @{
-                            if (User.Identity.IsAuthenticated)
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-controller="Tournament" asp-action="Index">Tournament</a></li>
+                        <li><a asp-controller="Teams" asp-action="Index">Team</a></li>
+                        <li><a asp-controller="Players" asp-action="Index">Player</a></li>
+                        <li><a asp-controller="MatchSeries" asp-action="Index">Series</a></li>
+                        <li><a asp-controller="Matches" asp-action="Index">Match</a></li>
+                        <li><a asp-controller="Records" asp-action="Index">Records</a></li>
+                        <li class="dropdown active">
+
+
+                            @if (User.Identity.IsAuthenticated)
                             {
-
-                                <!-- User Account: style can be found in dropdown.less -->
-                                <li class="dropdown user user-menu">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <img src="~/images/user.png" class="user-image" alt="User Image">
-                                        <span class="hidden-xs"> @User.GetDisplayName()</span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-
-                                        <li class="user-footer">
-                                            <div class="pull-right">
-                                                <a id="Logout" class="btn btn-default btn-flat">Logout</a>
-                                                <span class="AntiForge"> @Html.AntiForgeryToken() </span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="hidden-xs"> @User.GetDisplayName()</span>
+                                    @*<img src="~/images/user.png" class="pe-7s-gleam bounce-in" style="width: 10%; height:10%;">*@
+                                    <i class="icon-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" id="Logout">Log Out</a></li>
+                                </ul>
                             }
                             else
-                            {
-                                <li>
-                                    <a asp-controller="Account" asp-action="Login" class="btn-flat">
-                                        Login
-                                    </a>
-                                </li>
-
+                            { 
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="hidden-xs">User</span>
+                                    @*<img src="~/images/user.png" class="pe-7s-gleam bounce-in" style="width: 10%; height:10%;">*@
+                                    <i class="icon-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Account" asp-action="Login">Log In</a></li>
+                                </ul>
                             }
-                        }
 
-                        <!-- Control Sidebar Toggle Button -->
-                        <li>
-                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+
                         </li>
+                        @*<li><span class="search-trigger"><i class="fa fa-search"></i></span></li>*@
                     </ul>
                 </div>
-            </nav>
-        </header>
-        <!-- Left side column. contains the logo and sidebar -->
-        <aside class="main-sidebar">
-            <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar">
-                <!-- Sidebar user panel -->
-                @{
-                    if (User.Identity.IsAuthenticated)
-                    {
-                        <div class="user-panel">
-                            <div class="pull-left image">
-                                <img src="~/images/pak.png" class="img-circle" alt="User Image">
-                            </div>
-                            <div class="pull-left info">
-                                <p>@User.GetDisplayName()</p>
-                                <i class="fa fa-circle text-success"></i>Online
-                            </div>
-                        </div>
-
-                    }
-                }
-
-                <!-- search form -->
-                <!--<form action="#" method="get" class="sidebar-form">
-                  <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                          <button type="submit" name="search" id="search-btn" class="btn btn-flat">
-                            <i class="fa fa-search"></i>
-                          </button>
-                        </span>
-                  </div>
-                </form>-->
-                <!-- /.search form -->
-                <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">MAIN NAVIGATION</li>
-
-                    <li>
-                        <a asp-controller="Tournament" asp-action="Index">
-                            <i class="flaticon-cricket-ground-1"></i> <span>Tournaments</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="MatchSeries" asp-action="Index">
-                            <i class="flaticon-appointment"></i> <span>Series</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Teams" asp-action="Index">
-                            <i class="flaticon-cricket-2"></i> <span>Teams</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Matches" asp-action="Index">
-                            <i class="flaticon-cricket-4"></i> <span>Matches</span>
-                        </a>
-                    </li>
-                    @*<li>
-                            <a asp-controller="Others" asp-action="TestMatch">
-                                <i class="flaticon-cricket-3"></i> <span>Test Match</span>
-                            </a>
-                        </li>*@
-                    <li>
-                        <a asp-controller="Players" asp-action="Index">
-                            <i class="flaticon-cricket-helmet"></i> <span>Players</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a asp-controller="Records" asp-action="Index">
-                            <i class="flaticon-bar-chart"></i> <span>Records</span>
-                        </a>
-                    </li>
-
-                    <li class="header">OTHERS</li>
-                    <li>
-                        <a asp-controller="Others" asp-action="Partners">
-                            <i class="flaticon-partners-claping-hands"></i> <span>Our Partners</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Others" asp-action="Developers">
-                            <i class="flaticon-settings"></i> <span>Developers</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Others" asp-action="AboutUs">
-                            <i class="flaticon-care-about-planet"></i> <span>About Us</span>
-                        </a>
-                    </li>
-
-
-                    @*
-
-                        @*<li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-pie-chart"></i>
-                                <span>Charts</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                                <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-                                <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-                            </ul>
-                        </li>*@
-                </ul>
-            </section>
-            <!-- /.sidebar -->
-        </aside>
+            </div>
+        </header><!--/header-->
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
 
@@ -224,21 +101,10 @@
 
     </div>
 
-
-
-
-    <script src="~/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="~/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="~/fastclick/lib/fastclick.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/dist/js/adminlte.min.js"></script>
-
-    <script src="~/js/jquery.bootstrap.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
-    @* <script src="~/js/datatables.responsive.js"></script>*@
+    <script src="Home/js/plugins.js"></script>
+    <script src="Home/js/bootstrap.min.js"></script>
+    <script src="Home/js/jquery.prettyPhoto.js"></script>
+    <script src="Home/js/init.js"></script>
     <script type="text/javascript">var infolinks_pid = 3158006; var infolinks_wsid = 0;</script>
     <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
     @RenderSection("Scripts", required: false)

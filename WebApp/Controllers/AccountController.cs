@@ -89,7 +89,7 @@ namespace WebApp.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToAction("DashBoard", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
