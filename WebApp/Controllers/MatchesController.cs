@@ -86,6 +86,7 @@ namespace WebApp.Controllers
             return View(model);
         }
 
+        [Route("Matches/List/teamId/{teamId}/matchTypeId/{matchTypeId}/tournamentId/{tournamentId}/matchSeriesId/{matchSeriesId}/season/{season}/matchOvers/{matchOvers}/userId/{userId}/page/{page}")]
         public async Task<IActionResult> List(int? teamId, int? matchTypeId,
                                               int? tournamentId, int? matchSeriesId,
                                                int? season, int? matchOvers, int? userId, int? page)

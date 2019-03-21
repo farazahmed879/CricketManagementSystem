@@ -6,6 +6,8 @@ namespace WebApp.IServices
 {
     public interface IPlayers
     {
-         Task<List<Playersdto>> GetAllPlayers(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page);
+        Task<List<Playersdto>> GetAllPlayersList(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page);
+        List<PlayersDropDowndto> GetAllPlayers();
+        Task<PlayerPastRecorddto> GetPlayerPastRecordByPlayerId(int? playerId);
     }
 }

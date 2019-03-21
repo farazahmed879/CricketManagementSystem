@@ -46,6 +46,8 @@ namespace WebApp.Controllers
             return View(model);
            
         }
+
+        [Route("MatchSeries/List/{userId}")]
         public async Task<IActionResult> List(int? page, int? userId)
         {
             ViewBag.Name = "Series";

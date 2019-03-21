@@ -38,6 +38,13 @@ namespace WebApp.Controllers
 
         // GET: Players
 
+        [Route("Players/GetAllPlayers")]
+        public List<PlayersDropDowndto> GetAllPlayers()
+        {
+            var players = _players.GetAllPlayers();
+            return players;
+        }
+
         public async Task<IActionResult> Index(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
         {
 
@@ -63,12 +70,14 @@ namespace WebApp.Controllers
                 .Where(i => (!userId.HasValue || i.clubAdmin.UserId == userId))
                 .Select(i => new { i.TeamId, i.Team_Name })
            , "TeamId", "Team_Name");
-            var model = await _players.GetAllPlayers(teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId, page);
+            var model = await _players.GetAllPlayersList(teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId, page);
             return View(model);
 
 
 
         }
+
+      
 
         public async Task<IActionResult> List(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
         {
@@ -96,7 +105,7 @@ namespace WebApp.Controllers
                 .Where(i => (!userId.HasValue || i.clubAdmin.UserId == userId))
                 .Select(i => new { i.TeamId, i.Team_Name })
            , "TeamId", "Team_Name");
-            var model = await _players.GetAllPlayers(teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId, page);
+            var model = await _players.GetAllPlayersList(teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId, page);
             //if (partialView)
             //    return PartialView("_PlayerPartial", model);
             //else

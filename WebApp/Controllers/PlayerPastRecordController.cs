@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using WebApp.Helper;
+using WebApp.IServices;
 
 namespace WebApp.Controllers
 {
@@ -25,14 +26,17 @@ namespace WebApp.Controllers
         private readonly CricketContext _context;
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
+        private readonly IPlayers _players;
 
         public PlayerPastRecordController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager,
+            UserManager<IdentityUser<int>> userManager, IPlayers players,
             IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
+            _players = players;
+
         }
 
 
@@ -47,50 +51,7 @@ namespace WebApp.Controllers
             }
 
             ViewBag.PlayerName = PlayerName;
-
-            var playerPastRecord = await _context.PlayerPastRecord
-                .AsNoTracking()
-                .Select(i => new PlayerPastRecorddto
-                {
-                    PlayerPastRecordId = i.PlayerPastRecordId,
-                    PlayerId = i.PlayerId,
-                    TotalMatch = i.TotalMatch,
-                    TotalInnings = i.TotalInnings,
-                    TotalBatRuns = i.TotalBatRuns,
-                    TotalBatBalls = i.TotalBatBalls,
-                    TotalFours = i.TotalFours,
-                    TotalSixes = i.TotalSixes,
-                    NumberOf50s = i.NumberOf50s,
-                    NumberOf100s = i.NumberOf100s,
-                    TotalNotOut = i.TotalNotOut,
-                    GetBowled = i.GetBowled,
-                    GetCatch = i.GetCatch,
-                    GetHitWicket = i.GetHitWicket,
-                    GetLBW = i.GetLBW,
-                    GetRunOut = i.GetRunOut,
-                    GetStump = i.GetStump,
-                    TotalOvers = i.TotalOvers,
-                    TotalBallRuns = i.TotalBallRuns,
-                    TotalWickets = i.TotalWickets,
-                    TotalMaidens = i.TotalMaidens,
-                    FiveWickets = i.FiveWickets,
-                    DoBowled = i.DoBowled,
-                    DoCatch = i.DoCatch,
-                    DoHitWicket = i.DoHitWicket,
-                    DoLBW = i.DoLBW,
-                    DoStump = i.DoStump,
-                    OnFieldCatch = i.OnFieldCatch,
-                    OnFieldRunOut = i.OnFieldRunOut,
-                    OnFieldStump = i.OnFieldStump,
-                    BestScore = i.BestScore,
-
-
-                })
-                .SingleOrDefaultAsync(m => m.PlayerId == playerId);
-            if (playerPastRecord == null)
-            {
-                playerPastRecord = new PlayerPastRecorddto();
-            }
+            var playerPastRecord = await _players.GetPlayerPastRecordByPlayerId(playerId);
             return View(playerPastRecord);
         }
 
@@ -104,17 +65,12 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
 
-                _context.PlayerPastRecord.Update(_mapper.Map<PlayerPastRecord>(playerPastRecord));
-                await _context.SaveChangesAsync();
+               
 
                 return Json(ResponseHelper.UpdateSuccess());
             }
             return Json(ResponseHelper.UpdateUnSuccess());
         }
 
-        private bool PlayerExists(int id)
-        {
-            return _context.Players.Any(e => e.PlayerId == id);
-        }
     }
 }

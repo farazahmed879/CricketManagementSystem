@@ -24,7 +24,7 @@ namespace WebApp.Services
             _userManager = userManager;
         }
 
-        public async Task<List<Playersdto>> GetAllPlayers(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
+        public async Task<List<Playersdto>> GetAllPlayersList(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
         {
             int pageSize = 20;
             var model = await PaginatedList<Playersdto>.CreateAsync(
@@ -51,10 +51,71 @@ namespace WebApp.Services
                       })
                         .OrderByDescending(i => i.PlayerId)
                           , page ?? 1, pageSize);
-            //if (partialView)
-            //    return PartialView("_PlayerPartial", model);
-            //else
             return model;
         }
+        
+        public List<PlayersDropDowndto> GetAllPlayers()
+        {
+            var model = _context.Players
+                .AsNoTracking()
+                .Select(i => new PlayersDropDowndto
+                {
+                    PlayerId = i.PlayerId,
+                    Player_Name = i.Player_Name
+                }).ToList();
+            return model;
+        }
+
+        public async Task<PlayerPastRecorddto> GetPlayerPastRecordByPlayerId(int? playerId)
+        {
+            var playerPastRecord =  await _context.PlayerPastRecord
+                .AsNoTracking()
+                .Select(i => new PlayerPastRecorddto
+                {
+                    PlayerPastRecordId = i.PlayerPastRecordId,
+                    PlayerId = i.PlayerId,
+                    TotalMatch = i.TotalMatch,
+                    TotalInnings = i.TotalInnings,
+                    TotalBatRuns = i.TotalBatRuns,
+                    TotalBatBalls = i.TotalBatBalls,
+                    TotalFours = i.TotalFours,
+                    TotalSixes = i.TotalSixes,
+                    NumberOf50s = i.NumberOf50s,
+                    NumberOf100s = i.NumberOf100s,
+                    TotalNotOut = i.TotalNotOut,
+                    GetBowled = i.GetBowled,
+                    GetCatch = i.GetCatch,
+                    GetHitWicket = i.GetHitWicket,
+                    GetLBW = i.GetLBW,
+                    GetRunOut = i.GetRunOut,
+                    GetStump = i.GetStump,
+                    TotalOvers = i.TotalOvers,
+                    TotalBallRuns = i.TotalBallRuns,
+                    TotalWickets = i.TotalWickets,
+                    TotalMaidens = i.TotalMaidens,
+                    FiveWickets = i.FiveWickets,
+                    DoBowled = i.DoBowled,
+                    DoCatch = i.DoCatch,
+                    DoHitWicket = i.DoHitWicket,
+                    DoLBW = i.DoLBW,
+                    DoStump = i.DoStump,
+                    OnFieldCatch = i.OnFieldCatch,
+                    OnFieldRunOut = i.OnFieldRunOut,
+                    OnFieldStump = i.OnFieldStump,
+                    BestScore = i.BestScore,
+
+
+                })
+                .SingleOrDefaultAsync(m => m.PlayerId == playerId);
+            if (playerPastRecord == null)
+            {
+                playerPastRecord = new PlayerPastRecorddto();
+            }
+
+            return playerPastRecord;
+        }
+
+
+
     }
 }

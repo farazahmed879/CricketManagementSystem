@@ -14,6 +14,7 @@ using WebApp.ViewModels;
 using AutoMapper.QueryableExtensions;
 using WebApp.Helper;
 using WebApp.IServices;
+using System.Collections.Generic;
 
 namespace WebApp.Controllers
 {
@@ -35,6 +36,13 @@ namespace WebApp.Controllers
             _teams = teams;
         }
 
+        [Route("Team/GetAllTeams")]
+        public List<TeamDropDowndto> GetAllTeams()
+        {
+            var teams = _teams.GetAllTeams();
+            return teams;
+        }
+
         // GET: Teams
 
         public async Task<IActionResult> Index(string zone, string location, string name, int? page, int? userId)
@@ -46,6 +54,8 @@ namespace WebApp.Controllers
             var model = await _teams.GetAllTeams(zone, location, name, page, userId);
             return View(model);
         }
+
+        [Route("Team/List")]
         public async Task<IActionResult> List(string zone, string location, string name, int? page, int? userId)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);

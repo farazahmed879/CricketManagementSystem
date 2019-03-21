@@ -50,5 +50,17 @@ namespace WebApp.Services
             return model;
         }
 
+        public List<TeamDropDowndto> GetAllTeams()
+        {
+            var model = _context.Teams
+                .AsNoTracking()
+                .Select(i => new TeamDropDowndto
+                {
+                    TeamId = i.TeamId,
+                    Team_Name = i.Team_Name
+                }).ToList();
+            return model;
+        }
+
     }
 }
