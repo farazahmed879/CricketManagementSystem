@@ -10,7 +10,10 @@
         return Xsrf.GetAndStoreTokens(Context).RequestToken;
     }
 }
-
+<br />
+<br />
+<br />
+<br />
 <input type="hidden" id="RequestVerificationToken"
        name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
 <div class="container-fluid">
@@ -20,7 +23,7 @@
         <li><a>Edit</a></li>
     </ol>
 </div>
-<div class="container-fluid wizard">
+<div class="container-fluid">
     <div class="row">
         <form id="SeriesForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

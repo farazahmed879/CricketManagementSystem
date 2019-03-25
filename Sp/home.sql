@@ -32,13 +32,29 @@ begin
 		SELECT	top 1
 				homeTeam.Team_Name as 'HomeTeam',
 				Teams.Team_Name as 'OppponentTeam',
-				homeTeamScore.TotalScore as 'HomeTeamScore',
-				TeamScores.TotalScore as 'OpponentsTeamScore',
 				Result as 'Summary',
 				Teams.TeamLogo as 'OpponentTeamLogo',
 				homeTeam.TeamLogo as 'HomeTeamTeamLogo',
 				TeamScores.MatchId,
 				TeamScores.TeamId,
+				Matches.DateOfMatch,
+				u.UserName,
+				(
+					select TotalScore from TeamScores
+					WHERE  TeamScores.MatchId = Matches.MatchId	and TeamScores.TeamId = OppponentTeamId			
+				) as 'OpponentsTeamScore',
+				(
+					select TotalScore from TeamScores
+					WHERE  TeamScores.MatchId = Matches.MatchId	and TeamScores.TeamId = HomeTeamId			
+				) as 'HomeTeamScore',
+				(
+					select OppTeamOvers from TeamScores
+					WHERE  TeamScores.MatchId = Matches.MatchId	and TeamScores.TeamId = OppponentTeamId			
+				) as 'OpponentsTeamOvers',
+				(
+					select HomeTeamOvers from TeamScores
+					WHERE  TeamScores.MatchId = Matches.MatchId	and TeamScores.TeamId = HomeTeamId			
+				) as 'HomeTeamOvers',
 				 (
 					select wickets from TeamScores
 					WHERE  TeamScores.MatchId = Matches.MatchId	and TeamScores.TeamId = HomeTeamId			
@@ -55,6 +71,7 @@ begin
 
 		inner join Teams homeTeam on  homeTeam.TeamId = Matches.HomeTeamId
 		inner join TeamScores homeTeamScore on homeTeamScore.TeamId = homeTeam.TeamId
+		inner join AspNetUsers u on Id = Matches.UserId
 		order by Matches.MatchId Desc
 	) AS LastMatch
 end

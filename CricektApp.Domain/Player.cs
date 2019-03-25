@@ -28,6 +28,7 @@ namespace CricketApp.Domain
         public BowlingStyle BowlingStyle { get; set; }
         public PlayerRole PlayerRole { get; set; }
         public Team Team { get; set; }
+        public string FileName { get; set; }
         [Column(TypeName = "varbinary(max)")]
         public byte[] PlayerLogo { get; set; }
         [NotMapped]

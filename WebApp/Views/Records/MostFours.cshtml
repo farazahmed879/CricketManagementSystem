@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Players Record";
 }
+<br />
+<br />
+<br />
+<br />
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -198,13 +202,13 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-                        <td> ${i.playerName} </td>
-                        <td>${i.totalMatch}</td>
-                        <td> ${i.totalInnings} </td>
-                        <td> ${i.mostFours} </td>
+                            <td> ${i.playerName} </td>
+                            <td>${i.totalMatch}</td>
+                            <td> ${i.totalInnings} </td>
+                            <td> ${i.mostFours} </td>
 
 
-                                                                                                                                                                                                                                                                        `;
+                                                                                                                                                                                                                                                                            `;
                             tbody.appendChild(tr);
                             return tr;
                         });

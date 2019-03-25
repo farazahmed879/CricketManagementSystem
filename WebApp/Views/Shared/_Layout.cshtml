@@ -6,24 +6,25 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Home | Score Executive</title>
-    @*<link href="~/css/boostrap-wizard.css" rel="stylesheet" />*@
-    <link href="Home/css/bootstrap.min.css" rel="stylesheet">
-    <link href="Home/css/font-awesome.min.css" rel="stylesheet">
-    <link href="Home/css/pe-icons.css" rel="stylesheet">
-    <link href="Home/css/prettyPhoto.css" rel="stylesheet">
-    <link href="Home/css/animate.css" rel="stylesheet">
-    <link href="Home/css/style.css" rel="stylesheet">
-    <script src="Home/js/jquery.js"></script>
-    <!--ok-->
-    <script src="~/fastclick/lib/fastclick.js"></script> <!--Not Sure-->
+    <link rel="shortcut icon" href="~/images/Logo.PNG" type="image/x-icon" />
+    <link href="~/Home/css/boostrap-wizard.css" rel="stylesheet" />
+    <link href="/Home/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <link rel="stylesheet" href="~/css/Toast.css" />
-    <link rel="stylesheet" href="~/font/flaticon.css">
-    <link rel="shortcut icon" href="Home/images/ico/favicon.ico">
-    <link rel="apple-touch-icon" sizes="144x144" href="Home/images/ico/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="Home/images/ico/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="Home/images/ico/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" href="Home/images/ico/apple-touch-icon-57x57.png">
+    <link href="/Home/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/Home/css/pe-icons.css" rel="stylesheet">
+    <link href="/Home/css/prettyPhoto.css" rel="stylesheet">
+    <link href="/Home/css/animate.css" rel="stylesheet">
+    <link href="/Home/css/style.css" rel="stylesheet">
+    <script src="/Home/js/jquery.js"></script>
+    <!--ok-->
+    <script src="~/Home/fastclick/lib/fastclick.js"></script> <!--Not Sure-->
+    <link rel="stylesheet" href="~/Home/css/Toast.css" />
+    <link rel="stylesheet" href="~/Home/font/flaticon.css">
+    <link rel="shortcut icon" href="/Home/images/ico/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" href="/Home/images/ico/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/Home/images/ico/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/Home/images/ico/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" href="/Home/images/ico/apple-touch-icon-57x57.png">
     @RenderSection("styles", false)
 </head>
 <body class="skin-blue" style=" font-size: 13px;">
@@ -40,13 +41,25 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-controller="Tournament" asp-action="Index">Tournament</a></li>
                         <li><a asp-controller="Teams" asp-action="Index">Team</a></li>
                         <li><a asp-controller="Players" asp-action="Index">Player</a></li>
                         <li><a asp-controller="MatchSeries" asp-action="Index">Series</a></li>
                         <li><a asp-controller="Matches" asp-action="Index">Match</a></li>
-                        <li><a asp-controller="Records" asp-action="Index">Records</a></li>
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="hidden-xs">Records</span>
+                                <i class="icon-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="Records" asp-action="Index">Batsman</a></li>
+                                <li><a asp-controller="Records" asp-action="Index">Bowler</a></li>
+                                <li><a asp-controller="Records" asp-action="Index">Most Runs</a></li>
+                                <li><a asp-controller="Records" asp-action="Index">Most Wickets</a></li>
+                                <li><a asp-controller="Records" asp-action="Index">Most Catches</a></li>
+                            </ul>
+                        </li>
+                        
                         <li class="dropdown active">
 
 
@@ -58,11 +71,11 @@
                                     <i class="icon-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#" id="Logout">Log Out</a></li>
+                                    <li><a id="Logout">Log Out</a></li>
                                 </ul>
                             }
                             else
-                            { 
+                            {
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span class="hidden-xs">User</span>
                                     @*<img src="~/images/user.png" class="pe-7s-gleam bounce-in" style="width: 10%; height:10%;">*@
@@ -81,30 +94,19 @@
             </div>
         </header><!--/header-->
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper wizard">
 
-            <section class="wizard">
 
-                @RenderBody()
 
-            </section>
+            @RenderBody()
+
         </div>
-        <!-- /.content-wrapper -->
-        <footer class="main-footer">
-            <div class="pull-right hidden-xs">
-                <b>Version</b> 2.4.0
-            </div>
-            <strong>Copyright <a href="">FriendsBit</a>.</strong> All rights
-            reserved.
-        </footer>
-        <!-- Control Sidebar -->
-
     </div>
 
-    <script src="Home/js/plugins.js"></script>
-    <script src="Home/js/bootstrap.min.js"></script>
-    <script src="Home/js/jquery.prettyPhoto.js"></script>
-    <script src="Home/js/init.js"></script>
+    <script src="/Home/js/plugins.js"></script>
+    <script src="/Home/js/bootstrap.min.js"></script>
+    <script src="/Home/js/jquery.prettyPhoto.js"></script>
+    <script src="/Home/js/init.js"></script>
     <script type="text/javascript">var infolinks_pid = 3158006; var infolinks_wsid = 0;</script>
     <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
     @RenderSection("Scripts", required: false)
@@ -143,7 +145,6 @@
                     });
             });
         });
-        localStorage.setItem("Skin", "skin-blue")
     </script>
 
 </body>

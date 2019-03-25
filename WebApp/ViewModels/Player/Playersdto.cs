@@ -29,6 +29,7 @@ namespace WebApp.ViewModels
         public string BowlingStyle { get; set; }
         public string PlayerRole { get; set; }
         public string Team { get; set; }
+        public string FileName { get; set;}
         [Column(TypeName = "varbinary(max)")]
         public byte[] PlayerLogo { get; set; }
         [NotMapped]

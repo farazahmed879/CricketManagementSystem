@@ -264,6 +264,8 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<DateTime?>("DOB");
 
+                    b.Property<string>("FileName");
+
                     b.Property<string>("Gender")
                         .IsRequired();
 

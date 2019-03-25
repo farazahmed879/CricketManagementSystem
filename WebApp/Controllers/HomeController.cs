@@ -24,8 +24,18 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+            var connection = _context.Database.GetDbConnection();
+            var model = connection.QuerySingleOrDefault<HomeScreendto>(
+                "[usp_HomeScreen]",
+                new
+                { },
+                commandType: CommandType.StoredProcedure) ?? new HomeScreendto
+                {
 
-            return View();
+                };
+            ViewBag.Name = "Home";
+
+            return View(model);
         }
         [AllowAnonymous]
         public IActionResult DashBoard()

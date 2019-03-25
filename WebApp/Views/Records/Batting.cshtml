@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Players Record";
 }
+<br />
+<br />
+<br />
+<br />
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -244,16 +248,16 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-                            <td> ${i.playerName} </td>
-                            <td>${i.totalMatch}</td>
-                            <td>${i.totalInnings}</td>
-                            <td>${i.totalBatRuns}</td>
-                            <td> ${i.battingAverage} </td>
-                            <td> ${i.strikeRate}</td>
-                            <td> ${i.totalFours} </td>
-                            <td> ${i.totalSixes}</td>
-                            <td> ${i.numberOf50s} </td>
-                            <td>${i.numberOf100s}</td>                                                                                                                                                                                                                    `;
+                                <td> ${i.playerName} </td>
+                                <td>${i.totalMatch}</td>
+                                <td>${i.totalInnings}</td>
+                                <td>${i.totalBatRuns}</td>
+                                <td> ${i.battingAverage} </td>
+                                <td> ${i.strikeRate}</td>
+                                <td> ${i.totalFours} </td>
+                                <td> ${i.totalSixes}</td>
+                                <td> ${i.numberOf50s} </td>
+                                <td>${i.numberOf100s}</td>                                                                                                                                                                                                                    `;
                             tbody.appendChild(tr);
                             return tr;
                         });

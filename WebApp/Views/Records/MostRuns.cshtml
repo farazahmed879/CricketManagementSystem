@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Players Record";
 }
+<br />
+<br />
+<br />
+<br />
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -198,7 +202,7 @@
 <td> ${i.totalBatRuns} </td>
 
 
-                                                                                                                                                                                                                                                                            `;
+                                                                                                                                                                                                                                                                                `;
                             tbody.appendChild(tr);
                             return tr;
                         });
@@ -234,7 +238,7 @@
             }
         });
         function clearFilter() {
-          //  $("#homeTeamId").select2("val", "CA");
+            //  $("#homeTeamId").select2("val", "CA");
             $("#tournamentId").select('').trigger('change');
             $("#matchSeriesId").val('').trigger('change');
             $("#matchTypeId").val('').trigger('change');

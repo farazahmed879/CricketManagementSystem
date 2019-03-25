@@ -1,11 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@model WebApp.ViewModels.HomeScreendto
+<!DOCTYPE html>
 <html lang="en">
 <head>
-   
+
 </head><!--/head-->
 <body>
- 
-
     <section id="main-slider" class="no-margin">
         <div class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
@@ -29,6 +28,195 @@
     </section><!--/#main-slider-->
 
     <div id="content-wrapper">
+
+
+        <section id="blog" class="white">
+            <div class="container">
+                <div class="center gap fade-down section-heading">
+                    <div class="gap"></div>
+                    <h2 class="main-title">Recently Played</h2>
+                    <hr>
+                </div>
+                <div class="gap"></div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="post">
+                            <div class="content ">
+                                <h2 class="post-title ">Post Title</h2>
+                                <div class="post-img-content ">
+                                    <div class="form-inline table-bordered">
+                                        <ul class="list-inline">
+                                            <li>
+                                                @{
+                                                    if (Model.HomeTeamTeamLogo != null)
+                                                    {
+                                                        var base64 = Model.HomeTeamTeamLogo == null || !Model.HomeTeamTeamLogo.Any() ? "" : Convert.ToBase64String(Model.HomeTeamTeamLogo);
+                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+
+                                                    }
+                                                }
+                                            </li>
+                                            <li>  <strong> @Model.HomeTeam </strong> @Model.HomeTeamScore/@Model.HomeTeamWickets</li>
+                                        </ul>
+                                        <ul class="list-inline">
+                                            <li>
+                                                @{
+                                                    if (Model.OpponentTeamLogo != null)
+                                                    {
+                                                        var base64 = Model.OpponentTeamLogo == null || !Model.OpponentTeamLogo.Any() ? "" : Convert.ToBase64String(Model.OpponentTeamLogo);
+                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+
+                                                    }
+                                                }
+                                            </li>
+                                            <li>
+                                                <strong> @Model.OppponentTeam </strong> @Model.OpponentsTeamScore/@Model.OppenentTeamWickets
+                                            </li>
+                                        </ul>
+                                        <div class="col-md-12">
+                                            <p>@Model.Summary</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="author">
+                                    <i class="fa fa-user"></i> By <b> @Model.UserName</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">@Model.DateOfMatch</time>
+                                </div>
+                                <div class="read-more-wrapper">
+                                    <a href="#" class="btn btn-outlined btn-primary">More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="post">
+                            <div class="content">
+                                <h2 class="post-title">Post Title</h2>
+                                <div class="post-img-content">
+                                    <div class="form-inline table-bordered">
+                                        <ul class="list-inline">
+                                            <li>
+                                                @{
+                                                    if (Model.HomeTeamTeamLogo != null)
+                                                    {
+                                                        var base64 = Model.HomeTeamTeamLogo == null || !Model.HomeTeamTeamLogo.Any() ? "" : Convert.ToBase64String(Model.HomeTeamTeamLogo);
+                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+
+                                                    }
+                                                }
+                                            </li>
+                                            <li>  <strong> @Model.HomeTeam </strong> @Model.HomeTeamScore/@Model.HomeTeamWickets</li>
+                                        </ul>
+                                        <ul class="list-inline">
+                                            <li>
+                                                @{
+                                                    if (Model.OpponentTeamLogo != null)
+                                                    {
+                                                        var base64 = Model.OpponentTeamLogo == null || !Model.OpponentTeamLogo.Any() ? "" : Convert.ToBase64String(Model.OpponentTeamLogo);
+                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+
+                                                    }
+                                                }
+                                            </li>
+                                            <li>
+                                                <strong> @Model.OppponentTeam </strong> @Model.OpponentsTeamScore/@Model.OppenentTeamWickets
+                                            </li>
+                                        </ul>
+                                        <div class="col-md-12">
+                                            <p>@Model.Summary</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="author">
+                                    <i class="fa fa-user"></i> By <b>Author</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">April 11th, 2014</time>
+                                </div>
+                                <div class="read-more-wrapper">
+                                    <a href="#" class="btn btn-outlined btn-primary">More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="post">
+                            <div class="content">
+                                <h2 class="post-title">Post Title</h2>
+                                <div class="post-img-content">
+                                    <div class="form-inline table-bordered">
+                                        <ul class="list-inline">
+                                            <li>
+                                                @{
+                                                    if (Model.HomeTeamTeamLogo != null)
+                                                    {
+                                                        var base64 = Model.HomeTeamTeamLogo == null || !Model.HomeTeamTeamLogo.Any() ? "" : Convert.ToBase64String(Model.HomeTeamTeamLogo);
+                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+
+                                                    }
+                                                }
+                                            </li>
+                                            <li>  <strong> @Model.HomeTeam </strong> @Model.HomeTeamScore/@Model.HomeTeamWickets</li>
+                                        </ul>
+                                        <ul class="list-inline">
+                                            <li>
+                                                @{
+                                                    if (Model.OpponentTeamLogo != null)
+                                                    {
+                                                        var base64 = Model.OpponentTeamLogo == null || !Model.OpponentTeamLogo.Any() ? "" : Convert.ToBase64String(Model.OpponentTeamLogo);
+                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+
+                                                    }
+                                                }
+                                            </li>
+                                            <li>
+                                                <strong> @Model.OppponentTeam </strong> @Model.OpponentsTeamScore/@Model.OppenentTeamWickets
+                                            </li>
+                                        </ul>
+                                        <div class="col-md-12">
+                                            <p>@Model.Summary</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="author">
+                                    <i class="fa fa-user"></i> By <b>Author</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">April 11th, 2014</time>
+                                </div>
+                                <div class="read-more-wrapper">
+                                    <a href="#" class="btn btn-outlined btn-primary">More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gap"></div>
+            </div>
+        </section>
         <section id="services" class="white">
             <div class="container">
                 <div class="gap"></div>
@@ -49,8 +237,8 @@
                                 <i class="fa fa-camera fa fa-md"></i>
                             </div>
                             <div class="media-body fade-up">
-                                <h3 class="media-heading">Photography</h3>
-                                <p>Nay middleton him admitting consulted and behaviour son household. Recurred advanced he oh together entrance speedily suitable. Ready tried gay state fat could boy its among shall.</p>
+                                <h3 class="media-heading">Team</h3>
+                                <p>Add or Register your team in score Execcutive free and start your cricket from today</p>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -71,8 +259,8 @@
                                 <i class="fa fa-ticket fa fa-md"></i>
                             </div>
                             <div class="media-body fade-up">
-                                <h3 class="media-heading">Statistics</h3>
-                                <p>You can find complete statistics of any player.</p>
+                                <h3 class="media-heading">Players Record</h3>
+                                <p>We create each player profile batting bowling fielding from every aspects</p>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -97,7 +285,7 @@
                             </div>
                             <div class="media-body fade-up">
                                 <h3 class="media-heading">Live Streaming</h3>
-                                <p>You can find live scoring</p>
+                                <p>You match will become professional , here you add ap your match with live Score Exec moile app and we display live streaming on our website</p>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -108,11 +296,11 @@
                             </div>
                             <div class="media-body fade-up">
                                 <h3 class="media-heading">Software Support</h3>
-                                <p></p>
+                                <p>We assure to secure your data for life time aspects. Score Executive genertas PDF and give you sharing option of Social Media. we also provide user backup for our premium customer</p>
                             </div>
                         </div>
-                    </div><!--/.col-md-4-->
-                </div><!--/.row-->
+                    </div>
+                </div>
             </div>
             <div class="gap"></div>
             <div class="container">
@@ -131,7 +319,7 @@
                     <div class="col-md-3">
                         <div class="tile-progress tile-red bounce-in">
                             <div class="tile-header">
-                                <h3>Video Editing</h3>
+                                <h3>Top 10 Batsman</h3>
                                 <span>Our cutting room floor is messy.</span>
                             </div>
                             <div class="tile-progressbar">
@@ -147,7 +335,7 @@
                     <div class="col-md-3">
                         <div class="tile-progress tile-cyan bounce-in">
                             <div class="tile-header">
-                                <h3>Marketing</h3>
+                                <h3>Top 10 Bowlers</h3>
                                 <span>How well we can sell you and your brand.</span>
                             </div>
                             <div class="tile-progressbar">
@@ -163,7 +351,7 @@
                     <div class="col-md-3">
                         <div class="tile-progress tile-primary bounce-in">
                             <div class="tile-header">
-                                <h3>Web Development</h3>
+                                <h3>Most Runs</h3>
                                 <span>We love servers and stuff.</span>
                             </div>
                             <div class="tile-progressbar">
@@ -179,7 +367,7 @@
                     <div class="col-md-3">
                         <div class="tile-progress tile-pink bounce-in">
                             <div class="tile-header">
-                                <h3>Coffee</h3>
+                                <h3>Most Wickets</h3>
                                 <span>We done make good joe, though.</span>
                             </div>
                             <div class="tile-progressbar">
@@ -225,138 +413,7 @@
             </div>
         </section>
 
-        <section id="about-us" class="white">
-            <div class="container">
-                <div class="gap"></div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="center gap fade-down section-heading">
-                            <h2 class="main-title">A Little About Us</h2>
-                            <hr>
-                            <p>Why Score Executive</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1 fade-up">
-                        <p>Score Executive is a complete ERP solution for your cricket record maintaining. We are commited to secure and protect your data and give you the best result. You can find complete statistics of any player. Score Exec is cricket management web app portal where we market the local clubs and different cricket teams to maintain their records and statistics</p>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.</p>
-                    </div>
-                    <div class="col-md-4 fade-up">
 
-                    </div>
-                </div>
-                <div class="gap"></div>
-                <div class="row fade-up">
-                    <div class="col-md-6">
-                        <div class="testimonial-list-item">
-                            <img class="pull-left img-responsive quote-author-list" src="Home/images/team/team01.jpg">
-                            <blockquote>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                <small>Manager at <cite title="Source Title">Company</cite></small>
-                            </blockquote>
-                        </div>
-                        <div class="testimonial-list-item">
-                            <img class="pull-left img-responsive quote-author-list" src="Home/images/team/team01.jpg">
-                            <blockquote>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                <small>Manager at <cite title="Source Title">Company</cite></small>
-                            </blockquote>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="testimonial-list-item">
-                            <img class="pull-left img-responsive quote-author-list" src="Home/images/team/team01.jpg">
-                            <blockquote>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                <small>Manager at <cite title="Source Title">Company</cite></small>
-                            </blockquote>
-                        </div>
-                        <div class="testimonial-list-item">
-                            <img class="pull-left img-responsive quote-author-list" src="Home/images/team/team01.jpg">
-                            <blockquote>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                <small>Manager at <cite title="Source Title">Company</cite></small>
-                            </blockquote>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="gap"></div>
-                <div class="center gap fade-down section-heading">
-                    <h2 class="main-title">Meet The Team</h2>
-                    <hr>
-                    <p>Here you can find us</p>
-                </div>
-                <div class="gap"></div>
-
-                <div id="meet-the-team" class="row">
-                    <div class="col-md-3 col-xs-6">
-                        <div class="center team-member">
-                            <div class="team-image">
-                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Khalil copy.png" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Khalil copy.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="team-content fade-up">
-                                <h5>Khalil Muhammad Mirza<small class="role muted">CEO/Lead Developer</small></h5>
-                                <p>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor.</p>
-                                <a class="btn btn-social btn-facebook" href="#"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-                        <div class="center team-member">
-                            <div class="team-image">
-                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Faraz 2.png" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Faraz 2.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="team-content fade-up">
-                                <h5>Faraz Ahmed Shaikh<small class="role muted">Senior Software Developer</small></h5>
-                                <p>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor.</p>
-                                <a class="btn btn-social btn-facebook" href="https://www.facebook.com/faraz.ahmed879"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-xs-6">
-                        <div class="center team-member">
-                            <div class="team-image">
-                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Bilal 2.png" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Bilal 2.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="team-content fade-up">
-                                <h5>Muhammad Bilal Moosani<small class="role muted">Web Designer</small></h5>
-                                <p>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor.</p>
-                                <a class="btn btn-social btn-facebook" href="#"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-xs-6">
-                        <div class="center team-member">
-                            <div class="team-image">
-                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Arslan 2.png" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Arslan 2.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
-                                </div>
-                            </div>
-                            <div class="team-content fade-up">
-                                <h5>Muhammad Arsalan<small class="role muted">Software Developer</small></h5>
-                                <p>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor.</p>
-                                <a class="btn btn-social btn-facebook" href="#"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--/#meet-the-team-->
-                <div class="gap"></div>
-                <div class="gap"></div>
-            </div>
-        </section>
 
         <section id="stats" class="divider-section">
             <div class="gap"></div>
@@ -365,28 +422,28 @@
                     <div class="col-md-3 col-xs-6">
                         <div class="center bounce-in">
                             <span class="stat-icon"><span class="flaticon-cricket-helmet bounce-in"></span></span>
-                            <h1><span class="counter">246000</span></h1>
+                            <h1><span class="counter">@Model.Players</span></h1>
                             <h3>Players</h3>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
                         <div class="center bounce-in">
                             <span class="stat-icon"><span class="flaticon-cricket-2 bounce-in"></span></span>
-                            <h1><span class="counter">16875</span></h1>
+                            <h1><span class="counter">@Model.Teams</span></h1>
                             <h3>Teams</h3>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
                         <div class="center bounce-in">
                             <span class="stat-icon"><span class="flaticon-cricket-ground-1 bounce-in"></span></span>
-                            <h1><span class="counter">99999999</span></h1>
+                            <h1><span class="counter">@Model.Tournaments</span></h1>
                             <h3>Tournaments</h3>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
                         <div class="center bounce-in">
                             <span class="stat-icon"><span class="flaticon-bar-chart bounce-in"></span></span>
-                            <h1><span class="counter">54875</span></h1>
+                            <h1><span class="counter">@Model.Records</span></h1>
                             <h3>Records</h3>
                         </div>
                     </div>
@@ -413,86 +470,247 @@
                 <ul class="portfolio-items col-3 isotope fade-up">
                     <li class="portfolio-item apps isotope-item">
                         <div class="item-inner">
-                            <img src="Home/images/portfolio/folio01.jpg" alt="">
+                            <img src="~/Home/images/portfolio//Gcc.JPG" alt="">
                             <h5>Gulzar Cricket Club</h5>
                             <div class="overlay">
-                                <a class="preview btn btn-outlined btn-primary" href="Home/images/portfolio/folio01.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                <a class="preview btn btn-outlined btn-primary" href="~/Home/images/portfolio//Gcc.JPG" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </li><!--/.portfolio-item-->
                     <li class="portfolio-item joomla nature isotope-item">
                         <div class="item-inner">
-                            <img src="Home/images/portfolio/folio02.jpg" alt="">
+                            <img src="~/Home/images/portfolio/ASL.JPG" alt="">
                             <h5>Ayesha School of Learning</h5>
                             <div class="overlay">
-                                <a class="preview btn btn-outlined btn-primary" href="Home/images/portfolio/folio02.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                <a class="preview btn btn-outlined btn-primary" href="~/Home/images/portfolio/ASL.JPG" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </li><!--/.portfolio-item-->
                     <li class="portfolio-item bootstrap design isotope-item">
                         <div class="item-inner">
-                            <img src="Home/images/portfolio/folio03.jpg" alt="">
+                            <img src="~/Home/images/portfolio/poc.JPG" alt="">
                             <h5>Pole Of Cricket</h5>
                             <div class="overlay">
-                                <a class="preview btn btn-outlined btn-primary" href="Home/images/portfolio/folio03.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                <a class="preview btn btn-outlined btn-primary" href="~/Home/images/portfolio/poc.JPG" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </li><!--/.portfolio-item-->
                     <li class="portfolio-item joomla design apps isotope-item">
                         <div class="item-inner">
-                            <img src="Home/images/portfolio/folio04.jpg" alt="">
+                            <img src="~/Home/images/portfolio/Pak Shaheen.JPG" alt="">
                             <h5>Pak Shaheen Cricket Club</h5>
                             <div class="overlay">
-                                <a class="preview btn btn-outlined btn-primary" href="Home/images/portfolio/folio04.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                <a class="preview btn btn-outlined btn-primary" href="~/Home/images/portfolio/Pak Shaheen.JPG" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </li><!--/.portfolio-item-->
                     <li class="portfolio-item joomla apps isotope-item">
                         <div class="item-inner">
-                            <img src="Home/images/portfolio/folio05.jpg" alt="">
+                            <img src="~/Home/images/portfolio/inqilab.JPG" alt="">
                             <h5>Inqilab Cricket Club</h5>
                             <div class="overlay">
-                                <a class="preview btn btn-outlined btn-primary" href="Home/images/portfolio/folio05.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                <a class="preview btn btn-outlined btn-primary" href="~/Home/images/portfolio/inqilab.JPG" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </li><!--/.portfolio-item-->
                     <li class="portfolio-item wordpress nature isotope-item">
                         <div class="item-inner">
-                            <img src="Home/images/portfolio/folio06.jpg" alt="">
+                            <img src="~/Home/images/portfolio/ALI.JPG" alt="">
                             <h5>Ali Intermediate College</h5>
                             <div class="overlay">
-                                <a class="preview btn btn-outlined btn-primary" href="Home/images/portfolio/folio06.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                <a class="preview btn btn-outlined btn-primary" href="~/Home/images/portfolio/ALI.JPG" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </li><!--/.portfolio-item-->
                     <li class="portfolio-item joomla design apps isotope-item">
                         <div class="item-inner">
-                            <img src="Home/images/portfolio/folio07.jpg" alt="">
+                            <img src="~/Home/images/portfolio/orientstar.JPG" alt="">
                             <h5>Orient Star</h5>
                             <div class="overlay">
-                                <a class="preview btn btn-outlined btn-primary" href="Home/images/portfolio/folio07.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                <a class="preview btn btn-outlined btn-primary" href="~/Home/images/portfolio/orientstar.JPG" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </li><!--/.portfolio-item-->
                     <li class="portfolio-item joomla nature isotope-item">
                         <div class="item-inner">
-                            <img src="Home/images/portfolio/folio08.jpg" alt="">
-                            <h5>Portfolio Project</h5>
+                            <img src="~/Home/images/portfolio/you.JPG" alt="">
+                            <h5>You</h5>
                             <div class="overlay">
-                                <a class="preview btn btn-outlined btn-primary" href="Home/images/portfolio/folio08.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                <a class="preview btn btn-outlined btn-primary" href="~/Home/images/portfolio/you.JPG" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </li><!--/.portfolio-item-->
                     <li class="portfolio-item wordpress design isotope-item">
                         <div class="item-inner">
-                            <img src="Home/images/portfolio/folio09.jpg" alt="">
-                            <h5>Portfolio Project</h5>
+                            <img src="~/Home/images/portfolio/you.JPG" alt="">
+                            <h5>You</h5>
                             <div class="overlay">
-                                <a class="preview btn btn-outlined btn-primary" href="Home/images/portfolio/folio09.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                <a class="preview btn btn-outlined btn-primary" href="~/Home/images/portfolio/you.JPG" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </li><!--/.portfolio-item-->
                 </ul>
+            </div>
+        </section>
+
+        <section id="about-us" class="white">
+            <div class="container">
+                <div class="gap"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="center gap fade-down section-heading">
+                            <h2 class="main-title">A Little About Us</h2>
+                            <hr>
+                            <p>Why Score Executive?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 fade-up">
+                        <p>Score Executive is a complete ERP solution for your cricket record maintaining. We are commited to secure and protect your data and give you the best result. You can shre complete statistics of any player, match records, Score Cards Match Schedule Pictures. Score Exec is cricket management web app portal where we market the local clubs on root level and different cricket teams to maintain their records and statistics</p>
+                        <p>Score Exec is not only provide web portal also you can download our mobile app Android and IOS both, Whats new in mobile app? Score Exec provides you live scoring and directly post your data to server, which further help you to maintain your record anywhere anytime</p>
+                    </div>
+                    <div class="col-md-4 fade-up">
+
+                    </div>
+                </div>
+                <div class="gap"></div>
+                <div class="row fade-up">
+                    <div class="col-md-6">
+                        <div class="testimonial-list-item">
+                            <img class="pull-left img-responsive quote-author-list" src="~/Home/images/portfolio/zia.JPG">
+                            <blockquote>
+                                <p>Right Handed Batsman</p>
+                                <small>Zia Alvi<cite title="Source Title">Gulzar CC</cite></small>
+                            </blockquote>
+                        </div>
+                        <div class="testimonial-list-item">
+                            <img class="pull-left img-responsive quote-author-list" src="~/Home/images/portfolio/Jawad2.JPG">
+                            <blockquote>
+                                <p>All-Rounder</p>
+                                <small>Jawad Siddqui <cite title="Source Title">Gulzar CC</cite></small>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="testimonial-list-item">
+                            <img class="pull-left img-responsive quote-author-list" src="~/Home/images/portfolio/Ahmedullah.jpg">
+                            <blockquote>
+                                <p>Bowling All-Rounder</p>
+                                <small>Ahmedullah <cite title="Source Title">Gulzar CC</cite></small>
+                            </blockquote>
+                        </div>
+                        <div class="testimonial-list-item">
+                            <img class="pull-left img-responsive quote-author-list" src="~/Home/images/portfolio/Taha.JPG">
+                            <blockquote>
+                                <p>All-Rounder</p>
+                                <small>Taha Siddiqui <cite title="Source Title">Gulzar CC</cite></small>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gap"></div>
+                <div class="center gap fade-down section-heading">
+                    <h2 class="main-title">Meet The Team</h2>
+                    <hr>
+                    <p>Here you can find us</p>
+                </div>
+                <div class="gap"></div>
+
+                <div id="meet-the-team" class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <div class="center team-member">
+                            <div class="team-image">
+                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Khalil copy.png" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Khalil copy.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="team-content fade-up">
+                                <h5>Khalil Muhammad Mirza<small class="role muted">CEO/Lead Developer</small></h5>
+                                <ul class="nav nav-stacked">
+                                    <li>
+                                        BS in Computer Science (PAF-KIET)
+                                    </li>
+                                    <li>
+                                        <strong>Expertise: </strong>  Dot net , SQL, My Sql, Node js, React Native, React Js, Angular Js
+                                    </li>
+                                </ul>
+                                <a class="btn btn-social btn-facebook" href="#"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="center team-member">
+                            <div class="team-image">
+                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Faraz 2.png" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Faraz 2.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="team-content fade-up">
+                                <h5>Faraz Ahmed Shaikh<small class="role muted">Senior Software Developer</small></h5>
+                                <ul class="nav nav-stacked">
+                                    <li>
+                                        BS in Computer Science (Indus University)
+                                    </li>
+                                    <li>
+                                        <strong>Expertise: </strong>  Dot net ,MS SQL, React Native, React Js, Angular Js, Angular 7
+                                    </li>
+                                </ul>
+                                <a class="btn btn-social btn-facebook" href="https://www.facebook.com/faraz.ahmed879"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="center team-member">
+                            <div class="team-image">
+                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Bilal 2.png" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Bilal 2.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="team-content fade-up">
+                                <h5>Muhammad Bilal Moosani<small class="role muted">Web Designer</small></h5>
+                                <ul class="nav nav-stacked">
+                                    <li>
+                                        BS in Computer Science (Indus University)
+                                    </li>
+                                    <li>
+                                        <strong>Expertise: </strong>  Dot net , SQL, My Sql
+                                    </li>
+                                </ul>
+                                <a class="btn btn-social btn-facebook" href="#"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="center team-member">
+                            <div class="team-image">
+                                <img class="img-responsive img-thumbnail bounce-in" src="~/images/Arslan 2.png" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="~/images/Arslan 2.png" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="team-content fade-up">
+                                <h5>Muhammad Arsalan<small class="role muted">Software Developer</small></h5>
+                                <ul class="nav nav-stacked">
+                                    <li>
+                                        BS in Computer Science (Iqra University)
+                                    </li>
+                                    <li>
+                                        <strong>Expertise: </strong>  Dot net , SQL, My Sql, React Js, Angular Js
+                                    </li>
+                                </ul>
+                                <a class="btn btn-social btn-facebook" href="#"><i class="fa fa-facebook"></i></a> <a class="btn btn-social btn-google-plus" href="#"><i class="fa fa-google-plus"></i></a> <a class="btn btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i></a> <a class="btn btn-social btn-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/#meet-the-team-->
+                <div class="gap"></div>
+                <div class="gap"></div>
             </div>
         </section>
 
@@ -566,305 +784,6 @@
             </div>
         </section>
 
-        <section id="blog" class="white">
-            <div class="container">
-                <div class="center gap fade-down section-heading">
-                    <div class="gap"></div>
-                    <h2 class="main-title">Recently Played</h2>
-                    <hr>
-                </div>
-                <div class="gap"></div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="post">
-                            <div class="post-img-content">
-                                <img src="Home/images/portfolio/folio02.jpg" class="img-responsive" />
-                                <div class="overlay">
-                                    <a class="preview btn btn-outlined btn-primary" href="#"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <h2 class="post-title">Post Title</h2>
-                                <div class="author">
-                                    <i class="fa fa-user"></i> By <b>Author</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">April 11th, 2014</time>
-                                </div>
-                                <div>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                </div>
-                                <div class="read-more-wrapper">
-                                    <a href="#" class="btn btn-outlined btn-primary">Read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="post">
-                            <div class="post-img-content">
-                                <img src="Home/images/portfolio/folio06.jpg" class="img-responsive" />
-                                <div class="overlay">
-                                    <a class="preview btn btn-outlined btn-primary" href="#"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <h2 class="post-title">Post Title</h2>
-                                <div class="author">
-                                    <i class="fa fa-user"></i> By <b>Author</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">April 11th, 2014</time>
-                                </div>
-                                <div>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                </div>
-                                <div class="read-more-wrapper">
-                                    <a href="#" class="btn btn-outlined btn-primary">Read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="post">
-                            <div class="post-img-content">
-                                <img src="Home/images/portfolio/folio11.jpg" class="img-responsive" />
-                                <div class="overlay">
-                                    <a class="preview btn btn-outlined btn-primary" href="#"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <h2 class="post-title">Post Title</h2>
-                                <div class="author">
-                                    <i class="fa fa-user"></i> By <b>Author</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">April 11th, 2014</time>
-                                </div>
-                                <div>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                </div>
-                                <div class="read-more-wrapper">
-                                    <a href="#" class="btn btn-outlined btn-primary">Read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="gap"></div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="post">
-                            <div class="post-img-content">
-                                <img src="Home/images/portfolio/folio02.jpg" class="img-responsive" />
-                                <div class="overlay">
-                                    <a class="preview btn btn-outlined btn-primary" href="#"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <h2 class="post-title">Post Title</h2>
-                                <div class="author">
-                                    <i class="fa fa-user"></i> By <b>Author</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">April 11th, 2014</time>
-                                </div>
-                                <div>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                </div>
-                                <div class="read-more-wrapper">
-                                    <a href="#" class="btn btn-outlined btn-primary">Read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="post">
-                            <div class="post-img-content">
-                                <img src="Home/images/portfolio/folio06.jpg" class="img-responsive" />
-                                <div class="overlay">
-                                    <a class="preview btn btn-outlined btn-primary" href="#"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <h2 class="post-title">Post Title</h2>
-                                <div class="author">
-                                    <i class="fa fa-user"></i> By <b>Author</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">April 11th, 2014</time>
-                                </div>
-                                <div>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                </div>
-                                <div class="read-more-wrapper">
-                                    <a href="#" class="btn btn-outlined btn-primary">Read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="post">
-                            <div class="post-img-content">
-                                <img src="Home/images/portfolio/folio11.jpg" class="img-responsive" />
-                                <div class="overlay">
-                                    <a class="preview btn btn-outlined btn-primary" href="#"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <h2 class="post-title">Post Title</h2>
-                                <div class="author">
-                                    <i class="fa fa-user"></i> By <b>Author</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">April 11th, 2014</time>
-                                </div>
-                                <div>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                </div>
-                                <div class="read-more-wrapper">
-                                    <a href="#" class="btn btn-outlined btn-primary">Read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        @*<section id="pricing" class="white">
-            <div class="container">
-                <div class="center gap fade-down section-heading">
-                    <h2 class="main-title">So, How Much?</h2>
-                    <hr>
-                    <p>Of an or game gate west face shed. ﻿no great but music too old found arose.</p>
-                </div>
-                <div class="gap"></div>
-                <div id="pricing-table" class="row">
-                    <div class="col-md-3 col-xs-6 flip-in">
-                        <ul class="plan plan1">
-                            <li class="plan-name">
-                                <h3>Basic</h3>
-                            </li>
-                            <li class="plan-price">
-                                <div>
-                                    <span class="price"><sup>$</sup>10</span>
-                                    <small>month</small>
-                                </div>
-                            </li>
-                            <li>
-                                <strong>5GB</strong> Storage
-                            </li>
-                            <li>
-                                <strong>1GB</strong> RAM
-                            </li>
-                            <li>
-                                <strong>400GB</strong> Bandwidth
-                            </li>
-                            <li>
-                                <strong>10</strong> Email Address
-                            </li>
-                            <li>
-                                <strong>Forum</strong> Support
-                            </li>
-                            <li class="plan-action">
-                                <a href="#" class="btn btn-outlined btn-primary btn-md btn-white">Signup</a>
-                            </li>
-                        </ul>
-                    </div><!--/.col-md-3-->
-                    <div class="col-md-3 col-xs-6 flip-in">
-                        <ul class="plan plan2 featured">
-                            <li class="plan-name">
-                                <h3>Standard</h3>
-                            </li>
-                            <li class="plan-price">
-                                <div>
-                                    <span class="price"><sup>$</sup>20</span>
-                                    <small>month</small>
-                                </div>
-                            </li>
-                            <li>
-                                <strong>5GB</strong> Storage
-                            </li>
-                            <li>
-                                <strong>1GB</strong> RAM
-                            </li>
-                            <li>
-                                <strong>400GB</strong> Bandwidth
-                            </li>
-                            <li>
-                                <strong>10</strong> Email Address
-                            </li>
-                            <li>
-                                <strong>Forum</strong> Support
-                            </li>
-                            <li class="plan-action">
-                                <a href="#" class="btn btn-outlined btn-primary btn-md">Signup</a>
-                            </li>
-                        </ul>
-                    </div><!--/.col-md-3-->
-                    <div class="col-md-3 col-xs-6 flip-in">
-                        <ul class="plan plan3">
-                            <li class="plan-name">
-                                <h3>Advanced</h3>
-                            </li>
-                            <li class="plan-price">
-                                <div>
-                                    <span class="price"><sup>$</sup>40</span>
-                                    <small>month</small>
-                                </div>
-                            </li>
-                            <li>
-                                <strong>50GB</strong> Storage
-                            </li>
-                            <li>
-                                <strong>8GB</strong> RAM
-                            </li>
-                            <li>
-                                <strong>1024GB</strong> Bandwidth
-                            </li>
-                            <li>
-                                <strong>Unlimited</strong> Email Address
-                            </li>
-                            <li>
-                                <strong>Forum</strong> Support
-                            </li>
-                            <li class="plan-action">
-                                <a href="#" class="btn btn-outlined btn-primary btn-md btn-white">Signup</a>
-                            </li>
-                        </ul>
-                    </div><!--/.col-md-3-->
-                    <div class="col-md-3 col-xs-6 flip-in">
-                        <ul class="plan plan4">
-                            <li class="plan-name">
-                                <h3>Mighty</h3>
-                            </li>
-                            <li class="plan-price">
-                                <div>
-                                    <span class="price"><sup>$</sup>100</span>
-                                    <small>month</small>
-                                </div>
-                            </li>
-                            <li>
-                                <strong>50GB</strong> Storage
-                            </li>
-                            <li>
-                                <strong>8GB</strong> RAM
-                            </li>
-                            <li>
-                                <strong>1024GB</strong> Bandwidth
-                            </li>
-                            <li>
-                                <strong>Unlimited</strong> Email Address
-                            </li>
-                            <li>
-                                <strong>Forum</strong> Support
-                            </li>
-                            <li class="plan-action">
-                                <a href="#" class="btn btn-outlined btn-primary btn-md btn-white">Signup</a>
-                            </li>
-                        </ul>
-                    </div><!--/.col-md-3-->
-                </div>
-                <div class="gap"></div>
-            </div>
-        </section>*@
-
-       
 
         <section id="contact" class="white">
             <div class="container">
@@ -910,7 +829,7 @@
                 <div class="row">
                     <div class="col-md-3 col-sm-6 about-us-widget">
                         <h4>Global Coverage</h4>
-                        <p>Was drawing natural fat respect husband. An as noisy an offer drawn blush place. These tried for way joy wrote witty. In mr began music weeks after at begin.</p>
+                        <p>Score Exec is global for all, we are currently market in karachi and planing to move different cities in Pakistan</p>
                     </div><!--/.col-md-3-->
 
                     <div class="col-md-3 col-sm-6">
@@ -925,37 +844,37 @@
                         </div>
                     </div><!--/.col-md-3-->
 
-                    <div class="col-md-3 col-sm-6">
-                        <h4>Latest Articles</h4>
-                        <div>
-                            <div class="media">
-                                <div class="pull-left">
-                                    <img class="widget-img" src="Home/images/portfolio/folio01.jpg" alt="">
+                        @*<div class="col-md-3 col-sm-6">
+                            <h4>Latest Articles</h4>
+                            <div>
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <img class="widget-img" src="Home/images/portfolio/folio01.jpg" alt="">
+                                    </div>
+                                    <div class="media-body">
+                                        <span class="media-heading"><a href="#">Blog Post A</a></span>
+                                        <small class="muted">Posted 14 April 2014</small>
+                                    </div>
                                 </div>
-                                <div class="media-body">
-                                    <span class="media-heading"><a href="#">Blog Post A</a></span>
-                                    <small class="muted">Posted 14 April 2014</small>
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <img class="widget-img" src="Home/images/portfolio/folio02.jpg" alt="">
+                                    </div>
+                                    <div class="media-body">
+                                        <span class="media-heading"><a href="#">Blog Post B</a></span>
+                                        <small class="muted">Posted 14 April 2014</small>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="media">
-                                <div class="pull-left">
-                                    <img class="widget-img" src="Home/images/portfolio/folio02.jpg" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <span class="media-heading"><a href="#">Blog Post B</a></span>
-                                    <small class="muted">Posted 14 April 2014</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!--/.col-md-3-->
+                        </div>*@
 
                     <div class="col-md-3 col-sm-6">
                         <h4>Come See Us</h4>
                         <address>
-                            <strong>Ace Towers</strong><br>
-                            New York Ave,<br>
-                            New York, 215648<br>
-                            <abbr title="Phone"><i class="fa fa-phone"></i></abbr> 546 840654 05
+                            <strong>House# A-15</strong><br>
+                            Ancholi Block 20<br>
+                            Karachi, Pakistan<br>
+                            <abbr title="Phone"><i class="fa fa-phone"></i></abbr> +92-324-2181946
                         </address>
                     </div> <!--/.col-md-3-->
                 </div>
@@ -966,7 +885,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
-                        &copy; 2014 <a target="_blank" href="http://www.distinctivethemes.com" title="Premium Themes and Templates">Distinctive Themes</a>. All Rights Reserved.
+                        &copy; 2019 <a title="Premium Themes and Templates">FriendsBit</a>. All Rights Reserved.
                     </div>
                     <div class="col-sm-6">
                         <ul class="pull-right">

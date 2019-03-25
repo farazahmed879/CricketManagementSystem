@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Players Record";
 }
+<br />
+<br />
+<br />
+<br />
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -122,21 +126,21 @@
                 {
                     var item = Model[i];
 
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PlayerName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalMatch)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalInnings)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOf100s)
-                    </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PlayerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalMatch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalInnings)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumberOf100s)
+                        </td>
 
-                </tr>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -189,10 +193,10 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-                                <td> ${i.playerName} </td>
-                                <td>${i.totalMatch}</td>
-                                <td>${i.totalInnings}</td>
-                                <td> ${i.numberOf100s} </td>                                                                                                                                                                                                                                                                                `;
+                                    <td> ${i.playerName} </td>
+                                    <td>${i.totalMatch}</td>
+                                    <td>${i.totalInnings}</td>
+                                    <td> ${i.numberOf100s} </td>                                                                                                                                                                                                                                                                                `;
                             tbody.appendChild(tr);
                             return tr;
                         });

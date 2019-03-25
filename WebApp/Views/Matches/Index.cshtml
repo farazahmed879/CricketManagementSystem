@@ -1,10 +1,11 @@
 ﻿@model PaginatedList<WebApp.ViewModels.Matchdto>
-@{ 
-    Layout = "_LoginLayout";
-}
 @{
     ViewData["Title"] = "Matches";
 }
+<br />
+<br />
+<br />
+<br />
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -373,7 +374,7 @@
         $('#filterdata').click(async function () {
             window.location = `/Matches/Index?teamId=${$("#teamId").val()}&matchTypeId=${$("#matchTypeId").val()}&tournamentId=${$("#tournamentId").val()}&matchOvers=${$("#matchOvers").val()}&season=${$("#season").val()}&matchSeriesId=${$("#matchSeriesId").val()}`;
         });
-     
+
 
         function Delete(MatchId) {
             document.getElementById("MatchId").value = MatchId;

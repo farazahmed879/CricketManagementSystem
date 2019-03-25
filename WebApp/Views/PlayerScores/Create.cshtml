@@ -10,7 +10,10 @@
         return Xsrf.GetAndStoreTokens(Context).RequestToken;
     }
 }
-
+<br />
+<br />
+<br />
+<br />
 
 <input type="hidden" id="RequestVerificationToken"
        name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
@@ -257,104 +260,104 @@
                                 for (int i = 0; i < Model.TeamScore.Count; i++)
                                 {
 
-                            <div class="row">
-                                <input type="hidden" asp-for="@Model.TeamScore[i].MatchId" />
+                                    <div class="row">
+                                        <input type="hidden" asp-for="@Model.TeamScore[i].MatchId" />
 
-                                <div class="col-sm-1">
+                                        <div class="col-sm-1">
 
-                                    @{
-                                        if (i < 1)
-                                        {
+                                            @{
+                                                if (i < 1)
+                                                {
 
-                                            <label>1st Inning Played by</label>
-                                        }
-                                        else
-                                        {
-                                            <label>2nd Inning Played by</label>
-                                        }
+                                                    <label>1st Inning Played by</label>
+                                                }
+                                                else
+                                                {
+                                                    <label>2nd Inning Played by</label>
+                                                }
 
-                                    }
-                                </div>
+                                            }
+                                        </div>
 
-                                <div class="col-sm-2">
-                                    @{
-                                        if (i < 1)
-                                        {
-                                            ViewBag.teamId = ViewBag.homeTeamId;
-                                            ViewBag.TeamName = ViewBag.HomeTeam;
-                                        }
-                                        else
-                                        {
-                                            ViewBag.teamId = ViewBag.opponentTeamId;
-                                            ViewBag.TeamName = ViewBag.OpponentTeam;
-                                        }
+                                        <div class="col-sm-2">
+                                            @{
+                                                if (i < 1)
+                                                {
+                                                    ViewBag.teamId = ViewBag.homeTeamId;
+                                                    ViewBag.TeamName = ViewBag.HomeTeam;
+                                                }
+                                                else
+                                                {
+                                                    ViewBag.teamId = ViewBag.opponentTeamId;
+                                                    ViewBag.TeamName = ViewBag.OpponentTeam;
+                                                }
 
 
-                                    }
+                                            }
 
-                                    <input type="hidden" asp-for="TeamScore[i].TeamId" value="@ViewBag.teamId" />
-                                    <p class="form-control-static">@ViewBag.TeamName</p>
-                                </div>
-                                <div class="col-sm-1">
-                                    @{
-                                        if (i < 1)
-                                        {
+                                            <input type="hidden" asp-for="TeamScore[i].TeamId" value="@ViewBag.teamId" />
+                                            <p class="form-control-static">@ViewBag.TeamName</p>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            @{
+                                                if (i < 1)
+                                                {
 
-                                            <label>Set-up Score</label>
-                                        }
-                                        else
-                                        {
-                                            <label>Has Made While Chasing</label>
-                                        }
+                                                    <label>Set-up Score</label>
+                                                }
+                                                else
+                                                {
+                                                    <label>Has Made While Chasing</label>
+                                                }
 
-                                    }
+                                            }
 
-                                </div>
+                                        </div>
 
-                                <div class="col-sm-1">
-                                    <input asp-for="@Model.TeamScore[i].TotalScore" style="width: 50px" />
-                                </div>
-                                <div class="col-sm-1">
-                                    <label>Loose wickets</label>
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.TeamScore[i].TotalScore" style="width: 50px" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label>Loose wickets</label>
 
-                                </div>
-                                <div class="col-sm-1">
-                                    <input asp-for="@Model.TeamScore[i].Wickets" style="width: 50px" />
-                                </div>
-                                <div class="col-sm-1">
-                                    <label>Given Extras</label>
-                                </div>
-                                <div class="col-sm-1">
-                                    <div class="col-sm-6">
-                                        <label>Byes</label>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input asp-for="@Model.TeamScore[i].Wickets" style="width: 50px" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label>Given Extras</label>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <div class="col-sm-6">
+                                                <label>Byes</label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input asp-for="@Model.TeamScore[i].Byes" required style="width: 40px" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="col-sm-2">
+                                                <label>Leg-Byes</label>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <input asp-for="@Model.TeamScore[i].LegByes" required style="width: 40px" />
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <label> No-Balls</label>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <input asp-for="@Model.TeamScore[i].NoBalls" required style="width: 40px" />
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <label>Wide-Balls</label>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <input asp-for="@Model.TeamScore[i].Wideballs" required style="width: 40px" />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <input asp-for="@Model.TeamScore[i].Byes" required style="width: 40px" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="col-sm-2">
-                                        <label>Leg-Byes</label>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <input asp-for="@Model.TeamScore[i].LegByes" required style="width: 40px" />
-                                    </div>
-                                
-                                    <div class="col-sm-2">
-                                        <label> No-Balls</label>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <input asp-for="@Model.TeamScore[i].NoBalls" required style="width: 40px" />
-                                    </div>
-                             
-                                    <div class="col-sm-2">
-                                        <label>Wide-Balls</label>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <input asp-for="@Model.TeamScore[i].Wideballs" required style="width: 40px" />
-                                    </div>
-                                </div>
-                            </div>
                                 }
                             }
                             <hr />
@@ -659,31 +662,31 @@
         function prevTab(elem) {
             $(elem).prev().find('a[data-toggle="tab"]').click();
         }
-                                                                                //$('.playerDropDown')
-                                                                                //.on('change', (event) => {
-                                                                                //    const element = event.target;
-                                                                                //    if (!element.value)
-                                                                                //        return;
-                                                                                //    globalStates.push({
-                                                                                //        value: element.value
-                                                                                //    });
-                                                                                //    removeValues();
-                                                                                //});
+                                                                                    //$('.playerDropDown')
+                                                                                    //.on('change', (event) => {
+                                                                                    //    const element = event.target;
+                                                                                    //    if (!element.value)
+                                                                                    //        return;
+                                                                                    //    globalStates.push({
+                                                                                    //        value: element.value
+                                                                                    //    });
+                                                                                    //    removeValues();
+                                                                                    //});
 
-                                                                                //const removeValues = () => {
-                                                                                //    const elements = $('select.playerDropDown');
-                                                                                //    for (let index = 0; index < elements.length; index++) {
-                                                                                //        const isAdded = _.some(globalStates, {
-                                                                                //            value: elements[index].value
-                                                                                //        });
-                                                                                //        if (!isAdded) {
-                                                                                //            for (let globalState of globalStates) {
-                                                                                //                //elements[index].selectize.removeValues(globalState.value);
-                                                                                //                $(`#${elements[index].id}`)[0].selectize.removeOption(globalState.value);
-                                                                                //            }
-                                                                                //        }
-                                                                                //    }
-                                                                                //};
+                                                                                    //const removeValues = () => {
+                                                                                    //    const elements = $('select.playerDropDown');
+                                                                                    //    for (let index = 0; index < elements.length; index++) {
+                                                                                    //        const isAdded = _.some(globalStates, {
+                                                                                    //            value: elements[index].value
+                                                                                    //        });
+                                                                                    //        if (!isAdded) {
+                                                                                    //            for (let globalState of globalStates) {
+                                                                                    //                //elements[index].selectize.removeValues(globalState.value);
+                                                                                    //                $(`#${elements[index].id}`)[0].selectize.removeOption(globalState.value);
+                                                                                    //            }
+                                                                                    //        }
+                                                                                    //    }
+                                                                                    //};
 
 
 

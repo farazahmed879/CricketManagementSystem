@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Teams";
 }
+<br />
+<br />
+<br />
+<br />
 <div class="container-fluid">
     <ol class="breadcrumb">
         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -118,10 +122,10 @@
                                     </button>
                                     <ul class="dropdown-menu">
 
-                                        <li><a data-placement="left" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayersList" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-2"></i></a></li>
-                                        <li><a data-placement="left" data-toggle="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-4"></i></a></li>
-                                        <li><a data-placement="left" data-toggle="tooltip" title="Schedule" asp-controller="Schedule" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-history"></i></a></li>
-                                        <li><a data-placement="left" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-teamId="@item.TeamId"><i class="fas fa-info-circle"></i></a></li>
+                                        <li><a data-placement="left" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayersList" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-2"></i> Team Players</a></li>
+                                        <li><a data-placement="left" data-toggle="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-4"></i> Team Matches</a></li>
+                                        <li><a data-placement="left" data-toggle="tooltip" title="Schedule" asp-controller="Schedule" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-history"></i> Schedule</a></li>
+                                        <li><a data-placement="left" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-teamId="@item.TeamId"><i class="flaticon-appointment"></i> Details</a></li>
                                     </ul>
                                 </div>
                                 <a data-placement="top" data-toggle="tooltip" title="Add Player" asp-controller="Players" asp-action="create" asp-route-teamId="@item.TeamId"><i class="fas fa-user-alt"></i></a>

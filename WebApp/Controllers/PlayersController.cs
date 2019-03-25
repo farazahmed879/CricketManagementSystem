@@ -215,18 +215,18 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
 
-                var form = Request.Form;
-                byte[] fileBytes = null;
-                if (player.PlayerImage != null)
-                {
-                    using (var stream = player.PlayerImage.OpenReadStream())
-                    {
-                        fileBytes = ReadStream(stream);
-                    }
-                }
-                //var file = await FileHelpers.ProcessFormFile(player.PlayerImage, ModelState);
+                //var form = Request.Form;
+                //byte[] fileBytes = null;
+                //if (player.PlayerImage != null)
+                //{
+                //    using (var stream = player.PlayerImage.OpenReadStream())
+                //    {
+                //        fileBytes = ReadStream(stream);
+                //    }
+                //}
 
-                player.PlayerLogo = fileBytes ?? null;
+                //player.PlayerLogo = fileBytes ?? null;
+                player.FileName = player.PlayerImage.FileName;
                 _context.Players.Add(_mapper.Map<Player>(player));
                 await _context.SaveChangesAsync();
                 return Json(ResponseHelper.Success());

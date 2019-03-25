@@ -12,7 +12,9 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\ResetPassword.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\ResetPasswordConfirmation.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\DashBoard.cshtml
---file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\Index.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\index - Copy.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\index.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\OldIndex.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Create.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Details.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Edit.cshtml
@@ -51,6 +53,7 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Schedule\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Shared\EmailTemplate.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Shared\Error.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Shared\_Layout - Copy.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Shared\_Layout.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Shared\_LoginLayout.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Shared\_ValidationScriptsPartial.cshtml
