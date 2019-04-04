@@ -37,7 +37,7 @@ namespace WebApp.Services
                 TournamentId = i.TournamentId,
                 TournamentName = i.TournamentName,
                 Organizor = i.Organizor,
-                StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToShortDateString() : "",
+                StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToString("dddd, dd MMMM yyyy") : "",
 
             })
             .OrderByDescending(i => i.TournamentId)

@@ -300,9 +300,9 @@
 .pe-7s-global:before {
 	content: "\e64f";
 }
-.pe-7s-gleam:before {
+/*.pe-7s-gleam:before {
 	content: "\e650";
-}
+}*/
 .pe-7s-glasses:before {
 	content: "\e651";
 }

@@ -2,9 +2,9 @@
 
 namespace WebApp.ViewModels
 {
-    public class ScoreCarddto
+    public class MainScreendto
     {
-        public ScoreCarddto()
+        public MainScreendto()
         {
             HomeTeamScoreCard = new List<MatchSummarydto>(12);
             OpponentTeamScoreCard = new List<MatchSummarydto>(12);
@@ -21,6 +21,6 @@ namespace WebApp.ViewModels
         public List<FallOfWicketdto> HomeTeamFOW { get; set; }
         public List<FallOfWicketdto> OpponentTeamFOW { get; set; }
         public List<FallOfWicketdto> FallOfWicket { get; set; }
-
+        public Summary2dto Summary2dto { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace WebApp.Services
                 {
                     MatchId = i.MatchId,
                     GroundName = i.GroundName,
-                    DateOfMatch = i.DateOfMatch.HasValue ? i.DateOfMatch.Value.ToShortDateString() : "",
+                    DateOfMatch = i.DateOfMatch.HasValue ? i.DateOfMatch.Value.ToString("dddd, dd MMMM yyyy") : "",
                     MatchOvers = i.MatchOvers,
                     Result = i.Result,
                     MatchType = i.MatchType.MatchTypeName,

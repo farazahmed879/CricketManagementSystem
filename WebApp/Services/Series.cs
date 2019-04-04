@@ -37,7 +37,7 @@ namespace WebApp.Services
                      MatchSeriesId = i.MatchSeriesId,
                      Name = i.Name,
                      Organizor = i.Organizor,
-                     StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToShortDateString() : "",
+                     StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToString("dddd, dd MMMM yyyy") : "",
 
                  })
                  .OrderByDescending(i => i.MatchSeriesId)

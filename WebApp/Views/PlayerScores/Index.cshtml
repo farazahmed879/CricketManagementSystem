@@ -15,31 +15,68 @@
 </div>
 <div class="container-fluid">
 
+    <div class="col-md-12 pull-center">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            @if (Model.Summary2dto.HomeTeamTeamLogo != null)
+            {
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                    <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
+                    <img id="Img" class="pull-right" src="~/Home/images/Teams/@Model.Summary2dto.HomeTeamTeamLogo" />
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                    <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
+                    <img id="Img" class="pull-right" src="~/Home/images/Teams/noLogo.png" />
+                </div>
+            }
 
+            @if (Model.Summary2dto.Type != "Tournament")
+            {
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 bg-warning center">
+                    <h4 class="font">@Model.Summary2dto.Type Match </h4>
+                    <h5>@Model.Summary2dto.GroundName</h5>
+                    <h5 id="matchDate">@Model.Summary2dto.DateOfMatch.ToString("dddd, dd MMMM yyyy")</h5>
+                </div>
+            }
+            else
+            {
 
-    <div class="col-sm-12 center">
-        <ul class="list-inline">
-            <li>
-                <h4>@ViewBag.HomeTeam</h4>
-            </li>
-            <li><h4>vs</h4></li>
-            <li>
-                <h4>@ViewBag.OpponentTeam</h4>
-            </li>
-            <li>
-                <h5>Ground: </h5>
-            </li>
-            <li>
-                <h5>@ViewBag.GroundName</h5>
-            </li>
-        </ul>
-        <ul class="list-inline"></ul>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 bg-warning center">
+                    <h4 class="pull-center">
+                        @Model.Summary2dto.Type
+                    </h4>
+                    <h5 class="pull-center">@Model.Summary2dto.TournamentName</h5>
+                    <h5>@Model.Summary2dto.Stage</h5>
+                    <h5>@Model.Summary2dto.GroundName</h5>
+                    <h5>@Model.Summary2dto.DateOfMatch.ToString("dddd, dd MMMM yyyy")</h5>
+                </div>
 
+            }
+            @if (Model.Summary2dto.OpponentTeamLogo != null)
+            {
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                    <h4 class="pull-left">@Model.Summary2dto.OppponentTeam</h4>
+                    <img id="Img" class="pull-left" src="~/Home/images/Teams/@Model.Summary2dto.OpponentTeamLogo" />
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                    <h4 class="pull-left">@Model.Summary2dto.OppponentTeam</h4>
+                    <img id="Img" class="pull-left" src="~/Home/images/Teams/noLogo.png" />
+                </div>
+            }
+
+        </div>
     </div>
-    <div class="row">
+
+
+    <div class="">
         <div class="col-md-12">
             <!-- Custom Tabs -->
-            <ul class="nav nav-pills" role="tablist">
+            <ul class="nav nav-pills" role="tablist" >
                 <li id="tab1"><a href="#tab_1" data-toggle="tab"><span class="">First</span></a></li>
                 <li><a href="#tab_2" data-toggle="tab"><span>Second</span></a></li>
                 <li><a href="#tab_3" data-toggle="tab"><span>Summary</span></a></li>
@@ -49,7 +86,7 @@
                 <div class="tab-pane" id="tab_1">
 
                     <div class="col-md-12 bg-blue-active">
-                        <h4>@ViewBag.HomeTeam Batting @ViewBag.HomeTeamScore/@ViewBag.HomeTeamOut</h4>
+                        <h4>@Model.Summary2dto.HomeTeam Batting @Model.Summary2dto.HomeTeamScore/ @Model.Summary2dto.HomeTeamWickets</h4>
                     </div>
                     @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
                     {
@@ -173,7 +210,7 @@
 
                     }
                     <div class="col-md-12 bg-blue-active">
-                        <h4>@ViewBag.OpponentTeam Bowling</h4>
+                        <h4>@Model.Summary2dto.OppponentTeam Bowling</h4>
                     </div>
                     @if (Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any())
                     {
@@ -275,7 +312,7 @@
                 </div>
                 <div class="tab-pane" id="tab_2">
                     <div class="col-md-12 bg-blue-active">
-                        <h4>@ViewBag.OpponentTeam Batting @ViewBag.OppTeamScore/@ViewBag.OpponenetTeamOut</h4>
+                        <h4>@Model.Summary2dto.OppponentTeam Batting @Model.Summary2dto.OpponentsTeamScore/@Model.Summary2dto.OpponentTeamWickets</h4>
                     </div>
 
                     @if (Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any())
@@ -398,7 +435,7 @@
                     }
 
                     <div class="col-md-12 bg-blue-active">
-                        <h4>@ViewBag.HomeTeam Bowling</h4>
+                        <h4>@Model.Summary2dto.HomeTeam Bowling</h4>
                     </div>
                     @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
                     {
@@ -589,8 +626,8 @@
                     <div class="form-group">
                         <div class="box box-info">
                             <div class="box-header with-border">
-                                <h4 class="box-title"><strong>@ViewBag.HomeTeam</strong> vs </h4>
-                                <h4 class="box-title"><strong>@ViewBag.OpponentTeam</strong></h4>
+                                <h4 class="box-title"><strong>@Model.Summary2dto.HomeTeam</strong> vs </h4>
+                                <h4 class="box-title"><strong>@Model.Summary2dto.OppponentTeam</strong></h4>
                                 <div class="box-tools pull-right">
                                     <input type="hidden" id="matchId" value="@ViewBag.MatchId" />
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -604,7 +641,7 @@
                             <!-- /.box-body -->
                         </div>
                         <div class="col-md-12 bg-blue-active">
-                            <h4>@ViewBag.HomeTeam</h4>
+                            <h4>@Model.Summary2dto.HomeTeam</h4>
                         </div>
                         <div>
                             @if (Model.HomeTeamFOW != null && Model.HomeTeamFOW.Any())
@@ -703,7 +740,7 @@
 
                         </div>
                         <div class="col-md-12 bg-blue-active">
-                            <h4>@ViewBag.OpponentTeam</h4>
+                            <h4>@Model.Summary2dto.OppponentTeam</h4>
                         </div>
                         <div>
                             @if (Model.OpponentTeamFOW != null && Model.OpponentTeamFOW.Any())
@@ -1090,7 +1127,7 @@
             var trace1 = {
             type: "scatter",
             mode: "lines",
-            name: '@ViewBag.HomeTeam',
+            name: '@Model.Summary2dto.HomeTeam',
             x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             y: xArr,
             line: { color: '#17BECF' }
@@ -1124,7 +1161,7 @@
             var trace2 = {
             type: "scatter",
             mode: "lines",
-            name: '@ViewBag.OpponentTeam',
+            name: '@Model.Summary2dto.OppponentTeam',
             x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             y: yArr,
             line: { color: '#FF0000' }
@@ -1172,5 +1209,13 @@
 
 
     </script>
-
+    <style>
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            width: 50px;
+        }
+    </style>
 }

@@ -28,14 +28,14 @@
                             @if (Model.Summary2dto.HomeTeamTeamLogo != null)
                             {
                                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
-                                    <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
+                                    <h2 class="pull-right">@Model.Summary2dto.HomeTeam</h2>
                                     <img id="Img" class="pull-right" src="~/Home/images/Teams/@Model.Summary2dto.HomeTeamTeamLogo" />
                                 </div>
                             }
                             else
                             {
                                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
-                                    <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
+                                    <h2 class="pull-right">@Model.Summary2dto.HomeTeam</h2>
                                     <img id="Img" class="pull-right" src="~/Home/images/Teams/noLogo.png" />
                                 </div>
                             }
@@ -45,7 +45,7 @@
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 bg-warning center">
                                     <h4 class="font">@Model.Summary2dto.Type Match </h4>
                                     <h5>@Model.Summary2dto.GroundName</h5>
-                                    <h5 id="matchDate">@Model.Summary2dto.DateOfMatch.ToShortDateString()</h5>
+                                    <h5 id="matchDate">@Model.Summary2dto.DateOfMatch.ToString("dddd, dd MMMM yyyy")</h5>
                                 </div>
                             }
                             else
@@ -58,21 +58,21 @@
                                     <h5 class="pull-center">@Model.Summary2dto.TournamentName</h5>
                                     <h5>@Model.Summary2dto.Stage</h5>
                                     <h5>@Model.Summary2dto.GroundName</h5>
-                                    <h5>@Model.Summary2dto.DateOfMatch.ToShortDateString()</h5>
+                                    <h5>@Model.Summary2dto.DateOfMatch.ToString("dddd, dd MMMM yyyy")</h5>
                                 </div>
 
                             }
                             @if (Model.Summary2dto.OpponentTeamLogo != null)
                             {
                                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
-                                    <h4 class="pull-left">@Model.Summary2dto.OppponentTeam</h4>
+                                    <h2 class="pull-left">@Model.Summary2dto.OppponentTeam</h2>
                                     <img id="Img" class="pull-left" src="~/Home/images/Teams/@Model.Summary2dto.OpponentTeamLogo" />
                                 </div>
                             }
                             else
                             {
                                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
-                                    <h4 class="pull-left">@Model.Summary2dto.OppponentTeam</h4>
+                                    <h2 class="pull-left">@Model.Summary2dto.OppponentTeam</h2>
                                     <img id="Img" class="pull-left" src="~/Home/images/Teams/noLogo.png" />
                                 </div>
                             }

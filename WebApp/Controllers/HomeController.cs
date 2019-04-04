@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using CricketApp.Data;
 using Dapper;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
 using WebApp.ViewModels;
+using WebApp.ViewModels.Home;
+using System.Linq;
 
 namespace WebApp.Controllers
 {
@@ -24,18 +27,31 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+            var HomeScreendto = new HomeScreendto();
             var connection = _context.Database.GetDbConnection();
-            var model = connection.QuerySingleOrDefault<HomeScreendto>(
-                "[usp_HomeScreen]",
+            var recentMatchesdtos = connection.Query<RecentMatchesdto>(
+                "[usp_RecentMatches]",
                 new
                 { },
-                commandType: CommandType.StoredProcedure) ?? new HomeScreendto
+                commandType: CommandType.StoredProcedure) ?? new List<RecentMatchesdto>()
                 {
 
                 };
             ViewBag.Name = "Home";
+            
 
-            return View(model);
+                var count = connection.Query<TotalAchievedto>(
+                "[usp_TotalAchieve]",
+                new
+                { },
+                commandType: CommandType.StoredProcedure) ?? new List<TotalAchievedto>()
+                {
+
+                };
+            ViewBag.Name = "Home";
+            HomeScreendto.RecentMatches = recentMatchesdtos.ToList();
+            HomeScreendto.TotalAchievedto = count.Single();
+            return View(HomeScreendto);
         }
         [HttpGet]
         [AllowAnonymous]

@@ -39,186 +39,69 @@
                 </div>
                 <div class="gap"></div>
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="post">
-                            <div class="content ">
-                                <h2 class="post-title ">@Model.Type</h2>
-                                <div class="post-img-content ">
-                                    <div class="form-inline table-bordered">
-                                        <ul class="list-inline">
-                                            <li>
-                                                @{
-                                                    if (Model.HomeTeamTeamLogo != null)
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.HomeTeamTeamLogo">
+                    <ul class="list">
+                        @foreach (var item in Model.RecentMatches)
+                        {
+                        <li>
+                            <div class="col-md-4">
+                                <div class="post">
+                                    <div class="content ">
+                                        <h2 class="post-title ">@item.Type</h2>
+                                        <div class="post-img-content ">
+                                            <div class="form-inline table-bordered">
+                                                <ul class="list-inline">
+                                                    <li>
+                                                        @{
+                                                            if (item.HomeTeamTeamLogo != null)
+                                                            {
+                                                                <img class="img-responsive" id="Img" src="~/Home/images/Teams/@item.HomeTeamTeamLogo">
 
-                                                    }
-                                                    else
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
+                                                            }
+                                                            else
+                                                            {
+                                                                <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
 
-                                                    }
-                                                }
-                                            </li>
-                                            <li>  <strong> @Model.HomeTeam </strong> @Model.HomeTeamScore/@Model.HomeTeamWickets</li>
-                                        </ul>
-                                        <ul class="list-inline">
-                                            <li>
-                                                @{
-                                                    if (Model.OpponentTeamLogo != null)
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.OpponentTeamLogo">
-                                                    }
-                                                    else
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
-
-                                                    }
-                                                }
-                                            </li>
-                                            <li>
-                                                <strong> @Model.OppponentTeam </strong> @Model.OpponentsTeamScore/@Model.OppenentTeamWickets
-                                            </li>
-                                        </ul>
-                                        <div class="col-md-12">
-                                            <p>@Model.Summary</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="author">
-                                    <i class="fa fa-user"></i> By <b> @Model.UserName</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">@Model.DateOfMatch</time>
-                                </div>
-                                <div class="read-more-wrapper">
-                                    <a href="#" class="btn btn-outlined btn-primary">More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="post">
-                            <div class="content">
-                                <h2 class="post-title">Post Title</h2>
-                                <div class="post-img-content">
-                                    <div class="form-inline table-bordered">
-                                        <ul class="list-inline">
-                                            <li>
-                                                @{
-                                                    if (Model.HomeTeamTeamLogo != null)
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.HomeTeamTeamLogo">
-
-                                                    }
-                                                    else
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
-
-                                                    }
-                                                }
-                                            </li>
-                                            <li>  <strong> @Model.HomeTeam </strong> @Model.HomeTeamScore/@Model.HomeTeamWickets</li>
-                                        </ul>
-                                        <ul class="list-inline">
-                                            <li>
-                                                @{
-                                                    if (Model.HomeTeamTeamLogo != null)
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.HomeTeamTeamLogo">
-
-                                                    }
-                                                    else
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
-
-                                                    }
-                                                }
-                                            </li>
-                                            <li>
-                                                <strong> @Model.OppponentTeam </strong> @Model.OpponentsTeamScore/@Model.OppenentTeamWickets
-                                            </li>
-                                        </ul>
-                                        <div class="col-md-12">
-                                            <p>@Model.Summary</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="author">
-                                    <i class="fa fa-user"></i> By <b>@Model.UserName</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">@Model.DateOfMatch</time>
-                                </div>
-                                <div class="read-more-wrapper">
-                                    <a href="#" class="btn btn-outlined btn-primary">More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="post">
-                            <div class="content">
-                                <h2 class="post-title">Post Title</h2>
-                                <div class="post-img-content">
-                                    <div class="form-inline table-bordered">
-                                        <ul class="list-inline">
-                                            <li>
-                                                @{
-                                                    if (Model.HomeTeamTeamLogo != null)
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.HomeTeamTeamLogo">
-
-                                                    }
-                                                    else
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
-
-                                                    }
-                                                }
-                                            </li>
-                                            <li>  <strong> @Model.HomeTeam </strong> @Model.HomeTeamScore/@Model.HomeTeamWickets</li>
-                                        </ul>
-                                        <ul class="list-inline">
-                                            <li>
-                                                @*@{
-                                                        if (Model.OpponentTeamLogo != null)
-                                                        {
-                                                            var base64 = Model.OpponentTeamLogo == null || !Model.OpponentTeamLogo.Any() ? "" : Convert.ToBase64String(Model.OpponentTeamLogo);
-                                                            <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
-
+                                                            }
                                                         }
-                                                        else
-                                                        {
-                                                            <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+                                                    </li>
+                                                    <li>  <strong> @item.HomeTeam </strong> @item.HomeTeamScore/@item.HomeTeamWickets</li>
+                                                </ul>
+                                                <ul class="list-inline">
+                                                    <li>
+                                                        @{
+                                                            if (item.OpponentTeamLogo != null)
+                                                            {
+                                                                <img class="img-responsive" id="Img" src="~/Home/images/Teams/@item.OpponentTeamLogo">
+                                                            }
+                                                            else
+                                                            {
+                                                                <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
 
+                                                            }
                                                         }
-                                                    }*@
-                                                @{
-                                                    if (Model.HomeTeamTeamLogo != null)
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.HomeTeamTeamLogo">
-
-                                                    }
-                                                    else
-                                                    {
-                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
-
-                                                    }
-                                                }
-                                            </li>
-                                            <li>
-                                                <strong> @Model.OppponentTeam </strong> @Model.OpponentsTeamScore/@Model.OppenentTeamWickets
-                                            </li>
-                                        </ul>
-                                        <div class="col-md-12">
-                                            <p>@Model.Summary</p>
+                                                    </li>
+                                                    <li>
+                                                        <strong> @item.OppponentTeam </strong> @item.OpponentsTeamScore/@item.OppenentTeamWickets
+                                                    </li>
+                                                </ul>
+                                                <div class="col-md-12">
+                                                    <p>@item.Summary</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="author">
+                                            <i class="fa fa-user"></i> By <b> @item.UserName</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">@item.DateOfMatch.ToString("dddd, dd MMMM yyyy")</time>
+                                        </div>
+                                        <div class="read-more-wrapper">
+                                            <a href="#" class="btn btn-outlined btn-primary">More</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="author">
-                                    <i class="fa fa-user"></i> By <b>@Model.UserName</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">@Model.DateOfMatch</time>
-                                </div>
-                                <div class="read-more-wrapper">
-                                    <a href="#" class="btn btn-outlined btn-primary">More</a>
-                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                        }
+
+                    </ul>
                 </div>
                 <div class="gap"></div>
             </div>
@@ -428,28 +311,28 @@
                     <div class="col-md-3 col-xs-6">
                         <div class="center bounce-in">
                             <span class="stat-icon"><span class="flaticon-cricket-helmet bounce-in"></span></span>
-                            <h1><span class="counter">@Model.Players</span></h1>
+                            <h1><span class="counter">@Model.TotalAchievedto.Players</span></h1>
                             <h3>Players</h3>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
                         <div class="center bounce-in">
                             <span class="stat-icon"><span class="flaticon-cricket-2 bounce-in"></span></span>
-                            <h1><span class="counter">@Model.Teams</span></h1>
+                            <h1><span class="counter">@Model.TotalAchievedto.Teams</span></h1>
                             <h3>Teams</h3>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
                         <div class="center bounce-in">
                             <span class="stat-icon"><span class="flaticon-cricket-ground-1 bounce-in"></span></span>
-                            <h1><span class="counter">@Model.Tournaments</span></h1>
+                            <h1><span class="counter">@Model.TotalAchievedto.Tournaments</span></h1>
                             <h3>Tournaments</h3>
                         </div>
                     </div>
                     <div class="col-md-3 col-xs-6">
                         <div class="center bounce-in">
                             <span class="stat-icon"><span class="flaticon-bar-chart bounce-in"></span></span>
-                            <h1><span class="counter">@Model.Records</span></h1>
+                            <h1><span class="counter">@Model.TotalAchievedto.Records</span></h1>
                             <h3>Records</h3>
                         </div>
                     </div>

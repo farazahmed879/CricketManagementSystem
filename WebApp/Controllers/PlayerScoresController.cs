@@ -9,6 +9,9 @@ using CricketApp.Domain;
 using WebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using WebApp.Helper;
+using Dapper;
+using System.Data;
+using System.Collections.Generic;
 
 namespace WebApp.Controllers
 {
@@ -29,22 +32,18 @@ namespace WebApp.Controllers
         public IActionResult Index(int? matchId, int? homeTeamId, int? oppTeamId, long? playerScoreId)
         {
             ViewBag.Name = "Score Card";
-            var scoreDto = new ScoreCarddto();
+            var scoreDto = new MainScreendto();
             ViewBag.matchId = matchId;
             ViewBag.homeTeamId = homeTeamId;
             ViewBag.oppTeamId = oppTeamId;
 
-            ViewBag.OpponentTeam = _context.Teams
-                .AsNoTracking()
-                .Where(i => i.TeamId == oppTeamId)
-                .Select(i => i.Team_Name)
-                .Single();
 
-            ViewBag.GroundName = _context.Matches
-              .AsNoTracking()
-              .Where(i => i.MatchId == matchId)
-              .Select(i => i.GroundName)
-              .Single();
+
+
+
+   
+
+  
 
             ViewBag.Overs = _context.Matches
               .AsNoTracking()
@@ -52,30 +51,18 @@ namespace WebApp.Controllers
               .Select(i => i.MatchOvers)
               .Single();
 
-            ViewBag.HomeTeam = _context.Teams
-               .AsNoTracking()
-               .Where(i => i.TeamId == homeTeamId)
-               .Select(i => i.Team_Name)
-               .Single();
-
-            ViewBag.HomeTeamScore = _context.TeamScores
-              .AsNoTracking()
-              .Where(i => i.TeamId == homeTeamId && i.MatchId == matchId)
-              .Select(i => i.TotalScore).SingleOrDefault();
-
-            ViewBag.OppTeamScore = _context.TeamScores
-                .AsNoTracking()
-                .Where(i => i.TeamId == oppTeamId && i.MatchId == matchId)
-                .Select(i => i.TotalScore).SingleOrDefault();
-
-            ViewBag.HomeTeamOut = _context.PlayerScores
-                .AsNoTracking()
-                .Count(i => i.HowOutId != 7 && i.HowOutId != null && i.TeamId == homeTeamId && i.MatchId == matchId);
-
-            ViewBag.OpponenetTeamOut = _context.PlayerScores
-               .AsNoTracking()
-               .Where(i => i.HowOutId != 7 && i.HowOutId != null && i.TeamId == oppTeamId && i.MatchId == matchId)
-               .Count();
+            var connection = _context.Database.GetDbConnection();
+            var s = connection.Query<Summary2dto>(
+              "[usp_Summary2]",
+              new
+              {
+                  paramMatchId = matchId,
+                  paramHomeTeamId = homeTeamId,
+                  paramOpponentTeamId = oppTeamId
+              },
+              commandType: CommandType.StoredProcedure) ?? new List<Summary2dto>()
+              {
+              };
 
 
             var matchSummary = _context.PlayerScores
@@ -111,7 +98,7 @@ namespace WebApp.Controllers
             scoreDto.HomeTeamScoreCard = matchSummary.Where(i => i.TeamId == homeTeamId).ToList();
 
             scoreDto.OpponentTeamScoreCard = matchSummary.Where(i => i.TeamId == oppTeamId).ToList();
-
+            scoreDto.Summary2dto = s.SingleOrDefault();
             scoreDto.TeamScoreCard = _context.TeamScores
                 .AsNoTracking()
                 .Include(i => i.Team)
@@ -529,7 +516,7 @@ namespace WebApp.Controllers
                 .AsNoTracking()
                 .Select(i => new { i.HowOutId, i.Name })
                 , "HowOutId", "Name");
-            var scoreDto = new ScoreCarddto();
+            var scoreDto = new MainScreendto();
             //ViewBag.matchId = matchId;
             ViewBag.OpponentTeam = _context.Teams
              .AsNoTracking()

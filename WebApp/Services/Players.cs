@@ -43,7 +43,7 @@ namespace WebApp.Services
                           BattingStyle = i.BattingStyle.Name,
                           BowlingStyle = i.BowlingStyle.Name,
                           PlayerRole = i.PlayerRole.Name,
-                          DOB = i.DOB.HasValue ? i.DOB.Value.ToShortDateString() : "",
+                          DOB = i.DOB.HasValue ? i.DOB.Value.ToString("dddd, dd MMMM yyyy") : "",
                           Team = i.Team.Team_Name,
 
                       })
