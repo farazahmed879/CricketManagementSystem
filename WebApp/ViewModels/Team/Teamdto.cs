@@ -13,6 +13,7 @@ namespace WebApp.ViewModels
         public int TeamId { get; set; }
         [Required]
         public string Team_Name { get; set; }
+        public string FileName { get; set; }
         public string Place { get; set; }
         public string Zone { get; set; }
         public string Contact { get; set; }

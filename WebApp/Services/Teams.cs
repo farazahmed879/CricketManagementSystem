@@ -32,7 +32,6 @@ namespace WebApp.Services
             .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone)
                     && (string.IsNullOrEmpty(location) || EF.Functions.Like(i.Place, '%' + location + '%'))
                     && (string.IsNullOrEmpty(name) || EF.Functions.Like(i.Team_Name, '%' + name + '%'))
-                    && (!userId.HasValue || i.clubAdmin.UserId == userId)
             )
             .Select(i => new Teamdto
             {
@@ -42,7 +41,7 @@ namespace WebApp.Services
                 Zone = i.Zone,
                 City = i.City,
                 Contact = i.Contact,
-                TeamLogo = i.TeamLogo
+                FileName = i.FileName
             })
             .OrderByDescending(i => i.TeamId)
             , page ?? 1, pageSize));

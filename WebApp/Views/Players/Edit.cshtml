@@ -137,12 +137,12 @@
             </div>
             <div class="col-md-4">
                 <span id="span" style="color: red"></span>
-                @{
-                    var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
-                    <img class="img-responsive" id="PlayerImg" style='background-size:cover; background-image: url("data:image/png;base64,@base64");' />
-                    <input type="hidden" value="@base64" id="base64Pic" name="playerImage" />
-                }
-
+                @*@{
+            var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
+            <img class="img-responsive" id="PlayerImg" style='background-size:cover; background-image: url("data:image/png;base64,@base64");' />
+            <input type="hidden" value="@base64" id="base64Pic" name="playerImage" />
+        }*@
+                <img class="img-responsive" id="PlayerImg" src="~/Home/images/Players/@Model.FileName"/>
                 <label asp-for="PlayerImage" class="btn btn-box-tool">
                     <i class="far fa-picture-o"> Upload</i> <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
                 </label>

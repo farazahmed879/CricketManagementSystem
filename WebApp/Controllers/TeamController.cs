@@ -15,6 +15,7 @@ using AutoMapper.QueryableExtensions;
 using WebApp.Helper;
 using WebApp.IServices;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebApp.Controllers
 {
@@ -24,18 +25,21 @@ namespace WebApp.Controllers
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
         private readonly ITeams _teams;
+        private readonly IHostingEnvironment _hosting;
 
         public TeamsController(CricketContext context,
             UserManager<IdentityUser<int>> userManager,
-            IMapper mapper, ITeams teams
+            IMapper mapper, ITeams teams, IHostingEnvironment hosting
             )
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
             _teams = teams;
+            _hosting = hosting;
         }
 
+        [HttpGet]
         [Route("Team/GetAllTeams")]
         public List<TeamDropDowndto> GetAllTeams()
         {
@@ -44,7 +48,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Teams
-
+        [HttpGet]
         public async Task<IActionResult> Index(string zone, string location, string name, int? page, int? userId)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
@@ -55,6 +59,8 @@ namespace WebApp.Controllers
             return View(model);
         }
 
+
+        [HttpGet]
         [Route("Team/List")]
         public async Task<IActionResult> List(string zone, string location, string name, int? page, int? userId)
         {
@@ -66,6 +72,8 @@ namespace WebApp.Controllers
             return Json(model);
         }
 
+
+        [HttpGet]
         // GET: Teams/Details/5
         public async Task<IActionResult> Details(int? teamId)
         {
@@ -74,7 +82,7 @@ namespace WebApp.Controllers
                 {
                     TeamId = i.TeamId,
                     Team_Name = i.Team_Name,
-                    TeamLogo = i.TeamLogo,
+                    FileName = i.FileName,
                     Place = i.Place,
                     Zone = i.Zone,
                     Contact = i.Contact,
@@ -91,6 +99,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Teams/Create
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create()
         {
@@ -106,47 +115,31 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var form = Request.Form;
-                byte[] fileBytes = null;
-                if (team.TeamImage != null)
+                team.FileName = team.TeamImage.FileName;
+                if (team.TeamImage.Length > 0)
                 {
-                    using (var stream = team.TeamImage.OpenReadStream())
+                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Teams", team.FileName), FileMode.Create))
                     {
-                        fileBytes = ReadStream(stream);
-
+                        await team.TeamImage.CopyToAsync(stream);
                     }
                 }
 
-
-                team.TeamLogo = fileBytes ?? null;
                 var teamModel = _mapper.Map<Team>(team);
                 _context.Teams.Add(teamModel);
-                var users = await _userManager.GetUserAsync(HttpContext.User);
-                _context.ClubAdmins.Add(new ClubAdmin
-                {
-                    TeamId = teamModel.TeamId,
-                    UserId = users.Id
+                //var users = await _userManager.GetUserAsync(HttpContext.User);
+                //_context.ClubAdmins.Add(new ClubAdmin
+                //{
+                //    TeamId = teamModel.TeamId,
+                //    UserId = users.Id
 
-                });
+                //});
                 await _context.SaveChangesAsync();
                 return Json(ResponseHelper.Success());
             }
             return Json(ResponseHelper.UnSuccess());
         }
-        public static byte[] ReadStream(Stream input)
-        {
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
-        // GET: Teams/Edit/5
+
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -178,17 +171,15 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                var form = Request.Form;
-                byte[] fileBytes = null;
-                if (team.TeamImage != null)
+                team.FileName = team.TeamImage.FileName;
+                if (team.TeamImage.Length > 0)
                 {
-                    using (var stream = team.TeamImage.OpenReadStream())
+                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Teams", team.FileName), FileMode.Create))
                     {
-                        fileBytes = ReadStream(stream);
+                        await team.TeamImage.CopyToAsync(stream);
                     }
                 }
-                team.TeamLogo = fileBytes ?? null;
+
                 _context.Teams.Update(_mapper.Map<Team>(team));
                 await _context.SaveChangesAsync();
                 return Json(ResponseHelper.UpdateSuccess());
@@ -196,7 +187,7 @@ namespace WebApp.Controllers
             return Json(ResponseHelper.UnSuccess());
         }
 
-
+        [HttpDelete]
         [Route("Team/DeleteConfirmed")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int teamId)

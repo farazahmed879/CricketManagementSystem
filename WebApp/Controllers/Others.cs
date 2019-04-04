@@ -24,13 +24,14 @@ namespace WebApp.Controllers
 
 
 
-
+        [HttpGet]
         // View: Others/Developers
         public IActionResult Developers()
         {
             ViewBag.Name = "Developers";
             return View();
         }
+        [HttpGet]
         // View: Others/Partners
         public IActionResult Partners()
         {
@@ -38,18 +39,22 @@ namespace WebApp.Controllers
             return View();
         }
 
+        [HttpGet]
         // View: Others/AboutUs
         public IActionResult AboutUs()
         {
             ViewBag.Name = "AboutUs";
             return View();
         }
+        [HttpGet]
         // View: Others/TestMatch
         public IActionResult TestMatch()
         {
             ViewBag.Name = "AboutUs";
             return View();
         }
+
+        [HttpGet]
         // View: Others/Records
         public IActionResult Records()
         {

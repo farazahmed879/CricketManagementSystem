@@ -36,8 +36,7 @@ namespace WebApp.Services
                .Where(i => (!matchTypeId.HasValue || i.MatchTypeId == matchTypeId) &&
                            (!teamId.HasValue || i.HomeTeamId == teamId || i.OppponentTeamId == teamId) &&
                            (!tournamentId.HasValue || i.TournamentId == tournamentId) && (!season.HasValue || i.Season == season) &&
-                           (!matchSeriesId.HasValue || i.MatchSeriesId == matchSeriesId) && (!matchOvers.HasValue || i.MatchOvers == matchOvers) &&
-                           (!userId.HasValue || i.UserId == userId))
+                           (!matchSeriesId.HasValue || i.MatchSeriesId == matchSeriesId) && (!matchOvers.HasValue || i.MatchOvers == matchOvers))
                 .Select(i => new ViewModels.Matchdto
                 {
                     MatchId = i.MatchId,

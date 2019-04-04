@@ -35,7 +35,7 @@ namespace WebApp.Controllers
         }
 
         // GET: MatchSeries
-
+        [HttpGet]
         public async Task<IActionResult> Index(int? page, int? userId)
         {
             ViewBag.Name = "Series";
@@ -47,6 +47,7 @@ namespace WebApp.Controllers
            
         }
 
+        [HttpGet]
         [Route("MatchSeries/List/{userId}")]
         public async Task<IActionResult> List(int? page, int? userId)
         {
@@ -60,6 +61,7 @@ namespace WebApp.Controllers
         }
 
         // GET: MatchSeries/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -78,6 +80,7 @@ namespace WebApp.Controllers
         }
 
         // GET: MatchSeries/Create
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create()
         {
@@ -104,6 +107,7 @@ namespace WebApp.Controllers
         }
 
         // GET: MatchSeries/Edit/5
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -154,7 +158,7 @@ namespace WebApp.Controllers
         }
 
         // GET: MatchSeries/Delete/5
-
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -173,6 +177,7 @@ namespace WebApp.Controllers
         }
 
         // POST: MatchSeries/Delete/5
+        [HttpDelete]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int matchSeriesId)
         {

@@ -29,8 +29,6 @@ namespace CricketApp.Domain
         public PlayerRole PlayerRole { get; set; }
         public Team Team { get; set; }
         public string FileName { get; set; }
-        [Column(TypeName = "varbinary(max)")]
-        public byte[] PlayerLogo { get; set; }
         [NotMapped]
         [Display(Name = "Player Image")]
         public IFormFile PlayerImage { get; set; }

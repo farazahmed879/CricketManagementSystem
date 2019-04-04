@@ -166,10 +166,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <span id="span" style="color: red"></span>
-                            @{
+                            @*@{
                                 var base64 = Model.MatchLogo == null || !Model.MatchLogo.Any() ? "" : Convert.ToBase64String(Model.MatchLogo);
                                 <img class="img-responsive" id="Img" style='margin-bottom: 1em; background-size:cover; background-image: url("data:image/png;base64,@base64");' />
-                            }
+                            }*@
+                            <img class="img-responsive" id="Img" src="~/Home/images/Matches/@Model.FileName"/>
                             <label asp-for="MatchImage" class="btn btn-box-tool">
                                 <i class="far fa-picture-o"> Upload</i> <input asp-for="MatchImage" type="file" class="hidden" style="height:auto" />
                             </label>

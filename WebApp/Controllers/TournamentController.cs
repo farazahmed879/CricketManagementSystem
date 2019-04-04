@@ -32,7 +32,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Tournaments
-
+        [HttpGet]
         public async Task<IActionResult> Index(int? page, int? userId)
         {
             ViewBag.Name = "Tournaments";
@@ -44,6 +44,7 @@ namespace WebApp.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public async Task<IActionResult> List(int? page, int? userId)
         {
             ViewBag.Name = "Tournaments";
@@ -55,6 +56,7 @@ namespace WebApp.Controllers
             return Json(model);
         }
 
+        [HttpGet]
         // GET: Tournaments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -73,6 +75,7 @@ namespace WebApp.Controllers
             return View(tournament);
         }
 
+        [HttpGet]
         // GET: Tournament/Create
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create()
@@ -100,6 +103,7 @@ namespace WebApp.Controllers
             return Json(ResponseHelper.UnSuccess());
         }
 
+        [HttpGet]
         // GET: Tournaments/Edit/5
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
@@ -150,7 +154,7 @@ namespace WebApp.Controllers
             return Json(ResponseHelper.UpdateUnSuccess());
         }
 
-
+        [HttpDelete]
         // POST: Tournaments/Delete/5
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int tournamentId)

@@ -35,7 +35,6 @@ namespace WebApp.Services
                                       && (!battingStyleId.HasValue || i.BattingStyleId == battingStyleId)
                                       && (!bowlingStyleId.HasValue || i.BowlingStyleId == bowlingStyleId)
                                       && (string.IsNullOrEmpty(name) || EF.Functions.Like(i.Player_Name, '%' + name + '%'))
-                                      && (!userId.HasValue || i.Team.clubAdmin.UserId == userId)
                                      )
                       .Select(i => new Playersdto
                       {
@@ -44,7 +43,6 @@ namespace WebApp.Services
                           BattingStyle = i.BattingStyle.Name,
                           BowlingStyle = i.BowlingStyle.Name,
                           PlayerRole = i.PlayerRole.Name,
-                          PlayerLogo = i.PlayerLogo,
                           DOB = i.DOB.HasValue ? i.DOB.Value.ToShortDateString() : "",
                           Team = i.Team.Team_Name,
 

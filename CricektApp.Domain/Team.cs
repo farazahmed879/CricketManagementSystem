@@ -26,8 +26,8 @@ namespace CricketApp.Domain
         public bool IsRegistered { get; set; }
         [Required]
         public string City { get; set; }
-        [Column(TypeName = "varbinary(max)")]
-        public byte[] TeamLogo { get; set; }
+        public string FileName { get; set; }
+
         [NotMapped]
         [Display(Name = "Team Image")]
         public IFormFile TeamImage { get; set; }

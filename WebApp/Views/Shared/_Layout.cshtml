@@ -20,14 +20,13 @@
     <script src="~/Home/fastclick/lib/fastclick.js"></script> <!--Not Sure-->
     <link rel="stylesheet" href="~/Home/css/Toast.css" />
     <link rel="stylesheet" href="~/Home/font/flaticon.css">
-    <link rel="shortcut icon" href="/Home/images/ico/favicon.ico">
     <link rel="apple-touch-icon" sizes="144x144" href="/Home/images/ico/apple-touch-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="114x114" href="/Home/images/ico/apple-touch-icon-114x114.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/Home/images/ico/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" href="/Home/images/ico/apple-touch-icon-57x57.png">
     @RenderSection("styles", false)
 </head>
-<body class="skin-blue" style=" font-size: 13px;">
+<body style=" font-size: 13px;">
     <div class="wrapper fixed">
         <div id="preloader"></div>
         <header class="navbar navbar-inverse navbar-fixed-top " role="banner">
@@ -46,20 +45,21 @@
                         <li><a asp-controller="Players" asp-action="Index">Player</a></li>
                         <li><a asp-controller="MatchSeries" asp-action="Index">Series</a></li>
                         <li><a asp-controller="Matches" asp-action="Index">Match</a></li>
-                        <li class="dropdown active">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="hidden-xs">Records</span>
-                                <i class="icon-angle-down"></i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a asp-controller="Records" asp-action="Index">Batsman</a></li>
-                                <li><a asp-controller="Records" asp-action="Index">Bowler</a></li>
-                                <li><a asp-controller="Records" asp-action="Index">Most Runs</a></li>
-                                <li><a asp-controller="Records" asp-action="Index">Most Wickets</a></li>
-                                <li><a asp-controller="Records" asp-action="Index">Most Catches</a></li>
-                            </ul>
-                        </li>
-                        
+                        <li><a asp-controller="Records" asp-action="Index">Records</a></li>
+                        @*<li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="hidden-xs">Records</span>
+                                    <i class="icon-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Records" asp-action="Index">Batsman</a></li>
+                                    <li><a asp-controller="Records" asp-action="Index">Bowler</a></li>
+                                    <li><a asp-controller="Records" asp-action="Index">Most Runs</a></li>
+                                    <li><a asp-controller="Records" asp-action="Index">Most Wickets</a></li>
+                                    <li><a asp-controller="Records" asp-action="Index">Most Catches</a></li>
+                                </ul>
+                            </li>*@
+
                         <li class="dropdown active">
 
 
@@ -72,6 +72,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a id="Logout">Log Out</a></li>
+                                    <li><a asp-controller="RoleManagement" asp-action="Role">Role Management</a></li>
                                 </ul>
                             }
                             else
@@ -102,7 +103,6 @@
 
         </div>
     </div>
-
     <script src="/Home/js/plugins.js"></script>
     <script src="/Home/js/bootstrap.min.js"></script>
     <script src="/Home/js/jquery.prettyPhoto.js"></script>
@@ -112,7 +112,7 @@
     @RenderSection("Scripts", required: false)
 
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
     <style>
 
         #logo {
@@ -131,18 +131,34 @@
 
         $(function () {
             $('#Logout').click(function () {
+
                 const header = new Headers();
                 header.append("RequestVerificationToken", $(".AntiForge" + " input").val());
-                fetch('/Account/Logout', {
-                    method: "POST",
-                    credentials: 'same-origin',
-                    headers: header
+                $.ajax({
+                    type: "POST",
+                    headers: header,
+                    dataType: "json",
+                    url: "/Account/Logout/Logout",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        window.location = "/";
+                    },
+                    fail: function (data) {
+                    }
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            window.location = "/";
-                        }
-                    });
+
+
+                //fetch('/Account/Logout', {
+                //    method: "POST",
+                //    credentials: 'same-origin',
+                //    headers: header
+                //})
+                //    .then(response => {
+                //        if (response.ok) {
+                //            window.location = "/";
+                //        }
+                //    });
             });
         });
     </script>

@@ -1,0 +1,93 @@
+﻿@model WebApp.ViewModels.RoleManagement.ClubAdmindto
+<br />
+<br />
+<br />
+<br />
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+<input type="hidden" id="RequestVerificationToken"
+       name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <form id="RoleForm" enctype="multipart/form-data">
+                <div class="col-md-4" style="margin-top: 20px">
+                    <label>Club Admin<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                    <select asp-items="ViewBag.Users" asp-for="UserId" required style="width: 100%" id="userId" class="js-example-basic-single">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="col-md-4" style="margin-top: 20px">
+                    <label>Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                    <select asp-items="ViewBag.Team" asp-for="TeamId" required style="width: 100%" id="teamId" class="js-example-basic-single">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+            </form>
+
+
+        </div>
+        <div class="col-md-2"></div>
+
+    </div>
+    <div class="footer center">
+        <ul class="list-inline">
+            <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
+            <li><input id="RoleCreate" type="button" value="Save" class="btn btn-primary"></li>
+        </ul>
+    </div>
+</div>
+@section scripts {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <style>
+        #logo {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 45px;
+            width: 200px;
+        }
+    </style>
+    <script>
+
+        //Select2
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+            placeholder: "--Select Club Admin--";
+        });
+
+
+        $(document).on('click', '#RoleCreate', function (e) {
+            $('#RoleCreate').attr("disabled", "disabled");
+            var form = $("#RoleForm").closest("form");
+            var formData = new FormData(form[0]);
+            $.ajax({
+                type: "POST",
+                data: formData,
+                headers: {
+                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                },
+                dataType: "json",
+                url: "/RoleManagement/Create",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    myFunction(data);
+                    window.location = '/RoleManagement/Role'
+                },
+                fail: function (data) {
+                    myFunction(data);
+                }
+            })
+        });
+
+    </script>
+}

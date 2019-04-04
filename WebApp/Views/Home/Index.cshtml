@@ -17,7 +17,7 @@
                                     <h2 class="boxed animation animated-item-1 fade-down">Next Stop Cricket</h2>
                                     @*<p class="boxed animation animated-item-2 fade-up">Next Stop Cricket</p>*@
                                     <br>
-                                    <a class="btn btn-md animation bounce-in" asp-controller="Home" asp-action="DashBoard">Get Started</a>
+                                    <a class="btn btn-md animation bounce-in" >Get Started</a>
                                 </div>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                     <div class="col-md-4">
                         <div class="post">
                             <div class="content ">
-                                <h2 class="post-title ">Post Title</h2>
+                                <h2 class="post-title ">@Model.Type</h2>
                                 <div class="post-img-content ">
                                     <div class="form-inline table-bordered">
                                         <ul class="list-inline">
@@ -50,13 +50,12 @@
                                                 @{
                                                     if (Model.HomeTeamTeamLogo != null)
                                                     {
-                                                        var base64 = Model.HomeTeamTeamLogo == null || !Model.HomeTeamTeamLogo.Any() ? "" : Convert.ToBase64String(Model.HomeTeamTeamLogo);
-                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.HomeTeamTeamLogo">
 
                                                     }
                                                     else
                                                     {
-                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
 
                                                     }
                                                 }
@@ -68,13 +67,11 @@
                                                 @{
                                                     if (Model.OpponentTeamLogo != null)
                                                     {
-                                                        var base64 = Model.OpponentTeamLogo == null || !Model.OpponentTeamLogo.Any() ? "" : Convert.ToBase64String(Model.OpponentTeamLogo);
-                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
-
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.OpponentTeamLogo">
                                                     }
                                                     else
                                                     {
-                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
 
                                                     }
                                                 }
@@ -108,13 +105,12 @@
                                                 @{
                                                     if (Model.HomeTeamTeamLogo != null)
                                                     {
-                                                        var base64 = Model.HomeTeamTeamLogo == null || !Model.HomeTeamTeamLogo.Any() ? "" : Convert.ToBase64String(Model.HomeTeamTeamLogo);
-                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.HomeTeamTeamLogo">
 
                                                     }
                                                     else
                                                     {
-                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
 
                                                     }
                                                 }
@@ -124,15 +120,14 @@
                                         <ul class="list-inline">
                                             <li>
                                                 @{
-                                                    if (Model.OpponentTeamLogo != null)
+                                                    if (Model.HomeTeamTeamLogo != null)
                                                     {
-                                                        var base64 = Model.OpponentTeamLogo == null || !Model.OpponentTeamLogo.Any() ? "" : Convert.ToBase64String(Model.OpponentTeamLogo);
-                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.HomeTeamTeamLogo">
 
                                                     }
                                                     else
                                                     {
-                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
 
                                                     }
                                                 }
@@ -147,7 +142,7 @@
                                     </div>
                                 </div>
                                 <div class="author">
-                                    <i class="fa fa-user"></i> By <b>Author</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">April 11th, 2014</time>
+                                    <i class="fa fa-user"></i> By <b>@Model.UserName</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">@Model.DateOfMatch</time>
                                 </div>
                                 <div class="read-more-wrapper">
                                     <a href="#" class="btn btn-outlined btn-primary">More</a>
@@ -166,13 +161,12 @@
                                                 @{
                                                     if (Model.HomeTeamTeamLogo != null)
                                                     {
-                                                        var base64 = Model.HomeTeamTeamLogo == null || !Model.HomeTeamTeamLogo.Any() ? "" : Convert.ToBase64String(Model.HomeTeamTeamLogo);
-                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.HomeTeamTeamLogo">
 
                                                     }
                                                     else
                                                     {
-                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
 
                                                     }
                                                 }
@@ -181,16 +175,28 @@
                                         </ul>
                                         <ul class="list-inline">
                                             <li>
+                                                @*@{
+                                                        if (Model.OpponentTeamLogo != null)
+                                                        {
+                                                            var base64 = Model.OpponentTeamLogo == null || !Model.OpponentTeamLogo.Any() ? "" : Convert.ToBase64String(Model.OpponentTeamLogo);
+                                                            <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+
+                                                        }
+                                                    }*@
                                                 @{
-                                                    if (Model.OpponentTeamLogo != null)
+                                                    if (Model.HomeTeamTeamLogo != null)
                                                     {
-                                                        var base64 = Model.OpponentTeamLogo == null || !Model.OpponentTeamLogo.Any() ? "" : Convert.ToBase64String(Model.OpponentTeamLogo);
-                                                        <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.HomeTeamTeamLogo">
 
                                                     }
                                                     else
                                                     {
-                                                        <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+                                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
 
                                                     }
                                                 }
@@ -205,7 +211,7 @@
                                     </div>
                                 </div>
                                 <div class="author">
-                                    <i class="fa fa-user"></i> By <b>Author</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">April 11th, 2014</time>
+                                    <i class="fa fa-user"></i> By <b>@Model.UserName</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">@Model.DateOfMatch</time>
                                 </div>
                                 <div class="read-more-wrapper">
                                     <a href="#" class="btn btn-outlined btn-primary">More</a>
@@ -843,8 +849,7 @@
                             </ul>
                         </div>
                     </div><!--/.col-md-3-->
-
-                        @*<div class="col-md-3 col-sm-6">
+                    @*<div class="col-md-3 col-sm-6">
                             <h4>Latest Articles</h4>
                             <div>
                                 <div class="media">
@@ -910,4 +915,17 @@
         });
     </script>
 </body>
+
 </html>
+@section Scripts{
+    <style>
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 30px;
+            width: 30px;
+        }
+    </style>
+
+}

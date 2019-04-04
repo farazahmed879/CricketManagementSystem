@@ -75,10 +75,7 @@
             </div>
             <div class="col-md-4 gallery">
                 <span id="span" style="color: red"></span>
-                @{
-                    var base64 = Model.TeamLogo == null || !Model.TeamLogo.Any() ? "" : Convert.ToBase64String(Model.TeamLogo);
-                    <img class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");' />
-                }
+                <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.FileName"/>
                 <label asp-for="TeamImage" class="btn btn-box-tool">
                     <i class="far fa-picture-o"> Upload</i> <input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
                 </label>

@@ -17,11 +17,14 @@ namespace WebApp.Controllers
     {
         private readonly CricketContext _context;
 
+
+        
         public PlayerScoresController(CricketContext context)
         {
             _context = context;
         }
 
+        [HttpGet]
         [Route("PlayerScores/Index")]
         public IActionResult Index(int? matchId, int? homeTeamId, int? oppTeamId, long? playerScoreId)
         {
@@ -158,6 +161,8 @@ namespace WebApp.Controllers
 
         }
 
+
+        [HttpGet]
         // GET: PlayerScores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -177,6 +182,8 @@ namespace WebApp.Controllers
             return View(playerScore);
         }
 
+
+        [HttpGet]
         // GET: PlayerScores/Create
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create(int homeTeamId, int oppTeamId, int matchId)
@@ -481,6 +488,8 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet]
         // GET: PlayerScoresModal/Edit/5
         [Route("PlayerScores/GetPlayerScoreModal")]
         [Authorize(Roles = "Club Admin,Administrator")]
@@ -509,7 +518,9 @@ namespace WebApp.Controllers
 
             return Json(playerScore);
         }
+
         // GET: PlayerScores/Edit/5
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Edit(int? matchId, int? homeTeamId, int? oppTeamId, int? playerScoreId)
         {
@@ -722,7 +733,7 @@ namespace WebApp.Controllers
         }
 
         // POST: PlayerScores/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpDelete, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)

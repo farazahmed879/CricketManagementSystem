@@ -21,6 +21,7 @@ namespace WebApp.ViewModels
         [Display(Name = "Team Image")]
         public IFormFile TeamImage { get; set; }
         public string Team_Name { get; set; }
+        public string FileName { get; set; }
         public string City { get; set; }
         public string Place { get; set; }
         public string Zone { get; set; }

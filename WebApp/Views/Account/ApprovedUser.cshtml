@@ -2,21 +2,26 @@
 @{
     Layout = "_LoginLayout";
 }
+<div class="container">
+    <div class="row">
 
-<div class="login-box">
-    <div class="login-logo">
-        <img id="logo" src="~/images/ScoreExec copy.png" />
-    </div>
-    <!-- /.login-logo -->
-    <div class="login-box-body">
-        <h4>You have approved the user</h4>
-        <h1>Successfully <span class="label label-success"><i class="fas fa-check"></i></span></h1>
+        <div class='col-md-3'></div>
+        <div class="col-md-6">
+            <div class="center gap fade-down section-heading">
+                <img id="logo" src="~/images/ScoreExec copy.png" />
+            </div>
+            <div class="login-box well">
+                <h4>You have approved the user</h4>
+                <h1>Successfully <span class="label label-success"><i class="fas fa-check"></i></span></h1>
 
-        <!-- /.social-auth-links -->
-        <a id="Login" style="cursor: pointer" class="text-center">Login</a>
+                <!-- /.social-auth-links -->
+                <a id="Login" style="cursor: pointer" class="text-center">Login</a>
+            </div>
+        </div>
+        <div class='col-md-3'></div>
     </div>
-    <!-- /.login-box-body -->
 </div>
+
 @section scripts {
   
     <style>
@@ -24,9 +29,8 @@
             background-image: url('');
             background-size: cover;
             background-position: center;
-            height: 45px;
-            width: 200px;
-            
+            height: 80px;
+            width: 300px;
         }
     </style>
     <script>

@@ -7,6 +7,7 @@
         public int Teams { get; set; }
         public int Matches { get; set; }
         public string DateOfMatch { get; set; }
+        public string Type { get; set; }
         public string UserName { get; set; }
         public int Series { get; set; }
         public int Records { get; set; }
@@ -17,7 +18,7 @@
         public int OpponentsTeamScore { get; set; }
         public int HomeTeamWickets { get; set; }
         public int OppenentTeamWickets { get; set; }
-        public byte[] OpponentTeamLogo { get; set; }
-        public byte[] HomeTeamTeamLogo { get; set; }
+        public string OpponentTeamLogo { get; set; }
+        public string HomeTeamTeamLogo { get; set; }
     }
 }

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using WebApp.Helper;
 using WebApp.IServices;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebApp.Controllers
 {
@@ -25,19 +26,22 @@ namespace WebApp.Controllers
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
         private readonly IPlayers _players;
+        private readonly IHostingEnvironment _hosting;
 
         public PlayersController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager, IPlayers players,
+            UserManager<IdentityUser<int>> userManager, IPlayers players, IHostingEnvironment hosting,
             IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
             _players = players;
+            _hosting = hosting;
         }
 
         // GET: Players
 
+        [HttpGet]
         [Route("Players/GetAllPlayers")]
         public List<PlayersDropDowndto> GetAllPlayers()
         {
@@ -45,6 +49,8 @@ namespace WebApp.Controllers
             return players;
         }
 
+
+        [HttpGet]
         public async Task<IActionResult> Index(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
         {
 
@@ -67,7 +73,6 @@ namespace WebApp.Controllers
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == userId))
                 .Select(i => new { i.TeamId, i.Team_Name })
            , "TeamId", "Team_Name");
             var model = await _players.GetAllPlayersList(teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId, page);
@@ -77,8 +82,8 @@ namespace WebApp.Controllers
 
         }
 
-      
 
+        [HttpGet]
         public async Task<IActionResult> List(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
         {
 
@@ -102,7 +107,6 @@ namespace WebApp.Controllers
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == userId))
                 .Select(i => new { i.TeamId, i.Team_Name })
            , "TeamId", "Team_Name");
             var model = await _players.GetAllPlayersList(teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId, page);
@@ -116,7 +120,7 @@ namespace WebApp.Controllers
         }
 
         // GET: PlayerList
-
+        [HttpGet]
         public async Task<IActionResult> PlayersList(int? teamId)
         {
             ViewBag.Name = "Players";
@@ -128,7 +132,7 @@ namespace WebApp.Controllers
                            {
                                TeamId = i.TeamId,
                                Team_Name = i.Team_Name,
-                               TeamLogo = i.TeamLogo,
+                               FileName = i.FileName,
                                Zone = i.Zone,
                                Place = i.Place,
                                City = i.City,
@@ -139,13 +143,13 @@ namespace WebApp.Controllers
                                                {
                                                    PlayerId = o.PlayerId,
                                                    Player_Name = o.Player_Name,
-                                                   PlayerLogo = o.PlayerLogo,
                                                }).ToList() : null
                            })
                            .SingleAsync());
 
         }
         // GET: Players/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             ViewBag.Name = "Player Detail";
@@ -165,6 +169,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Players/Create
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Create(int? teamId)
         {
@@ -197,7 +202,6 @@ namespace WebApp.Controllers
             {
                 ViewBag.TeamId = new SelectList(_context.Teams
                     .AsNoTracking()
-                    .Where(i => i.clubAdmin.UserId == users.Id)
                     .Select(i => new { i.TeamId, i.Team_Name })
                     , "TeamId", "Team_Name");
             }
@@ -224,9 +228,17 @@ namespace WebApp.Controllers
                 //        fileBytes = ReadStream(stream);
                 //    }
                 //}
-
-                //player.PlayerLogo = fileBytes ?? null;
                 player.FileName = player.PlayerImage.FileName;
+                if (player.PlayerImage.Length > 0)
+                {
+                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath,"Home","Images", "Players", player.FileName), FileMode.Create))
+                    {
+                        await player.PlayerImage.CopyToAsync(stream);
+                    }
+                }
+                
+                //player.PlayerLogo = fileBytes ?? null;
+                
                 _context.Players.Add(_mapper.Map<Player>(player));
                 await _context.SaveChangesAsync();
                 return Json(ResponseHelper.Success());
@@ -235,22 +247,23 @@ namespace WebApp.Controllers
             return Json(ResponseHelper.UnSuccess());
 
         }
-
-        public static byte[] ReadStream(Stream input)
-        {
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
+        //[HttpGet]
+        //public static byte[] ReadStream(Stream input)
+        //{
+        //    byte[] buffer = new byte[16 * 1024];
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        int read;
+        //        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+        //        {
+        //            ms.Write(buffer, 0, read);
+        //        }
+        //        return ms.ToArray();
+        //    }
+        //}
 
         // GET: Players/Edit/5
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -285,7 +298,6 @@ namespace WebApp.Controllers
                 {
                     PlayerId = i.PlayerId,
                     Player_Name = i.Player_Name,
-                    PlayerLogo = i.PlayerLogo,
                     PlayerRoleId = i.PlayerRoleId,
                     BattingStyleId = i.BattingStyleId,
                     BowlingStyleId = i.BowlingStyleId,
@@ -295,7 +307,9 @@ namespace WebApp.Controllers
                     Address = i.Address,
                     IsGuestorRegistered = i.IsGuestorRegistered,
                     IsDeactivated = i.IsDeactivated,
-                    TeamId = i.TeamId
+                    TeamId = i.TeamId,
+                    FileName = i.FileName
+
 
                 })
                 .SingleOrDefaultAsync(m => m.PlayerId == id);
@@ -305,8 +319,10 @@ namespace WebApp.Controllers
             }
             return View(player);
         }
+
         // GET: Players/getPlayerbyId/5
         //[Authorize(Roles = "Club Admin,Administrator")]
+        [HttpGet]
         public async Task<IActionResult> getPlayerbyId(int? id)
         {
             ViewBag.Name = "Edit Mode";
@@ -340,7 +356,6 @@ namespace WebApp.Controllers
                 {
                     PlayerId = i.PlayerId,
                     Player_Name = i.Player_Name,
-                    PlayerLogo = i.PlayerLogo,
                     PlayerRoleId = i.PlayerRoleId,
                     BattingStyleId = i.BattingStyleId,
                     BowlingStyleId = i.BowlingStyleId,
@@ -369,16 +384,14 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var fokrm = Request.Form;
-                byte[] fileBytes = null;
-                if (player.PlayerImage != null)
+                player.FileName = player.PlayerImage.FileName;
+                if (player.PlayerImage.Length > 0)
                 {
-                    using (var stream = player.PlayerImage.OpenReadStream())
+                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Players", player.FileName), FileMode.Create))
                     {
-                        fileBytes = ReadStream(stream);
+                        await player.PlayerImage.CopyToAsync(stream);
                     }
                 }
-                player.PlayerLogo = fileBytes ?? null;
                 _context.Players.Update(_mapper.Map<Player>(player));
                 await _context.SaveChangesAsync();
                 return Json(ResponseHelper.UpdateSuccess());
@@ -389,6 +402,7 @@ namespace WebApp.Controllers
 
 
         // POST: Players/Delete/5
+        [HttpDelete]
         [Route("Players/DeleteConfirmed")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int playerId)
@@ -399,6 +413,8 @@ namespace WebApp.Controllers
             return Ok();
         }
         // GET: PlayerStatistics
+
+        [HttpGet]
         public IActionResult PlayerStatistics(int playerId, bool Api)
         {
             ViewBag.Name = "Players / Profile";

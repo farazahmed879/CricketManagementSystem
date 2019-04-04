@@ -41,6 +41,7 @@ namespace WebApp.Controllers
 
 
         // GET: PlayerPastRecord
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> PastRecord(int? playerId,string PlayerName)
         {
@@ -64,8 +65,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-
-               
+                _context.Update(playerPastRecord);
+                await _context.SaveChangesAsync();
 
                 return Json(ResponseHelper.UpdateSuccess());
             }

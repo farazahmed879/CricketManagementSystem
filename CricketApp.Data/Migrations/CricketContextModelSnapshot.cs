@@ -125,6 +125,8 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<DateTime?>("DateOfMatch");
 
+                    b.Property<string>("FileName");
+
                     b.Property<string>("GroundName");
 
                     b.Property<int>("HomeTeamId");
@@ -132,9 +134,6 @@ namespace CricketApp.Data.Migrations
                     b.Property<float?>("HomeTeamOvers");
 
                     b.Property<string>("MatchDescription");
-
-                    b.Property<byte[]>("MatchLogo")
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("MatchOvers");
 
@@ -272,9 +271,6 @@ namespace CricketApp.Data.Migrations
                     b.Property<bool>("IsDeactivated");
 
                     b.Property<string>("IsGuestorRegistered");
-
-                    b.Property<byte[]>("PlayerLogo")
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<int?>("PlayerRoleId");
 
@@ -448,12 +444,11 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<string>("Contact");
 
+                    b.Property<string>("FileName");
+
                     b.Property<bool>("IsRegistered");
 
                     b.Property<string>("Place");
-
-                    b.Property<byte[]>("TeamLogo")
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Team_Name")
                         .IsRequired();

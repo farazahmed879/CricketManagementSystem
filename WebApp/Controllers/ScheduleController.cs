@@ -27,8 +27,8 @@ namespace WebApp.Controllers
             _mapper = mapper;
         }
 
-        // GET: Teams
-
+  
+        [HttpGet]
         public async Task<IActionResult> Index(int? day, string month, int? year, int? page, int? teamId)
         {
             ViewBag.Name = "Schedule";
@@ -64,6 +64,7 @@ namespace WebApp.Controllers
 
 
         // Post: Schedule/CreateSchedule
+        [HttpPost]
         [Route("Schedule/CreateSchedule")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> CreateSchedule([FromBody]MatchScheduledto matchSchedule)
@@ -79,6 +80,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Schedule/Edit/5
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult GetEdit(int matchScheduleId)
         {
@@ -102,7 +104,7 @@ namespace WebApp.Controllers
             return Json(matchSchedule);
         }
 
-
+        [HttpDelete]
         [Route("Schedule/DeleteConfirmed")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int matchScheduleId)

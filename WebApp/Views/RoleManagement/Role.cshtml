@@ -1,0 +1,89 @@
+﻿@model List<WebApp.ViewModels.RoleManagement.ClubAdmindto>
+<br />
+<br />
+<br />
+<br />
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+<div class="container">
+    <div class="row">
+        <ul class="list-inline">
+            <li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="form-group">
+                        <a asp-controller="RoleManagement" data-placement="top" data-toggle="tooltip" title="Add Roles" class="btn btn-primary" asp-action="Create">Add</a>
+                    </div>
+
+                }
+            </li>
+        </ul>
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-blue-active">
+                        <tr>
+                            <th>Club Admin</th>
+                            <th>Teams</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <h4>@item.UserName</h4>
+                                </td>
+                                <td>
+                                    <div>
+                                        <select asp-items="ViewBag.Team" asp-for="Select(i => i.TeamId)" class="js-example-basic-single" style="width: 100%">
+                                            <option value="">--Select Team--</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td><a asp-action="Edit" asp-route-userId="@item.UserId" asp-route-userName="@item.UserName" class="btn btn-default">Edit</a></td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <style>
+        #logo {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 45px;
+            width: 200px;
+        }
+    </style>
+    <script>
+
+        //Select2
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+            placeholder: "--Select Club Admin--";
+        });
+
+        $('#Login').click(function () {
+            $(function () {
+                window.location = '/Account/Login'
+            });
+
+        })
+
+    </script>
+}

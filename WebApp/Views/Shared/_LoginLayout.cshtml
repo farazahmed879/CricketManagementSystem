@@ -5,97 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Name | ScoreExec</title>
     <link rel="shortcut icon" href="~/images/Logo.PNG" type="image/x-icon" />
+    <link href="~/Home/css/boostrap-wizard.css" rel="stylesheet" />
+    <link href="/Home/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="/Home/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/Home/css/pe-icons.css" rel="stylesheet">
+    <link href="/Home/css/prettyPhoto.css" rel="stylesheet">
+    <link href="/Home/css/animate.css" rel="stylesheet">
+    <link href="/Home/css/style.css" rel="stylesheet">
+    <script src="/Home/js/jquery.js"></script>
+    <!--ok-->
+    <script src="~/Home/fastclick/lib/fastclick.js"></script> <!--Not Sure-->
+    <link rel="stylesheet" href="~/Home/css/Toast.css" />
+    <link rel="stylesheet" href="~/Home/font/flaticon.css">
+    <link rel="apple-touch-icon" sizes="144x144" href="/Home/images/ico/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/Home/images/ico/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/Home/images/ico/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" href="/Home/images/ico/apple-touch-icon-57x57.png">
+    @RenderSection("styles", false)
     <environment include="Development">
-
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/dist/css/bootstrap.min.css">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="~/font-awesome/css/font-awesome.min.css">
-
-        <!-- Theme style -->
-        <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
-        <!-- AdminLTE Skins. Choose a skin from the css/skins
-        folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="~/dist/css/skins/_all-skins.min.css">
-        <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-        <link href="~/css/boostrap-wizard.css" rel="stylesheet" />
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
     </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/dist/css/bootstrap.min.css">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="~/font-awesome/css/font-awesome.min.css">
 
-        <!-- Theme style -->
-        <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
-        <!-- AdminLTE Skins. Choose a skin from the css/skins
-        folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="~/dist/css/skins/_all-skins.min.css">
-        <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-        <link href="~/css/boostrap-wizard.css" rel="stylesheet" />
-
-
-
-
-    </environment>
     @RenderSection("styles", false)
 </head>
 <body>
-    <div id="wrapper">
 
-        <div id="page-content-wrapper">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid body-content"></div>
+    <div class="container-fluid ">
 
-                @RenderBody()
 
-                <hr />
-                <footer>
-                    <p>&copy; Developed by FriendsBit</p>
-                </footer>
-            </nav>
-        </div>
-        <!-- /#page-content-wrapper -->
+        @RenderBody()
     </div>
 
 
+    <hr />
+    <footer>
+        <p>&copy; Developed by FriendsBit</p>
+    </footer>
+    <script src="/Home/js/plugins.js"></script>
+    <script src="/Home/js/bootstrap.min.js"></script>
+    <script src="/Home/js/jquery.prettyPhoto.js"></script>
+    <script src="/Home/js/init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>
 
 
-    <environment include="Development">
-
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/jquery.bootstrap.js"></script>
-        <script src="~/js/material-bootstrap-wizard.js"></script>
-        <script src="~/js/jquery.validate.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>
-
-        <script src="~/js/datatables.responsive.js"></script>
-        @*<script src="~/js/bootstrap.bundle.min.js"></script>*@
-    </environment>
-    <environment exclude="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/jquery.bootstrap.js"></script>
-        <script src="~/js/material-bootstrap-wizard.js"></script>
-        <script src="~/js/jquery.validate.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
-        @*<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>*@
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.min.js"></script>
-
-        <script src="~/js/datatables.responsive.js"></script>
-        @*<script src="~/js/bootstrap.bundle.min.js"></script>*@
-    </environment>
 
     @RenderSection("Scripts", required: false)
 

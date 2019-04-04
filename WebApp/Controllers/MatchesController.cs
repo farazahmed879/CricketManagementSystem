@@ -23,6 +23,7 @@ using System;
 namespace WebApp.Controllers
 {
 
+
     public class MatchesController : Controller
     {
         private readonly CricketContext _context;
@@ -30,20 +31,23 @@ namespace WebApp.Controllers
         private readonly IMapper _mapper;
         private readonly IMatches _matches;
         private IHostingEnvironment _env;
+        private readonly IHostingEnvironment _hosting;
 
         public MatchesController(
             CricketContext context,
-            UserManager<IdentityUser<int>> userManager,IMatches matches,
-            IMapper mapper, IHostingEnvironment env)
+            UserManager<IdentityUser<int>> userManager, IMatches matches,
+            IMapper mapper, IHostingEnvironment env, IHostingEnvironment hosting)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
             _matches = matches;
             _env = env;
+            _hosting = hosting;
         }
 
         // GET: Matches
+        [HttpGet]
         [Route("Matches/Index")]
         public async Task<IActionResult> Index(int? teamId, int? matchTypeId,
                                                int? tournamentId, int? matchSeriesId,
@@ -85,7 +89,7 @@ namespace WebApp.Controllers
             var model = await _matches.GetAllMatches(teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers, userId, page);
             return View(model);
         }
-
+        [HttpGet]
         [Route("Matches/List/teamId/{teamId}/matchTypeId/{matchTypeId}/tournamentId/{tournamentId}/matchSeriesId/{matchSeriesId}/season/{season}/matchOvers/{matchOvers}/userId/{userId}/page/{page}")]
         public async Task<IActionResult> List(int? teamId, int? matchTypeId,
                                               int? tournamentId, int? matchSeriesId,
@@ -129,6 +133,7 @@ namespace WebApp.Controllers
         }
 
         // GET: MatchSummary
+        [HttpGet]
         public IActionResult Summary(int matchId, int homeTeamId, int oppTeamId, bool isApi)
         {
             ViewBag.Name = "Match Summary";
@@ -203,6 +208,7 @@ namespace WebApp.Controllers
             return View(matchSummary);
         }
 
+        [HttpGet]
         // GET: Matches/Details/5
         public async Task<IActionResult> Details(int? matchId)
         {
@@ -241,7 +247,7 @@ namespace WebApp.Controllers
         }
 
         //GET: Matches/Create
-
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         [Route("Matches/Create")]
         public async Task<IActionResult> Create(int? tournamentId, int? matchSeriesId)
@@ -249,7 +255,6 @@ namespace WebApp.Controllers
             ViewBag.Name = "Add Match";
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.TeamId = new SelectList(_context.Teams
-                .Where(i => i.clubAdmin.UserId == users.Id)
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
 
@@ -311,41 +316,27 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                var form = Request.Form;
-                byte[] fileBytes = null;
-                if (match.MatchImage != null)
+                match.FileName = match.MatchImage.FileName;
+                if (match.MatchImage.Length > 0)
                 {
-                    using (var stream = match.MatchImage.OpenReadStream())
+                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Matches", match.FileName), FileMode.Create))
                     {
-                        fileBytes = ReadStream(stream);
-
+                        await match.MatchImage.CopyToAsync(stream);
                     }
                 }
+
                 var users = await _userManager.GetUserAsync(HttpContext.User);
                 match.UserId = users.Id;
-                match.MatchLogo = fileBytes ?? null;
                 _context.Matches.Add(_mapper.Map<Match>(match));
                 await _context.SaveChangesAsync();
                 return Json(ResponseHelper.Success());
             }
             return Json(ResponseHelper.UnSuccess());
         }
-        public static byte[] ReadStream(Stream input)
-        {
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
+
 
         // GET: Matches/Edit/5
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -387,8 +378,7 @@ namespace WebApp.Controllers
                 {
                     MatchId = i.MatchId,
                     GroundName = i.GroundName,
-                    MatchImage = i.MatchImage,
-                    MatchLogo = i.MatchLogo,
+                    FileName = i.FileName,
                     MatchOvers = i.MatchOvers,
                     MatchSeriesId = i.MatchSeriesId,
                     MatchTypeId = i.MatchTypeId,
@@ -421,19 +411,16 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var form = Request.Form;
-                byte[] fileBytes = null;
-                if (match.MatchImage != null)
+                match.FileName = match.MatchImage.FileName;
+                if (match.MatchImage.Length > 0)
                 {
-                    using (var stream = match.MatchImage.OpenReadStream())
+                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Matches", match.FileName), FileMode.Create))
                     {
-                        fileBytes = ReadStream(stream);
-
+                        await match.MatchImage.CopyToAsync(stream);
                     }
                 }
                 var users = await _userManager.GetUserAsync(HttpContext.User);
                 match.UserId = users.Id;
-                match.MatchLogo = fileBytes ?? null;
                 _context.Update(_mapper.Map<Match>(match));
                 await _context.SaveChangesAsync();
 
@@ -446,6 +433,7 @@ namespace WebApp.Controllers
 
         // POST: Matches/Delete/5
         [Route("Matches/DeleteConfirmed")]
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int matchId)
         {
@@ -456,6 +444,7 @@ namespace WebApp.Controllers
             return Ok();
         }
 
+        [HttpGet]
         public IActionResult MatchChartJson(int matchId)
         {
             ViewBag.MatchId = matchId;
@@ -478,6 +467,7 @@ namespace WebApp.Controllers
             return Json(graph);
 
         }
+        [HttpGet]
         public IActionResult MatchChart(int matchId)
         {
             ViewBag.MatchId = matchId;
@@ -487,7 +477,7 @@ namespace WebApp.Controllers
             return View();
 
         }
-
+        [HttpGet]
         public IActionResult ScreenShot([FromBody]ScreenShotdto screenShotdto)
         {
             screenShotdto.fileName = screenShotdto.fileName + ".png";

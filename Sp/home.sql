@@ -33,11 +33,12 @@ begin
 				homeTeam.Team_Name as 'HomeTeam',
 				Teams.Team_Name as 'OppponentTeam',
 				Result as 'Summary',
-				Teams.TeamLogo as 'OpponentTeamLogo',
-				homeTeam.TeamLogo as 'HomeTeamTeamLogo',
+				Teams.[FileName] as 'OpponentTeamLogo',
+				homeTeam.[FileName] as 'HomeTeamTeamLogo',
 				TeamScores.MatchId,
 				TeamScores.TeamId,
 				Matches.DateOfMatch,
+				MT.MatchTypeName as 'Type',
 				u.UserName,
 				(
 					select TotalScore from TeamScores
@@ -68,6 +69,7 @@ begin
 		FROM Matches		
 		inner join Teams on  Teams.TeamId = Matches.OppponentTeamId
 		inner join TeamScores on TeamScores.TeamId = Teams.TeamId
+		inner join MatchType MT on MT.MatchTypeId = Matches.MatchTypeId
 
 		inner join Teams homeTeam on  homeTeam.TeamId = Matches.HomeTeamId
 		inner join TeamScores homeTeamScore on homeTeamScore.TeamId = homeTeam.TeamId

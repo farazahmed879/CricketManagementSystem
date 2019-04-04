@@ -20,7 +20,7 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -37,6 +37,7 @@ namespace WebApp.Controllers
 
             return View(model);
         }
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult DashBoard()
         {
@@ -54,6 +55,7 @@ namespace WebApp.Controllers
             return View(model);
         }
         [Route("home/HomePage")]
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult HomePage()
         {
@@ -70,6 +72,7 @@ namespace WebApp.Controllers
             return Json(model);
         }
 
+        [HttpGet]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -77,6 +80,7 @@ namespace WebApp.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -84,6 +88,7 @@ namespace WebApp.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

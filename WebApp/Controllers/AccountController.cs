@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using RazorHtmlToPdfDemo.Services;
 using WebApp.Extentions;
 using WebApp.Models;
+using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
@@ -319,14 +320,14 @@ namespace WebApp.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost("Logout")]
+       // [ValidateAntiForgeryToken]
 
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -383,6 +384,8 @@ namespace WebApp.Controllers
           
             return View();
         }
+
+        [HttpGet]
         public IActionResult PendingRequest()
         {
             return View();
@@ -547,6 +550,9 @@ namespace WebApp.Controllers
                 .AsNoTracking()
                 .Any(i => i.UserName == user));
         }
+
+
+       
 
         #endregion
     }

@@ -14,6 +14,7 @@ namespace WebApp.ViewModels
         [Required]
         public string GroundName { get; set; }
         public string Place { get; set; }
+        public string FileName { get; set; }
         [Required]
         public int MatchOvers { get; set; }
         [Required]

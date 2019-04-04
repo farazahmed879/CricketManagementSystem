@@ -38,8 +38,8 @@ namespace CricketApp.Domain
         public Team OppponentTeam { get; set; }
         public Team HomeTeam { get; set; }
         public Tournament Tournament { get; set; }
-        [Column(TypeName = "varbinary(max)")]
-        public byte[] MatchLogo { get; set; }
+
+        public string FileName { get; set; }
         [NotMapped]
         [Display(Name = "Match Image")]
         public IFormFile MatchImage { get; set; }

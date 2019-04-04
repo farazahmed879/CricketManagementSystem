@@ -20,8 +20,8 @@ namespace WebApp.ViewModels
         public string ManOfTheMatch { get; set; }
         public int HomeTeamWickets { get; set; }
         public int OpponentTeamWickets { get; set; }
-        public byte[] OpponentTeamLogo { get; set; }
-        public byte[] HomeTeamTeamLogo { get; set; }
+        public string OpponentTeamLogo { get; set; }
+        public string HomeTeamTeamLogo { get; set; }
 
     }
 }

@@ -20,12 +20,26 @@
             <div id="MatchSummary" class="content" style=" border: 2px solid #000000">
                 <div class="row">
                     <div class="center gap fade-down section-heading">
-                        <h4 class="main-title" ><img id="ScoreExecImg" src="~/images/ScoreExec.png" /></h4>
+                        <h4 class="main-title"><img id="ScoreExecImg" src="~/images/ScoreExec.png" /></h4>
                         <hr>
                     </div>
                     <div class="col-md-12 pull-center">
                         <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient"><h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4></div>
+                            @if (Model.Summary2dto.HomeTeamTeamLogo != null)
+                            {
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                                    <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
+                                    <img id="Img" class="pull-right" src="~/Home/images/Teams/@Model.Summary2dto.HomeTeamTeamLogo" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                                    <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
+                                    <img id="Img" class="pull-right" src="~/Home/images/Teams/noLogo.png" />
+                                </div>
+                            }
+
                             @if (Model.Summary2dto.Type != "Tournament")
                             {
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 bg-warning center">
@@ -48,7 +62,21 @@
                                 </div>
 
                             }
-                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-green-gradient"><h4 class="pull-left">@Model.Summary2dto.OppponentTeam</h4></div>
+                            @if (Model.Summary2dto.OpponentTeamLogo != null)
+                            {
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                                    <h4 class="pull-left">@Model.Summary2dto.OppponentTeam</h4>
+                                    <img id="Img" class="pull-left" src="~/Home/images/Teams/@Model.Summary2dto.OpponentTeamLogo" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                                    <h4 class="pull-left">@Model.Summary2dto.OppponentTeam</h4>
+                                    <img id="Img" class="pull-left" src="~/Home/images/Teams/noLogo.png" />
+                                </div>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -62,7 +90,7 @@
                         <div class="col-md-12">
                             @if (Model.HomeTeamBatting.Count != 0)
                             {
-                                <table class="table" style="bgcolor=" #FFFFFF">
+                                <table class="table">
                                     <tbody>
                                         @foreach (var item in Model.HomeTeamBatting)
                                         {
@@ -99,7 +127,7 @@
                         <div class="col-md-12">
                             @if (Model.OppTeamBowling.Count != 0)
                             {
-                                <table class="table">
+                                <table class="table  table-striped">
                                     <tbody>
                                         @foreach (var item in Model.OppTeamBowling)
                                         {
@@ -350,137 +378,23 @@
 
     </script>
     <style>
-        /*#Img {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 30px;
-                width: 30px;
-            }*/
-        #bgimg {
-            background-image: url('../../wwwroot/Home/images/bg/bg1.jpg');
-            //filter: blur(2px);
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            width: 100px;
         }
 
-        @@media only screen and (min-width: 1300px) {
-            /* For tablets: */
-            #ScoreExecImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 70px;
-                width: 270px;
-            }
 
-            #CricketImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 290px;
-                width: 1350px;
-            }
+        #ScoreExecImg {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 70px;
+            width: 270px;
         }
-
-        @@media only screen and (min-width: 1000px) and (max-width: 1299px) {
-            /* For tablets: */
-            #ScoreExecImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 90px;
-                width: 270px;
-                margin-left: 220px;
-            }
-
-            #CricketImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 250px;
-                width: 1050px;
-            }
-        }
-
-        @@media only screen and (min-width: 800px) and (max-width: 999px) {
-            /* For tablets: */
-            #ScoreExecImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 90px;
-                width: 270px;
-                margin-left: 150px;
-            }
-
-            #CricketImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 180px;
-                width: 830px;
-            }
-        }
-
-        @@media only screen and (min-width: 600px) and (max-width: 799px) {
-            /* For tablets: */
-            #ScoreExecImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 90px;
-                width: 270px;
-                margin-left: 150px;
-            }
-
-            #CricketImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 170px;
-                width: 630px;
-            }
-        }
-
-        @@media only screen and (min-width: 360px) and (max-width: 599px) {
-            /* For desktop: */
-            #ScoreExecImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 70px;
-                width: 270px;
-            }
-
-            #CricketImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 90px;
-                width: 355px;
-            }
-        }
-
-        @@media only screen and (min-width: 320px) and (max-width: 359px) {
-            /* For desktop: */
-            #ScoreExecImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 70px;
-                width: 270px;
-            }
-
-            #CricketImg {
-                background-image: url('');
-                background-size: cover;
-                background-position: center;
-                height: 90px;
-                width: 320px;
-            }
-        }
-
         body {
-            // color: white;
             font-weight: bold;
         }
 
