@@ -17,58 +17,63 @@
 <input type="hidden" id="RequestVerificationToken"
        name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
 <div class="container-fluid">
-    <ol class="breadcrumb">
-        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a asp-controller="MatchSeries" asp-action="Index">Series</a></li>
-        <li><a>Add</a></li>
-    </ol>
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <form id="SeriesForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="form-group label-floating">
-                        <label class="control-label">Series<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="form-group label-floating">
-                        <label class="control-label">Organizor</label>
-                        <input asp-for="Organizor" class="form-control" />
-                        <span asp-validation-for="Organizor" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Starting Date</label>
-                    <div class="input-group date">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
+
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="MatchSeries" asp-action="Index">Series</a></li>
+                <li><a>Add</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <form id="SeriesForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Series<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
-                        <input type="text" asp-for="StartingDate" class="form-control pull-right" id="datepicker">
                     </div>
-                    <!-- /.input group -->
                 </div>
-            </div>
-        </form>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Organizor</label>
+                            <input asp-for="Organizor" class="form-control" />
+                            <span asp-validation-for="Organizor" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Starting Date</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" asp-for="StartingDate" class="form-control pull-right" id="datepicker">
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                </div>
+            </form>
 
+        </div>
+        <div id="snackbar"></div>
+        <div class="footer">
+            <ul class="list-inline">
+                <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
+                <li><input id="SeriesCreate" type="button" value="Add" class="btn btn-primary"></li>
+            </ul>
+        </div>
     </div>
-    <div id="snackbar"></div>
-    <div class="footer">
-        <ul class="list-inline">
-            <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
-            <li><input id="SeriesCreate" type="button" value="Add" class="btn btn-primary"></li>
-        </ul>
-    </div>
-
+    <div class='col-md-1'></div>
 </div>
+
 
 
 

@@ -7,167 +7,176 @@
 <br />
 <br />
 <div class="container-fluid">
-    <ol class="breadcrumb">
-        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a>Record</a></li>
-    </ol>
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="dl-horizontal">
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-gray-active">
-                    <div class="inner">
-                        <h4>Batting</h4>
-                        <p></p>
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a>Record</a></li>
+            </ol>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="dl-horizontal">
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-gray-active">
+                            <div class="inner">
+                                <h4>Batting</h4>
+                                <p></p>
+                            </div>
+                            <div class="icon">
+                                <i class="flaticon-cricket-22"></i>
+                            </div>
+                            <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="Batting" class="small-box-footer">
+                                click here<i class="flaticon-cricket-14 font-size: 2em"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-22"></i>
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h4>Bowling</h4>
+                                <p></p>
+                            </div>
+                            <div class="icon">
+                                <i class="flaticon-cricket-21"></i>
+                            </div>
+                            <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="Bowling" class="small-box-footer">
+                                click here<i class="flaticon-cricket-20"></i>
+                            </a>
+                        </div>
                     </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="Batting" class="small-box-footer">
-                        click here<i class="flaticon-cricket-14 font-size: 2em"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h4>Bowling</h4>
-                        <p></p>
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-aqua-gradient">
+                            <div class="inner">
+                                <h4>Most Runs</h4>
+                                <p></p>
+                            </div>
+                            <div class="icon">
+                                <i class="flaticon-cricket-player-3"></i>
+                            </div>
+                            <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostRuns" class="small-box-footer">
+                                click here<i class="flaticon-cricket-20"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-21"></i>
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-red-gradient">
+                            <div class="inner">
+                                <h4>Most Wickets</h4>
+                                <p></p>
+                            </div>
+                            <div class="icon">
+                                <i class="flaticon-cricket-19"></i>
+                            </div>
+                            <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostWickets" class="small-box-footer">
+                                click here<i class="flaticon-cricket-20"></i>
+                            </a>
+                        </div>
                     </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="Bowling" class="small-box-footer">
-                        click here<i class="flaticon-cricket-20"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua-gradient">
-                    <div class="inner">
-                        <h4>Most Runs</h4>
-                        <p></p>
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-blue-gradient">
+                            <div class="inner">
+                                <h4>Most Six</h4>
+                                <p></p>
+                            </div>
+                            <div class="icon">
+                                <i class="flaticon-cricket-18"></i>
+                            </div>
+                            <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostSixes" class="small-box-footer">
+                                click here<i class="flaticon-cricket-20"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-player-3"></i>
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-lime-active">
+                            <div class="inner">
+                                <h4>Most Four</h4>
+                                <p></p>
+                            </div>
+                            <div class="icon">
+                                <i class="flaticon-cricket-15"></i>
+                            </div>
+                            <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostFours" class="small-box-footer">
+                                click here<i class="flaticon-cricket-20"></i>
+                            </a>
+                        </div>
                     </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostRuns" class="small-box-footer">
-                        click here<i class="flaticon-cricket-20"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red-gradient">
-                    <div class="inner">
-                        <h4>Most Wickets</h4>
-                        <p></p>
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-olive">
+                            <div class="inner">
+                                <h4>Most Catch</h4>
+                                <p></p>
+                            </div>
+                            <div class="icon">
+                                <i class="flaticon-catcher"></i>
+                            </div>
+                            <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostCatches" class="small-box-footer">
+                                click here<i class="flaticon-cricket-20"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-19"></i>
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-purple-gradient">
+                            <div class="inner">
+                                <h4>Most Stump</h4>
+                                <p></p>
+                            </div>
+                            <div class="icon">
+                                <i class="flaticon-cricket-3"></i>
+                            </div>
+                            <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostStumps" class="small-box-footer">
+                                click here<i class="flaticon-cricket-20"></i>
+                            </a>
+                        </div>
                     </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostWickets" class="small-box-footer">
-                        click here<i class="flaticon-cricket-20"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-blue-gradient">
-                    <div class="inner">
-                        <h4>Most Six</h4>
-                        <p></p>
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-purple-gradient">
+                            <div class="inner">
+                                <h4>Most 50s</h4>
+                                <p></p>
+                            </div>
+                            <div class="icon">
+                                <i class="flaticon-cricket-3"></i>
+                            </div>
+                            <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostFifties" class="small-box-footer">
+                                click here<i class="flaticon-cricket-20"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-18"></i>
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-purple-gradient">
+                            <div class="inner">
+                                <h4>Most 100s</h4>
+                                <p></p>
+                            </div>
+                            <div class="icon">
+                                <i class="flaticon-cricket-3"></i>
+                            </div>
+                            <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostCenturies" class="small-box-footer">
+                                click here<i class="flaticon-cricket-20"></i>
+                            </a>
+                        </div>
                     </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostSixes" class="small-box-footer">
-                        click here<i class="flaticon-cricket-20"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-lime-active">
-                    <div class="inner">
-                        <h4>Most Four</h4>
-                        <p></p>
-                    </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-15"></i>
-                    </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostFours" class="small-box-footer">
-                        click here<i class="flaticon-cricket-20"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-olive">
-                    <div class="inner">
-                        <h4>Most Catch</h4>
-                        <p></p>
-                    </div>
-                    <div class="icon">
-                        <i class="flaticon-catcher"></i>
-                    </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostCatches" class="small-box-footer">
-                        click here<i class="flaticon-cricket-20"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-purple-gradient">
-                    <div class="inner">
-                        <h4>Most Stump</h4>
-                        <p></p>
-                    </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-3"></i>
-                    </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostStumps" class="small-box-footer">
-                        click here<i class="flaticon-cricket-20"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-purple-gradient">
-                    <div class="inner">
-                        <h4>Most 50s</h4>
-                        <p></p>
-                    </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-3"></i>
-                    </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostFifties" class="small-box-footer">
-                        click here<i class="flaticon-cricket-20"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-purple-gradient">
-                    <div class="inner">
-                        <h4>Most 100s</h4>
-                        <p></p>
-                    </div>
-                    <div class="icon">
-                        <i class="flaticon-cricket-3"></i>
-                    </div>
-                    <a data-toggle="tooltip" data-placement="top" title="Click me" asp-action="MostCenturies" class="small-box-footer">
-                        click here<i class="flaticon-cricket-20"></i>
-                    </a>
                 </div>
             </div>
         </div>
     </div>
+    <div class='col-md-1'></div>
+
 </div>
+
 @section Scripts{
     <style>
     </style>

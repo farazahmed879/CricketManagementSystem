@@ -32,18 +32,10 @@ namespace WebApp.Controllers
         public IActionResult Index(int? matchId, int? homeTeamId, int? oppTeamId, long? playerScoreId)
         {
             ViewBag.Name = "Score Card";
-            var scoreDto = new MainScreendto();
+            var scoreDto = new ScoreCarddto();
             ViewBag.matchId = matchId;
             ViewBag.homeTeamId = homeTeamId;
             ViewBag.oppTeamId = oppTeamId;
-
-
-
-
-
-   
-
-  
 
             ViewBag.Overs = _context.Matches
               .AsNoTracking()
@@ -516,7 +508,7 @@ namespace WebApp.Controllers
                 .AsNoTracking()
                 .Select(i => new { i.HowOutId, i.Name })
                 , "HowOutId", "Name");
-            var scoreDto = new MainScreendto();
+            var scoreDto = new ScoreCarddto();
             //ViewBag.matchId = matchId;
             ViewBag.OpponentTeam = _context.Teams
              .AsNoTracking()

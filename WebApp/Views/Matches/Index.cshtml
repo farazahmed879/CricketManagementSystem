@@ -7,276 +7,284 @@
 <br />
 <br />
 <div class="container-fluid">
-    <ol class="breadcrumb">
-        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a>Match</a></li>
-    </ol>
-</div>
-<div class="container-fluid">
-    <div class="form-group">
-        <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
-            <div class="panel-body">
-                <form class="form-inline" role="form" id="Filters">
-                    <div class="row">
-                        <div class="col-xs-6 col-md-4">
-                            <label>Team</label>
-                            <select id="teamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a>Match</a></li>
+            </ol>
+        </div>
+        <div class="container-fluid">
+            <div class="form-group">
+                <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
+                    <div class="panel-body">
+                        <form class="form-inline" role="form" id="Filters">
+                            <div class="row">
+                                <div class="col-xs-6 col-md-4">
+                                    <label>Team</label>
+                                    <select id="teamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
 
-                        <div class="col-xs-6 col-md-4">
-                            <div class="form-group label-floating" style="width: 100%;">
-                                <label class="control-label">Overs</label>
-                                <select id="matchOvers" name="matchOvers" asp-items="ViewBag.Overs" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                    <option value="">--Select--</option>
-                                </select>
+                                <div class="col-xs-6 col-md-4">
+                                    <div class="form-group label-floating" style="width: 100%;">
+                                        <label class="control-label">Overs</label>
+                                        <select id="matchOvers" name="matchOvers" asp-items="ViewBag.Overs" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                            <option value="">--Select--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-md-4">
+                                    <label class="control-label">Season</label>
+                                    <select id="season" name="season" asp-items="ViewBag.Season" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-xs-6 col-md-4">
+                                    <label>Match Type</label>
+                                    <select id="matchTypeId" name="matchTypeId" asp-items="ViewBag.MatchType" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-xs-6 col-md-4">
+                                    <label>Tournament</label>
+                                    <select id="tournamentId" name="tournamentId" asp-items="ViewBag.Tournament" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-6 col-md-4">
+                                    <label>Series</label>
+                                    <select id="matchSeriesId" name="matchSeriesId" asp-items="ViewBag.MatchSeries" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xs-6 col-md-4">
-                            <label class="control-label">Season</label>
-                            <select id="season" name="season" asp-items="ViewBag.Season" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="col-xs-6 col-md-4">
-                            <label>Match Type</label>
-                            <select id="matchTypeId" name="matchTypeId" asp-items="ViewBag.MatchType" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
-
-                        <div class="col-xs-6 col-md-4">
-                            <label>Tournament</label>
-                            <select id="tournamentId" name="tournamentId" asp-items="ViewBag.Tournament" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-6 col-md-4">
-                            <label>Series</label>
-                            <select id="matchSeriesId" name="matchSeriesId" asp-items="ViewBag.MatchSeries" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
-                                <option value="">--Select--</option>
-                            </select>
+                        </form>
+                        <div class="footer" style="margin-top : .5em">
+                            <ul class="list-inline">
+                                <li><input id="clear" type="button" onclick="clearFilter()" value="Clear" class="btn btn-default"></li>
+                                <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
+                            </ul>
                         </div>
                     </div>
-                </form>
-                <div class="footer" style="margin-top : .5em">
-                    <ul class="list-inline">
-                        <li><input id="clear" type="button" onclick="clearFilter()" value="Clear" class="btn btn-default"></li>
-                        <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
-                    </ul>
+
                 </div>
+
             </div>
+            <ul class="list-inline">
+                <li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="form-group">
+                            <a asp-controller="Matches" class="btn btn-primary" asp-action="Create">Add</a>
+                        </div>
 
-        </div>
+                    }
+                </li>
+                <li>
+                    <button id="advSearch" class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
+                        Advanced Search
+                    </button>
+                </li>
+                <li id="bteamId"></li>
+                <li id="bmatchOvers"></li>
+                <li id="bseason"></li>
+                <li id="bmatchTypeId"></li>
+                <li id="btournamentId"></li>
+                <li id="bmatchSeriesId"></li>
+            </ul>
 
-    </div>
-    <ul class="list-inline">
-        <li>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div class="form-group">
-                    <a asp-controller="Matches" class="btn btn-primary" asp-action="Create">Add</a>
-                </div>
 
+            <div class="table-responsive">
+                <table id="MatchTable" class="table table-bordered table-striped">
+                    <thead class="bg-blue-active">
+                        <tr>
+                            <th>
+                                Ground
+                            </th>
+
+                            <th>
+                                First Inning
+                            </th>
+                            <th>
+                                Second Inning
+                            </th>
+                            <th>
+                                Summary
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Ov
+                            </th>
+
+                            <th>
+                                Result
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.GroundName)
+                                </td>
+
+                                <td>
+
+                                    @if (item.HasFilledHomeTeamData == true)
+                                    {
+                                        @item.HomeTeam<span data-placement="top" data-toggle="tooltip" title="Has Filled" class="label  pull-right label-success"><i class="fas fa-check"></i></span>
+
+                                    }
+                                    else
+                                    {
+                                        @item.HomeTeam <span data-placement="top" data-toggle="tooltip" title="No Data" class="label pull-right label-warning"><i class="fas fa-question"></i></span>
+
+                                    }
+                                    @*@item.HomeTeam.Team_Name <span class="label pull-right label-warning"><i class="fas fa-question"></i></span>*@
+
+                                </td>
+                                <td>
+
+                                    @if (item.HasFilledOpponentTeamData == true)
+                                    {
+                                        @item.OppponentTeam <span data-placement="top" data-toggle="tooltip" title="Has Filled" class="label pull-right label-success"><i class="fas fa-check"></i></span>
+
+                                    }
+                                    else
+                                    {
+                                        @item.OppponentTeam<span data-placement="top" data-toggle="tooltip" title="No Data" class="label pull-right label-warning"><i class="fas fa-question"></i></span>
+
+                                    }
+
+                                </td>
+                                <td>
+
+                                    @if (item.HasFilledTeamScoreData == true)
+                                    {
+                                        <h1 data-placement="top" data-toggle="tooltip" title="Has Filled" class="label label-success">Read<i class="fas fa-check"></i></h1>
+
+                                    }
+                                    else
+
+                                    {
+                                        <h3 data-placement="top" data-toggle="tooltip" title="No Data" class="label label-warning">Pending<i class="fas fa-question"></i></h3>
+                                    }
+
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MatchType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateOfMatch)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MatchOvers)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Result)
+                                </td>
+
+                                <td>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+
+
+                                        <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="flaticon-cricket-18"></i></a>
+                                        <a data-placement="top" data-toggle="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId"><i class="fas fa-edit"></i></a>
+                                        <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.MatchId)" class="fas fa-trash-alt"></i></a>
+                                        <a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-matchId="@item.MatchId"><i class="fas fa-info-circle"></i></a>
+                                        <a asp-action="Summary" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Match Summary"><i class="fas fa-baseball-ball"></i></a>
+
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="flaticon-cricket-18"></i></a>
+                                        <a asp-action="Summary" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Match Summary"><i class="fas fa-baseball-ball"></i></a>
+                                        <a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-matchId="@item.MatchId"><i class="fas fa-info-circle"></i></a>
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var prev1Disabled = !Model.HasPreviousPage ? "hide" : "";
+                var prev2Disabled = !Model.HasPreviousTwo ? "hide" : "";
+                var prev3Disabled = !Model.HasPreviousThree ? "hide" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                var next1Disabled = !Model.HasNextPage ? "hide" : "";
+                var next2Disabled = !Model.HasNext2 ? "hide" : "";
+                var next3Disabled = !Model.HasNext3 ? "hide" : "";
             }
-        </li>
-        <li>
-            <button id="advSearch" class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
-                Advanced Search
-            </button>
-        </li>
-        <li id="bteamId"></li>
-        <li id="bmatchOvers"></li>
-        <li id="bseason"></li>
-        <li id="bmatchTypeId"></li>
-        <li id="btournamentId"></li>
-        <li id="bmatchSeriesId"></li>
-    </ul>
+            <nav class="navbar navbar-light bg-light">
+                <div class="col-md-12">
+                    <span class="fa-1x">
+                        <strong class="text-primary">Showing @Model.PageStartValue to @Model.PageEndValue of @Model.TotalCount entries</strong>
+                    </span>
+                    <span class="fa-1x pull-right">
+                        <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
+                    </span>
+                </div>
+                <form class="form-inline pull-right">
+                    <div class="row pull-right">
+                        <a data-placement="top" data-toggle="tooltip" title="First Page" asp-action="Index" class="btn btn-primary @prevDisabled"
+                           asp-route-page="@(1)">
+                            First
+                        </a>
 
+                        <a asp-action="Index" class="btn btn-default @prev3Disabled"
+                           asp-route-page="@(Model.PageIndex - 3)">@(Model.PageIndex - 3)</a>
+                        <a asp-action="Index" class="btn btn-default @prev2Disabled"
+                           asp-route-page="@(Model.PageIndex - 2)">@(Model.PageIndex - 2)</a>
+                        <a asp-action="Index" class="btn btn-default @prev1Disabled"
+                           asp-route-page="@(Model.PageIndex - 1)">@(Model.PageIndex - 1)</a>
 
-    <div class="table-responsive">
-        <table id="MatchTable" class="table table-bordered table-striped">
-            <thead class="bg-blue-active">
-                <tr>
-                    <th>
-                        Ground
-                    </th>
+                        <a asp-action="Index" class="btn btn-primary disabled"
+                           asp-route-page="@(Model.PageIndex)">@(Model.PageIndex)</a>
 
-                    <th>
-                        First Inning
-                    </th>
-                    <th>
-                        Second Inning
-                    </th>
-                    <th>
-                        Summary
-                    </th>
-                    <th>
-                        Type
-                    </th>
-                    <th>
-                        Date
-                    </th>
+                        <a asp-action="Index" class="btn btn-default @next1Disabled"
+                           asp-route-page="@(Model.PageIndex + 1)">@(Model.PageIndex + 1)</a>
+                        <a asp-action="Index" class="btn btn-default @next2Disabled"
+                           asp-route-page="@(Model.PageIndex + 2)">@(Model.PageIndex + 2)</a>
+                        <a asp-action="Index" class="btn btn-default @next3Disabled"
+                           asp-route-page="@(Model.PageIndex + 3)">@(Model.PageIndex + 3)</a>
 
-                    <th>
-                        Ov
-                    </th>
+                        <a data-placement="top" data-toggle="tooltip" title="Last Page" asp-action="Index"
+                           asp-route-page="@(Model.TotalPages)"
+                           class="btn btn-primary @nextDisabled">
+                            Last
+                        </a>
 
-                    <th>
-                        Result
-                    </th>
-                    <th>
-                        Actions
-                    </th>
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.GroundName)
-                        </td>
-
-                        <td>
-
-                            @if (item.HasFilledHomeTeamData == true)
-                            {
-                                @item.HomeTeam<span data-placement="top" data-toggle="tooltip" title="Has Filled" class="label  pull-right label-success"><i class="fas fa-check"></i></span>
-
-                            }
-                            else
-                            {
-                                @item.HomeTeam <span data-placement="top" data-toggle="tooltip" title="No Data" class="label pull-right label-warning"><i class="fas fa-question"></i></span>
-
-                            }
-                            @*@item.HomeTeam.Team_Name <span class="label pull-right label-warning"><i class="fas fa-question"></i></span>*@
-
-                        </td>
-                        <td>
-
-                            @if (item.HasFilledOpponentTeamData == true)
-                            {
-                                @item.OppponentTeam <span data-placement="top" data-toggle="tooltip" title="Has Filled" class="label pull-right label-success"><i class="fas fa-check"></i></span>
-
-                            }
-                            else
-                            {
-                                @item.OppponentTeam<span data-placement="top" data-toggle="tooltip" title="No Data" class="label pull-right label-warning"><i class="fas fa-question"></i></span>
-
-                            }
-
-                        </td>
-                        <td>
-
-                            @if (item.HasFilledTeamScoreData == true)
-                            {
-                                <h1 data-placement="top" data-toggle="tooltip" title="Has Filled" class="label label-success">Read<i class="fas fa-check"></i></h1>
-
-                            }
-                            else
-
-                            {
-                                <h3 data-placement="top" data-toggle="tooltip" title="No Data" class="label label-warning">Pending<i class="fas fa-question"></i></h3>
-                            }
-
-
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MatchType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DateOfMatch)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MatchOvers)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Result)
-                        </td>
-
-                        <td>
-                            @if (User.Identity.IsAuthenticated)
-                            {
-
-
-                                <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="flaticon-cricket-18"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId"><i class="fas fa-edit"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.MatchId)" class="fas fa-trash-alt"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-matchId="@item.MatchId"><i class="fas fa-info-circle"></i></a>
-                                <a asp-action="Summary" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Match Summary"><i class="fas fa-baseball-ball"></i></a>
-
-                            }
-                            else
-                            {
-                                <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="flaticon-cricket-18"></i></a>
-                                <a asp-action="Summary" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Match Summary"><i class="fas fa-baseball-ball"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-matchId="@item.MatchId"><i class="fas fa-info-circle"></i></a>
-                            }
-
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var prev1Disabled = !Model.HasPreviousPage ? "hide" : "";
-        var prev2Disabled = !Model.HasPreviousTwo ? "hide" : "";
-        var prev3Disabled = !Model.HasPreviousThree ? "hide" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-        var next1Disabled = !Model.HasNextPage ? "hide" : "";
-        var next2Disabled = !Model.HasNext2 ? "hide" : "";
-        var next3Disabled = !Model.HasNext3 ? "hide" : "";
-    }
-    <nav class="navbar navbar-light bg-light">
-        <div class="col-md-12">
-            <span class="fa-1x">
-                <strong class="text-primary">Showing @Model.PageStartValue to @Model.PageEndValue of @Model.TotalCount entries</strong>
-            </span>
-            <span class="fa-1x pull-right">
-                <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
-            </span>
+                    </div>
+                </form>
+            </nav>
         </div>
-        <form class="form-inline pull-right">
-            <div class="row pull-right">
-                <a data-placement="top" data-toggle="tooltip" title="First Page" asp-action="Index" class="btn btn-primary @prevDisabled"
-                   asp-route-page="@(1)">
-                    First
-                </a>
+    </div>
+    <div class='col-md-1'></div>
 
-                <a asp-action="Index" class="btn btn-default @prev3Disabled"
-                   asp-route-page="@(Model.PageIndex - 3)">@(Model.PageIndex - 3)</a>
-                <a asp-action="Index" class="btn btn-default @prev2Disabled"
-                   asp-route-page="@(Model.PageIndex - 2)">@(Model.PageIndex - 2)</a>
-                <a asp-action="Index" class="btn btn-default @prev1Disabled"
-                   asp-route-page="@(Model.PageIndex - 1)">@(Model.PageIndex - 1)</a>
-
-                <a asp-action="Index" class="btn btn-primary disabled"
-                   asp-route-page="@(Model.PageIndex)">@(Model.PageIndex)</a>
-
-                <a asp-action="Index" class="btn btn-default @next1Disabled"
-                   asp-route-page="@(Model.PageIndex + 1)">@(Model.PageIndex + 1)</a>
-                <a asp-action="Index" class="btn btn-default @next2Disabled"
-                   asp-route-page="@(Model.PageIndex + 2)">@(Model.PageIndex + 2)</a>
-                <a asp-action="Index" class="btn btn-default @next3Disabled"
-                   asp-route-page="@(Model.PageIndex + 3)">@(Model.PageIndex + 3)</a>
-
-                <a data-placement="top" data-toggle="tooltip" title="Last Page" asp-action="Index"
-                   asp-route-page="@(Model.TotalPages)"
-                   class="btn btn-primary @nextDisabled">
-                    Last
-                </a>
-
-            </div>
-        </form>
-    </nav>
 </div>
+
 <div id="snackbar"></div>
 <div id="DeleteModal" class="modal fade" role="dialog">
     <div class="modal-dialog">

@@ -8,197 +8,205 @@
 <br />
 <br />
 <div class="container-fluid">
-    <ol class="breadcrumb">
-        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a>Players</a></li>
-    </ol>
-</div>
-<div class="container-fluid">
-    <div class="form-group">
-        <div id="filter-panel" class="collapse filter-panel">
-            <div class="panel-body">
-                <form class="form-inline" role="form" id="Filters">
-                    <div class="row">
-                        <div class="col-xs-6 col-md-3">
-                            <label>Team</label>
-                            <select id="teamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a>Players</a></li>
+            </ol>
+        </div>
+        <div class="container-fluid">
+            <div class="form-group">
+                <div id="filter-panel" class="collapse filter-panel">
+                    <div class="panel-body">
+                        <form class="form-inline" role="form" id="Filters">
+                            <div class="row">
+                                <div class="col-xs-6 col-md-3">
+                                    <label>Team</label>
+                                    <select id="teamId" name="teamId" asp-items="ViewBag.TeamId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
 
 
-                        <div class=" col-xs-6 col-md-3">
-                            <label>Role</label>
-                            <select id="playerRoleId" asp-items="ViewBag.PlayerRoleId" name="playerRoleId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
+                                <div class=" col-xs-6 col-md-3">
+                                    <label>Role</label>
+                                    <select id="playerRoleId" asp-items="ViewBag.PlayerRoleId" name="playerRoleId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
 
-                        <div class=" col-xs-6 col-md-3">
-                            <label>Batting Style</label>
-                            <select id="battingStyleId" asp-items="ViewBag.BattingStyleId" name="battingStyleId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
+                                <div class=" col-xs-6 col-md-3">
+                                    <label>Batting Style</label>
+                                    <select id="battingStyleId" asp-items="ViewBag.BattingStyleId" name="battingStyleId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
 
-                        <div class="col-xs-6 col-md-3">
-                            <label>Bowling Style</label>
-                            <select id="bowlingStyleId" asp-items="ViewBag.BowlingStyleId" name="bowlingStyleId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-6 col-md-3" style="margin-top: 20px">
+                                <div class="col-xs-6 col-md-3">
+                                    <label>Bowling Style</label>
+                                    <select id="bowlingStyleId" asp-items="ViewBag.BowlingStyleId" name="bowlingStyleId" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-6 col-md-3" style="margin-top: 20px">
 
-                            <label class="control-label">Player</label>
-                            <input name="name" id="name" placeholder="John" class="form-control" />
-                        </div>
+                                    <label class="control-label">Player</label>
+                                    <input name="name" id="name" placeholder="John" class="form-control" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="footer" style="margin-top : .5em">
+                                <ul class="list-inline">
+                                    <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
+                                    <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
+                                </ul>
+                            </div>
+                        </form>
                     </div>
-                    <br />
-                    <div class="footer" style="margin-top : .5em">
-                        <ul class="list-inline">
-                            <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
-                            <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
-                        </ul>
+
+                </div>
+            </div>
+            <ul class="list-inline">
+                <li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="form-group">
+                            <a asp-controller="Players" data-placement="top" data-toggle="tooltip" title="Add new player" class="btn btn-primary" asp-action="Create">Add</a>
+                        </div>
+
+                    }
+                </li>
+                <li>
+                    <button class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
+                        Advanced Search
+                    </button>
+                </li>
+            </ul>
+
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var prev1Disabled = !Model.HasPreviousPage ? "hide" : "";
+                var prev2Disabled = !Model.HasPreviousTwo ? "hide" : "";
+                var prev3Disabled = !Model.HasPreviousThree ? "hide" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                var next1Disabled = !Model.HasNextPage ? "hide" : "";
+                var next2Disabled = !Model.HasNext2 ? "hide" : "";
+                var next3Disabled = !Model.HasNext3 ? "hide" : "";
+            }
+
+            <div class="table-responsive">
+
+                <table id="PlayerTable" class="table table-striped">
+                    <thead class="bg-blue-active">
+                        <tr>
+                            <th>
+                                Player Name
+                            </th>
+                            <th>
+                                Birth
+                            </th>
+                            <th>
+                                Team
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    @item.Player_Name
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DOB)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Team)
+                                </td>
+                                <td>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+
+                                        <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" onclick="statistics(@item.PlayerId)" title="Statistics">
+                                            <i data-toggle="modal" data-target="#playerStatistics" class="fas fa-user"></i>
+                                        </a>
+                                        <a data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.PlayerId"><i class="fas fa-edit"></i></a>
+                                        <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" onclick="Delete(@item.PlayerId)"></i></a>
+                                        <a data-placement="top" data-toggle="tooltip" title="Past Record" asp-route-PlayerName="@item.Player_Name" asp-controller="PlayerPastRecord" asp-action="PastRecord" asp-route-playerId="@item.PlayerId"><i class="fa fa-certificate"></i></a>
+
+                                    }
+                                    else
+                                    {
+
+                                        <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" onclick="statistics(@item.PlayerId)" title="Statistics">
+                                            <i data-toggle="modal" data-target="#playerStatistics" class="fas fa-user"></i>
+                                        </a>
+                                    }
+
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @*@{
+                    await Html.RenderPartialAsync("_PlayerPartial", Model);
+                }*@
+            </div>
+
+            <nav class="navbar navbar-light bg-light">
+                <form class="form-inline">
+                    <div class="col-md-12">
+                        <span class="fa-1x">
+                            <strong class="text-primary">Showing @Model.PageStartValue to @Model.PageEndValue of @Model.TotalCount entries</strong>
+                        </span>
+                        <span class="fa-1x pull-right">
+                            <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
+                        </span>
+
+                    </div>
+                    <div class="row pull-right">
+                        <a data-placement="top" data-toggle="tooltip" title="First Page" asp-action="Index" class="btn btn-primary @prevDisabled"
+                           asp-route-page="@(1)">
+                            First
+                        </a>
+
+                        <a asp-action="Index" class="btn btn-default @prev3Disabled"
+                           asp-route-page="@(Model.PageIndex - 3)">@(Model.PageIndex - 3)</a>
+                        <a asp-action="Index" class="btn btn-default @prev2Disabled"
+                           asp-route-page="@(Model.PageIndex - 2)">@(Model.PageIndex - 2)</a>
+                        <a asp-action="Index" class="btn btn-default @prev1Disabled"
+                           asp-route-page="@(Model.PageIndex - 1)">@(Model.PageIndex - 1)</a>
+
+                        <a asp-action="Index" class="btn btn-primary disabled"
+                           asp-route-page="@(Model.PageIndex)">@(Model.PageIndex)</a>
+
+                        <a asp-action="Index" class="btn btn-default @next1Disabled"
+                           asp-route-page="@(Model.PageIndex + 1)">@(Model.PageIndex + 1)</a>
+                        <a asp-action="Index" class="btn btn-default @next2Disabled"
+                           asp-route-page="@(Model.PageIndex + 2)">@(Model.PageIndex + 2)</a>
+                        <a asp-action="Index" class="btn btn-default @next3Disabled"
+                           asp-route-page="@(Model.PageIndex + 3)">@(Model.PageIndex + 3)</a>
+
+                        <a data-placement="top" data-toggle="tooltip" title="Last Page" asp-action="Index"
+                           asp-route-page="@(Model.TotalPages)"
+                           class="btn btn-primary @nextDisabled">
+                            Last
+                        </a>
+
                     </div>
                 </form>
-            </div>
-
+            </nav>
         </div>
     </div>
-    <ul class="list-inline">
-        <li>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div class="form-group">
-                    <a asp-controller="Players" data-placement="top" data-toggle="tooltip" title="Add new player" class="btn btn-primary" asp-action="Create">Add</a>
-                </div>
-
-            }
-        </li>
-        <li>
-            <button class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
-                Advanced Search
-            </button>
-        </li>
-    </ul>
-
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var prev1Disabled = !Model.HasPreviousPage ? "hide" : "";
-        var prev2Disabled = !Model.HasPreviousTwo ? "hide" : "";
-        var prev3Disabled = !Model.HasPreviousThree ? "hide" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-        var next1Disabled = !Model.HasNextPage ? "hide" : "";
-        var next2Disabled = !Model.HasNext2 ? "hide" : "";
-        var next3Disabled = !Model.HasNext3 ? "hide" : "";
-    }
-
-    <div class="table-responsive">
-
-        <table id="PlayerTable" class="table table-striped">
-            <thead class="bg-blue-active">
-                <tr>
-                    <th>
-                        Player Name
-                    </th>
-                    <th>
-                        Birth
-                    </th>
-                    <th>
-                        Team
-                    </th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="myTable">
-                @foreach (var item in Model)
-                {
-
-                    <tr>
-                        <td>
-                            @item.Player_Name
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DOB)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Team)
-                        </td>
-                        <td>
-                            @if (User.Identity.IsAuthenticated)
-                            {
-
-                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" onclick="statistics(@item.PlayerId)" title="Statistics">
-                                    <i data-toggle="modal" data-target="#playerStatistics" class="fas fa-user"></i>
-                                </a>
-                                <a data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.PlayerId"><i class="fas fa-edit"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" onclick="Delete(@item.PlayerId)"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" title="Past Record" asp-route-PlayerName="@item.Player_Name" asp-controller="PlayerPastRecord" asp-action="PastRecord" asp-route-playerId="@item.PlayerId"><i class="fa fa-certificate"></i></a>
-
-                            }
-                            else
-                            {
-
-                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" onclick="statistics(@item.PlayerId)" title="Statistics">
-                                    <i data-toggle="modal" data-target="#playerStatistics" class="fas fa-user"></i>
-                                </a>
-                            }
-
-
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        @*@{
-                await Html.RenderPartialAsync("_PlayerPartial", Model);
-            }*@
-    </div>
-
-    <nav class="navbar navbar-light bg-light">
-        <form class="form-inline">
-            <div class="col-md-12">
-                <span class="fa-1x">
-                    <strong class="text-primary">Showing @Model.PageStartValue to @Model.PageEndValue of @Model.TotalCount entries</strong>
-                </span>
-                <span class="fa-1x pull-right">
-                    <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
-                </span>
-
-            </div>
-            <div class="row pull-right">
-                <a data-placement="top" data-toggle="tooltip" title="First Page" asp-action="Index" class="btn btn-primary @prevDisabled"
-                   asp-route-page="@(1)">
-                    First
-                </a>
-
-                <a asp-action="Index" class="btn btn-default @prev3Disabled"
-                   asp-route-page="@(Model.PageIndex - 3)">@(Model.PageIndex - 3)</a>
-                <a asp-action="Index" class="btn btn-default @prev2Disabled"
-                   asp-route-page="@(Model.PageIndex - 2)">@(Model.PageIndex - 2)</a>
-                <a asp-action="Index" class="btn btn-default @prev1Disabled"
-                   asp-route-page="@(Model.PageIndex - 1)">@(Model.PageIndex - 1)</a>
-
-                <a asp-action="Index" class="btn btn-primary disabled"
-                   asp-route-page="@(Model.PageIndex)">@(Model.PageIndex)</a>
-
-                <a asp-action="Index" class="btn btn-default @next1Disabled"
-                   asp-route-page="@(Model.PageIndex + 1)">@(Model.PageIndex + 1)</a>
-                <a asp-action="Index" class="btn btn-default @next2Disabled"
-                   asp-route-page="@(Model.PageIndex + 2)">@(Model.PageIndex + 2)</a>
-                <a asp-action="Index" class="btn btn-default @next3Disabled"
-                   asp-route-page="@(Model.PageIndex + 3)">@(Model.PageIndex + 3)</a>
-
-                <a data-placement="top" data-toggle="tooltip" title="Last Page" asp-action="Index"
-                   asp-route-page="@(Model.TotalPages)"
-                   class="btn btn-primary @nextDisabled">
-                    Last
-                </a>
-
-            </div>
-        </form>
-    </nav>
+    <div class='col-md-1'></div>
+ 
 </div>
+
 <div id="snackbar"></div>
 <div id="playerStatistics" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -773,10 +781,10 @@
                                 document.getElementById("doLBW").innerHTML = json.doLBW;
                                 document.getElementById("doStump").innerHTML = json.doCatch;
 
-                                if (json.playerImage != null) {
-                                    $('#target').attr('src', `data:image/png;base64,${json.playerImage}`);
+                                if (json.fileName != null) {
+                                    $('#target').attr('src', `/Home/images/Player/${json.fileName}`);
                                 } else {
-                                    $('#target').attr('src', `/images/user.png`);
+                                    $('#target').attr('src', `/Home/images/noImage.jpg`);
                                 }
 
                             })

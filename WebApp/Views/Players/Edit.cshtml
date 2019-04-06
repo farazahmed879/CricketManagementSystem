@@ -17,149 +17,156 @@
 <input type="hidden" id="RequestVerificationToken"
        name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
 <div class="container-fluid">
-    <ol class="breadcrumb">
-        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a asp-controller="Players" asp-action="Index">Players</a></li>
-        <li><a>Edit</a></li>
-    </ol>
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <form id="PlayerForm" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PlayerId" />
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group label-floating">
-                            <label asp-for="Player_Name" class="control-label">Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <input asp-for="Player_Name" required class="form-control" />
-                            <span asp-validation-for="Player_Name" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group label-floating">
-                            <label asp-for="Contact" class="control-label">Contact No.</label>
-                            <input asp-for="Contact" id="playerContact" class="form-control" data-inputmask='"mask": "9999-9999999"' data-mask />
-                            <span asp-validation-for="Contact" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Players" asp-action="Index">Players</a></li>
+                <li><a>Edit</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <form id="PlayerForm" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="PlayerId" />
+                <input asp-for="FileName" type="hidden" />
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-4">
                             <div class="form-group label-floating">
-                                <label asp-for="CNIC" class="control-label">Cnic</label>
-                                <input asp-for="CNIC" id="playerCnic" class="form-control" data-inputmask='"mask": "99999-9999999-9"' data-mask />
-                                <span asp-validation-for="CNIC" class="text-danger"></span>
+                                <label asp-for="Player_Name" class="control-label">Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                                <input asp-for="Player_Name" required class="form-control" />
+                                <span asp-validation-for="Player_Name" class="text-danger"></span>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Role</label>
-                        <select asp-for="PlayerRoleId" asp-items="ViewBag.PlayerRole" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                            <option value="">--Select--</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label>Batting Style</label>
-                        <select asp-for="BattingStyleId" asp-items="ViewBag.BattingStyle" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                            <option value="">--Select--</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label>Bowling Style</label>
-                        <select asp-for="BowlingStyleId" asp-items="ViewBag.BowlingStyle" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                            <option value="">--Select--</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4" style="margin-top: 20px">
-                        <label>Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="TeamId" asp-items="ViewBag.TeamId" style="width: 100%" required placeholder="--Select--" class="js-example-basic-single">
-                            <option value="">--Select--</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4" style="margin-top: 20px">
-                        <label>Gender<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                        <select asp-for="Gender" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                            <option value="">--Select--</option>
-                            <option selected>Male</option>
-                            <option>Female</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4" style="margin-top: 20px">
-                        <div class="form-group">
-                            <label>Date of birth</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
+                        <div class="col-md-4">
+                            <div class="form-group label-floating">
+                                <label asp-for="Contact" class="control-label">Contact No.</label>
+                                <input asp-for="Contact" id="playerContact" class="form-control" data-inputmask='"mask": "9999-9999999"' data-mask />
+                                <span asp-validation-for="Contact" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="form-group label-floating">
+                                    <label asp-for="CNIC" class="control-label">Cnic</label>
+                                    <input asp-for="CNIC" id="playerCnic" class="form-control" data-inputmask='"mask": "99999-9999999-9"' data-mask />
+                                    <span asp-validation-for="CNIC" class="text-danger"></span>
                                 </div>
-                                <input type="text" asp-for="DOB" class="form-control pull-right" id="datepicker">
-                            </div>
-                            <!-- /.input group -->
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <div class="form-group label-floating">
-                                <label asp-for="Address" class="control-label">St. Address</label>
-                                <input asp-for="Address" class="form-control" />
-                                <span asp-validation-for="Address" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Role</label>
+                            <select asp-for="PlayerRoleId" asp-items="ViewBag.PlayerRole" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Batting Style</label>
+                            <select asp-for="BattingStyleId" asp-items="ViewBag.BattingStyle" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Bowling Style</label>
+                            <select asp-for="BowlingStyleId" asp-items="ViewBag.BowlingStyle" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" style="margin-top: 20px">
+                            <label>Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <select asp-for="TeamId" asp-items="ViewBag.TeamId" style="width: 100%" required placeholder="--Select--" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4" style="margin-top: 20px">
+                            <label>Gender<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <select asp-for="Gender" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select--</option>
+                                <option selected>Male</option>
+                                <option>Female</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4" style="margin-top: 20px">
+                            <div class="form-group">
+                                <label>Date of birth</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" asp-for="DOB" class="form-control pull-right" id="datepicker">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <div class="form-group label-floating">
+                                    <label asp-for="Address" class="control-label">St. Address</label>
+                                    <input asp-for="Address" class="form-control" />
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
 
-                    <ul class="list-inline">
-                        <li>
-                            <label>
-                                Guest
-                                <input type="radio" asp-for="IsGuestorRegistered" value="Guest" class="flat-red">
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Registered
-                                <input type="radio" asp-for="IsGuestorRegistered" value="Registered" class="flat-red">
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Deactivated
-                                <input type="checkbox" asp-for="IsDeactivated" class="flat-red">
-                            </label>
-                        </li>
-                    </ul>
+                        <ul class="list-inline">
+                            <li>
+                                <label>
+                                    Guest
+                                    <input type="radio" asp-for="IsGuestorRegistered" value="Guest" class="flat-red">
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Registered
+                                    <input type="radio" asp-for="IsGuestorRegistered" value="Registered" class="flat-red">
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Deactivated
+                                    <input type="checkbox" asp-for="IsDeactivated" class="flat-red">
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <span id="span" style="color: red"></span>
-                @*@{
-            var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
-            <img class="img-responsive" id="PlayerImg" style='background-size:cover; background-image: url("data:image/png;base64,@base64");' />
-            <input type="hidden" value="@base64" id="base64Pic" name="playerImage" />
-        }*@
-                <img class="img-responsive" id="PlayerImg" src="~/Home/images/Players/@Model.FileName"/>
-                <label asp-for="PlayerImage" class="btn btn-box-tool">
-                    <i class="far fa-picture-o"> Upload</i> <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
-                </label>
-                <label id="RemoveImage" class="btn btn-box-tool">
-                    <i class="far fa-trash-alt"> Remove</i>
-                </label>
+                <div class="col-md-4">
+                    <span id="span" style="color: red"></span>
+                    @*@{
+                var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
+                <img class="img-responsive" id="PlayerImg" style='background-size:cover; background-image: url("data:image/png;base64,@base64");' />
+                <input type="hidden" value="@base64" id="base64Pic" name="playerImage" />
+            }*@
 
-            </div>
-        </form>
+                    <img class="img-responsive" id="PlayerImg" src="~/Home/images/Players/@Model.FileName" />
+                    <label asp-for="PlayerImage" class="btn btn-box-tool">
+                        <i class="far fa-picture-o"> Upload</i> <input asp-for="PlayerImage" type="file" class="hidden" style="height:auto" />
+                    </label>
+                    <label id="RemoveImage" class="btn btn-box-tool">
+                        <i class="far fa-trash-alt"> Remove</i>
+                    </label>
+
+                </div>
+            </form>
+        </div>
+        <div id="snackbar"></div>
+        <div class="footer">
+            <ul class="list-inline">
+                <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
+                <li><input id="PlayerCreate" type="button" value="Save" class="btn btn-primary"></li>
+            </ul>
+        </div>
     </div>
-    <div id="snackbar"></div>
-    <div class="footer">
-        <ul class="list-inline">
-            <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-            <li><input id="PlayerCreate" type="button" value="Save" class="btn btn-primary"></li>
-        </ul>
-    </div>
+    <div class='col-md-1'></div>
+
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -219,6 +226,7 @@
 
                     reader.onload = function (e) {
                         //$('#PlayerImg').attr('src', e.target.result);
+                        $('#PlayerImg').removeAttr('src');
                         const PlayerImg = document.getElementById('PlayerImg');
                         PlayerImg.style.backgroundImage = "url(" + e.target.result + ")";
                         PlayerImg.style.backgroundPosition = "cover";
@@ -236,8 +244,7 @@
 
         $(function () {
             $('#RemoveImage').click(function () {
-                const PlayerImg = document.getElementById('PlayerImg');
-                PlayerImg.style.backgroundImage = "";
+                $('#PlayerImg').removeAttr('src');
             });
 
         });

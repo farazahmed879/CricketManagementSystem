@@ -18,14 +18,15 @@
        name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
 
 <div class="container-fluid">
-    <ol class="breadcrumb">
-        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a asp-controller="Players" asp-action="Index">Players</a></li>
-        <li><a>Edit</a></li>
-    </ol>
-</div>
-<div class="container-fluid">
-    <div class="container-fluid">
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Players" asp-action="Index">Players</a></li>
+                <li><a>Edit</a></li>
+            </ol>
+        </div>
         <div class="row">
             <form id="PlayerForm" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -166,7 +167,10 @@
             </ul>
         </div>
     </div>
+    <div class='col-md-1'></div>
+
 </div>
+
 
 
 
@@ -233,6 +237,7 @@
 
         $(function () {
             $('#RemoveImage').click(function () {
+
                 const PlayerImg = document.getElementById('PlayerImg');
                 PlayerImg.style.backgroundImage = "";
             });

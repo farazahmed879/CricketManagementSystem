@@ -384,9 +384,10 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                player.FileName = player.PlayerImage.FileName;
-                if (player.PlayerImage.Length > 0)
+                
+                if (player.PlayerImage != null)
                 {
+                    player.FileName = player.PlayerImage.FileName;
                     using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Players", player.FileName), FileMode.Create))
                     {
                         await player.PlayerImage.CopyToAsync(stream);

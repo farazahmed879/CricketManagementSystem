@@ -411,9 +411,10 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                match.FileName = match.MatchImage.FileName;
-                if (match.MatchImage.Length > 0)
+               
+                if (match.MatchImage != null)
                 {
+                    match.FileName = match.MatchImage.FileName;
                     using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Matches", match.FileName), FileMode.Create))
                     {
                         await match.MatchImage.CopyToAsync(stream);

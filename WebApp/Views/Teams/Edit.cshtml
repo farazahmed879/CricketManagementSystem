@@ -10,89 +10,98 @@
         return Xsrf.GetAndStoreTokens(Context).RequestToken;
     }
 }
-
+<br />
+<br />
+<br />
+<br />
 <input type="hidden" id="RequestVerificationToken"
        name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
 <div class="container-fluid">
-    <ol class="breadcrumb">
-        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a asp-controller="Teams" asp-action="Index">Team</a></li>
-        <li><a>Edit</a></li>
-    </ol>
-</div>
-<div class="container-fluid">
-
-    <div class="row">
-        <form id="TeamForm" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="TeamId" />
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group label-floating">
-                            <label class="control-label">Team Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <input asp-for="Team_Name" required class="form-control" />
-                            <span asp-validation-for="Team_Name" class="text-danger"></span>
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Teams" asp-action="Index">Team</a></li>
+                <li><a>Edit</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <form id="TeamForm" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="TeamId" />
+                <input asp-for="FileName" type="hidden" />
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Team Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                                <input asp-for="Team_Name" required class="form-control" />
+                                <span asp-validation-for="Team_Name" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group label-floating">
-                            <label class="control-label">Zone</label>
-                            <input asp-for="Zone" type="number" class="form-control" />
-                            <span asp-validation-for="Zone" class="text-danger"></span>
+                        <div class="col-md-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Zone</label>
+                                <input asp-for="Zone" type="number" class="form-control" />
+                                <span asp-validation-for="Zone" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group label-floating">
-                            <label class="control-label">City<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <input asp-for="City" required class="form-control" />
-                            <span asp-validation-for="City" class="text-danger"></span>
+                        <div class="col-md-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">City<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                                <input asp-for="City" required class="form-control" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group label-floating">
-                            <label class="control-label">Place</label>
-                            <input asp-for="Place" class="form-control" />
-                            <span asp-validation-for="Place" class="text-danger"></span>
+                        <div class="col-md-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Place</label>
+                                <input asp-for="Place" class="form-control" />
+                                <span asp-validation-for="Place" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group label-floating">
-                            <label class="control-label">Contact</label>
-                            <input asp-for="Contact" class="form-control" data-inputmask='"mask": "9999-9999999"' data-mask />
-                            <span asp-validation-for="Contact" class="text-danger"></span>
+                        <div class="col-md-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Contact</label>
+                                <input asp-for="Contact" class="form-control" data-inputmask='"mask": "9999-9999999"' data-mask />
+                                <span asp-validation-for="Contact" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" asp-for="IsRegistered" value="true" class="flat-red">
-                                IsRegistered
-                            </label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" asp-for="IsRegistered" value="true" class="flat-red">
+                                    IsRegistered
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 gallery">
-                <span id="span" style="color: red"></span>
-                <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.FileName"/>
-                <label asp-for="TeamImage" class="btn btn-box-tool">
-                    <i class="far fa-picture-o"> Upload</i> <input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
-                </label>
-                <label id="RemoveImage" class="btn btn-box-tool">
-                    <i class="far fa-trash-alt"> Remove</i>
-                </label>
-            </div>
-        </form>
+                <div class="col-md-4 gallery">
+                    <span id="span" style="color: red"></span>
+                    <img class="img-responsive" id="Img" src="~/Home/images/Teams/@Model.FileName" />
+                    <label asp-for="TeamImage" class="btn btn-box-tool">
+                        <i class="far fa-picture-o"> Upload</i> <input asp-for="TeamImage" type="file" class="hidden" style="height:auto" />
+                    </label>
+                    <label id="RemoveImage" class="btn btn-box-tool">
+                        <i class="far fa-trash-alt"> Remove</i>
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div id="snackbar"></div>
+        <div class="footer">
+            <ul class="list-inline">
+                <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
+                <li><input id="TeamCreate" type="button" value="Add" class="btn btn-primary"></li>
+            </ul>
+        </div>
     </div>
-    <div id="snackbar"></div>
-    <div class="footer">
-        <ul class="list-inline">
-            <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-            <li><input id="TeamCreate" type="button" value="Add" class="btn btn-primary"></li>
-        </ul>
-    </div>
+    <div class='col-md-1'></div>
+
 </div>
+
 
 
 
@@ -132,8 +141,7 @@
         });
         $(function () {
             $('#RemoveImage').click(function () {
-                const PlayerImg = document.getElementById('Img');
-                PlayerImg.style.backgroundImage = "";
+                $('#Img').removeAttr('src');
             });
 
         });
@@ -145,6 +153,7 @@
                     var reader = new FileReader();
 
                     reader.onload = function (e) {
+                        $('#Img').removeAttr('src');
                         const TeamImg = document.getElementById('Img');
                         TeamImg.style.backgroundImage = "url(" + e.target.result + ")";
                         TeamImg.style.backgroundPosition = "cover";

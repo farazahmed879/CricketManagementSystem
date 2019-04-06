@@ -17,7 +17,7 @@
     <link href="/Home/css/style.css" rel="stylesheet">
     <script src="/Home/js/jquery.js"></script>
     <!--ok-->
-    <script src="~/Home/fastclick/lib/fastclick.js"></script> <!--Not Sure-->
+    <!--Not Sure-->
     <link rel="stylesheet" href="~/Home/css/Toast.css" />
     <link rel="stylesheet" href="~/Home/font/flaticon.css">
     <link rel="apple-touch-icon" sizes="144x144" href="/Home/images/ico/apple-touch-icon-144x144.png">
@@ -28,7 +28,7 @@
 </head>
 <body style=" font-size: 13px;">
     <div class="wrapper fixed">
-        <div id="preloader"></div>
+        @*<div id="preloader"></div>*@
         <header class="navbar navbar-inverse navbar-fixed-top " role="banner">
             <div class="container">
                 <div class="navbar-header">
@@ -103,10 +103,14 @@
 
         </div>
     </div>
+
+    <script src="~/Home/fastclick/lib/fastclick.js"></script>
+
+    <script src="/home/js/bootstrap.min.js"></script>
     <script src="/Home/js/plugins.js"></script>
-    <script src="/Home/js/bootstrap.min.js"></script>
     <script src="/Home/js/jquery.prettyPhoto.js"></script>
     <script src="/Home/js/init.js"></script>
+
     <script type="text/javascript">var infolinks_pid = 3158006; var infolinks_wsid = 0;</script>
     <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
     @RenderSection("Scripts", required: false)
@@ -128,6 +132,12 @@
             $('[data-toggle="tooltip"]').tooltip()
         })
 
+        //jQuery(document).ready(function ($) {
+        //    $('.counter').counterUp({
+        //        delay: 10,
+        //        time: 1000
+        //    });
+        //});
 
         $(function () {
             $('#Logout').click(function () {

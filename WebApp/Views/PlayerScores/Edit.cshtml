@@ -15,486 +15,492 @@
 <br />
 <br />
 <div class="container-fluid">
-    <ol class="breadcrumb">
-        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a asp-controller="Matches" asp-action="Index">Match</a></li>
-        <li><a>Score Card</a></li>
-        <li><a>Edit</a></li>
-    </ol>
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Matches" asp-action="Index">Match</a></li>
+                <li><a>Score Card</a></li>
+                <li><a>Edit</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 center">
+                <ul class="list-inline pull-center">
+                    <li>
+                        <h4>@ViewBag.HomeTeam</h4>
+                    </li>
+                    <li><h4>vs</h4></li>
+                    <li>
+                        <h4>@ViewBag.OpponentTeam</h4>
+                    </li>
+                </ul>
+
+            </div>
+            <section>
+                <div class="wizard">
+                    <div class="wizard-inner">
+                        <div class="connecting-line"></div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="First Inning">
+                                    <span class="round-tab">
+                                        <i class="flaticon-number-one-in-a-circle"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Second Inning">
+                                    <span class="round-tab">
+                                        <i class="flaticon-number-two-in-a-circle"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Match Summary">
+                                    <span class="round-tab">
+                                        <i class="flaticon-schedule"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#fallOfWicket" data-toggle="tab" aria-controls="fallOfWicket" role="tab" title="Fall of Wickets">
+                                    <span class="round-tab">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" role="tabpanel" id="step1">
+                            <div class="col-md-12 bg-blue-active">
+                                <h4>@ViewBag.HomeTeam Players</h4>
+                            </div>
+                            <div class="container-fluid">
+
+                                <form class="form-inline" role="form" id="HomeTeamData">
+
+                                    <div class="form-inline">
+
+                                        <div class="col-sm-1">
+
+                                            <h4>S.No</h4>
+
+                                        </div>
+                                        <div class="col-sm-1">
+
+                                            <h4>Inning</h4>
+
+                                        </div>
+
+                                        <div class="col-sm-4">
+
+                                            <h4>Batsman</h4>
+
+                                        </div>
+                                        <div class="col-sm-2">
+
+                                            <h4>How Out</h4>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <h4>Bowler</h4>
+                                        </div>
+                                    </div>
+                                    @{
+
+                                        for (int i = 0; i < 15; i++)
+                                        {
+
+                                            <div class="row">
+                                                <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].MatchId" />
+                                                <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].PlayerScoreId" />
+                                                <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].TeamId" />
+                                                <br />
+                                                <div class="col-sm-1">
+                                                    @{
+                                                        var position = i + 1;
+                                                        <label>@position</label>
+                                                        <input readonly="readonly" style="display:none;" value="@position" asp-for="@Model.HomeTeamScoreCard[i].Position" />
+                                                    }
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" asp-for="@Model.HomeTeamScoreCard[i].IsPlayedInning" value="true">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <select asp-for="@Model.HomeTeamScoreCard[i].PlayerId" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
+                                                        <option value="">--Select Player--</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <select asp-for="@Model.HomeTeamScoreCard[i].HowOutId" asp-items="ViewBag.HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
+                                                        <option value="">--How Out--</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <select asp-for="@Model.HomeTeamScoreCard[i].Bowler" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
+                                                        <option value="">--Select Bowler--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    <hr />
+
+                                    <ul class="list-inline pull-right">
+                                        <li><input type="button" value="Skip" class="btn btn-default next-step"></li>
+                                        <li><input type="button" id="HomeTeamBtn" value="Save and Continue" class="btn btn-primary next-step"></li>
+                                    </ul>
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="step2">
+                            <div class="col-md-12 bg-blue-active">
+                                <h4>@ViewBag.OpponentTeam Players</h4>
+                            </div>
+                            <div class="container-fluid">
+
+                                <form class="form-inline" role="form" id="OpponentTeamData">
+
+                                    <div class="form-inline">
+
+                                        <div class="col-sm-1">
+
+                                            <h4>S.No</h4>
+
+                                        </div>
+                                        <div class="col-sm-1">
+
+                                            <h4>Inning</h4>
+
+                                        </div>
+
+                                        <div class="col-sm-4">
+
+                                            <h4>Batsman</h4>
+
+                                        </div>
+                                        <div class="col-sm-2">
+
+                                            <h4>How Out</h4>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <h4>Bowler</h4>
+                                        </div>
+                                    </div>
+                                    @{
+
+                                        for (int i = 0; i < 15; i++)
+                                        {
+
+                                            <div class="row">
+                                                <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].MatchId" />
+                                                <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].PlayerScoreId" />
+                                                <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].TeamId" />
+                                                <br />
+                                                <div class="col-sm-1">
+                                                    @{
+                                                        var position = i + 1;
+                                                        <label>@position</label>
+                                                        <input readonly="readonly" style="display:none;" value="@position" asp-for="@Model.OpponentTeamScoreCard[i].Position" />
+                                                    }
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" asp-for="@Model.OpponentTeamScoreCard[i].IsPlayedInning" value="true">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <select asp-for="@Model.OpponentTeamScoreCard[i].PlayerId" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
+                                                        <option value="">--Select Player--</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <select asp-for="@Model.OpponentTeamScoreCard[i].HowOutId" asp-items="ViewBag.HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
+                                                        <option value="">--How Out--</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <select asp-for="@Model.OpponentTeamScoreCard[i].Bowler" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
+                                                        <option value="">--Select Player--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    <hr />
+                                    <ul class="list-inline pull-right">
+                                        <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
+                                        <li><input type="button" value="Skip" class="btn btn-default next-step"></li>
+                                        <li><input type="button" id="OpponentTeamBtn" value="Save and Continue" class="btn btn-primary next-step"></li>
+                                    </ul>
+                                </form>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="complete">
+                            <div class="col-md-12 bg-blue-active">
+                                <h4>Match Summary</h4>
+                            </div>
+                            <form class="form-inline" role="form" id="MatchSummary">
+
+                                @{
+
+                                    for (int i = 0; i < 2; i++)
+                                    {
+
+                                        <div class="row">
+                                            <input type="hidden" asp-for="@Model.TeamScoreCard[i].TeamScoreId" />
+                                            <input type="hidden" asp-for="@Model.TeamScoreCard[i].MatchId" />
+
+                                            <div class="col-sm-1">
+
+                                                @{
+                                                    if (i < 1)
+                                                    {
+
+                                                        <label>1st Inning Played by</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>2nd Inning Played by</label>
+                                                    }
+
+                                                }
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                @{
+                                                    if (i < 1)
+                                                    {
+                                                        ViewBag.teamId = ViewBag.homeTeamId;
+                                                        ViewBag.TeamName = ViewBag.HomeTeam;
+                                                    }
+                                                    else
+                                                    {
+                                                        ViewBag.teamId = ViewBag.opponentTeamId;
+                                                        ViewBag.TeamName = ViewBag.OpponentTeam;
+
+                                                    }
+
+                                                }
+                                                <input type="hidden" asp-for="TeamScoreCard[i].TeamId" value="@ViewBag.teamId" />
+                                                <p class="form-control-static">@ViewBag.TeamName</p>
+
+
+                                            </div>
+                                            <div class="col-sm-1">
+                                                @{
+                                                    if (i < 1)
+                                                    {
+
+                                                        <label>Set-up Score</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>Has Made While Chasing</label>
+                                                    }
+
+                                                }
+
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.TeamScoreCard[i].TotalScore" style="width: 50px" />
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <label>Loose wickets</label>
+
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.TeamScoreCard[i].Wickets" style="width: 50px" />
+                                            </div>
+
+                                            <div class="col-sm-1">
+                                                <label>Given Extras</label>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="col-sm-6">
+                                                    <label>Byes</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input asp-for="@Model.TeamScoreCard[i].Byes" required style="width: 50px" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-sm-2">
+                                                    <label>Leg-Byes</label>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input asp-for="@Model.TeamScoreCard[i].LegByes" required style="width: 50px" />
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <label> No-Balls</label>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input asp-for="@Model.TeamScoreCard[i].NoBalls" required style="width: 50px" />
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <label>Wide-Balls</label>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input asp-for="@Model.TeamScoreCard[i].Wideballs" required style="width: 50px" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                <hr />
+                                <ul class="list-inline pull-right">
+                                    <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
+                                    <li><input type="button" value="Skip" class="btn btn-default next-step"></li>
+                                    <li><input type="button" id="TeamScorebtn" value="Save and Finish" class="btn btn-primary next-step"></li>
+                                </ul>
+                            </form>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="fallOfWicket">
+                            <div class="col-md-12 bg-blue-active">
+                                <h4>Fall Of Wickets</h4>
+                            </div>
+                            <form class="form-inline" role="form" id="FallOfWicket">
+                                <div class="form-inline">
+                                    <div class="col-sm-2">
+                                        <h4>Team Name</h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>1st</h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>2nd</h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>3rd</h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>4th</h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>5th</h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>6th</h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>7th</h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>8th</h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>9th</h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>10th</h4>
+                                    </div>
+                                </div>
+                                @{
+
+                                    for (int i = 0; i < Model.FallOfWicket.Count; i++)
+                                    {
+
+                                        <div class="row">
+                                            <input type="hidden" asp-for="@Model.FallOfWicket[i].MatchId" />
+                                            <input type="hidden" asp-for="@Model.FallOfWicket[i].FallOfWicketId" />
+
+
+                                            <div class="col-sm-2">
+                                                @{
+                                                    if (i < 1)
+                                                    {
+                                                        ViewBag.teamId = ViewBag.homeTeamId;
+                                                        ViewBag.TeamName = ViewBag.HomeTeam;
+                                                    }
+                                                    else
+                                                    {
+                                                        ViewBag.teamId = ViewBag.opponentTeamId;
+                                                        ViewBag.TeamName = ViewBag.OpponentTeam;
+                                                    }
+
+
+                                                }
+
+                                                <input type="hidden" asp-for="FallOfWicket[i].TeamId" value="@ViewBag.teamId" />
+                                                <p class="form-control-static">@ViewBag.TeamName</p>
+
+                                            </div>
+
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.FallOfWicket[i].First" style="width: 50px" />
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.FallOfWicket[i].Second" style="width: 50px" />
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.FallOfWicket[i].Third" style="width: 50px" />
+                                            </div>
+
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.FallOfWicket[i].Fourth" style="width: 50px" />
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.FallOfWicket[i].Fifth" style="width: 50px" />
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.FallOfWicket[i].Sixth" style="width: 50px" />
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.FallOfWicket[i].Seventh" style="width: 50px" />
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.FallOfWicket[i].Eight" style="width: 50px" />
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.FallOfWicket[i].Ninth" style="width: 50px" />
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input asp-for="@Model.FallOfWicket[i].Tenth" style="width: 50px" />
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                <hr />
+
+                                <ul class="list-inline pull-right">
+                                    <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
+                                    <li><input id="FallofWicketBtn" type="button" value="Save and Finish" class="btn btn-primary"></li>
+                                </ul>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <ul class="list-inline">
+                        <li><input type="button" id="BackBtn" value="Close" class="btn btn-danger"></li>
+                    </ul>
+                    <div id="snackbar"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class='col-md-1'></div>
+
 </div>
 <input type="hidden" id="RequestVerificationToken"
        name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
 
-<div class="container-fluid">
 
-
-    <div class="col-sm-12 center">
-        <ul class="list-inline pull-center">
-            <li>
-                <h4>@ViewBag.HomeTeam</h4>
-            </li>
-            <li><h4>vs</h4></li>
-            <li>
-                <h4>@ViewBag.OpponentTeam</h4>
-            </li>
-        </ul>
-
-    </div>
-    <section>
-        <div class="wizard">
-            <div class="wizard-inner">
-                <div class="connecting-line"></div>
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
-                        <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="First Inning">
-                            <span class="round-tab">
-                                <i class="flaticon-number-one-in-a-circle"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Second Inning">
-                            <span class="round-tab">
-                                <i class="flaticon-number-two-in-a-circle"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Match Summary">
-                            <span class="round-tab">
-                                <i class="flaticon-schedule"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#fallOfWicket" data-toggle="tab" aria-controls="fallOfWicket" role="tab" title="Fall of Wickets">
-                            <span class="round-tab">
-                                <i class="fas fa-check"></i>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-content">
-                <div class="tab-pane active" role="tabpanel" id="step1">
-                    <div class="col-md-12 bg-blue-active">
-                        <h4>@ViewBag.HomeTeam Players</h4>
-                    </div>
-                    <div class="container-fluid">
-
-                        <form class="form-inline" role="form" id="HomeTeamData">
-
-                            <div class="form-inline">
-
-                                <div class="col-sm-1">
-
-                                    <h4>S.No</h4>
-
-                                </div>
-                                <div class="col-sm-1">
-
-                                    <h4>Inning</h4>
-
-                                </div>
-
-                                <div class="col-sm-4">
-
-                                    <h4>Batsman</h4>
-
-                                </div>
-                                <div class="col-sm-2">
-
-                                    <h4>How Out</h4>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <h4>Bowler</h4>
-                                </div>
-                            </div>
-                            @{
-
-                                for (int i = 0; i < 15; i++)
-                                {
-
-                                    <div class="row">
-                                        <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].MatchId" />
-                                        <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].PlayerScoreId" />
-                                        <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].TeamId" />
-                                        <br />
-                                        <div class="col-sm-1">
-                                            @{
-                                                var position = i + 1;
-                                                <label>@position</label>
-                                                <input readonly="readonly" style="display:none;" value="@position" asp-for="@Model.HomeTeamScoreCard[i].Position" />
-                                            }
-                                        </div>
-                                        <div class="col-sm-1">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" asp-for="@Model.HomeTeamScoreCard[i].IsPlayedInning" value="true">
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <select asp-for="@Model.HomeTeamScoreCard[i].PlayerId" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
-                                                <option value="">--Select Player--</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <select asp-for="@Model.HomeTeamScoreCard[i].HowOutId" asp-items="ViewBag.HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
-                                                <option value="">--How Out--</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-sm-3">
-                                            <select asp-for="@Model.HomeTeamScoreCard[i].Bowler" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
-                                                <option value="">--Select Bowler--</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            <hr />
-
-                            <ul class="list-inline pull-right">
-                                <li><input type="button" value="Skip" class="btn btn-default next-step"></li>
-                                <li><input type="button" id="HomeTeamBtn" value="Save and Continue" class="btn btn-primary next-step"></li>
-                            </ul>
-
-                        </form>
-                    </div>
-                </div>
-                <div class="tab-pane" role="tabpanel" id="step2">
-                    <div class="col-md-12 bg-blue-active">
-                        <h4>@ViewBag.OpponentTeam Players</h4>
-                    </div>
-                    <div class="container-fluid">
-
-                        <form class="form-inline" role="form" id="OpponentTeamData">
-
-                            <div class="form-inline">
-
-                                <div class="col-sm-1">
-
-                                    <h4>S.No</h4>
-
-                                </div>
-                                <div class="col-sm-1">
-
-                                    <h4>Inning</h4>
-
-                                </div>
-
-                                <div class="col-sm-4">
-
-                                    <h4>Batsman</h4>
-
-                                </div>
-                                <div class="col-sm-2">
-
-                                    <h4>How Out</h4>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <h4>Bowler</h4>
-                                </div>
-                            </div>
-                            @{
-
-                                for (int i = 0; i < 15; i++)
-                                {
-
-                                    <div class="row">
-                                        <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].MatchId" />
-                                        <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].PlayerScoreId" />
-                                        <input type="hidden" asp-for="@Model.OpponentTeamScoreCard[i].TeamId" />
-                                        <br />
-                                        <div class="col-sm-1">
-                                            @{
-                                                var position = i + 1;
-                                                <label>@position</label>
-                                                <input readonly="readonly" style="display:none;" value="@position" asp-for="@Model.OpponentTeamScoreCard[i].Position" />
-                                            }
-                                        </div>
-                                        <div class="col-sm-1">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" asp-for="@Model.OpponentTeamScoreCard[i].IsPlayedInning" value="true">
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <select asp-for="@Model.OpponentTeamScoreCard[i].PlayerId" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
-                                                <option value="">--Select Player--</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <select asp-for="@Model.OpponentTeamScoreCard[i].HowOutId" asp-items="ViewBag.HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
-                                                <option value="">--How Out--</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-sm-4">
-                                            <select asp-for="@Model.OpponentTeamScoreCard[i].Bowler" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
-                                                <option value="">--Select Player--</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            <hr />
-                            <ul class="list-inline pull-right">
-                                <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
-                                <li><input type="button" value="Skip" class="btn btn-default next-step"></li>
-                                <li><input type="button" id="OpponentTeamBtn" value="Save and Continue" class="btn btn-primary next-step"></li>
-                            </ul>
-                        </form>
-                    </div>
-
-                </div>
-                <div class="tab-pane" role="tabpanel" id="complete">
-                    <div class="col-md-12 bg-blue-active">
-                        <h4>Match Summary</h4>
-                    </div>
-                    <form class="form-inline" role="form" id="MatchSummary">
-
-                        @{
-
-                            for (int i = 0; i < 2; i++)
-                            {
-
-                                <div class="row">
-                                    <input type="hidden" asp-for="@Model.TeamScoreCard[i].TeamScoreId" />
-                                    <input type="hidden" asp-for="@Model.TeamScoreCard[i].MatchId" />
-
-                                    <div class="col-sm-1">
-
-                                        @{
-                                            if (i < 1)
-                                            {
-
-                                                <label>1st Inning Played by</label>
-                                            }
-                                            else
-                                            {
-                                                <label>2nd Inning Played by</label>
-                                            }
-
-                                        }
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        @{
-                                            if (i < 1)
-                                            {
-                                                ViewBag.teamId = ViewBag.homeTeamId;
-                                                ViewBag.TeamName = ViewBag.HomeTeam;
-                                            }
-                                            else
-                                            {
-                                                ViewBag.teamId = ViewBag.opponentTeamId;
-                                                ViewBag.TeamName = ViewBag.OpponentTeam;
-
-                                            }
-
-                                        }
-                                        <input type="hidden" asp-for="TeamScoreCard[i].TeamId" value="@ViewBag.teamId" />
-                                        <p class="form-control-static">@ViewBag.TeamName</p>
-
-
-                                    </div>
-                                    <div class="col-sm-1">
-                                        @{
-                                            if (i < 1)
-                                            {
-
-                                                <label>Set-up Score</label>
-                                            }
-                                            else
-                                            {
-                                                <label>Has Made While Chasing</label>
-                                            }
-
-                                        }
-
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.TeamScoreCard[i].TotalScore" style="width: 50px" />
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <label>Loose wickets</label>
-
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.TeamScoreCard[i].Wickets" style="width: 50px" />
-                                    </div>
-
-                                    <div class="col-sm-1">
-                                        <label>Given Extras</label>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="col-sm-6">
-                                            <label>Byes</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input asp-for="@Model.TeamScoreCard[i].Byes" required style="width: 50px" />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="col-sm-2">
-                                            <label>Leg-Byes</label>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input asp-for="@Model.TeamScoreCard[i].LegByes" required style="width: 50px" />
-                                        </div>
-
-                                        <div class="col-sm-2">
-                                            <label> No-Balls</label>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input asp-for="@Model.TeamScoreCard[i].NoBalls" required style="width: 50px" />
-                                        </div>
-
-                                        <div class="col-sm-2">
-                                            <label>Wide-Balls</label>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input asp-for="@Model.TeamScoreCard[i].Wideballs" required style="width: 50px" />
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        }
-                        <hr />
-                        <ul class="list-inline pull-right">
-                            <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
-                            <li><input type="button" value="Skip" class="btn btn-default next-step"></li>
-                            <li><input type="button" id="TeamScorebtn" value="Save and Finish" class="btn btn-primary next-step"></li>
-                        </ul>
-                    </form>
-                </div>
-                <div class="tab-pane" role="tabpanel" id="fallOfWicket">
-                    <div class="col-md-12 bg-blue-active">
-                        <h4>Fall Of Wickets</h4>
-                    </div>
-                    <form class="form-inline" role="form" id="FallOfWicket">
-                        <div class="form-inline">
-                            <div class="col-sm-2">
-                                <h4>Team Name</h4>
-                            </div>
-                            <div class="col-sm-1">
-                                <h4>1st</h4>
-                            </div>
-                            <div class="col-sm-1">
-                                <h4>2nd</h4>
-                            </div>
-                            <div class="col-sm-1">
-                                <h4>3rd</h4>
-                            </div>
-                            <div class="col-sm-1">
-                                <h4>4th</h4>
-                            </div>
-                            <div class="col-sm-1">
-                                <h4>5th</h4>
-                            </div>
-                            <div class="col-sm-1">
-                                <h4>6th</h4>
-                            </div>
-                            <div class="col-sm-1">
-                                <h4>7th</h4>
-                            </div>
-                            <div class="col-sm-1">
-                                <h4>8th</h4>
-                            </div>
-                            <div class="col-sm-1">
-                                <h4>9th</h4>
-                            </div>
-                            <div class="col-sm-1">
-                                <h4>10th</h4>
-                            </div>
-                        </div>
-                        @{
-
-                            for (int i = 0; i < Model.FallOfWicket.Count; i++)
-                            {
-
-                                <div class="row">
-                                    <input type="hidden" asp-for="@Model.FallOfWicket[i].MatchId" />
-                                    <input type="hidden" asp-for="@Model.FallOfWicket[i].FallOfWicketId" />
-
-
-                                    <div class="col-sm-2">
-                                        @{
-                                            if (i < 1)
-                                            {
-                                                ViewBag.teamId = ViewBag.homeTeamId;
-                                                ViewBag.TeamName = ViewBag.HomeTeam;
-                                            }
-                                            else
-                                            {
-                                                ViewBag.teamId = ViewBag.opponentTeamId;
-                                                ViewBag.TeamName = ViewBag.OpponentTeam;
-                                            }
-
-
-                                        }
-
-                                        <input type="hidden" asp-for="FallOfWicket[i].TeamId" value="@ViewBag.teamId" />
-                                        <p class="form-control-static">@ViewBag.TeamName</p>
-
-                                    </div>
-
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.FallOfWicket[i].First" style="width: 50px" />
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.FallOfWicket[i].Second" style="width: 50px" />
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.FallOfWicket[i].Third" style="width: 50px" />
-                                    </div>
-
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.FallOfWicket[i].Fourth" style="width: 50px" />
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.FallOfWicket[i].Fifth" style="width: 50px" />
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.FallOfWicket[i].Sixth" style="width: 50px" />
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.FallOfWicket[i].Seventh" style="width: 50px" />
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.FallOfWicket[i].Eight" style="width: 50px" />
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.FallOfWicket[i].Ninth" style="width: 50px" />
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <input asp-for="@Model.FallOfWicket[i].Tenth" style="width: 50px" />
-                                    </div>
-                                </div>
-                            }
-                        }
-                        <hr />
-
-                        <ul class="list-inline pull-right">
-                            <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
-                            <li><input id="FallofWicketBtn" type="button" value="Save and Finish" class="btn btn-primary"></li>
-                        </ul>
-                    </form>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <ul class="list-inline">
-                <li><input type="button" id="BackBtn" value="Close" class="btn btn-danger"></li>
-            </ul>
-            <div id="snackbar"></div>
-        </div>
-    </section>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

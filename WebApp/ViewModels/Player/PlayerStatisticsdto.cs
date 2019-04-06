@@ -36,6 +36,7 @@ namespace WebApp.ViewModels
         public int TotalMaidens { get; set; }
         public string BowlingAvg { get; set; }
         public string Economy { get; set; }
+        public string FileName { get; set; }
         public int FiveWickets { get; set; }
         public int DoBowled { get; set; }
         public int DoHitWicket { get; set; }
@@ -44,8 +45,7 @@ namespace WebApp.ViewModels
         public int DoStump { get; set; }
         public int OnFieldCatch { get; set; }
         public int OnFieldStump { get; set; }
-        public int OnFieldRunOut { get; set; }      
-        public byte[] PlayerImage { get; set; }
+        public int OnFieldRunOut { get; set; } 
         public int HightScore { get; set; }
         public int MostWickets { get; set; }
         public int BestBowlingFigureRuns { get; set; }

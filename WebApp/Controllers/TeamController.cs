@@ -171,9 +171,10 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                team.FileName = team.TeamImage.FileName;
-                if (team.TeamImage.Length > 0)
+               
+                if (team.TeamImage != null)
                 {
+                    team.FileName = team.TeamImage.FileName;
                     using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Teams", team.FileName), FileMode.Create))
                     {
                         await team.TeamImage.CopyToAsync(stream);

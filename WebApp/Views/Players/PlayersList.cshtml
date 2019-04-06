@@ -8,83 +8,88 @@
 <br />
 <br />
 <div class="container-fluid">
-    <div class="row">
-        <!-- Widget: user widget style 1 -->
-        <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header">
-                <div class="col-md-4">
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header">
+                    <div class="col-md-12">
 
-                    @{ if (Model.TeamLogo != null)
-                        {
-                            var base64 = (Model.TeamLogo == null || !Model.TeamLogo.Any()) ? "" : Convert.ToBase64String(@Model.TeamLogo);
-                            <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' id="PlayerImg"></div>
+                        @{ if (Model.TeamLogo != null)
+                            {
+                                var base64 = (Model.TeamLogo == null || !Model.TeamLogo.Any()) ? "" : Convert.ToBase64String(@Model.TeamLogo);
+                                <img class="img-responsive" src="~/Home/images/Teams/@Model.FileName" id="PlayerImg">
+                            }
+                            else
+                            {
+                                <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("/images/no-user-profile-picture-whatsapp.jpg");' id="PlayerImg"></div>
+
+                            }
                         }
-                        else
-                        {
-                            <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("/images/no-user-profile-picture-whatsapp.jpg");' id="PlayerImg"></div>
 
-                        }
-                    }
+                    </div>
 
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">@Html.DisplayFor(model => model.Team_Name)</h3>
+                    <h5 class="widget-user-desc">@Html.DisplayFor(model => model.City)</h5>
+                    <h5 class="widget-user-desc">@Html.DisplayFor(model => model.Place)</h5>
+
+                    <h5 class="widget-user-desc">Zone @Html.DisplayFor(model => model.Zone)</h5>
+                    <a asp-controller="Players" class="btn btn-default" asp-action="Create">Add Player</a>
                 </div>
-
-                <!-- /.widget-user-image -->
-                <h3 class="widget-user-username">@Html.DisplayFor(model => model.Team_Name)</h3>
-                <h5 class="widget-user-desc">@Html.DisplayFor(model => model.City)</h5>
-                <h5 class="widget-user-desc">@Html.DisplayFor(model => model.Place)</h5>
-
-                <h5 class="widget-user-desc">Zone @Html.DisplayFor(model => model.Zone)</h5>
-                <a asp-controller="Players" class="btn btn-default" asp-action="Create">Add Player</a>
-            </div>
-            <br />
-            <div class="box-footer">
-                <nav class="navbar navbar-light bg-light">
-                    @*<div class="form-group">
+                <br />
+                <div class="box-footer">
+                    <nav class="navbar navbar-light bg-light">
+                        @*<div class="form-group">
 
                         </div>*@
 
 
-                    @if (Model != null && Model.TeamPlayers.Any())
-                    {
-                        @foreach (var item in Model.TeamPlayers)
+                        @if (Model != null && Model.TeamPlayers.Any())
                         {
-                            <div class="dl-horizontal">
-                                <div class="col-md-2">
-                                    <a data-placement="top" data-toggle="tooltip" title="@item.Player_Name">
-                                        @{
-                                            if (item.PlayerLogo != null)
-                                            {
-                                                var base64 = @item.PlayerLogo == null || !item.PlayerLogo.Any() ? "" : Convert.ToBase64String(@item.PlayerLogo);
-                                                <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' data-toggle="modal" data-target="#playerStatistics" onclick="statistics(@item.PlayerId)" id="PlayerImg">
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("/images/no-user-profile-picture-whatsapp.jpg");' data-toggle="modal" data-target="#playerStatistics" onclick="statistics(@item.PlayerId)" id="PlayerImg"></div>
+                            @foreach (var item in Model.TeamPlayers)
+                            {
+                                <div class="dl-horizontal">
+                                    <div class="col-md-2">
+                                        <a data-placement="top" data-toggle="tooltip" title="@item.Player_Name">
+                                            @{
+                                                if (item.PlayerLogo != null)
+                                                {
+                                                    var base64 = @item.PlayerLogo == null || !item.PlayerLogo.Any() ? "" : Convert.ToBase64String(@item.PlayerLogo);
+                                                    <img class="img-responsive" src="~/Home/images/Players/@Model.FileName" data-toggle="modal" data-target="#playerStatistics" onclick="statistics(@item.PlayerId)" id="PlayerImg">
+                                                
+                                                }
+                                                else
+                                                {
+                                                    <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("/images/no-user-profile-picture-whatsapp.jpg");' data-toggle="modal" data-target="#playerStatistics" onclick="statistics(@item.PlayerId)" id="PlayerImg"></div>
 
 
+                                                }
                                             }
-                                        }
-                                    </a>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
-                    }
-                    else
-                    {
-                        <div class="wizard-header">
-                            <h3 class="wizard-title">
-                                No Player Found
-                            </h3>
-                        </div>
+                        else
+                        {
+                            <div class="wizard-header">
+                                <h3 class="wizard-title">
+                                    No Player Found
+                                </h3>
+                            </div>
 
-                    }
-                </nav>
+                        }
+                    </nav>
+                </div>
             </div>
+            <!-- /.widget-user -->
         </div>
-        <!-- /.widget-user -->
     </div>
+    <div class='col-md-1'></div>
+   
 </div>
 <div id="screenShot" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -545,10 +550,10 @@
                                 document.getElementById("doLBW").innerHTML = json.doLBW;
                                 document.getElementById("doStump").innerHTML = json.doCatch;
 
-                                if (json.playerImage != null) {
-                                    $('#target').attr('src', `data:image/png;base64,${json.playerImage}`);
+                                if (json.fileName != null) {
+                                    $('#target').attr('src', '/Home/images/Player/${json.fileName}');
                                 } else {
-                                    $('#target').attr('src', `/images/user.png`);
+                                    $('#target').attr('src', `/Home/images/noImage.jpg`);
                                 }
 
 

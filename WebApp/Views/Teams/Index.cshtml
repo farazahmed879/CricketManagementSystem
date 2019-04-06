@@ -8,197 +8,201 @@
 <br />
 <br />
 <div class="container-fluid">
-    <ol class="breadcrumb">
-        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a>Team</a></li>
-    </ol>
-</div>
-<div class="container-fluid">
-    <div class="form-group">
-        <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
-            <div class="panel-body">
-                <form class="form-inline" role="form" id="Filters">
-                    <div class="row">
-                        <div class="col-xs-4 col-md-4">
-                            <label>Team Name</label>
-                            <input id="name" name="name" placeholder="Gulzar Cricket Club" class="form-control">
+
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a>Team</a></li>
+            </ol>
+        </div>
+        <div class="form-group">
+            <div id="filter-panel" style="border: 1px solid #bbb;" class="collapse filter-panel">
+                <div class="panel-body">
+                    <form class="form-inline" role="form" id="Filters">
+                        <div class="row">
+                            <div class="col-xs-4 col-md-4">
+                                <label>Team Name</label>
+                                <input id="name" name="name" placeholder="Gulzar Cricket Club" class="form-control">
+                            </div>
+                            <div class="col-xs-4 col-md-4">
+                                <label>Zone</label>
+                                <input type="number" id="zone" name="zone" placeholder="4" class="form-control">
+                            </div>
+                            <div class="col-xs-4 col-md-4">
+                                <label>Location</label>
+                                <input id="location" name="location" placeholder="Malir City" class="form-control">
+                            </div>
                         </div>
-                        <div class="col-xs-4 col-md-4">
-                            <label>Zone</label>
-                            <input type="number" id="zone" name="zone" placeholder="4" class="form-control">
+                        <br />
+                        <div class="footer" style="margin-top : .5em">
+                            <ul class="list-inline">
+                                <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
+                                <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
+                            </ul>
                         </div>
-                        <div class="col-xs-4 col-md-4">
-                            <label>Location</label>
-                            <input id="location" name="location" placeholder="Malir City" class="form-control">
-                        </div>
-                    </div>
-                    <br />
-                    <div class="footer" style="margin-top : .5em">
-                        <ul class="list-inline">
-                            <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
-                            <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
-                        </ul>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    <ul class="list-inline">
-        <li>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div class="form-group">
-                    <a asp-controller="Teams" class="btn btn-primary" asp-action="Create">Add</a>
-                </div>
-
-            }
-        </li>
-        <li>
-            <button class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
-                Advanced Search
-            </button>
-        </li>
-    </ul>
-
-    <div class="table-responsive">
-        <table id="TeamTable" class="table table-bordered table-striped">
-            <thead class="bg-blue-active">
-                <tr>
-
-                    <th>
-                        Team
-                    </th>
-
-                    <th>
-                        Region
-                    </th>
-
-                    <th>
-                        Action
-                    </th>
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
+        <ul class="list-inline">
+            <li>
+                @if (User.Identity.IsAuthenticated)
                 {
-                    <tr>
-                        <td>
-                            <ul class="list-inline">
-                                <li>
-                                    @{
-                                        if (item.TeamLogo != null)
-                                        {
-                                            var base64 = item.TeamLogo == null || !item.TeamLogo.Any() ? "" : Convert.ToBase64String(item.TeamLogo);
-                                            <div class="img-responsive" id="Img" style='background-size:cover; background-image: url("data:image/png;base64,@base64");'></div>
+                    <div class="form-group">
+                        <a asp-controller="Teams" class="btn btn-primary" asp-action="Create">Add</a>
+                    </div>
 
-                                        }
-                                        else
-                                        {
-                                            <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
-
-                                        }
-                                    }
-                                </li>
-                                <li> @Html.DisplayFor(modelItem => item.Team_Name)</li>
-                            </ul>
-
-
-
-
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.City) zone-@item.Zone
-                        </td>
-
-
-                        <td>
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-
-                                        <li><a data-placement="left" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayersList" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-2"></i> Team Players</a></li>
-                                        <li><a data-placement="left" data-toggle="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-4"></i> Team Matches</a></li>
-                                        <li><a data-placement="left" data-toggle="tooltip" title="Schedule" asp-controller="Schedule" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-history"></i> Schedule</a></li>
-                                        <li><a data-placement="left" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-teamId="@item.TeamId"><i class="flaticon-appointment"></i> Details</a></li>
-                                    </ul>
-                                </div>
-                                <a data-placement="top" data-toggle="tooltip" title="Add Player" asp-controller="Players" asp-action="create" asp-route-teamId="@item.TeamId"><i class="fas fa-user-alt"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TeamId"><i class="fas fa-edit"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.TeamId)" class="fas fa-trash-alt"></i></a>
-
-
-                            }
-                            else
-                            {
-                                <a data-placement="top" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayersList" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-helmet"></i></a>
-                                <a data-placement="top" data-toggle="tooltip" title="Schedule" asp-controller="Schedule" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="fas fa-clock-o"></i></a>
-                                <a data-placement="left" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-teamId="@item.TeamId"><i class="fas fa-info-circle"></i></a>
-                            }
-                        </td>
-                    </tr>
                 }
-            </tbody>
-        </table>
+            </li>
+            <li>
+                <button class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
+                    Advanced Search
+                </button>
+            </li>
+        </ul>
 
-        @{
-            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-            var prev1Disabled = !Model.HasPreviousPage ? "hide" : "";
-            var prev2Disabled = !Model.HasPreviousTwo ? "hide" : "";
-            var prev3Disabled = !Model.HasPreviousThree ? "hide" : "";
-            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-            var next1Disabled = !Model.HasNextPage ? "hide" : "";
-            var next2Disabled = !Model.HasNext2 ? "hide" : "";
-            var next3Disabled = !Model.HasNext3 ? "hide" : "";
-        }
+        <div class="table-responsive">
+            <table id="TeamTable" class="table table-bordered table-striped">
+                <thead class="bg-blue-active">
+                    <tr>
+
+                        <th>
+                            Team
+                        </th>
+
+                        <th>
+                            Region
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <ul class="list-inline">
+                                    <li>
+                                        @{
+                                            if (item.FileName != null)
+                                            {
+                                                <img class="img-responsive" id="Img" src="~/Home/images/Teams/@item.FileName" >
+
+                                            }
+                                            else
+                                            {
+                                                <span class="label label-warning pull-left"><i class="fas fa-question"></i></span>
+
+                                            }
+                                        }
+                                    </li>
+                                    <li> @Html.DisplayFor(modelItem => item.Team_Name)</li>
+                                </ul>
+
+
+
+
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City) zone-@item.Zone
+                            </td>
+
+
+                            <td>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+
+                                            <li><a data-placement="left" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayersList" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-2"></i> Team Players</a></li>
+                                            <li><a data-placement="left" data-toggle="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-4"></i> Team Matches</a></li>
+                                            <li><a data-placement="left" data-toggle="tooltip" title="Schedule" asp-controller="Schedule" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-history"></i> Schedule</a></li>
+                                            <li><a data-placement="left" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-teamId="@item.TeamId"><i class="flaticon-appointment"></i> Details</a></li>
+                                        </ul>
+                                    </div>
+                                    <a data-placement="top" data-toggle="tooltip" title="Add Player" asp-controller="Players" asp-action="create" asp-route-teamId="@item.TeamId"><i class="fas fa-user-alt"></i></a>
+                                    <a data-placement="top" data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TeamId"><i class="fas fa-edit"></i></a>
+                                    <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.TeamId)" class="fas fa-trash-alt"></i></a>
+
+
+                                }
+                                else
+                                {
+                                    <a data-placement="top" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayersList" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-helmet"></i></a>
+                                    <a data-placement="top" data-toggle="tooltip" title="Schedule" asp-controller="Schedule" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="fas fa-clock-o"></i></a>
+                                    <a data-placement="left" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-teamId="@item.TeamId"><i class="fas fa-info-circle"></i></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var prev1Disabled = !Model.HasPreviousPage ? "hide" : "";
+                var prev2Disabled = !Model.HasPreviousTwo ? "hide" : "";
+                var prev3Disabled = !Model.HasPreviousThree ? "hide" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                var next1Disabled = !Model.HasNextPage ? "hide" : "";
+                var next2Disabled = !Model.HasNext2 ? "hide" : "";
+                var next3Disabled = !Model.HasNext3 ? "hide" : "";
+            }
+        </div>
+        <nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
+                <div class="col-md-12">
+                    <span class="fa-1x">
+                        <strong class="text-primary">Showing @Model.PageStartValue to @Model.PageEndValue of @Model.TotalCount entries</strong>
+                    </span>
+                    <span class="fa-1x pull-right">
+                        <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
+                    </span>
+                </div>
+                <div class="row pull-right">
+                    <a data-placement="top" data-toggle="tooltip" title="First Page" asp-action="Index" class="btn btn-primary @prevDisabled"
+                       asp-route-page="@(1)">
+                        First
+                    </a>
+
+                    <a asp-action="Index" class="btn btn-default @prev3Disabled"
+                       asp-route-page="@(Model.PageIndex - 3)">@(Model.PageIndex - 3)</a>
+                    <a asp-action="Index" class="btn btn-default @prev2Disabled"
+                       asp-route-page="@(Model.PageIndex - 2)">@(Model.PageIndex - 2)</a>
+                    <a asp-action="Index" class="btn btn-default @prev1Disabled"
+                       asp-route-page="@(Model.PageIndex - 1)">@(Model.PageIndex - 1)</a>
+
+                    <a asp-action="Index" class="btn btn-primary disabled"
+                       asp-route-page="@(Model.PageIndex)">@(Model.PageIndex)</a>
+
+                    <a asp-action="Index" class="btn btn-default @next1Disabled"
+                       asp-route-page="@(Model.PageIndex + 1)">@(Model.PageIndex + 1)</a>
+                    <a asp-action="Index" class="btn btn-default @next2Disabled"
+                       asp-route-page="@(Model.PageIndex + 2)">@(Model.PageIndex + 2)</a>
+                    <a asp-action="Index" class="btn btn-default @next3Disabled"
+                       asp-route-page="@(Model.PageIndex + 3)">@(Model.PageIndex + 3)</a>
+
+                    <a data-placement="top" data-toggle="tooltip" title="Last Page" asp-action="Index"
+                       asp-route-page="@(Model.TotalPages)"
+                       class="btn btn-primary @nextDisabled">
+                        Last
+                    </a>
+
+                </div>
+            </form>
+        </nav>
     </div>
-    <nav class="navbar navbar-light bg-light">
-        <form class="form-inline">
-            <div class="col-md-12">
-                <span class="fa-1x">
-                    <strong class="text-primary">Showing @Model.PageStartValue to @Model.PageEndValue of @Model.TotalCount entries</strong>
-                </span>
-                <span class="fa-1x pull-right">
-                    <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
-                </span>
-            </div>
-            <div class="row pull-right">
-                <a data-placement="top" data-toggle="tooltip" title="First Page" asp-action="Index" class="btn btn-primary @prevDisabled"
-                   asp-route-page="@(1)">
-                    First
-                </a>
-
-                <a asp-action="Index" class="btn btn-default @prev3Disabled"
-                   asp-route-page="@(Model.PageIndex - 3)">@(Model.PageIndex - 3)</a>
-                <a asp-action="Index" class="btn btn-default @prev2Disabled"
-                   asp-route-page="@(Model.PageIndex - 2)">@(Model.PageIndex - 2)</a>
-                <a asp-action="Index" class="btn btn-default @prev1Disabled"
-                   asp-route-page="@(Model.PageIndex - 1)">@(Model.PageIndex - 1)</a>
-
-                <a asp-action="Index" class="btn btn-primary disabled"
-                   asp-route-page="@(Model.PageIndex)">@(Model.PageIndex)</a>
-
-                <a asp-action="Index" class="btn btn-default @next1Disabled"
-                   asp-route-page="@(Model.PageIndex + 1)">@(Model.PageIndex + 1)</a>
-                <a asp-action="Index" class="btn btn-default @next2Disabled"
-                   asp-route-page="@(Model.PageIndex + 2)">@(Model.PageIndex + 2)</a>
-                <a asp-action="Index" class="btn btn-default @next3Disabled"
-                   asp-route-page="@(Model.PageIndex + 3)">@(Model.PageIndex + 3)</a>
-
-                <a data-placement="top" data-toggle="tooltip" title="Last Page" asp-action="Index"
-                   asp-route-page="@(Model.TotalPages)"
-                   class="btn btn-primary @nextDisabled">
-                    Last
-                </a>
-
-            </div>
-        </form>
-    </nav>
+    <div class='col-md-1'></div>
 </div>
 <div id="snackbar"></div>
 <div id="DeleteModal" class="modal fade" role="dialog">
