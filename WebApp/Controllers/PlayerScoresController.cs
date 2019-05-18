@@ -21,15 +21,15 @@ namespace WebApp.Controllers
         private readonly CricketContext _context;
 
 
-        
+
         public PlayerScoresController(CricketContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        [Route("PlayerScores/Index")]
-        public IActionResult Index(int? matchId, int? homeTeamId, int? oppTeamId, long? playerScoreId)
+       // [Route("PlayerScores/Index/matchId{matchId}/homeTeamId{homeTeamId}/oppTeamId{oppTeamId}/playerScoreId{playerScoreId}")]
+        public IActionResult Index(int? matchId, int? homeTeamId, int? oppTeamId, bool api)
         {
             ViewBag.Name = "Score Card";
             var scoreDto = new ScoreCarddto();
@@ -66,7 +66,7 @@ namespace WebApp.Controllers
                                  PlayerId = i.PlayerId,
                                  Position = i.Position,
                                  MatchId = i.MatchId,
-                                 Bowler = i.Bowler,
+                                 Bowler = i.BowlerId,
                                  Catches = i.Catches,
                                  IsPlayedInning = i.IsPlayedInning,
                                  Ball_Runs = i.Ball_Runs,
@@ -82,7 +82,8 @@ namespace WebApp.Controllers
                                  Wickets = i.Wickets,
                                  Player = i.Player,
                                  HowOutName = i.HowOut.Name,
-                                 TeamId = i.TeamId
+                                 TeamId = i.TeamId,
+                                 Fielder = i.Fielder
                              })
                 .OrderBy(i => i.Position)
                 .ToList();
@@ -136,55 +137,39 @@ namespace WebApp.Controllers
             scoreDto.HomeTeamFOW = graph.Where(i => i.TeamId == homeTeamId).ToList();
             scoreDto.OpponentTeamFOW = graph.Where(i => i.TeamId == oppTeamId).ToList();
 
-            return View(scoreDto);
+            if (api == true)
+                return Json(scoreDto);
+            else
+                return View(scoreDto);
 
         }
 
 
-        [HttpGet]
-        // GET: PlayerScores/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var playerScore = await _context.PlayerScores
-                .AsNoTracking()
-                .SingleOrDefaultAsync(m => m.PlayerScoreId == id);
-            if (playerScore == null)
-            {
-                return NotFound();
-            }
-
-            return View(playerScore);
-        }
-
-
-        [HttpGet]
-        // GET: PlayerScores/Create
+        [HttpGet("PlayerScores/Create/{homeTeamId}/{oppTeamId}/{matchId}")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create(int homeTeamId, int oppTeamId, int matchId)
         {
+            var model = new TeamMatchScoredto();
             ViewBag.Name = "Add Match Players";
             ViewBag.HowOut = new SelectList(_context.HowOut
                 .AsNoTracking()
                 .Select(i => new { i.HowOutId, i.Name })
                 , "HowOutId", "Name");
 
-            ViewBag.OpponentTeam = _context.Teams
-                 .AsNoTracking()
-                 .Where(i => i.TeamId == oppTeamId)
-                 .Select(i => i.Team_Name)
-                 .Single();
+            var connection = _context.Database.GetDbConnection();
+            var s = connection.Query<Summary2dto>(
+              "[usp_Summary2]",
+              new
+              {
+                  paramMatchId = matchId,
+                  paramHomeTeamId = homeTeamId,
+                  paramOpponentTeamId = oppTeamId
+              },
+              commandType: CommandType.StoredProcedure) ?? new List<Summary2dto>()
+              {
+              };
 
 
-            ViewBag.HomeTeam = _context.Teams
-               .AsNoTracking()
-               .Where(i => i.TeamId == homeTeamId)
-               .Select(i => i.Team_Name)
-               .Single();
 
             ViewBag.homeTeamId = homeTeamId;
             ViewBag.opponentTeamId = oppTeamId;
@@ -201,7 +186,7 @@ namespace WebApp.Controllers
              .Select(i => new { i.PlayerId, i.Player_Name })
              , "PlayerId", "Player_Name");
 
-            var model = new TeamMatchScoredto();
+
             for (int i = 0; i < 2; i++)
 
                 model.TeamScore.Add(new TeamScoredto
@@ -237,271 +222,15 @@ namespace WebApp.Controllers
                 });
             }
 
-
+            model.Summary2dto = s.SingleOrDefault();
             return View(model);
         }
 
-        // POST: PlayerScores/HomeTeamSave
-        [HttpPost]
+
+
+        [HttpGet("PlayerScores/Edit/{homeTeamId}/{oppTeamId}/{matchId}")]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> HomeTeamSave([FromForm] TeamMatchScoredto HomeTeamplayers, int teamId)
-        {
-            if (ModelState.IsValid)
-            {
-
-                _context.AddRange(HomeTeamplayers.HomeTeamScoreCard.Select(i => new PlayerScore
-                {
-                    Position = i.Position,
-                    IsPlayedInning = i.IsPlayedInning,
-                    PlayerId = i.PlayerId,
-                    HowOutId = i.HowOutId,
-                    Bowler = i.Bowler,
-                    MatchId = i.MatchId,
-                    TeamId = i.TeamId
-                }
-                ));
-
-                await _context.SaveChangesAsync();
-                return Json(ResponseHelper.Success());
-                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
-            }
-            return Json(ResponseHelper.UnSuccess());
-        }
-
-        // POST: PlayerScores/OpponentTeamSave
-        [HttpPost]
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> OpponentTeamSave([FromForm] TeamMatchScoredto OpponentTeamplayers, int teamId)
-        {
-            if (ModelState.IsValid)
-            {
-
-                _context.AddRange(OpponentTeamplayers.OpponentTeamScoreCard.Select(i => new PlayerScore
-                {
-                    Position = i.Position,
-                    IsPlayedInning = i.IsPlayedInning,
-                    PlayerId = i.PlayerId,
-                    HowOutId = i.HowOutId,
-                    Bowler = i.Bowler,
-                    MatchId = i.MatchId,
-                    TeamId = i.TeamId
-                }
-                ));
-
-                await _context.SaveChangesAsync();
-                return Json(ResponseHelper.Success());
-                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
-            }
-            return Json(ResponseHelper.UnSuccess());
-        }
-
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> TeamScoreSave([FromForm] TeamMatchScoredto TeamScores)
-        {
-            if (ModelState.IsValid)
-            {
-
-                _context.AddRange(TeamScores.TeamScore.Select(i => new TeamScore
-                {
-                    TeamId = i.TeamId,
-                    MatchId = i.MatchId,
-                    TotalScore = i.TotalScore,
-                    Wickets = i.Wickets,
-                    Wideballs = i.Wideballs,
-                    NoBalls = i.NoBalls,
-                    Byes = i.Byes,
-                    LegByes = i.LegByes
-                }
-                ));
-
-                await _context.SaveChangesAsync();
-                return Json(ResponseHelper.Success());
-                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
-            }
-            return Json(ResponseHelper.UnSuccess());
-        }
-
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> FallOfWicketSave([FromForm] TeamMatchScoredto Model)
-        {
-            if (ModelState.IsValid)
-            {
-
-                _context.AddRange(Model.FallOfWicket.Select(i => new FallOfWicket
-                {
-                    TeamId = i.TeamId,
-                    MatchId = i.MatchId,
-                    First = i.First,
-                    Second = i.Second,
-                    Third = i.Third,
-                    Fourth = i.Fourth,
-                    Fifth = i.Fifth,
-                    Sixth = i.Sixth,
-                    Seventh = i.Seventh,
-                    Eight = i.Eight,
-                    Ninth = i.Ninth,
-                    Tenth = i.Tenth
-                }
-                ));
-
-                await _context.SaveChangesAsync();
-                return Json(ResponseHelper.Success());
-                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
-            }
-            return Json(ResponseHelper.UnSuccess());
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> UpdateTeamScore([FromForm] TeamMatchScoredto model)
-        {
-            if (ModelState.IsValid)
-            {
-                foreach (var teamScore in model.TeamScore)
-                {
-                    var teamScoreDbModel = new TeamScore
-                    {
-                        TeamScoreId = teamScore.TeamScoreId
-                    };
-                    _context.TeamScores.Attach(teamScoreDbModel);
-
-                    teamScoreDbModel.TeamScoreId = teamScore.TeamScoreId;
-                    teamScoreDbModel.TeamId = teamScore.TeamId;
-                    teamScoreDbModel.MatchId = teamScore.MatchId;
-                    teamScoreDbModel.TotalScore = teamScore.TotalScore;
-                    teamScoreDbModel.Wickets = teamScore.Wickets;
-                    teamScoreDbModel.Wideballs = teamScore.Wideballs;
-                    teamScoreDbModel.NoBalls = teamScore.NoBalls;
-                    teamScoreDbModel.Byes = teamScore.Byes;
-                    teamScoreDbModel.LegByes = teamScore.LegByes;
-
-                    _context.TeamScores.Update(teamScoreDbModel);
-                }
-
-                await _context.SaveChangesAsync();
-                return Json(ResponseHelper.UpdateSuccess());
-            }
-            else
-                return Json(ResponseHelper.UpdateUnSuccess());
-
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> UpdateFallOfWicket([FromForm] TeamMatchScoredto model)
-        {
-            if (ModelState.IsValid)
-            {
-                foreach (var fallOfWicket in model.FallOfWicket)
-                {
-                    var fallOfWicketDbModel = new FallOfWicket
-                    {
-                        FallOfWicketId = fallOfWicket.FallOfWicketId
-                    };
-                    _context.FallOFWickets.Attach(fallOfWicketDbModel);
-
-                    fallOfWicketDbModel.FallOfWicketId = fallOfWicket.FallOfWicketId;
-                    fallOfWicketDbModel.First = fallOfWicket.First;
-                    fallOfWicketDbModel.Second = fallOfWicket.Second;
-                    fallOfWicketDbModel.Third = fallOfWicket.Third;
-                    fallOfWicketDbModel.Fourth = fallOfWicket.Fourth;
-                    fallOfWicketDbModel.Fifth = fallOfWicket.Fifth;
-                    fallOfWicketDbModel.Sixth = fallOfWicket.Sixth;
-                    fallOfWicketDbModel.Seventh = fallOfWicket.Seventh;
-                    fallOfWicketDbModel.Eight = fallOfWicket.Eight;
-                    fallOfWicketDbModel.Ninth = fallOfWicket.Ninth;
-                    fallOfWicketDbModel.Tenth = fallOfWicket.Tenth;
-                    fallOfWicketDbModel.TeamId = fallOfWicket.TeamId;
-                    fallOfWicketDbModel.MatchId = fallOfWicket.MatchId;
-
-                    _context.FallOFWickets.Update(fallOfWicketDbModel);
-                }
-
-                await _context.SaveChangesAsync();
-                return Json(ResponseHelper.UpdateSuccess());
-            }
-            else
-                return Json(ResponseHelper.UpdateUnSuccess());
-
-        }
-
-        [HttpPost]
-        [Route("PlayerScores/PlayerScoreModal")]
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> PlayerScoreModal([FromBody]MatchSummarydto playerScores)
-        {
-            try
-            {
-
-                if (ModelState.IsValid)
-                {
-                    var playercoreCard = _context.PlayerScores
-                        .AsNoTracking()
-                        .Where(i => i.PlayerScoreId == playerScores.PlayerScoreId)
-                        .SingleOrDefault();
-                    playercoreCard.Bat_Runs = playerScores.Bat_Runs;
-                    playercoreCard.Bat_Balls = playerScores.Bat_Balls;
-                    playercoreCard.Four = playerScores.Four;
-                    playercoreCard.Six = playerScores.Six;
-                    playercoreCard.Ball_Runs = playerScores.Ball_Runs;
-                    playercoreCard.Overs = playerScores.Overs;
-                    playercoreCard.Wickets = playerScores.Wickets;
-                    playercoreCard.Maiden = playerScores.Maiden;
-                    playercoreCard.RunOut = playerScores.RunOut;
-                    playercoreCard.Catches = playerScores.Catches;
-                    playercoreCard.Stump = playerScores.Stump;
-                    _context.Update(playercoreCard);
-                    await _context.SaveChangesAsync();
-                    return Ok();
-                }
-                else
-                    return BadRequest(ModelState);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return BadRequest();
-            }
-        }
-
-        [HttpGet]
-        // GET: PlayerScoresModal/Edit/5
-        [Route("PlayerScores/GetPlayerScoreModal")]
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public IActionResult GetPlayerScoreModal(int playerScoreId)
-        {
-
-            var playerScore = _context.PlayerScores
-      .AsNoTracking()
-      .Where(i => i.PlayerScoreId == playerScoreId)
-      .Select(i => new MatchSummarydto
-      {
-          Catches = i.Catches,
-          Ball_Runs = i.Ball_Runs,
-          Bat_Balls = i.Bat_Balls,
-          Bat_Runs = i.Bat_Runs,
-          Four = i.Four,
-          Maiden = i.Maiden,
-          Overs = i.Overs,
-          RunOut = i.RunOut,
-          Six = i.Six,
-          Stump = i.Stump,
-          Wickets = i.Wickets,
-          PlayerScoreId = i.PlayerScoreId
-      })
-      .ToList();
-
-            return Json(playerScore);
-        }
-
-        // GET: PlayerScores/Edit/5
-        [HttpGet]
-        [Authorize(Roles = "Club Admin,Administrator")]
-        public IActionResult Edit(int? matchId, int? homeTeamId, int? oppTeamId, int? playerScoreId)
+        public IActionResult Edit(int? matchId, int? homeTeamId, int? oppTeamId)
         {
             ViewBag.Name = "Edit Match Players";
             ViewBag.HowOut = new SelectList(_context.HowOut
@@ -509,18 +238,20 @@ namespace WebApp.Controllers
                 .Select(i => new { i.HowOutId, i.Name })
                 , "HowOutId", "Name");
             var scoreDto = new ScoreCarddto();
+            var connection = _context.Database.GetDbConnection();
+            var s = connection.Query<Summary2dto>(
+              "[usp_Summary2]",
+              new
+              {
+                  paramMatchId = matchId,
+                  paramHomeTeamId = homeTeamId,
+                  paramOpponentTeamId = oppTeamId
+              },
+              commandType: CommandType.StoredProcedure) ?? new List<Summary2dto>()
+              {
+              };
+            scoreDto.Summary2dto = s.SingleOrDefault();
             //ViewBag.matchId = matchId;
-            ViewBag.OpponentTeam = _context.Teams
-             .AsNoTracking()
-             .Where(i => i.TeamId == oppTeamId)
-             .Select(i => i.Team_Name)
-             .Single();
-
-            ViewBag.HomeTeam = _context.Teams
-               .AsNoTracking()
-               .Where(i => i.TeamId == homeTeamId)
-               .Select(i => i.Team_Name)
-               .Single();
 
             ViewBag.homeTeamId = homeTeamId;
             ViewBag.opponentTeamId = oppTeamId;
@@ -544,10 +275,11 @@ namespace WebApp.Controllers
                   IsPlayedInning = i.IsPlayedInning,
                   PlayerId = i.PlayerId,
                   HowOutId = i.HowOutId,
-                  Bowler = i.Bowler,
+                  Bowler = i.BowlerId,
                   MatchId = i.MatchId,
                   TeamId = i.TeamId,
-                  Wickets = i.Wickets
+                  Wickets = i.Wickets,
+                  Fielder = i.Fielder
               })
               .ToList();
 
@@ -564,6 +296,7 @@ namespace WebApp.Controllers
                         scoreDto.HomeTeamScoreCard.Add(new MatchSummarydto
                         {
                             MatchId = matchId.Value,
+                            TeamId = homeTeamId.Value
                         });
                     }
                 }
@@ -577,6 +310,7 @@ namespace WebApp.Controllers
                         scoreDto.OpponentTeamScoreCard.Add(new MatchSummarydto
                         {
                             MatchId = matchId.Value,
+                            TeamId = oppTeamId.Value
                         });
                     }
                 }
@@ -651,14 +385,135 @@ namespace WebApp.Controllers
             return View(scoreDto);
         }
 
+
+
+        [HttpPost("PlayerScores/HomeTeamSave")]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<IActionResult> HomeTeamSave([FromForm] TeamMatchScoredto HomeTeamplayers, int teamId)
+        {
+            if (ModelState.IsValid)
+            {
+
+                _context.AddRange(HomeTeamplayers.HomeTeamScoreCard.Select(i => new PlayerScore
+                {
+                    Position = i.Position,
+                    IsPlayedInning = i.IsPlayedInning,
+                    PlayerId = i.PlayerId,
+                    HowOutId = i.HowOutId,
+                    BowlerId = i.Bowler,
+                    MatchId = i.MatchId,
+                    TeamId = i.TeamId,
+                    Fielder = i.Fielder
+                }
+                ));
+
+                await _context.SaveChangesAsync();
+                return Json(ResponseHelper.Success());
+                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
+            }
+            return Json(ResponseHelper.UnSuccess());
+        }
+
+
+        [HttpPost("PlayerScores/OpponentTeamSave")]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<IActionResult> OpponentTeamSave([FromForm] TeamMatchScoredto OpponentTeamplayers, int teamId)
+        {
+            if (ModelState.IsValid)
+            {
+
+                _context.AddRange(OpponentTeamplayers.OpponentTeamScoreCard.Select(i => new PlayerScore
+                {
+                    Position = i.Position,
+                    IsPlayedInning = i.IsPlayedInning,
+                    PlayerId = i.PlayerId,
+                    HowOutId = i.HowOutId,
+                    BowlerId = i.Bowler,
+                    MatchId = i.MatchId,
+                    TeamId = i.TeamId,
+                    Fielder = i.Fielder
+                }
+                ));
+
+                await _context.SaveChangesAsync();
+                return Json(ResponseHelper.Success());
+                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
+            }
+            return Json(ResponseHelper.UnSuccess());
+        }
+
+        [HttpPost("PlayerScores/TeamScoreSave")]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<IActionResult> TeamScoreSave([FromForm] TeamMatchScoredto TeamScores)
+        {
+            if (ModelState.IsValid)
+            {
+
+                _context.AddRange(TeamScores.TeamScore.Select(i => new TeamScore
+                {
+                    TeamId = i.TeamId,
+                    MatchId = i.MatchId,
+                    TotalScore = i.TotalScore,
+                    Wickets = i.Wickets,
+                    Wideballs = i.Wideballs,
+                    NoBalls = i.NoBalls,
+                    Byes = i.Byes,
+                    LegByes = i.LegByes
+                }
+                ));
+
+                await _context.SaveChangesAsync();
+                return Json(ResponseHelper.Success());
+                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
+            }
+            return Json(ResponseHelper.UnSuccess());
+        }
+
+        [HttpPost("PlayerScores/FallOfWicketSave")]
+        //[ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<IActionResult> FallOfWicketSave([FromForm] TeamMatchScoredto Model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                _context.AddRange(Model.FallOfWicket.Select(i => new FallOfWicket
+                {
+                    TeamId = i.TeamId,
+                    MatchId = i.MatchId,
+                    First = i.First,
+                    Second = i.Second,
+                    Third = i.Third,
+                    Fourth = i.Fourth,
+                    Fifth = i.Fifth,
+                    Sixth = i.Sixth,
+                    Seventh = i.Seventh,
+                    Eight = i.Eight,
+                    Ninth = i.Ninth,
+                    Tenth = i.Tenth
+                }
+                ));
+
+                await _context.SaveChangesAsync();
+                return Json(ResponseHelper.Success());
+                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
+            }
+            return Json(ResponseHelper.UnSuccess());
+        }
+
+
+
         // POST: PlayerScores/OpponentTeamUpdate/5
-        [HttpPost]
+        [HttpPut("PlayerScores/OpponentTeamUpdate")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> OpponentTeamUpdate([FromForm] TeamMatchScoredto Matchplayers, int teamId)
         {
             if (ModelState.IsValid)
             {
+                var playerScoreIds = Matchplayers.OpponentTeamScoreCard.Select(i => i.PlayerScoreId).ToList();
+
+
                 foreach (var mp in Matchplayers.OpponentTeamScoreCard)
                 {
                     var matchScore = new PlayerScore { PlayerScoreId = mp.PlayerScoreId };
@@ -669,9 +524,11 @@ namespace WebApp.Controllers
                     matchScore.IsPlayedInning = mp.IsPlayedInning;
                     matchScore.PlayerId = mp.PlayerId;
                     matchScore.HowOutId = mp.HowOutId;
-                    matchScore.Bowler = mp.Bowler;
+                    matchScore.BowlerId = mp.Bowler;
                     matchScore.MatchId = mp.MatchId;
                     matchScore.TeamId = mp.TeamId;
+                    matchScore.Fielder = mp.Fielder;
+
                     await _context.SaveChangesAsync();
 
                 }
@@ -681,8 +538,7 @@ namespace WebApp.Controllers
             return Json(ResponseHelper.UpdateUnSuccess());
         }
 
-        // POST: PlayerScores/HomeTeamUpdate/5
-        [HttpPost]
+        [HttpPut("PlayerScores/HomeTeamUpdate")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> HomeTeamUpdate([FromForm] TeamMatchScoredto Matchplayers, int teamId)
@@ -699,9 +555,10 @@ namespace WebApp.Controllers
                     matchScore.IsPlayedInning = mp.IsPlayedInning;
                     matchScore.PlayerId = mp.PlayerId;
                     matchScore.HowOutId = mp.HowOutId;
-                    matchScore.Bowler = mp.Bowler;
+                    matchScore.BowlerId = mp.Bowler;
                     matchScore.MatchId = mp.MatchId;
                     matchScore.TeamId = mp.TeamId;
+                    matchScore.Fielder = mp.Fielder;
                     await _context.SaveChangesAsync();
 
                 }
@@ -711,17 +568,153 @@ namespace WebApp.Controllers
             return Json(ResponseHelper.UpdateUnSuccess());
         }
 
-        // POST: PlayerScores/Delete/5
-        [HttpDelete, ActionName("Delete")]
+        [HttpPut("PlayerScores/UpdateTeamScore")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> UpdateTeamScore([FromForm] TeamMatchScoredto model)
         {
-            var playerScore = await _context.PlayerScores.SingleOrDefaultAsync(m => m.PlayerId == null);
-            _context.PlayerScores.Remove(playerScore);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                foreach (var teamScore in model.TeamScore)
+                {
+                    var teamScoreDbModel = new TeamScore
+                    {
+                        TeamScoreId = teamScore.TeamScoreId
+                    };
+                    _context.TeamScores.Attach(teamScoreDbModel);
+
+                    teamScoreDbModel.TeamScoreId = teamScore.TeamScoreId;
+                    teamScoreDbModel.TeamId = teamScore.TeamId;
+                    teamScoreDbModel.MatchId = teamScore.MatchId;
+                    teamScoreDbModel.TotalScore = teamScore.TotalScore;
+                    teamScoreDbModel.Wickets = teamScore.Wickets;
+                    teamScoreDbModel.Wideballs = teamScore.Wideballs;
+                    teamScoreDbModel.NoBalls = teamScore.NoBalls;
+                    teamScoreDbModel.Byes = teamScore.Byes;
+                    teamScoreDbModel.LegByes = teamScore.LegByes;
+                    await _context.SaveChangesAsync();
+                    //_context.TeamScores.Update(teamScoreDbModel);
+                }
+
+
+                return Json(ResponseHelper.UpdateSuccess());
+            }
+            else
+                return Json(ResponseHelper.UpdateUnSuccess());
+
         }
+
+        [HttpPut("PlayerScores/UpdateFallOfWicket")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<IActionResult> UpdateFallOfWicket([FromForm] TeamMatchScoredto model)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (var fallOfWicket in model.FallOfWicket)
+                {
+                    var fallOfWicketDbModel = new FallOfWicket
+                    {
+                        FallOfWicketId = fallOfWicket.FallOfWicketId
+                    };
+                    _context.FallOFWickets.Attach(fallOfWicketDbModel);
+
+                    fallOfWicketDbModel.FallOfWicketId = fallOfWicket.FallOfWicketId;
+                    fallOfWicketDbModel.First = fallOfWicket.First;
+                    fallOfWicketDbModel.Second = fallOfWicket.Second;
+                    fallOfWicketDbModel.Third = fallOfWicket.Third;
+                    fallOfWicketDbModel.Fourth = fallOfWicket.Fourth;
+                    fallOfWicketDbModel.Fifth = fallOfWicket.Fifth;
+                    fallOfWicketDbModel.Sixth = fallOfWicket.Sixth;
+                    fallOfWicketDbModel.Seventh = fallOfWicket.Seventh;
+                    fallOfWicketDbModel.Eight = fallOfWicket.Eight;
+                    fallOfWicketDbModel.Ninth = fallOfWicket.Ninth;
+                    fallOfWicketDbModel.Tenth = fallOfWicket.Tenth;
+                    fallOfWicketDbModel.TeamId = fallOfWicket.TeamId;
+                    fallOfWicketDbModel.MatchId = fallOfWicket.MatchId;
+                    await _context.SaveChangesAsync();
+                }
+
+
+                return Json(ResponseHelper.UpdateSuccess());
+            }
+            else
+                return Json(ResponseHelper.UpdateUnSuccess());
+
+        }
+
+        [HttpPut]
+        [Route("PlayerScores/PlayerScoreModal")]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public int PlayerScoreModal([FromBody]MatchSummarydto playerScores)
+        {
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    var playercoreCard = _context.PlayerScores
+                        .AsNoTracking()
+                        .Where(i => i.PlayerScoreId == playerScores.PlayerScoreId)
+                        .SingleOrDefault();
+                    playercoreCard.Bat_Runs = playerScores.Bat_Runs;
+                    playercoreCard.Bat_Balls = playerScores.Bat_Balls;
+                    playercoreCard.Four = playerScores.Four;
+                    playercoreCard.Six = playerScores.Six;
+                    playercoreCard.Ball_Runs = playerScores.Ball_Runs;
+                    playercoreCard.Overs = playerScores.Overs;
+                    playercoreCard.Wickets = playerScores.Wickets;
+                    playercoreCard.Maiden = playerScores.Maiden;
+                    playercoreCard.RunOut = playerScores.RunOut;
+                    playercoreCard.Catches = playerScores.Catches;
+                    playercoreCard.Stump = playerScores.Stump;
+                    _context.Update(playercoreCard);
+                     _context.SaveChangesAsync();
+                    return playerScores.PlayerScoreId;
+                }
+                else
+                    return 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return 0;
+            }
+        }
+
+        [HttpGet]
+        // GET: PlayerScoresModal/Edit/5
+        [Route("PlayerScores/GetPlayerScoreModal")]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public IActionResult GetPlayerScoreModal(int playerScoreId)
+        {
+
+            var playerScore = _context.PlayerScores
+      .AsNoTracking()
+      .Where(i => i.PlayerScoreId == playerScoreId)
+      .Select(i => new MatchSummarydto
+      {
+          Catches = i.Catches,
+          PlayerName = i.Player.Player_Name,
+          Ball_Runs = i.Ball_Runs,
+          Bat_Balls = i.Bat_Balls,
+          Bat_Runs = i.Bat_Runs,
+          Four = i.Four,
+          Maiden = i.Maiden,
+          Overs = i.Overs,
+          RunOut = i.RunOut,
+          Six = i.Six,
+          Stump = i.Stump,
+          Wickets = i.Wickets,
+          PlayerScoreId = i.PlayerScoreId
+      })
+      .ToList();
+
+            return Json(playerScore);
+        }
+
+
+      
 
     }
 }

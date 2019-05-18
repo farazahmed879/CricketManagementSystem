@@ -21,7 +21,7 @@ namespace WebApp.Extentions
             {
                 throw new ArgumentNullException(nameof(principal));
             }
-            var claim = principal.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
+            var claim = principal.FindFirst("https://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
             return claim != null ? claim.Value : null;
         }
 

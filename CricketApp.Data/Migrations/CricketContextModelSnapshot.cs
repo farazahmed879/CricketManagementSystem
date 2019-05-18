@@ -112,6 +112,8 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Normalize");
+
                     b.HasKey("HowOutId");
 
                     b.ToTable("HowOut");
@@ -390,9 +392,11 @@ namespace CricketApp.Data.Migrations
 
                     b.Property<int?>("Bat_Runs");
 
-                    b.Property<string>("Bowler");
+                    b.Property<int?>("BowlerId");
 
                     b.Property<int?>("Catches");
+
+                    b.Property<string>("Fielder");
 
                     b.Property<int?>("Four");
 
@@ -421,6 +425,8 @@ namespace CricketApp.Data.Migrations
                     b.Property<int?>("Wickets");
 
                     b.HasKey("PlayerScoreId");
+
+                    b.HasIndex("BowlerId");
 
                     b.HasIndex("HowOutId");
 
@@ -800,6 +806,10 @@ namespace CricketApp.Data.Migrations
 
             modelBuilder.Entity("CricketApp.Domain.PlayerScore", b =>
                 {
+                    b.HasOne("CricketApp.Domain.Player", "Bowler")
+                        .WithMany()
+                        .HasForeignKey("BowlerId");
+
                     b.HasOne("CricketApp.Domain.HowOut", "HowOut")
                         .WithMany()
                         .HasForeignKey("HowOutId");

@@ -162,8 +162,8 @@
         <div id="snackbar"></div>
         <div class="footer">
             <ul class="list-inline">
-                <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-                <li><input id="PlayerCreate" type="button" value="Add" class="btn btn-primary"></li>
+                <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
+                <li><input id="PlayerCreate" type="button" value="Add" class="btn btn-outlined btn-primary"></li>
             </ul>
         </div>
     </div>
@@ -176,14 +176,14 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link rel="stylesheet" href="~/plugins/iCheck/square/blue.css">
     <script src="~/plugins/input-mask/jquery.inputmask.js"></script>
     <script src="~/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
     <script src="~/plugins/input-mask/jquery.inputmask.extensions.js"></script>
-    <link rel="stylesheet" href="~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script src="~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
+    <script src="~/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="~/plugins/iCheck/icheck.min.js"></script>
     <link rel="stylesheet" href="~/Home/css/photobox.css">
     <script src="~/Home/js/photobox.js"></script>

@@ -1,17 +1,20 @@
-﻿Create procedure [usp_RecentMatches]
+﻿Alter procedure [usp_RecentMatches]
 AS
 begin
 		SELECT	top 3
 				homeTeam.Team_Name as 'HomeTeam',
 				Teams.Team_Name as 'OppponentTeam',
 				Result as 'Summary',
-				Teams.[FileName] as 'OpponentTeamLogo',
-				homeTeam.[FileName] as 'HomeTeamTeamLogo',
-				--TeamScores.MatchId,
+				case when Teams.[FileName] is null then 'noLogo.png' else Teams.[FileName] End as 'OpponentTeamLogo',
+				case when homeTeam.[FileName] is null then 'noLogo.png' else homeTeam.[FileName] End as 'HomeTeamTeamLogo',
+				Matches.MatchId ,
+				Teams.TeamId as 'OppTeamId',
+				homeTeam.TeamId as 'HomeTeamId',
 				Matches.MatchOvers as 'MatchOvers',
 				--TeamScores.TeamId,
 				Matches.DateOfMatch,
 				MT.MatchTypeName as 'Type',
+				T.TournamentName as 'Tournament',
 				u.UserName,
 				(
 					select TotalScore from TeamScores
@@ -41,13 +44,12 @@ begin
 		
 		FROM Matches		
 		inner join Teams on  Teams.TeamId = Matches.OppponentTeamId
-		--inner join TeamScores on TeamScores.TeamId = Teams.TeamId
 		inner join MatchType MT on MT.MatchTypeId = Matches.MatchTypeId
-
+		left join Tournaments T on T.TournamentId = Matches.TournamentId
 		inner join Teams homeTeam on  homeTeam.TeamId = Matches.HomeTeamId
-		--inner join TeamScores homeTeamScore on homeTeamScore.TeamId = homeTeam.TeamId
 		inner join AspNetUsers u on Id = Matches.UserId
 		order by Matches.MatchId Desc
 
 end
 go
+--exec [usp_RecentMatches]

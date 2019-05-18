@@ -8,11 +8,13 @@ namespace WebApp.ViewModels
         public int? PlayerId { get; set; }
         public int Position { get; set; }
         public int MatchId { get; set; }
-        public string Bowler { get; set; }
+        public int? Bowler { get; set; }
         public int? Bat_Runs { get; set; }
         public int? Bat_Balls { get; set; }
         public int? HowOutId { get; set; }
         public string HowOutName { get; set; }
+        public string Fielder { get; set; }
+        public string PlayerName { get; set; }
         public int? Ball_Runs { get; set; }
         public float? Overs { get; set; }
         public int? Wickets { get; set; }

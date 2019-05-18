@@ -36,32 +36,35 @@ namespace WebApp.Controllers
 
         // GET: MatchSeries
         [HttpGet]
-        public async Task<IActionResult> Index(int? page, int? userId)
+        public async Task<IActionResult> Index(DataTableAjaxPostModel model, int? page, bool isApi)
         {
             ViewBag.Name = "Series";
-            var users = await _userManager.GetUserAsync(HttpContext.User);
-            if (users != null)
-                userId = users.Id;
-            var model = await _series.GetAllSeries(page, userId);
-            return View(model);
-           
+            var result = await _series.GetAllSeries(model.Init(),page);
+            if (isApi == true)
+                return Json(new
+                {
+                    data = result,
+                    draw = model.Draw,
+                    recordsTotal = result.TotalCount,
+                    recordsFiltered = result.TotalCount,
+                });
+            else
+                return View(result);
+
         }
 
         [HttpGet]
-        [Route("MatchSeries/List/{userId}")]
-        public async Task<IActionResult> List(int? page, int? userId)
+        [Route("MatchSeries/List")]
+        public async Task<IActionResult> List(DataTableAjaxPostModel model, int? page)
         {
             ViewBag.Name = "Series";
-            var users = await _userManager.GetUserAsync(HttpContext.User);
-            if (users != null)
-                userId = users.Id;
-            var model = await _series.GetAllSeries(page, userId);
-            return Json(model);
+            var result = await _series.GetAllSeries(model.Init(),page);
+            return Json(result);
 
         }
 
         // GET: MatchSeries/Details/5
-        [HttpGet]
+        [HttpGet("MatchSeries/Details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -80,7 +83,7 @@ namespace WebApp.Controllers
         }
 
         // GET: MatchSeries/Create
-        [HttpGet]
+        [HttpGet("MatchSeries/Create")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create()
         {
@@ -89,7 +92,7 @@ namespace WebApp.Controllers
         }
 
         // POST: MatchSeries/Create
-        [HttpPost]
+        [HttpPost("MatchSeries/Create")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Create(MatchSeriesdto matchSeries)
@@ -107,7 +110,7 @@ namespace WebApp.Controllers
         }
 
         // GET: MatchSeries/Edit/5
-        [HttpGet]
+        [HttpGet("MatchSeries/Edit/{id}")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -136,7 +139,7 @@ namespace WebApp.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPut("MatchSeries/Edit")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(MatchSeriesdto matchSeries)
@@ -157,27 +160,9 @@ namespace WebApp.Controllers
             return Json(ResponseHelper.UpdateUnSuccess());
         }
 
-        // GET: MatchSeries/Delete/5
-        [HttpGet]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var matchSeries = await _context.MatchSeries
-                .SingleOrDefaultAsync(m => m.MatchSeriesId == id);
-            if (matchSeries == null)
-            {
-                return NotFound();
-            }
-
-            return View(matchSeries);
-        }
 
         // POST: MatchSeries/Delete/5
-        [HttpDelete]
+        [HttpDelete("MatchSeries/DeleteConfirmed/{matchSeriesId}")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int matchSeriesId)
         {

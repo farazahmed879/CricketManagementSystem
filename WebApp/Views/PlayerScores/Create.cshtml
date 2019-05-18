@@ -29,22 +29,65 @@
             </ol>
         </div>
         <div class="row">
-            <div class="col-sm-12 center">
-                <ul class="list-inline pull-center">
-                    <li>
-                        <h4>@ViewBag.HomeTeam</h4>
-                    </li>
-                    <li><h4>vs</h4></li>
-                    <li>
-                        <h4>@ViewBag.OpponentTeam</h4>
-                    </li>
-                </ul>
+            <div class="col-md-12 pull-center">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    @if (Model.Summary2dto.HomeTeamTeamLogo != null)
+                    {
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                            <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
+                            <img id="Img" class="pull-right" src="~/Home/images/Teams/@Model.Summary2dto.HomeTeamTeamLogo" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                            <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
+                            <img id="Img" class="pull-right" src="~/Home/images/Teams/noLogo.png" />
+                        </div>
+                    }
 
+                    @if (Model.Summary2dto.Type != "Tournament")
+                    {
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 bg-warning center">
+                            <h4 class="font">@Model.Summary2dto.Type Match </h4>
+                            <h5>@Model.Summary2dto.GroundName</h5>
+                            <h5 id="matchDate">@Model.Summary2dto.DateOfMatch.ToString("dddd, dd MMMM yyyy")</h5>
+                        </div>
+                    }
+                    else
+                    {
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 bg-warning center">
+                            <h4 class="pull-center">
+                                @Model.Summary2dto.Type
+                            </h4>
+                            <h5 class="pull-center">@Model.Summary2dto.TournamentName</h5>
+                            <h5>@Model.Summary2dto.Stage</h5>
+                            <h5>@Model.Summary2dto.GroundName</h5>
+                            <h5>@Model.Summary2dto.DateOfMatch.ToString("dddd, dd MMMM yyyy")</h5>
+                        </div>
+
+                    }
+                    @if (Model.Summary2dto.OpponentTeamLogo != null)
+                    {
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                            <h4 class="pull-left">@Model.Summary2dto.OppponentTeam</h4>
+                            <img id="Img" class="pull-left" src="~/Home/images/Teams/@Model.Summary2dto.OpponentTeamLogo" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                            <h4 class="pull-left">@Model.Summary2dto.OppponentTeam</h4>
+                            <img id="Img" class="pull-left" src="~/Home/images/Teams/noLogo.png" />
+                        </div>
+                    }
+
+                </div>
             </div>
             <section>
                 <div class="wizard">
                     <div class="wizard-inner">
-                        <div class="connecting-line"></div>
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active">
                                 <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="First Inning">
@@ -78,45 +121,48 @@
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane active" role="tabpanel" id="step1">
-                            <div class="col-md-12 bg-blue-active">
-                                <h4>@ViewBag.HomeTeam Players</h4>
+                            <div class="col-md-12" style="background-color: maroon; color: white">
+                                <h4><b>@Model.Summary2dto.HomeTeam Players</b></h4>
                             </div>
                             <div class="container-fluid">
 
                                 <form class="form-inline" role="form" id="HomeTeamData">
 
+                                    <div class="row">
+                                        <div class="col-sm-1">
 
-                                    <div class="col-sm-1">
+                                            <h4>S.No</h4>
 
-                                        <h4>S.No</h4>
+                                        </div>
+                                        <div class="col-sm-1">
 
+                                            <h4>Inning</h4>
+
+                                        </div>
+
+                                        <div class="col-sm-3">
+
+                                            <h4>Batsman</h4>
+
+                                        </div>
+                                        <div class="col-sm-2">
+
+                                            <h4>How Out</h4>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <h4>Bowler</h4>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <h4>Fielder</h4>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-1">
-
-                                        <h4>Inning</h4>
-
-                                    </div>
-
-                                    <div class="col-sm-4">
-
-                                        <h4>Batsman</h4>
-
-                                    </div>
-                                    <div class="col-sm-2">
-
-                                        <h4>How Out</h4>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <h4>Bowler</h4>
-                                    </div>
-
                                     @{
 
                                         for (int i = 0; i < Model.HomeTeamScoreCard.Count; i++)
                                         {
 
-                                            <div class="row">
+                                            <div class="row" style="border-bottom:inset;">
                                                 <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].MatchId" />
                                                 <input type="hidden" asp-for="@Model.HomeTeamScoreCard[i].TeamId" value="@ViewBag.homeTeamId" />
                                                 <br />
@@ -134,21 +180,28 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <select asp-for="@Model.HomeTeamScoreCard[i].PlayerId" asp-items="ViewBag.HomePlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
                                                         <option value="">--Select Player--</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <select asp-for="@Model.HomeTeamScoreCard[i].HowOutId" asp-items="ViewBag.HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single">
+                                                    <select asp-for="@Model.HomeTeamScoreCard[i].HowOutId" asp-items="ViewBag.HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single howOut">
                                                         <option value="">--How Out--</option>
                                                     </select>
                                                 </div>
 
-                                                <div class="col-sm-4">
-                                                    <select asp-for="@Model.HomeTeamScoreCard[i].Bowler" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single">
+                                                <div class="col-sm-3">
+                                                    <select asp-for="@Model.HomeTeamScoreCard[i].Bowler" asp-items="ViewBag.OpponentPlayerId" placeholder="--Select Player--" style="width: 100%" class="js-example-basic-single bowler">
                                                         <option value="">--Select Bowler--</option>
                                                     </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        <div class="form-group label-floating">
+                                                            <input asp-for="@Model.HomeTeamScoreCard[i].Fielder" class="form-control fielder" />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         }
@@ -157,15 +210,15 @@
 
                                     <ul class="list-inline pull-right">
                                         <li><input type="button" value="Skip" class="btn btn-default next-step"></li>
-                                        <li><input type="button" id="HomeTeamBtn" value="Save and Continue" class="btn btn-primary next-step"></li>
+                                        <li><input type="button" id="HomeTeamBtn" value="Save and Continue" class="btn btn-outlined btn-primary next-step"></li>
                                     </ul>
 
                                 </form>
                             </div>
                         </div>
                         <div class="tab-pane" role="tabpanel" id="step2">
-                            <div class="col-md-12 bg-blue-active">
-                                <h4>@ViewBag.OpponentTeam Players</h4>
+                            <div class="col-md-12" style="background-color: maroon; color: white">
+                                <h4>@Model.Summary2dto.OppponentTeam Players</h4>
                             </div>
                             <div class="container-fluid">
 
@@ -183,7 +236,7 @@
 
                                     </div>
 
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
 
                                         <h4>Batsman</h4>
 
@@ -193,10 +246,12 @@
                                         <h4>How Out</h4>
                                     </div>
 
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <h4>Bowler</h4>
                                     </div>
-
+                                    <div class="col-sm-2">
+                                        <h4>Fielder</h4>
+                                    </div>
                                     @{
 
                                         for (int i = 0; i < Model.OpponentTeamScoreCard.Count; i++)
@@ -220,21 +275,28 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <select asp-for="@Model.OpponentTeamScoreCard[i].PlayerId" asp-items="ViewBag.OpponentPlayerId" style="width: 100%" placeholder="--Select Player--" class="js-example-basic-single">
                                                         <option value="">--Select Player--</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <select asp-for="@Model.OpponentTeamScoreCard[i].HowOutId" asp-items="ViewBag.HowOut" style="width: 100%" class="js-example-basic-single" placeholder="--How Out--">
+                                                    <select asp-for="@Model.OpponentTeamScoreCard[i].HowOutId" asp-items="ViewBag.HowOut" style="width: 100%" class="js-example-basic-single howOut" placeholder="--How Out--">
                                                         <option value="">--How Out--</option>
                                                     </select>
                                                 </div>
 
-                                                <div class="col-sm-4">
-                                                    <select asp-for="@Model.OpponentTeamScoreCard[i].Bowler" asp-items="ViewBag.HomePlayerId" style="width: 100%" placeholder="--Select Player--" class="js-example-basic-single">
+                                                <div class="col-sm-3">
+                                                    <select asp-for="@Model.OpponentTeamScoreCard[i].Bowler" asp-items="ViewBag.HomePlayerId" style="width: 100%" placeholder="--Select Player--" class="js-example-basic-single bowler">
                                                         <option value="">--Select Player--</option>
                                                     </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        <div class="form-group label-floating">
+                                                            <input asp-for="@Model.OpponentTeamScoreCard[i].Fielder" class="form-control fielder" />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         }
@@ -243,14 +305,14 @@
                                     <ul class="list-inline pull-right">
                                         <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
                                         <li><input type="button" value="Skip" class="btn btn-default next-step"></li>
-                                        <li><input type="button" id="OpponentTeamBtn" value="Save and Continue" class="btn btn-primary next-step"></li>
+                                        <li><input type="button" id="OpponentTeamBtn" value="Save and Continue" class="btn btn-outlined btn-primary next-step"></li>
                                     </ul>
                                 </form>
                             </div>
 
                         </div>
                         <div class="tab-pane" role="tabpanel" id="complete">
-                            <div class="col-md-12 bg-blue-active">
+                            <div class="col-md-12" style="background-color: maroon; color: white">
                                 <h4>Summary</h4>
                             </div>
                             <div class="col-md-12">
@@ -285,12 +347,12 @@
                                                         if (i < 1)
                                                         {
                                                             ViewBag.teamId = ViewBag.homeTeamId;
-                                                            ViewBag.TeamName = ViewBag.HomeTeam;
+                                                            ViewBag.TeamName = Model.Summary2dto.HomeTeam;
                                                         }
                                                         else
                                                         {
                                                             ViewBag.teamId = ViewBag.opponentTeamId;
-                                                            ViewBag.TeamName = ViewBag.OpponentTeam;
+                                                            ViewBag.TeamName = Model.Summary2dto.OppponentTeam;
                                                         }
 
 
@@ -365,13 +427,13 @@
                                     <ul class="list-inline pull-right">
                                         <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
                                         <li><input type="button" value="Skip" class="btn btn-default next-step"></li>
-                                        <li><input type="button" id="TeamScorebtn" value="Save and continue" class="btn btn-primary next-step"></li>
+                                        <li><input type="button" id="TeamScorebtn" value="Save and continue" class="btn btn-outlined btn-primary next-step"></li>
                                     </ul>
                                 </form>
                             </div>
                         </div>
                         <div class="tab-pane" role="tabpanel" id="fallOfWicket">
-                            <div class="col-md-12 bg-blue-active">
+                            <div class="col-md-12" style="background-color: maroon; color: white">
                                 <h4>Fall of wickets</h4>
                             </div>
                             <form class="form-inline" role="form" id="FallOfWicket">
@@ -423,12 +485,12 @@
                                                     if (i < 1)
                                                     {
                                                         ViewBag.teamId = ViewBag.homeTeamId;
-                                                        ViewBag.TeamName = ViewBag.HomeTeam;
+                                                        ViewBag.TeamName = Model.Summary2dto.HomeTeam;
                                                     }
                                                     else
                                                     {
                                                         ViewBag.teamId = ViewBag.opponentTeamId;
-                                                        ViewBag.TeamName = ViewBag.OpponentTeam;
+                                                        ViewBag.TeamName = Model.Summary2dto.OppponentTeam;
                                                     }
 
 
@@ -477,7 +539,7 @@
                                 <hr />
                                 <ul class="list-inline pull-right">
                                     <li><input type="button" value="Previous" class="btn btn-default prev-step"></li>
-                                    <li><input type="button" id="FallOfWicketBtn" value="Save and Finish" class="btn btn-primary"></li>
+                                    <li><input type="button" id="FallOfWicketBtn" value="Save and Finish" class="btn btn-outlined btn-primary"></li>
                                 </ul>
                             </form>
 
@@ -501,15 +563,17 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/plugins/iCheck/square/blue.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
     <script src="~/plugins/iCheck/icheck.min.js"></script>
 
     <script>
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
+            $('.fielder').prop('disabled', true);
+            $('.bowler').prop('disabled', true);
         });
 
         $(function () {
@@ -633,6 +697,8 @@
         });
 
 
+
+
         $(document).ready(function () {
             //Initialize tooltips
             $('.nav-tabs > li a[title]').tooltip();
@@ -668,34 +734,62 @@
         function prevTab(elem) {
             $(elem).prev().find('a[data-toggle="tab"]').click();
         }
-                                                                                        //$('.playerDropDown')
-                                                                                        //.on('change', (event) => {
-                                                                                        //    const element = event.target;
-                                                                                        //    if (!element.value)
-                                                                                        //        return;
-                                                                                        //    globalStates.push({
-                                                                                        //        value: element.value
-                                                                                        //    });
-                                                                                        //    removeValues();
-                                                                                        //});
+        //$('.playerDropDown')
+        //.on('change', (event) => {
+        //    const element = event.target;
+        //    if (!element.value)
+        //        return;
+        //    globalStates.push({
+        //        value: element.value
+        //    });
+        //    removeValues();
+        //});
 
-                                                                                        //const removeValues = () => {
-                                                                                        //    const elements = $('select.playerDropDown');
-                                                                                        //    for (let index = 0; index < elements.length; index++) {
-                                                                                        //        const isAdded = _.some(globalStates, {
-                                                                                        //            value: elements[index].value
-                                                                                        //        });
-                                                                                        //        if (!isAdded) {
-                                                                                        //            for (let globalState of globalStates) {
-                                                                                        //                //elements[index].selectize.removeValues(globalState.value);
-                                                                                        //                $(`#${elements[index].id}`)[0].selectize.removeOption(globalState.value);
-                                                                                        //            }
-                                                                                        //        }
-                                                                                        //    }
-                                                                                        //};
+        //const removeValues = () => {
+        //    const elements = $('select.playerDropDown');
+        //    for (let index = 0; index < elements.length; index++) {
+        //        const isAdded = _.some(globalStates, {
+        //            value: elements[index].value
+        //        });
+        //        if (!isAdded) {
+        //            for (let globalState of globalStates) {
+        //                //elements[index].selectize.removeValues(globalState.value);
+        //                $(`#${elements[index].id}`)[0].selectize.removeOption(globalState.value);
+        //            }
+        //        }
+        //    }
+        //};
 
+        $(".howOut").change(function () {
+            var id = $(this).val();
+            if (id == "1" || id == "3" || id == "4")
+                $(this).parent().next().next().find('input').prop('disabled', false);
+            else {
+                $(this).parent().next().next().find('input').prop('disabled', true);
+                $(this).parent().next().next().find('input').val('').trigger('change');
+            }
+            
+            if (id == "4" || id == "7" || id == "8" || id == "") {
+                $(this).parent().next().find('select').prop('disabled', true);
+                $(this).parent().next().find('select').val('').trigger('change');
+            }
+
+            else {
+                $(this).parent().next().find('select').prop('disabled', false);
+            }
+                
+        });
 
 
     </script>
+    <style>
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            width: 70px;
+        }
+    </style>
 }
 

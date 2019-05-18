@@ -1,6 +1,6 @@
 /* IMPACT - By DistinctiveThemes */
 
-@import url(http://fonts.googleapis.com/css?family=Lato:400,700,300);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,300);
 
 .clearfix {
     zoom: 1;
@@ -35,10 +35,9 @@
 }
 
 body {
-    color: #222;
+    color: #202020;
     background: #f5f5f5;
     font-family: Lato, sans-serif;
-    font-weight: 300;
     line-height: 1.6;
     font-size: 16px;
 }
@@ -89,7 +88,6 @@ a:focus {
 
 .dropdown-menu {
     margin-top: -1px;
-    min-width: 180px;
 }
 
 body > section {
@@ -277,8 +275,8 @@ blockquote {
 
 .portfolio-filter > li a.active {
     color: #FFF;
-    background: #00b29e;
-    border: 2px solid #00b29e;
+    background: maroon;
+    border: 2px solid maroon;
 }
 
 .portfolio-items > li {
@@ -351,7 +349,7 @@ blockquote {
     -o-transition: all .5s ease-in-out;
     -ms-transition: all .5s ease-in-out;
     transition: all .5s ease-in-out;
-    border-bottom: 4px solid #00b29e;
+    border-bottom: 4px solid maroon;
 }
 
 .portfolio-item h5:after {
@@ -492,7 +490,7 @@ div.pp_overlay {
     border-radius: 0;
     list-style: none;
     margin: 0 0 20px;
-    background: #00b29e;
+    background: maroon;
     text-align: center;
     padding: 30px 0;
 }
@@ -860,7 +858,7 @@ ul.tag-cloud li {
 
 .opaqued {
     padding: 10px 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: #363131;
     -webkit-transition: all .5s ease-in-out;
     -moz-transition: all .5s ease-in-out;
     -o-transition: all .5s ease-in-out;
@@ -894,7 +892,7 @@ ul.tag-cloud li {
 
 .team-member:hover .img-thumbnail {
     background: transparent;
-    background-color: #00b29e;
+    background-color: maroon;
 }
 
 .team-member .img-thumbnail {
@@ -1028,7 +1026,7 @@ ul.tag-cloud li {
     line-height: 68px;
     color: #fff;
     margin-right: 15px;
-    background-color: #00b29e;
+    background-color: maroon;
     text-align: center;
     display: block;
     box-shadow: 0 0 0 4px rgba(255, 255, 255, 1);
@@ -1040,8 +1038,8 @@ ul.tag-cloud li {
 
 .service-block:hover .fa-md {
     background: transparent;
-    color: #00b29e;
-    box-shadow: 0 0 0 4px #00b29e;
+    color: maroon;
+    box-shadow: 0 0 0 4px maroon;
 }
 
 .service-block .media-heading {
@@ -1233,7 +1231,7 @@ ul.rss li::before {
 
 #footer a:hover,
 #footer-wrapper a:hover {
-    color: #00b29e;
+    color: maroon;
 }
 
 #footer ul {
@@ -1300,23 +1298,23 @@ ul.social > li > a:hover {
 .blog .blog-item .blog-content {
     padding: 20px;
     position: relative;
-    border-bottom: 4px solid #f0f0f0;
+    border-bottom: 4px solid maroon;
 }
 
-.blog .blog-item .blog-content:after {
-    bottom: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-color: rgba(255, 255, 255, 0);
-    border-bottom-color: #fff;
-    border-width: 15px;
-    margin-left: -15px;
-}
+    .blog .blog-item .blog-content:after {
+        bottom: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: maroon;
+        border-width: 15px;
+        margin-left: -15px;
+    }
 
 .blog .blog-item h3 {
     margin-top: 0;
@@ -1547,7 +1545,7 @@ img.author-box-image {
     margin-bottom: 15px;
     width: 100%;
     background-color: #555;
-    border-bottom: 2px solid #555;
+    border-bottom: 2px solid maroon;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -1608,18 +1606,18 @@ img.author-box-image {
     box-shadow: none !important;
 }
 
-.btn-outlined.btn-primary {
-    background: none;
-    border: 2px solid #00b29e;
-    color: #00b29e;
-}
+    .btn-outlined.btn-primary {
+        background: none;
+        border: 2px solid maroon;
+        color: maroon;
+    }
 
-.btn-outlined.btn-primary:hover,
-.btn-outlined.btn-primary:active {
-    color: #FFF;
-    background: #00b29e;
-    border-color: #00b29e: ;
-}
+        .btn-outlined.btn-primary:hover,
+        .btn-outlined.btn-primary:active {
+            color: #FFF;
+            background: maroon;
+            border-color: maroon;
+        }
 
 .btn-outlined.btn-success {
     background: none;
@@ -1635,14 +1633,14 @@ img.author-box-image {
 
 .btn-outlined.btn-info {
     background: none;
-    border: 2px solid #5bc0de;
-    color: #5bc0de;
+    border: 2px solid maroon;
+    color: maroon;
 }
 
 .btn-outlined.btn-info:hover,
 .btn-outlined.btn-info:active {
-    color: #FFF;
-    background: #39b3d7;
+    color: maroon;
+    background: maroon;
 }
 
 .btn-outlined.btn-warning {
@@ -1677,7 +1675,7 @@ img.author-box-image {
 
 .btn-outlined.btn-white:hover,
 .btn-outlined.btn-white:active {
-    color: #00b29e;
+    color: maroon;
     background: #fff;
 }
 
@@ -1908,7 +1906,7 @@ img.author-box-image {
 }
 
 .tile-progress.tile-cyan .tile-footer {
-    background: #00b29e;
+    background: maroon;
     color: #fff;
 }
 
@@ -1996,7 +1994,7 @@ img.author-box-image {
 }
 
 .testimonial-list-item:hover blockquote {
-    border-left: 4px solid #00b29e;
+    border-left: 4px solid maroon;
 }
 
 .quote-author-list {
@@ -2080,10 +2078,9 @@ img.author-box-image {
 
 .form-control {
     padding: 10px 5px;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: white;
     color: #202020;
-    border: none;
-    border-radius: 0;
+    border-radius: 2px;
 }
 
 

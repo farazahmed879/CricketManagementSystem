@@ -34,6 +34,7 @@ BEGIN
 			sum (Catches) as 'TotalCatches',
 		 	sum (RunOut) as 'TotalRunOuts',
 			sum (Stump) as 'TotalStumps',
+			Players.[FileName] AS 'Image',
 			Players.Player_Name AS 'PlayerName'
 	
 	
@@ -60,6 +61,7 @@ BEGIN
 	GROUP BY PlayerScores.PlayerId,
 			Players.Player_Name,
 			PlayerRole.Name,
+			Players.[FileName],
 			 Players.TeamId
 END
 go

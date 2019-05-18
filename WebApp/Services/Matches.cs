@@ -25,12 +25,11 @@ namespace WebApp.Services
             _userManager = userManager;
         }
 
-        public async Task<List<Matchdto>> GetAllMatches(int? teamId, int? matchTypeId,
+        public async Task<PaginatedList<Matchdto>> GetAllMatchesList(DataTableAjaxPostModel model, int? teamId, int? matchTypeId,
                                                int? tournamentId, int? matchSeriesId,
                                                 int? season, int? matchOvers, int? userId, int? page)
         {
-            int pageSize = 20;
-            var model = await PaginatedList<Matchdto>.CreateAsync(
+            var result = await PaginatedList<Matchdto>.CreateAsync(
                 _context.Matches
                 .AsNoTracking()
                .Where(i => (!matchTypeId.HasValue || i.MatchTypeId == matchTypeId) &&
@@ -57,9 +56,9 @@ namespace WebApp.Services
                     HasFilledOpponentTeamData = i.PlayerScores.Any() && i.PlayerScores.Any(o => o.Player != null && o.Player.TeamId == i.OppponentTeamId),
                     HasFilledTeamScoreData = i.TeamScores.Any() && i.TeamScores.Any(o => i.MatchId == i.MatchId)
                 })
-               .OrderByDescending(i => i.MatchId)
-                                 , page ?? 1, pageSize);
-            return model;
+               .OrderByDescending(i => i.DateOfMatch)
+                                 , model.Start, model.Length);
+            return result;
         }
 
     }

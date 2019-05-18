@@ -28,7 +28,7 @@
 </head>
 <body style=" font-size: 13px;">
     <div class="wrapper fixed">
-        @*<div id="preloader"></div>*@
+        <div id="preloader"></div>
         <header class="navbar navbar-inverse navbar-fixed-top " role="banner">
             <div class="container">
                 <div class="navbar-header">
@@ -71,7 +71,8 @@
                                     <i class="icon-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a id="Logout">Log Out</a></li>
+                                    <li><a style="cursor: pointer" asp-controller="Account" asp-action="Logout">Log Out</a></li>
+                                    @*<li><a style="cursor: pointer" id="Logout">Log Out</a></li>*@
                                     <li><a asp-controller="RoleManagement" asp-action="Role">Role Management</a></li>
                                 </ul>
                             }
@@ -83,7 +84,7 @@
                                     <i class="icon-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a asp-controller="Account" asp-action="Login">Log In</a></li>
+                                    <li><a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">Log In</a></li>
                                 </ul>
                             }
 
@@ -106,7 +107,7 @@
 
     <script src="~/Home/fastclick/lib/fastclick.js"></script>
 
-    <script src="/home/js/bootstrap.min.js"></script>
+    <script src="/Home/js/bootstrap.min.js"></script>
     <script src="/Home/js/plugins.js"></script>
     <script src="/Home/js/jquery.prettyPhoto.js"></script>
     <script src="/Home/js/init.js"></script>
@@ -152,11 +153,12 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        window.location = "/";
+                        window.location.reload;
                     },
                     fail: function (data) {
                     }
                 })
+
 
 
                 //fetch('/Account/Logout', {

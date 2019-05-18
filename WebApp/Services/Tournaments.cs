@@ -25,13 +25,11 @@ namespace WebApp.Services
             _userManager = userManager;
         }
 
-        public async Task<List<Tournamentdto>> GetAllTournaments(int? page, int? userId)
+        public async Task<PaginatedList<Tournamentdto>> GetAllTournaments(DataTableAjaxPostModel model, int? page)
         {
-            int pageSize = 20;
 
-            var model = await PaginatedList<Tournamentdto>.CreateAsync(
+            var result = await PaginatedList<Tournamentdto>.CreateAsync(
             _context.Tournaments
-           .Where(i => !userId.HasValue || i.UserId == userId)
             .Select(i => new ViewModels.Tournamentdto
             {
                 TournamentId = i.TournamentId,
@@ -41,9 +39,9 @@ namespace WebApp.Services
 
             })
             .OrderByDescending(i => i.TournamentId)
-            , page ?? 1, pageSize);
+            , model.Start, model.Length);
 
-            return model;
+            return result;
         }
 
     }

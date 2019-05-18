@@ -22,11 +22,10 @@ namespace WebApp.Services
             _userManager = userManager;
         }
 
-        public async Task<List<Teamdto>> GetAllTeams(string zone, string location, string name, int? page, int? userId)
+        public async Task<PaginatedList<Teamdto>> GetAllTeamsList(DataTableAjaxPostModel model, string zone, string location, string name, int? page)
         {
-            int pageSize = 20;
 
-            var model = (await PaginatedList<Teamdto>.CreateAsync(
+            var result = (await PaginatedList<Teamdto>.CreateAsync(
             _context.Teams
             .AsNoTracking()
             .Where(i => (string.IsNullOrEmpty(zone) || i.Zone == zone)
@@ -41,12 +40,12 @@ namespace WebApp.Services
                 Zone = i.Zone,
                 City = i.City,
                 Contact = i.Contact,
-                FileName = i.FileName
+                FileName = i.FileName ?? "noLogo.png"
             })
             .OrderByDescending(i => i.TeamId)
-            , page ?? 1, pageSize));
+            , model.Start, model.Length));
 
-            return model;
+            return result;
         }
 
         public List<TeamDropDowndto> GetAllTeams()

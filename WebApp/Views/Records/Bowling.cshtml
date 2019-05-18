@@ -240,7 +240,7 @@
                     var matchSeriesId = document.getElementById("matchSeriesId").value
 
                     const response = await fetch(`/Records/Bowling?teamId=${homeTeamId}&season=${season}&overs=${overs}&playerRoleId=${playerRoleId}&matchTypeId=${matchTypeId}&tournamentId=${tournamentId}&matchSeriesId=${matchSeriesId}&isApi=true`, {
-                        method: "POST",
+                        method: "Get",
                         //     body: JSON.stringify(model),
                         credentials: 'same-origin'
 

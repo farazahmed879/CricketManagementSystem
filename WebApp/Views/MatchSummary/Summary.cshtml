@@ -1,0 +1,386 @@
+﻿@model WebApp.ViewModels.Summary
+
+@{
+    ViewData["Title"] = "Matches";
+}
+<br />
+<br />
+
+<div class="container" id="body" style="margin-top: 20px">
+    <center>
+        <div class="tab" style="padding-top:3%">
+            <img src="~/Home/images/Teams/@Model.Summary2dto.HomeTeamTeamLogo" style="width : 70px; height: 35px"> &nbsp;&nbsp;&nbsp;&nbsp;
+            @*<img src="~/images/ScoreExec.png" style=" width: 110px; height :25px">&nbsp;&nbsp;&nbsp;&nbsp;*@
+            <span src="~/images/ScoreExec.png" style="font-size: 15px"><b>@Model.Summary2dto.TournamentName</b></span>
+            <img src="~/Home/images/Teams/@Model.Summary2dto.OpponentTeamLogo" style="width : 70px; height: 35px">
+        </div>
+    </center>
+    <br>
+    <div class="col-md-2">
+        <a asp-controller="MatchSummary" asp-action="FirstInning" asp-route-matchId="@ViewBag.matchId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-homeTeamId="@ViewBag.homeTeamId" style="width: 150px" class="btn btn-primary">First Inning</a>
+        <a asp-controller="MatchSummary" asp-action="SecondInning" asp-route-matchId="@ViewBag.matchId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-homeTeamId="@ViewBag.homeTeamId" style="width: 150px" class="btn btn-primary">Second Inning</a>
+        <a asp-controller="MatchSummary" asp-action="Summary" asp-route-matchId="@ViewBag.matchId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-homeTeamId="@ViewBag.homeTeamId" style="width: 150px" class="btn btn-primary"><center>Summary</center></a>
+    </div>
+    <div class="col-md-8">
+        <div class="row" style="margin-top:-15px">
+            <div class="col-lg-5" style="background-color:#01023b;border-radius:0px 40px 40px 0px; opacity: 0.95;
+  padding-top:0.5%;padding-bottom:0.5%">
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8"><b style="font-size:20px; color: white">@Model.Summary2dto.HomeTeam</b></div>
+                    <div class="col-lg-2"></div>
+                </div>
+            </div>
+            @if (Model.Summary2dto.TournamentName != null)
+            {
+                <div class="col-lg-2" style="background-color:maroon; border-radius: 40px 40px 40px 40px; color:white;
+            text-align:center">
+                    <b style="font-size:15px">@Model.Summary2dto.Stage <br>@Model.Summary2dto.GroundName <br> @Model.Summary2dto.DateOfMatch.ToString("dd MMMM yyyy")</b>
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-2" style="background-color:maroon; border-radius: 40px 40px 40px 40px; color:white;
+            text-align:center">
+                    <b style="font-size:10px">@Model.Summary2dto.Type Match <br>@Model.Summary2dto.GroundName</b>
+                </div>
+            }
+
+
+            <div class="col-lg-5" style="background-color:#010080;border-radius:40px 0px 0px 40px;
+  padding-top:0.5%;padding-bottom:0.5%">
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8"><b style="font-size:20px; color: white ">@Model.Summary2dto.OppponentTeam</b></div>
+                    <div class="col-lg-2"></div>
+                </div>
+            </div>
+        </div><br>
+
+
+
+
+        <div class="row" style="margin-top:-22px;">
+            <div class="col-lg-6">
+                <table class="table" STYLE="font-size:22px">
+                    @if (Model.HomeTeamBatting.Count != 0)
+                    {
+                        <thead>
+                            <tr>
+                                <th style="color:white;" Colspan="3">
+                                    <div class="row" style="margin-bottom:-8px;padding-right:8px;padding-left:8px">
+                                        <div class="col-lg-12" id="homeTeam" style="font-size:20px;padding-top:1%">
+                                            <img src="https://img.icons8.com/color/32/000000/cricket.png">
+                                            &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.Summary2dto.HomeTeamScore/@Model.Summary2dto.HomeTeamWickets
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.HomeTeamBatting)
+                            {
+                                <tr>
+                                    <td style="background-color:white; border-right: 1px solid;border-bottom: 2px solid lightgray; font-size:15px"><b>@item.HomeTeamBatsman</b></td>
+                                    @if (item.HowOut == 4 || item.HowOut == 8)
+                                    {
+                                        <td class="center" style="background-color:white;border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px"><b>@item.Runs</b><i class="fa fa-asterisk" style="color: black" aria-hidden="true"></i></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="center" style="background-color:white;border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px"><b>@item.Runs</b></td>
+                                    }
+                                    <td class="center" style="background-color:white;border-bottom: 2px solid lightgray;font-size:14px">@item.Balls</td>
+                                </tr>
+                            }
+                        </tbody>
+
+
+                    }
+
+                    @if (Model.OppTeamBowling.Count != 0)
+                    {
+                        <thead>
+                            <tr>
+                                <th style="color:white;" Colspan="3">
+                                    <div class="row" style="margin-bottom:-8px;padding-right:8px;padding-left:8px">
+                                        <div class="col-lg-12" id="oppTeam" style="font-size:20px;padding-top:1%">
+                                            <img src="~/images/bal.png">
+                                            &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Overs @Model.Summary2dto.HomeTeamOvers
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OppTeamBowling)
+                            {
+                                <tr>
+                                    <td style="background-color:white; border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px "><b>@item.OppTeamBowler</b></td>
+                                    <td class="center" style="background-color:white; border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px"><b>@item.Wicket-@item.Runs</b></td>
+                                    <td class="center" style="background-color:white;border-bottom: 2px solid lightgray;font-size:14px">@item.Overs overs</td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    }
+                    else
+                    {
+
+                    }
+
+
+                </table>
+            </div>
+
+
+
+            <div class="col-lg-6">
+                <table class="table">
+                    @if (Model.OppTeamBatting.Count != 0)
+                    {
+                        <thead>
+                            <tr>
+                                <th style="color:white;" Colspan="3">
+                                    <div class="row" style="margin-bottom:-8px;padding-right:8px;padding-left:8px">
+                                        <div class="col-lg-12" id="oppTeam" style="font-size:20px;padding-top:1%">
+                                            <img src="https://img.icons8.com/color/32/000000/cricket.png">
+                                            &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.Summary2dto.OpponentsTeamScore/@Model.Summary2dto.OpponentTeamWickets
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OppTeamBatting)
+                            {
+                                <tr>
+                                    <td style="background-color:white; border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px "><b>@item.OppTeamBatsman</b></td>
+                                    @if (item.HowOut == 4 || item.HowOut == 8)
+                                    {
+                                        <td class="center" style="background-color:white;border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px"><b>@item.Runs</b><i class="fa fa-asterisk" style="color: black" aria-hidden="true"></i></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="center" style="background-color:white;border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px"><b>@item.Runs</b></td>
+                                    }
+                                    <td class="center" style="background-color:white;border-bottom: 2px solid lightgray;font-size:14px">@item.Balls</td>
+                                </tr>
+                            }
+                        </tbody>
+
+
+                    }
+
+                    @if (Model.HomeTeamBowling.Count != 0)
+                    {
+                        <thead>
+                            <tr>
+                                <th style="color:white;" Colspan="3">
+                                    <div class="row" style="margin-bottom:-8px;padding-right:8px;padding-left:8px">
+                                        <div class="col-lg-12" id="homeTeam" style="font-size:20px;padding-top:1%;">
+                                            <img src="~/images/bal.png">
+                                            &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Overs @Model.Summary2dto.OppTeamOvers
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.HomeTeamBowling)
+                            {
+                                <tr>
+                                    <td style="background-color:white; border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px "><b>@item.HomeTeamBowler</b></td>
+                                    <td class="center" style="background-color:white; border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px"><b>@item.Wicket-@item.Runs</b></td>
+                                    <td class="center" style="background-color:white;border-bottom: 2px solid lightgray;font-size:14px">@item.Overs overs</td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </div>
+        <div class="row" style="margin-top:6px;padding-right:12px;padding-left:12px">
+            <table class="table" style="margin-top:-22px">
+                <tr>
+                    <th style="background-color:darkgray;color:white;font-size:15px"><center><b>Man of the Match: @Model.Summary2dto.ManOfTheMatch</b></center></th>
+                </tr>
+                <tr>
+                    <th style="background-color:maroon;color:white;font-size:15px"><center></b>@Model.Summary2dto.Result</b></center></th>
+                </tr>
+            </table>
+        </div>
+        <center>
+            <div class="footer">
+                <ul class="list-inline">
+                    <li><input id="BackBtn" style="background-color: maroon; color: white;" type="button" value="Back" class="btn"></li>
+                    <li><center><img src="~/images/ScoreExec.png" style=" width: 110px; height :25px"></center></li>
+                </ul>
+            </div>
+        </center>
+    </div>
+    <div class="col-md-2"></div>
+
+
+</div>
+
+
+<div class="hidden" id="screenShotBody"></div>
+@*<div id="screenShot" class="modal fade" role="dialog">
+
+        <div class="">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header  bg-light-blue-active">
+                    <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <a data-placement="top" onclick="ogShare();" data-dismiss="modal" data-toggle="tooltip" style="cursor:pointer" title="Share"><i class="fas fa-share-alt"></i> <i class="fab fa-facebook-square"></i></a>
+                    <div class="container-canvas">
+                        <div id="screenShotBody"></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+
+
+@section Scripts{
+    <script src="~/Home/js/html2convas-min.js"></script>
+    <div id="fb-root"></div>
+    <script>
+        $(function () {
+            $('#BackBtn').click(function () {
+                window.history.back();
+            });
+        });
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=821635978177081&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
+
+        // Initialize the Facebook JS SDK.
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '821635978177081',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v3.1'
+            });
+
+            // Put additional init code here
+        };
+
+        // Load the Facebook JS SDK Asynchronously
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // Custom function to call when user initiates a share
+
+        function ogShare() {
+            var canvas = document.querySelector('#screenShotBody > canvas');
+            var dataURI = canvas.toDataURL();
+            debugger; var imgdata = dataURI.match(/data:(image\/.+);base64,(.+)/);
+
+            var date = document.getElementById("matchDate").innerText;
+            var mydate = new Date(date);
+            var month = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"][mydate.getMonth()];
+            var day = mydate.getDate();
+            var fileName = day + month + '' + mydate.getFullYear();
+
+
+            console.log(fileName);
+
+            $.ajax({
+                url: "/Matches/ScreenShot?",
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    baseUrl: imgdata[2],
+                    fileName: fileName
+                }),
+                success: function (url) {
+                    console.log(url);
+                    fb(url)
+                },
+                fail: function () {
+                }
+            })
+        }
+
+        function fb(url) {
+            FB.ui({
+                method: 'share_open_graph',
+                action_type: 'og.likes',
+                //  picture: image.src,
+                action_properties: JSON.stringify({
+                    object: url
+                })
+            }, function (response) {
+                // Debug response (optional)
+                console.log(response);
+            });
+        }
+
+        $('#Capture').click(function () {
+            html2canvas(document.querySelector("#MatchSummary")).then(canvas => {
+                document.getElementById("screenShotBody").appendChild(canvas);
+                ogShare();
+            });
+        });
+
+        $('#close').click(function () {
+
+            document.getElementById("screenShotBody").innerHTML = "";
+        });
+
+    </script>
+    <style>
+        body {
+            background-image: url("/Home/images/bg/bg1.jpg");
+            background-size: 100% 100%;
+            opacity: 0.85;
+        }
+
+        #homeTeam {
+            background-image: url("/Home/images/bg/run copy.jpg");
+            background-size: 100% 100%;
+            height: 40px;
+        }
+
+        #oppTeam {
+            background-image: url("/Home/images/bg/over copy.jpg");
+            background-size: 100% 100%;
+            height: 40px;
+        }
+
+
+        @@media only screen and (max-width: 300px) {
+            /* For tablets: */
+            .tab {
+                width: 8.33%;
+            }
+        }
+    </style>
+}

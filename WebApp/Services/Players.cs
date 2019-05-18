@@ -24,10 +24,9 @@ namespace WebApp.Services
             _userManager = userManager;
         }
 
-        public async Task<List<Playersdto>> GetAllPlayersList(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
+        public async Task<PaginatedList<Playersdto>> GetAllPlayersList(DataTableAjaxPostModel model,int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId)
         {
-            int pageSize = 20;
-            var model = await PaginatedList<Playersdto>.CreateAsync(
+            var result = await PaginatedList<Playersdto>.CreateAsync(
                           _context.Players
                         .AsNoTracking()
                         .Where(i => (!teamId.HasValue || i.TeamId == teamId)
@@ -45,11 +44,12 @@ namespace WebApp.Services
                           PlayerRole = i.PlayerRole.Name,
                           DOB = i.DOB.HasValue ? i.DOB.Value.ToString("dddd, dd MMMM yyyy") : "",
                           Team = i.Team.Team_Name,
+                          FileName = i.FileName ?? "noImage.jpg"
 
                       })
                         .OrderByDescending(i => i.PlayerId)
-                          , page ?? 1, pageSize);
-            return model;
+                          , model.Start , model.Length);
+            return result;
         }
         
         public List<PlayersDropDowndto> GetAllPlayers()

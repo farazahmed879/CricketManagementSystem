@@ -16,28 +16,25 @@
                 <li><a>Score Card</a></li>
             </ol>
         </div>
-        <div class="row">
 
+        <div class="row">
+            <center>  <h5 class="pull-center">@Model.Summary2dto.TournamentName</h5></center>
             <div class="col-md-12 pull-center">
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    @*@if (Model.Summary2dto.HomeTeamTeamLogo != null)
-                        {
-                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
-                                <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
-                                <img id="Img" class="pull-right" src="~/Home/images/Teams/@Model.Summary2dto.HomeTeamTeamLogo" />
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
-                                <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
-                                <img id="Img" class="pull-right" src="~/Home/images/Teams/noLogo.png" />
-                            </div>
-                        }*@
-                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
-                        <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
-                        <img id="Img" class="pull-right" src="~/Home/images/Teams/noLogo.png" />
-                    </div>
+                    @if (Model.Summary2dto.HomeTeamTeamLogo != null)
+                    {
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                            <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
+                            <img id="Img" class="pull-right" src="~/Home/images/Teams/@Model.Summary2dto.HomeTeamTeamLogo" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 bg-blue-gradient">
+                            <h4 class="pull-right">@Model.Summary2dto.HomeTeam</h4>
+                            <img id="Img" class="pull-right" src="~/Home/images/Teams/noLogo.png" />
+                        </div>
+                    }
 
                     @if (Model.Summary2dto.Type != "Tournament")
                     {
@@ -51,10 +48,6 @@
                     {
 
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 bg-warning center">
-                            <h4 class="pull-center">
-                                @Model.Summary2dto.Type
-                            </h4>
-                            <h5 class="pull-center">@Model.Summary2dto.TournamentName</h5>
                             <h5>@Model.Summary2dto.Stage</h5>
                             <h5>@Model.Summary2dto.GroundName</h5>
                             <h5>@Model.Summary2dto.DateOfMatch.ToString("dddd, dd MMMM yyyy")</h5>
@@ -84,15 +77,15 @@
                 <div class="col-md-12">
                     <!-- Custom Tabs -->
                     <ul class="nav nav-pills" role="tablist">
-                        <li id="tab1"><a href="#tab_1" data-toggle="tab"><span class="">First</span></a></li>
-                        <li><a href="#tab_2" data-toggle="tab"><span>Second</span></a></li>
-                        <li><a href="#tab_3" data-toggle="tab"><span>Summary</span></a></li>
-                        <li id="tab4" class="active"><a href="#tab_4" data-toggle="tab"><span>Wickets</span></a></li>
+                        <li id="tab1"><a href="#tab_1" data-toggle="tab"><span class=""><b>First</span></b></a></li>
+                        <li><a href="#tab_2" data-toggle="tab"><span><b>Second</b></span></a></li>
+                        <li><a href="#tab_3" data-toggle="tab"><span><b>Summary</b></span></a></li>
+                        <li id="tab4" class="active"><a href="#tab_4" data-toggle="tab"><span><b>Wickets</b></span></a></li>
                     </ul>
                     <div class="tab-content clearfix">
                         <div class="tab-pane" id="tab_1">
 
-                            <div class="col-md-12 bg-blue-active">
+                            <div class="col-md-12" style="background-color:maroon; color:white">
                                 <h4>@Model.Summary2dto.HomeTeam Batting @Model.Summary2dto.HomeTeamScore/ @Model.Summary2dto.HomeTeamWickets</h4>
                             </div>
                             @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
@@ -144,49 +137,52 @@
 
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="hometeamBatting">
                                                     @foreach (var item in Model.HomeTeamScoreCard)
                                                     {
                                                         if (item.PlayerId.HasValue && item.PlayerId != 0)
                                                         {
-                                                            <tr>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Position)
+                                                            <tr id="trBat_@item.PlayerScoreId">
+                                                                <td class="hidden">
+                                                                    <b>@Html.DisplayFor(modelItem => item.PlayerScoreId)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Position)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Bat_Runs)
+                                                                    <b> @Html.DisplayFor(modelItem => item.Player.Player_Name)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Bat_Balls)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Bat_Runs)</b>
+                                                                </td>
+                                                                <td>
+                                                                    <b>@Html.DisplayFor(modelItem => item.Bat_Balls)</b>
                                                                 </td>
                                                                 <td>
                                                                     @{
 
                                                                         var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
 
-                                                                        <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
+                                                                        <b>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</b>
                                                                     }
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.HowOutName)
+                                                                    <b>@Html.DisplayFor(modelItem => item.HowOutName)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Four)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Four)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Six)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Six)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Catches)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Catches)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.RunOut)
+                                                                    <b>@Html.DisplayFor(modelItem => item.RunOut)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Stump)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Stump)</b>
                                                                 </td>
 
 
@@ -216,7 +212,7 @@
                                 </div>
 
                             }
-                            <div class="col-md-12 bg-blue-active">
+                            <div class="col-md-12" style="background-color:maroon; color:white">
                                 <h4>@Model.Summary2dto.OppponentTeam Bowling</h4>
                             </div>
                             @if (Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any())
@@ -259,23 +255,23 @@
                                                     {
                                                         if (item.Overs.HasValue && item.Overs != 0)
                                                         {
-                                                            <tr>
+                                                            <tr id="trBall_@item.PlayerScoreId">
 
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Player.Player_Name)</b>
                                                                 </td>
 
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Overs)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Overs)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Ball_Runs)
+                                                                    <b> @Html.DisplayFor(modelItem => item.Ball_Runs)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Wickets)
+                                                                    <b> @Html.DisplayFor(modelItem => item.Wickets)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Maiden)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Maiden)</b>
                                                                 </td>
                                                                 <td>
                                                                     @{
@@ -285,7 +281,7 @@
                                                                         var balls = wholeValue + Convert.ToInt32(decimalballs);
                                                                         var econ = (Convert.ToDouble(item.Ball_Runs) / balls) * 6;
 
-                                                                        <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
+                                                                        <b>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</b>
                                                                     }
                                                                 </td>
 
@@ -318,7 +314,7 @@
 
                         </div>
                         <div class="tab-pane" id="tab_2">
-                            <div class="col-md-12 bg-blue-active">
+                            <div class="col-md-12" style="background-color:maroon; color:white">
                                 <h4>@Model.Summary2dto.OppponentTeam Batting @Model.Summary2dto.OpponentsTeamScore/@Model.Summary2dto.OpponentTeamWickets</h4>
                             </div>
 
@@ -376,44 +372,47 @@
                                                     {
                                                         if (item.PlayerId.HasValue && item.PlayerId != 0)
                                                         {
-                                                            <tr>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Position)
+                                                            <tr id="trBat_@item.PlayerScoreId">
+                                                                <td class="hidden">
+                                                                    <b>@Html.DisplayFor(modelItem => item.PlayerScoreId)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Position)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Bat_Runs)
+                                                                    <b> @Html.DisplayFor(modelItem => item.Player.Player_Name)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Bat_Balls)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Bat_Runs)</b>
+                                                                </td>
+                                                                <td>
+                                                                    <b>@Html.DisplayFor(modelItem => item.Bat_Balls)</b>
                                                                 </td>
                                                                 <td>
                                                                     @{
 
                                                                         var strikeRate = Convert.ToDouble(item.Bat_Runs) * 100 / Convert.ToDouble(item.Bat_Balls);
 
-                                                                        <span>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</span>
+                                                                        <b>@(Double.IsNaN(strikeRate) || Double.IsInfinity(strikeRate) ? "" : strikeRate.ToString("0.00"))</b>
                                                                     }
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.HowOutName)
+                                                                    <b>@Html.DisplayFor(modelItem => item.HowOutName)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Four)
+                                                                    <b> @Html.DisplayFor(modelItem => item.Four)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Six)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Six)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Catches)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Catches)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.RunOut)
+                                                                    <b>@Html.DisplayFor(modelItem => item.RunOut)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Stump)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Stump)</b>
                                                                 </td>
                                                                 @if (User.Identity.IsAuthenticated)
                                                                 {
@@ -441,7 +440,7 @@
 
                             }
 
-                            <div class="col-md-12 bg-blue-active">
+                            <div class="col-md-12" style="background-color:maroon; color:white">
                                 <h4>@Model.Summary2dto.HomeTeam Bowling</h4>
                             </div>
                             @if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any())
@@ -484,23 +483,23 @@
                                                     {
                                                         if (item.Overs.HasValue && item.Overs != 0)
                                                         {
-                                                            <tr>
+                                                            <tr id="trBall_@item.PlayerScoreId">
 
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Player.Player_Name)
+                                                                    <b> @Html.DisplayFor(modelItem => item.Player.Player_Name)</b>
                                                                 </td>
 
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Overs)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Overs)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Ball_Runs)
+                                                                    <b> @Html.DisplayFor(modelItem => item.Ball_Runs)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Wickets)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Wickets)</b>
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Maiden)
+                                                                    <b>@Html.DisplayFor(modelItem => item.Maiden)</b>
                                                                 </td>
                                                                 <td>
                                                                     @{
@@ -511,7 +510,7 @@
                                                                         var econ = (Convert.ToDouble(item.Ball_Runs) / balls) * 6;
 
 
-                                                                        <span>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</span>
+                                                                        <b>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</b>
 
                                                                     }
                                                                 </td>
@@ -544,7 +543,7 @@
                             }
                         </div>
                         <div class="tab-pane" id="tab_3">
-                            <div class="col-md-12 bg-blue-active">
+                            <div class="col-md-12" style="background-color:maroon; color:white">
                                 <h4>Match Summary</h4>
                             </div>
                             @if (Model.TeamScoreCard != null && Model.TeamScoreCard.Any())
@@ -584,29 +583,29 @@
                                                     {
                                                         <tr>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.TeamName)
+                                                                <b>@Html.DisplayFor(modelItem => item.TeamName)</b>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.TotalScore)/@item.Wickets
+                                                                <b>@Html.DisplayFor(modelItem => item.TotalScore)/@item.Wickets</b>
                                                             </td>
                                                             <td>
                                                                 @{
 
                                                                     var TotalExtras = item.Wideballs + item.NoBalls + item.Byes + item.LegByes;
 
-                                                                    <span>@(TotalExtras)</span>
+                                                                    <b>@(TotalExtras)</b>
                                                                 }
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.Wideballs)
+                                                                <b>@Html.DisplayFor(modelItem => item.Wideballs)</b>
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.NoBalls)
+                                                                <b> @Html.DisplayFor(modelItem => item.NoBalls)</b>
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.Byes)
+                                                                <b>@Html.DisplayFor(modelItem => item.Byes)</b>
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.LegByes)
+                                                                <b> @Html.DisplayFor(modelItem => item.LegByes)</b>
                                                             </td>
                                                         </tr>
                                                     }
@@ -627,7 +626,7 @@
                             }
                         </div>
                         <div class="tab-pane active" id="tab_4">
-                            <div class="col-md-12 bg-blue-active">
+                            <div class="col-md-12" style="background-color:maroon; color:white">
                                 <h4>Fall of wickets</h4>
                             </div>
                             <div class="form-group">
@@ -647,7 +646,7 @@
                                     </div>
                                     <!-- /.box-body -->
                                 </div>
-                                <div class="col-md-12 bg-blue-active">
+                                <div class="col-md-12" style="background-color:maroon; color:white">
                                     <h4>@Model.Summary2dto.HomeTeam</h4>
                                 </div>
                                 <div>
@@ -746,7 +745,7 @@
                                     }
 
                                 </div>
-                                <div class="col-md-12 bg-blue-active">
+                                <div class="col-md-12" style="background-color:maroon; color:white">
                                     <h4>@Model.Summary2dto.OppponentTeam</h4>
                                 </div>
                                 <div>
@@ -859,11 +858,11 @@
 
                         if (Model.HomeTeamScoreCard != null && Model.HomeTeamScoreCard.Any() || Model.OpponentTeamScoreCard != null && Model.OpponentTeamScoreCard.Any() || Model.TeamScoreCard != null && Model.TeamScoreCard.Any() || Model.HomeTeamFOW != null && Model.HomeTeamFOW.Any() || Model.OpponentTeamFOW != null && Model.OpponentTeamFOW.Any())
                         {
-                            <li><a class="btn btn-primary" asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Edit</a></li>
+                            <li><a class='btn btn-outlined btn-primary' asp-action="Edit" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Edit</a></li>
                         }
                         else
                         {
-                            <li><a class="btn btn-primary" style="width: 100%" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Add</a></li>
+                            <li><a class='btn btn-outlined btn-primary' style="width: 100%" asp-action="Create" asp-route-homeTeamId="@ViewBag.homeTeamId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-matchId="@ViewBag.matchId">Add</a></li>
 
                         }
 
@@ -886,105 +885,82 @@
             </div>
             <div class="modal-body">
                 <div id="rootwizard">
-                    <div class="navbar">
-                        <div class="navbar-inner">
-                            <div class="container">
-                                <ul>
-                                    <li><a href="#batting" data-toggle="tab">Batting</a></li>
-                                    <li><a href="#bowlling" data-toggle="tab">Bowling</a></li>
-                                    <li><a href="#fielding" data-toggle="tab">Fielding</a></li>
-                                </ul>
+                    <input type="hidden" id="PlayerScoreId" />
+                   <label id="pName"></label>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Runs</label>
+                                <input id="battingRuns" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Balls</label>
+                                <input id="battingBalls" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">4s</label>
+                                <input id="fours" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">6s</label>
+                                <input id="sixes" type="number" class="form-control">
                             </div>
                         </div>
                     </div>
-                    <div class="tab-content">
-                        <div class="tab-pane" id="batting">
-                            <input type="hidden" id="PlayerScoreId" />
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Runs</label>
-                                        <input id="battingRuns" type="number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Balls</label>
-                                        <input id="battingBalls" type="number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">4s</label>
-                                        <input id="fours" type="number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">6s</label>
-                                        <input id="sixes" type="number" class="form-control">
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Overs</label>
+                                <input id="overs" type="number" class="form-control">
                             </div>
                         </div>
-                        <div class="tab-pane" id="bowlling">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Overs</label>
-                                        <input id="overs" type="number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Runs</label>
-                                        <input id="bowlingRuns" type="number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Wickets</label>
-                                        <input id="wickets" type="number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Maidens</label>
-                                        <input id="maidens" type="number" class="form-control">
-                                    </div>
-                                </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Runs</label>
+                                <input id="bowlingRuns" type="number" class="form-control">
                             </div>
                         </div>
-                        <div class="tab-pane" id="fielding">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Catches</label>
-                                        <input id="catches" type="number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Run Out</label>
-                                        <input id="runOuts" type="number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Stump</label>
-                                        <input id="stumps" type="number" class="form-control">
-                                    </div>
-                                </div>
-
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Wickets</label>
+                                <input id="wickets" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Maidens</label>
+                                <input id="maidens" type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Catches</label>
+                                <input id="catches" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Run Out</label>
+                                <input id="runOuts" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Stump</label>
+                                <input id="stumps" type="number" class="form-control">
                             </div>
                         </div>
 
                     </div>
-                    <ul class="pager wizard">
-                        <li class="previous"><a href="#">Previous</a></li>
-                        <li class="next"><a href="#">Next</a></li>
-                    </ul>
-                    <input id="btnFinish" type='button' class='btn btn-previous btn-fill btn-primary btn-wd' data-dismiss="modal" value='Finish' />
+                    <input id="btnFinish" type='button' class='btn btn-outlined btn-primary' data-dismiss="modal" value='Save' />
                 </div>
 
 
@@ -1053,15 +1029,53 @@
             header.append("content-type", "application/json");
 
             const response = await fetch('/PlayerScores/PlayerScoreModal', {
-                method: "POST",
+                method: "Put",
                 body: JSON.stringify(model),
                 credentials: 'same-origin',
                 headers: header
             });
 
             if (response.ok) {
-                window.location.reload();
-                return;
+                debugger;
+                const response = await fetch(`/PlayerScores/GetPlayerScoreModal?playerScoreId=${PlayerScoreId}`, {
+                    method: "Get",
+                    //     body: JSON.stringify(model),
+                    credentials: 'same-origin'
+                });
+                if (response.ok) {
+                    const json = await response.json();
+                    var id = json[0].playerScoreId;
+                    var runs = json[0].bat_Runs;
+                    var balls = json[0].bat_Balls;
+                    var four = json[0].four;
+                    var six = json[0].six;
+                    var catches = json[0].catches;
+                    var runOut = json[0].runOut;
+                    var stump = json[0].stump;
+                    $('#trBat_' + id + ' > td')[3].innerHTML = runs;
+                    $('#trBat_' + id + ' > td')[4].innerHTML = balls;
+
+                    var strikeRate = (runs / balls) * 100;
+                    $('#trBat_' + id + ' > td')[5].innerHTML = strikeRate.toFixed(2);
+
+                    $('#trBat_' + id + ' > td')[7].innerHTML = four;
+                    $('#trBat_' + id + ' > td')[8].innerHTML = six;
+                    $('#trBat_' + id + ' > td')[9].innerHTML = catches;
+                    $('#trBat_' + id + ' > td')[10].innerHTML = runOut;
+                    $('#trBat_' + id + ' > td')[11].innerHTML = stump;
+
+
+                    var over = json[0].overs;
+                    var balRuns = json[0].ball_Runs;
+                    var wicket = json[0].wickets;
+                    var maiden = json[0].maiden;
+
+
+                    $('#trBall_' + id + ' > td')[1].innerHTML = over;
+                    $('#trBall_' + id + ' > td')[2].innerHTML = balRuns;
+                    $('#trBall_' + id + ' > td')[3].innerHTML = wicket;
+                    $('#trBall_' + id + ' > td')[4].innerHTML = maiden;
+                }
             } else {
                 alert("Error");
             }
@@ -1096,6 +1110,7 @@
                                 document.getElementById("runOuts").value = json[0].runOut;
                                 document.getElementById("stumps").value = json[0].stump;
                                 document.getElementById("PlayerScoreId").value = json[0].playerScoreId;
+                                document.getElementById("pName").innerHTML = json[0].playerName;
 
 
                             })
@@ -1227,7 +1242,7 @@
             background-size: cover;
             background-position: center;
             height: 50px;
-            width: 50px;
+            width: 70px;
         }
     </style>
 }

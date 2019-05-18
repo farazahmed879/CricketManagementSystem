@@ -50,8 +50,8 @@ namespace WebApp.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> Index(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
+        [HttpGet("Players/Index")]
+        public async Task<IActionResult> Index(DataTableAjaxPostModel model, int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, bool isApi)
         {
 
             var users = await _userManager.GetUserAsync(HttpContext.User);
@@ -75,16 +75,22 @@ namespace WebApp.Controllers
                 .AsNoTracking()
                 .Select(i => new { i.TeamId, i.Team_Name })
            , "TeamId", "Team_Name");
-            var model = await _players.GetAllPlayersList(teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId, page);
-            return View(model);
-
-
-
+            var result = await _players.GetAllPlayersList(model.Init() ,teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId);
+            if (isApi == true)
+                return Json(new
+                {
+                    data = result,
+                    draw = model.Draw,
+                    recordsTotal = result.TotalCount,
+                    recordsFiltered = result.TotalCount,
+                });
+            else
+                return View(result);
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> List(int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
+        [HttpGet("Players/List")]
+        public async Task<IActionResult> List(DataTableAjaxPostModel model,int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, int? page)
         {
 
             var users = await _userManager.GetUserAsync(HttpContext.User);
@@ -109,18 +115,18 @@ namespace WebApp.Controllers
                 .AsNoTracking()
                 .Select(i => new { i.TeamId, i.Team_Name })
            , "TeamId", "Team_Name");
-            var model = await _players.GetAllPlayersList(teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId, page);
+            var result = await _players.GetAllPlayersList(model, teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId);
             //if (partialView)
             //    return PartialView("_PlayerPartial", model);
             //else
-            return Json(model);
+            return Json(result);
 
 
 
         }
 
         // GET: PlayerList
-        [HttpGet]
+        [HttpGet("Players/PlayersList")]
         public async Task<IActionResult> PlayersList(int? teamId)
         {
             ViewBag.Name = "Players";
@@ -132,7 +138,7 @@ namespace WebApp.Controllers
                            {
                                TeamId = i.TeamId,
                                Team_Name = i.Team_Name,
-                               FileName = i.FileName,
+                               FileName = i.FileName ?? "noLogo.png",
                                Zone = i.Zone,
                                Place = i.Place,
                                City = i.City,
@@ -143,13 +149,14 @@ namespace WebApp.Controllers
                                                {
                                                    PlayerId = o.PlayerId,
                                                    Player_Name = o.Player_Name,
+                                                   FileName = o.FileName ?? "noImage.jpg"
                                                }).ToList() : null
                            })
                            .SingleAsync());
 
         }
         // GET: Players/Details/5
-        [HttpGet]
+        [HttpGet("Players/Details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             ViewBag.Name = "Player Detail";
@@ -169,7 +176,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Players/Create
-        [HttpGet]
+        [HttpGet("Players/Create")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Create(int? teamId)
         {
@@ -210,7 +217,7 @@ namespace WebApp.Controllers
         }
 
         // POST: Players/Create
-        [HttpPost]
+        [HttpPost("Players/Create")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Create(Playersdto player)
@@ -228,17 +235,21 @@ namespace WebApp.Controllers
                 //        fileBytes = ReadStream(stream);
                 //    }
                 //}
-                player.FileName = player.PlayerImage.FileName;
-                if (player.PlayerImage.Length > 0)
+
+                var directory = Path.Combine(_hosting.WebRootPath, "Home", "images", "Players");
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+                if (player.PlayerImage != null)
                 {
-                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath,"Home","Images", "Players", player.FileName), FileMode.Create))
+                    player.FileName = player.PlayerImage.FileName;
+                    using (var stream = new FileStream(Path.Combine(directory, player.FileName), FileMode.Create))
                     {
                         await player.PlayerImage.CopyToAsync(stream);
                     }
                 }
-                
+
                 //player.PlayerLogo = fileBytes ?? null;
-                
+
                 _context.Players.Add(_mapper.Map<Player>(player));
                 await _context.SaveChangesAsync();
                 return Json(ResponseHelper.Success());
@@ -263,7 +274,7 @@ namespace WebApp.Controllers
         //}
 
         // GET: Players/Edit/5
-        [HttpGet]
+        [HttpGet("Players/Edit/{id}")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -322,7 +333,7 @@ namespace WebApp.Controllers
 
         // GET: Players/getPlayerbyId/5
         //[Authorize(Roles = "Club Admin,Administrator")]
-        [HttpGet]
+        [HttpGet("Players/getPlayerbyId/{id}")]
         public async Task<IActionResult> getPlayerbyId(int? id)
         {
             ViewBag.Name = "Edit Mode";
@@ -377,18 +388,18 @@ namespace WebApp.Controllers
         }
 
         // POST: Players/Edit/5
-        [HttpPost]
+        [HttpPut("Players/Edit")]
         //  [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(Playersdto player)
         {
             if (ModelState.IsValid)
             {
-                
+
                 if (player.PlayerImage != null)
                 {
                     player.FileName = player.PlayerImage.FileName;
-                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Players", player.FileName), FileMode.Create))
+                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "images", "Players", player.FileName), FileMode.Create))
                     {
                         await player.PlayerImage.CopyToAsync(stream);
                     }
@@ -404,7 +415,7 @@ namespace WebApp.Controllers
 
         // POST: Players/Delete/5
         [HttpDelete]
-        [Route("Players/DeleteConfirmed")]
+        [Route("Players/DeleteConfirmed/{playerId}")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int playerId)
         {
@@ -415,9 +426,15 @@ namespace WebApp.Controllers
         }
         // GET: PlayerStatistics
 
-        [HttpGet]
-        public IActionResult PlayerStatistics(int playerId, bool Api)
+        [HttpGet("Players/PlayerStatistics/{playerId}")]
+        public IActionResult PlayerStatistics(int playerId,int? season,int? matchTypeId, bool Api)
         {
+
+            ViewBag.Season = new SelectList(_context.Matches
+              .Select(i => i.Season)
+              .ToList().Distinct(), "Season");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
             ViewBag.Name = "Players / Profile";
             ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
             try
@@ -427,19 +444,16 @@ namespace WebApp.Controllers
                     "[usp_GetSinglePlayerStatistics]",
                     new
                     {
-                        @paramPlayerId = playerId
+                        @paramPlayerId = playerId,
+                        @paramSeason = season,
+                        @paramMatchTypeId = matchTypeId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new PlayerStatisticsdto
                     {
 
                     };
-
-                if (Api)
-                {
-                    return Json(model);
-                }
-                return View(model);
+                return Json(model);
             }
             catch (DbUpdateConcurrencyException)
             {

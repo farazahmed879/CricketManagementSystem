@@ -41,6 +41,7 @@ BEGIN
 						   )
 			END As 'BattingAverage',
 			Players.Player_Name AS 'PlayerName',
+			Players.[FileName] AS 'Image',
 			Players.TeamId As 'TeamId'
 
 	
@@ -68,6 +69,7 @@ BEGIN
 	GROUP BY PlayerScores.PlayerId,
 			 Players.Player_Name,
 			 PlayerRole.Name,
-			 Players.TeamId
+			 Players.TeamId,
+			 Players.[FileName]
 END
 go

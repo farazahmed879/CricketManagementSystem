@@ -14,6 +14,7 @@ BEGIN
 			count (PlayerScores.MatchId) as 'TotalMatch',
 			count (case when IsPlayedInning = 1 then 1 else null end) as 'TotalInnings',
 			sum (Bat_Runs) as 'TotalBatRuns',
+			Players.[FileName] AS 'Image',
 			Players.Player_Name AS 'PlayerName'
 			
 	
@@ -43,7 +44,8 @@ BEGIN
 	GROUP BY PlayerScores.PlayerId,
 			Players.Player_Name,
 			PlayerRole.Name,
-			Players.TeamId
+			Players.TeamId,
+			Players.[FileName]
 		--	PlayerScores.Bat_Runs
 
 	order by sum(Bat_Runs) desc ;

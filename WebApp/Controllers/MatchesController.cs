@@ -46,12 +46,11 @@ namespace WebApp.Controllers
             _hosting = hosting;
         }
 
-        // GET: Matches
+
         [HttpGet]
-        [Route("Matches/Index")]
-        public async Task<IActionResult> Index(int? teamId, int? matchTypeId,
+        public async Task<IActionResult> Index(DataTableAjaxPostModel model, int? teamId, int? matchTypeId,
                                                int? tournamentId, int? matchSeriesId,
-                                                int? season, int? matchOvers, int? userId, int? page)
+                                                int? season, int? matchOvers, int? userId, int? page, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -60,40 +59,49 @@ namespace WebApp.Controllers
                 userId = users.Id;
 
             ViewBag.Overs = new SelectList(_context.Matches
-                .Where(i => (!userId.HasValue || i.UserId == userId))
                 .Select(i => i.MatchOvers)
                 .ToList().Distinct(), "MatchOvers");
 
             ViewBag.Season = new SelectList(_context.Matches
-                .Where(i => (!userId.HasValue || i.UserId == userId))
                 .Select(i => i.Season)
                 .ToList().Distinct(), "Season");
 
             ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
-                .Where(i => (!userId.HasValue || i.UserId == userId))
                 .Select(i => new { i.TournamentId, i.TournamentName })
            , "TournamentId", "TournamentName");
 
+            ViewBag.Stage = new SelectList(_context.TournamentStages
+                .Select(i => new { i.TournamentStageId, i.Name })
+           , "TournamentStageId", "Name");
+
             ViewBag.MatchSeries = new SelectList(_context.MatchSeries
-                .Where(i => (!userId.HasValue || i.UserId == userId))
                 .Select(i => new { i.MatchSeriesId, i.Name })
            , "MatchSeriesId", "Name");
 
             ViewBag.TeamId = new SelectList(_context.Teams
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == userId))
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
 
-            var model = await _matches.GetAllMatches(teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers, userId, page);
-            return View(model);
+            var result = await _matches.GetAllMatchesList(model.Init() ,teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers, userId, page);
+            if (isApi == true)
+                return Json(new
+                {
+                    data = result,
+                    draw = model.Draw,
+                    recordsTotal = result.TotalCount,
+                    recordsFiltered = result.TotalCount,
+                });
+            else
+                return View(result);
         }
         [HttpGet]
-        [Route("Matches/List/teamId/{teamId}/matchTypeId/{matchTypeId}/tournamentId/{tournamentId}/matchSeriesId/{matchSeriesId}/season/{season}/matchOvers/{matchOvers}/userId/{userId}/page/{page}")]
-        public async Task<IActionResult> List(int? teamId, int? matchTypeId,
+        //[Route("Matches/List/teamId/{teamId}/matchTypeId/{matchTypeId}/tournamentId/{tournamentId}/matchSeriesId/{matchSeriesId}/season/{season}/matchOvers/{matchOvers}/userId/{userId}/page/{page}")]
+        [Route("Matches/List")]
+        public async Task<IActionResult> List(DataTableAjaxPostModel model, int? teamId, int? matchTypeId,
                                               int? tournamentId, int? matchSeriesId,
-                                               int? season, int? matchOvers, int? userId, int? page)
+                                               int? season, int? matchOvers, int? userId, int? page, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -102,38 +110,42 @@ namespace WebApp.Controllers
                 userId = users.Id;
 
             ViewBag.Overs = new SelectList(_context.Matches
-                .Where(i => (!userId.HasValue || i.UserId == userId))
                 .Select(i => i.MatchOvers)
                 .ToList().Distinct(), "MatchOvers");
 
             ViewBag.Season = new SelectList(_context.Matches
-                .Where(i => (!userId.HasValue || i.UserId == userId))
                 .Select(i => i.Season)
                 .ToList().Distinct(), "Season");
 
             ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
-                .Where(i => (!userId.HasValue || i.UserId == userId))
                 .Select(i => new { i.TournamentId, i.TournamentName })
            , "TournamentId", "TournamentName");
 
             ViewBag.MatchSeries = new SelectList(_context.MatchSeries
-                .Where(i => (!userId.HasValue || i.UserId == userId))
                 .Select(i => new { i.MatchSeriesId, i.Name })
            , "MatchSeriesId", "Name");
 
             ViewBag.TeamId = new SelectList(_context.Teams
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == userId))
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
 
-            var model = await _matches.GetAllMatches(teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers, userId, page);
-            return Json(model);
+            var result = await _matches.GetAllMatchesList(model.Init(),teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers, userId, page);
+            if (isApi == true)
+                return Json(new
+                {
+                    data = result,
+                    draw = model.Draw,
+                    recordsTotal = result.TotalCount,
+                    recordsFiltered = result.TotalCount,
+                });
+            else
+                return View(result);
         }
 
         // GET: MatchSummary
-        [HttpGet]
+        [HttpGet("Matches/Summary")]
         public IActionResult Summary(int matchId, int homeTeamId, int oppTeamId, bool isApi)
         {
             ViewBag.Name = "Match Summary";
@@ -208,7 +220,7 @@ namespace WebApp.Controllers
             return View(matchSummary);
         }
 
-        [HttpGet]
+        [HttpGet("Matches/Details")]
         // GET: Matches/Details/5
         public async Task<IActionResult> Details(int? matchId)
         {
@@ -224,7 +236,7 @@ namespace WebApp.Controllers
                     MatchId = i.MatchId,
                     HomeTeam = i.HomeTeam.Team_Name,
                     OppponentTeam = i.OppponentTeam.Team_Name,
-                    DateOfMatch = i.DateOfMatch.HasValue ? i.DateOfMatch.Value.ToShortDateString() : "",
+                    DateOfMatch = i.DateOfMatch.HasValue ? i.DateOfMatch.Value.ToString("dddd, dd MMMM yyyy") : "",
                     GroundName = i.GroundName,
                     Season = i.Season,
                     MatchType = i.MatchType.MatchTypeName,
@@ -271,9 +283,14 @@ namespace WebApp.Controllers
                 .Where(i => i.TournamentId == tournamentId && i.UserId == users.Id)
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName", tournamentId);
+
                 ViewBag.MatchType = new SelectList(_context.MatchType
                     .Select(i => new { i.MatchTypeId, i.MatchTypeName })
                     , "MatchTypeId", "MatchTypeName", 2);
+
+                ViewBag.Stage = new SelectList(_context.TournamentStages
+                .Select(i => new { i.TournamentStageId, i.Name })
+                , "TournamentStageId", "Name");
             }
             else if (matchSeriesId != null && tournamentId == null)
             {
@@ -302,6 +319,9 @@ namespace WebApp.Controllers
                     .Where(i => i.UserId == users.Id)
                      .Select(i => new { i.TournamentId, i.TournamentName })
                     , "TournamentId", "TournamentName");
+                ViewBag.Stage = new SelectList(_context.TournamentStages
+                 .Select(i => new { i.TournamentStageId, i.Name })
+                 , "TournamentStageId", "Name");
             }
 
             return View();
@@ -316,10 +336,13 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                match.FileName = match.MatchImage.FileName;
-                if (match.MatchImage.Length > 0)
+                var directory = Path.Combine(_hosting.WebRootPath, "Home", "images", "Matches");
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+                if (match.MatchImage != null)
                 {
-                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Matches", match.FileName), FileMode.Create))
+                    match.FileName = match.MatchImage.FileName;
+                    using (var stream = new FileStream(Path.Combine(directory, match.FileName), FileMode.Create))
                     {
                         await match.MatchImage.CopyToAsync(stream);
                     }
@@ -336,7 +359,7 @@ namespace WebApp.Controllers
 
 
         // GET: Matches/Edit/5
-        [HttpGet]
+        [HttpGet("Matches/Edit/{id}")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -372,6 +395,10 @@ namespace WebApp.Controllers
                  .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
+            ViewBag.Stage = new SelectList(_context.TournamentStages
+              .Select(i => new { i.TournamentStageId, i.Name })
+         , "TournamentStageId", "Name");
+
             var match = await _context.Matches
                 .AsNoTracking()
                 .Select(i => new Matchdto
@@ -404,14 +431,14 @@ namespace WebApp.Controllers
         }
 
         // POST: Matches/Edit/5
-        [HttpPost]
+        [HttpPut("Matches/Edit")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(Matchdto match)
         {
             if (ModelState.IsValid)
             {
-               
+
                 if (match.MatchImage != null)
                 {
                     match.FileName = match.MatchImage.FileName;
@@ -433,8 +460,7 @@ namespace WebApp.Controllers
 
 
         // POST: Matches/Delete/5
-        [Route("Matches/DeleteConfirmed")]
-        [HttpGet]
+        [HttpDelete("Matches/DeleteConfirmed/{matchId}")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int matchId)
         {
@@ -490,7 +516,7 @@ namespace WebApp.Controllers
             var filePath = Path.Combine(directory, screenShotdto.fileName);
             byte[] bytes = Convert.FromBase64String(screenShotdto.baseUrl);
             System.IO.File.WriteAllBytes(filePath, bytes);
-            return Json($"http://{HttpContext.Request.Host}{(filePath.Substring(filePath.IndexOf(_env.WebRootPath) + _env.WebRootPath.Length)).Replace('\\', '/')}");
+            return Json($"https://{HttpContext.Request.Host}{(filePath.Substring(filePath.IndexOf(_env.WebRootPath) + _env.WebRootPath.Length)).Replace('\\', '/')}");
         }
 
     }

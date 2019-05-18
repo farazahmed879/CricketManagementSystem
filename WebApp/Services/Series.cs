@@ -25,13 +25,11 @@ namespace WebApp.Services
             _userManager = userManager;
         }
 
-        public async Task<List<MatchSeriesdto>> GetAllSeries(int? page, int? userId)
+        public async Task<PaginatedList<MatchSeriesdto>> GetAllSeries(DataTableAjaxPostModel model, int? page)
         {
-            int pageSize = 20;
 
-            var model = await PaginatedList<MatchSeriesdto>.CreateAsync(
+            var result = await PaginatedList<MatchSeriesdto>.CreateAsync(
                _context.MatchSeries
-                .Where(i => !userId.HasValue || i.UserId == userId)
                  .Select(i => new MatchSeriesdto
                  {
                      MatchSeriesId = i.MatchSeriesId,
@@ -41,10 +39,10 @@ namespace WebApp.Services
 
                  })
                  .OrderByDescending(i => i.MatchSeriesId)
-                , page ?? 1, pageSize);
+                , model.Start, model.Length);
 
 
-            return model;
+            return result;
         }
     }
 }

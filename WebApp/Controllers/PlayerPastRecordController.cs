@@ -41,7 +41,7 @@ namespace WebApp.Controllers
 
 
         // GET: PlayerPastRecord
-        [HttpGet]
+        [HttpGet("PlayerPastRecord/PastRecord")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> PastRecord(int? playerId,string PlayerName)
         {
@@ -57,7 +57,7 @@ namespace WebApp.Controllers
         }
 
         // POST: Players/Edit/5
-        [HttpPost]
+        [HttpPost("PlayerPastRecord/PastRecordSave")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> PastRecordSave(PlayerPastRecorddto playerPastRecord)

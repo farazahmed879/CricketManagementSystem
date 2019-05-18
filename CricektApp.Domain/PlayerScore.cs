@@ -9,7 +9,7 @@ namespace CricketApp.Domain
         public int? PlayerId { get; set; }
         public int Position { get; set; }
         public int MatchId { get; set; }
-        public string Bowler { get; set; }
+        public int? BowlerId { get; set; }
         public int? Bat_Runs { get; set; }
         public int? Bat_Balls { get; set; }
         public int? HowOutId { get; set; }
@@ -22,8 +22,10 @@ namespace CricketApp.Domain
         public int? RunOut { get; set; }
         public int? Four { get; set; }
         public int? Six { get; set; }
+        public string Fielder { get; set; }
         public int TeamId { get; set; }
         public bool IsPlayedInning { get; set; }
+        public Player Bowler { get; set; }
         public Player Player { get; set; }
         public Match Match { get; set; }
         public HowOut HowOut { get; set; }

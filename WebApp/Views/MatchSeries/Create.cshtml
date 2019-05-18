@@ -67,7 +67,7 @@
         <div class="footer">
             <ul class="list-inline">
                 <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
-                <li><input id="SeriesCreate" type="button" value="Add" class="btn btn-primary"></li>
+                <li><input id="SeriesCreate" type="button" value="Add" class="btn btn-outlined btn-primary"></li>
             </ul>
         </div>
     </div>
@@ -81,8 +81,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <link rel="stylesheet" href="~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-    <script src="~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <script src="~/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="~/plugins/iCheck/icheck.min.js"></script>
     <script>
         //Date picker

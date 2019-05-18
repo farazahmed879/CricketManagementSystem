@@ -33,30 +33,34 @@ namespace WebApp.Controllers
 
         // GET: Tournaments
         [HttpGet]
-        public async Task<IActionResult> Index(int? page, int? userId)
+        public async Task<IActionResult> Index(DataTableAjaxPostModel model, int? page, bool isApi)
         {
             ViewBag.Name = "Tournaments";
-            var users = await _userManager.GetUserAsync(HttpContext.User);
-            if (users != null)
-                userId = users.Id;
-            var model = await _tournaments.GetAllTournaments(page, userId);
 
-            return View(model);
+            var result = await _tournaments.GetAllTournaments(model.Init(), page);
+
+            if (isApi == true)
+                return Json(new
+                {
+                    data = result,
+                    draw = model.Draw,
+                    recordsTotal = result.TotalCount,
+                    recordsFiltered = result.TotalCount,
+                });
+            else
+                return View(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> List(int? page, int? userId)
+        [HttpGet("Tournament/List")]
+        public async Task<IActionResult> List(DataTableAjaxPostModel model, int? page)
         {
             ViewBag.Name = "Tournaments";
-            var users = await _userManager.GetUserAsync(HttpContext.User);
-            if (users != null)
-                userId = users.Id;
-            var model = await _tournaments.GetAllTournaments(page, userId);
+            var result = await _tournaments.GetAllTournaments(model.Init(), page);
 
-            return Json(model);
+            return Json(result);
         }
 
-        [HttpGet]
+        [HttpGet("Tournament/Details/{id}")]
         // GET: Tournaments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -75,7 +79,7 @@ namespace WebApp.Controllers
             return View(tournament);
         }
 
-        [HttpGet]
+        [HttpGet("Tournament/Create")]
         // GET: Tournament/Create
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create()
@@ -85,9 +89,9 @@ namespace WebApp.Controllers
         }
 
         // POST: Tournament/Create
-        [HttpPost]
+
         [ValidateAntiForgeryToken]
-        [Route("Tournament/Create")]
+        [HttpPost("Tournament/Create")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Create(Tournamentdto tournament)
         {
@@ -103,7 +107,7 @@ namespace WebApp.Controllers
             return Json(ResponseHelper.UnSuccess());
         }
 
-        [HttpGet]
+        [HttpGet("Tournament/Edit/{id}")]
         // GET: Tournaments/Edit/5
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
@@ -133,9 +137,8 @@ namespace WebApp.Controllers
         }
 
         // POST: Tournaments/Edit/5
-        [HttpPost]
+        [HttpPut("Tournament/Edit")]
         [ValidateAntiForgeryToken]
-        [Route("Tournament/Edit")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(Tournamentdto tournament)
         {
@@ -154,7 +157,7 @@ namespace WebApp.Controllers
             return Json(ResponseHelper.UpdateUnSuccess());
         }
 
-        [HttpDelete]
+        [HttpDelete("Tournament/DeleteConfirmed/{tournamentId}")]
         // POST: Tournaments/Delete/5
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int tournamentId)

@@ -7,6 +7,7 @@
 <br />
 <br />
 <br />
+<input type="hidden" id="hdnAuthenticated" value="@Html.Raw(User.Identity.IsAuthenticated)" />
 <div class="container-fluid">
     <div class='col-md-1'></div>
     <div class="col-md-10">
@@ -17,6 +18,13 @@
             </ol>
         </div>
         <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="center fade-down section-heading">
+                        <h2 class="main-title">Manage Player</h2>
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <div id="filter-panel" class="collapse filter-panel">
                     <div class="panel-body">
@@ -60,7 +68,7 @@
                             <div class="footer" style="margin-top : .5em">
                                 <ul class="list-inline">
                                     <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
-                                    <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
+                                    <li><input type="button" id="filterdata" value="Search" class="btn btn-outlined btn-primary filter-col"></li>
                                 </ul>
                             </div>
                         </form>
@@ -73,33 +81,24 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <div class="form-group">
-                            <a asp-controller="Players" data-placement="top" data-toggle="tooltip" title="Add new player" class="btn btn-primary" asp-action="Create">Add</a>
+                            <a asp-controller="Players" data-placement="top" data-toggle="tooltip" title="Add new player" class="btn btn-outlined btn-primary" asp-action="Create">Add</a>
                         </div>
 
                     }
                 </li>
                 <li>
-                    <button class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
+                    <button id="advSearch" class="btn btn-default" data-toggle="collapse" data-target="#filter-panel">
                         Advanced Search
                     </button>
                 </li>
             </ul>
 
-            @{
-                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-                var prev1Disabled = !Model.HasPreviousPage ? "hide" : "";
-                var prev2Disabled = !Model.HasPreviousTwo ? "hide" : "";
-                var prev3Disabled = !Model.HasPreviousThree ? "hide" : "";
-                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-                var next1Disabled = !Model.HasNextPage ? "hide" : "";
-                var next2Disabled = !Model.HasNext2 ? "hide" : "";
-                var next3Disabled = !Model.HasNext3 ? "hide" : "";
-            }
+
 
             <div class="table-responsive">
 
-                <table id="PlayerTable" class="table table-striped">
-                    <thead class="bg-blue-active">
+                <table id="PlayerTable" class="table table-bordered table-striped">
+                    <thead style="background-color: maroon; color: white">
                         <tr>
                             <th>
                                 Player Name
@@ -119,19 +118,22 @@
 
                             <tr>
                                 <td>
-                                    @item.Player_Name
+                                    <ul class="list-inline">
+                                        <li><img class="img-responsive" id="Img" src="~/Home/images/Players/@item.FileName"></li>
+                                        <li><b>@item.Player_Name</b></li>
+                                    </ul>
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.DOB)
+                                    <b>@Html.DisplayFor(modelItem => item.DOB)</b>
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Team)
+                                    <b>@Html.DisplayFor(modelItem => item.Team)</b>
                                 </td>
                                 <td>
                                     @if (User.Identity.IsAuthenticated)
                                     {
 
-                                        <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" onclick="statistics(@item.PlayerId)" title="Statistics">
+                                        <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" onclick="statistics(@item.PlayerId,null,null)" title="Statistics">
                                             <i data-toggle="modal" data-target="#playerStatistics" class="fas fa-user"></i>
                                         </a>
                                         <a data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.PlayerId"><i class="fas fa-edit"></i></a>
@@ -154,57 +156,15 @@
                     </tbody>
                 </table>
                 @*@{
-                    await Html.RenderPartialAsync("_PlayerPartial", Model);
-                }*@
+                        await Html.RenderPartialAsync("_PlayerPartial", Model);
+                    }*@
             </div>
 
-            <nav class="navbar navbar-light bg-light">
-                <form class="form-inline">
-                    <div class="col-md-12">
-                        <span class="fa-1x">
-                            <strong class="text-primary">Showing @Model.PageStartValue to @Model.PageEndValue of @Model.TotalCount entries</strong>
-                        </span>
-                        <span class="fa-1x pull-right">
-                            <strong class="text-primary">Page # @Model.PageIndex of @Model.TotalPages pages</strong>
-                        </span>
 
-                    </div>
-                    <div class="row pull-right">
-                        <a data-placement="top" data-toggle="tooltip" title="First Page" asp-action="Index" class="btn btn-primary @prevDisabled"
-                           asp-route-page="@(1)">
-                            First
-                        </a>
-
-                        <a asp-action="Index" class="btn btn-default @prev3Disabled"
-                           asp-route-page="@(Model.PageIndex - 3)">@(Model.PageIndex - 3)</a>
-                        <a asp-action="Index" class="btn btn-default @prev2Disabled"
-                           asp-route-page="@(Model.PageIndex - 2)">@(Model.PageIndex - 2)</a>
-                        <a asp-action="Index" class="btn btn-default @prev1Disabled"
-                           asp-route-page="@(Model.PageIndex - 1)">@(Model.PageIndex - 1)</a>
-
-                        <a asp-action="Index" class="btn btn-primary disabled"
-                           asp-route-page="@(Model.PageIndex)">@(Model.PageIndex)</a>
-
-                        <a asp-action="Index" class="btn btn-default @next1Disabled"
-                           asp-route-page="@(Model.PageIndex + 1)">@(Model.PageIndex + 1)</a>
-                        <a asp-action="Index" class="btn btn-default @next2Disabled"
-                           asp-route-page="@(Model.PageIndex + 2)">@(Model.PageIndex + 2)</a>
-                        <a asp-action="Index" class="btn btn-default @next3Disabled"
-                           asp-route-page="@(Model.PageIndex + 3)">@(Model.PageIndex + 3)</a>
-
-                        <a data-placement="top" data-toggle="tooltip" title="Last Page" asp-action="Index"
-                           asp-route-page="@(Model.TotalPages)"
-                           class="btn btn-primary @nextDisabled">
-                            Last
-                        </a>
-
-                    </div>
-                </form>
-            </nav>
         </div>
     </div>
     <div class='col-md-1'></div>
- 
+
 </div>
 
 <div id="snackbar"></div>
@@ -212,51 +172,56 @@
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-body">
+            <input hidden id="pId"/>
+            <div class="modal-body" style="border: solid">
                 <div id="screen">
-                    <!-- Widget: user widget style 1 -->
-                    <div class="box box-widget widget-user">
-                        <!-- Add the bg color to the header using any of the bg-* classes -->
-                        <div class="widget-user-header bg-aqua-active">
-                            <h3 class="widget-user-username" id="name"></h3>
-                            <h5 class="widget-user-desc" id="teamName"></h5>
-                            <h5 class="widget-user-desc" id="age"></h5>
-                        </div>
-                        <div class="widget-user-image">
-                            <img class="img-circle" id="target">
-                        </div>
-                        <div class="box-footer">
-                            <div class="row">
-                                <!-- /.col -->
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h6 class="description-header">Batting Style</h6>
-                                        <span class="description-text" id="battingStyle"></span>
-                                    </div>
-                                    <!-- /.description-block -->
+                    <center>
+                    </center>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="widget-user-image">
+                                    <img class="img-circle" id="target">
                                 </div>
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h6 class="description-header">Playing Role</h6>
-                                        <span class="description-text" id="playingRole"></span>
-                                    </div>
-                                    <!-- /.description-block -->
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" id="prettyPhoto" href="~/Home/images/Players/Ahmed Raza.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
                                 </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4">
-                                    <div class="description-block">
-                                        <h6 class="description-header">Bowling Style</h6>
-                                        <span class="description-text" id="bowlingStyle"></span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
                             </div>
-                            <!-- /.row -->
+                            <div class="col-md-6">
+                                <ul>
+                                    <li> <b id="playerName"></b></li>
+                                    <li> <span class="description-header">Playing Role</span> <b id="playingRole"></b></li>
+                                    <li> <span class="description-header">Batting Style</span> <b id="battingStyle"></b></li>
+                                    <li> <span class="description-header">Bowling Style</span> <b id="bowlingStyle"></b></li>
+                                    <li> <span class="description-header">Birth</span> <b id="age"></b></li>
+                                    <li> <b id="teamName"></b></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-xs-12 col-md-12">
+                                    <label class="control-label">Season</label>
+                                    <select id="season" name="season" asp-items="ViewBag.Season" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <label>Match Type</label>
+                                    <select id="matchTypeId" name="matchTypeId" asp-items="ViewBag.MatchType" style="width:100%" class="js-example-basic-single" placeholder="--Select--">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <a data-placement="top" style="cursor:pointer;" onclick="statistics(null,null,null)" data-toggle="tooltip" >Apply</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+
+
                     <!-- /.widget-user -->
-                    <div class="col-md-12 bg-light-blue-active">
+                    <div style="background-color: maroon; color:white">
                         <h4>Batting<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BattingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h4>
                     </div>
                     <div class="row">
@@ -281,24 +246,24 @@
                                     <tbody>
 
                                         <tr>
-                                            <td><span id="totalMatch"></span></td>
-                                            <td><span id="totalInnings"></span></td>
-                                            <td><span id="totalBatRuns"></span></td>
-                                            <td><span id="totalBatBalls"></span></td>
-                                            <td><span id="numberOf50s"></span></td>
-                                            <td><span id="numberOf100s"></span></td>
-                                            <td><span id="battingAverage"></span></td>
-                                            <td><span id="strikeRate"></span></td>
-                                            <td><span id="bestScore"></span></td>
-                                            <td><span id="totalFours"></span></td>
-                                            <td><span id="totalSixes"></span></td>
+                                            <td><b id="totalMatch"></b></td>
+                                            <td><b id="totalInnings"></b></td>
+                                            <td><b id="totalBatRuns"></b></td>
+                                            <td><b id="totalBatBalls"></b></td>
+                                            <td><b id="numberOf50s"></b></td>
+                                            <td><b id="numberOf100s"></b></td>
+                                            <td><b id="battingAverage"></b></td>
+                                            <td><b id="strikeRate"></b></td>
+                                            <td><b id="bestScore"></b></td>
+                                            <td><b id="totalFours"></b></td>
+                                            <td><b id="totalSixes"></b></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 bg-light-blue-active">
+                    <div style="background-color: maroon; color:white">
                         <h4>Bowling<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BowlingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h4>
                     </div>
                     <div class="row">
@@ -319,21 +284,21 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><span id="totalOvers"></span></td>
-                                            <td><span id="totalWickets"></span></td>
-                                            <td><span id="totalBallRuns"></span></td>
-                                            <td><span id="fiveWickets"></span></td>
-                                            <td><span id="totalMaidens"></span></td>
-                                            <td><span id="bowlingAvg"></span></td>
-                                            <td><span id="economy"></span></td>
-                                            <td><span id="bestBowling"></span></td>
+                                            <td><b id="totalOvers"></b></td>
+                                            <td><b id="totalWickets"></b></td>
+                                            <td><b id="totalBallRuns"></b></td>
+                                            <td><b id="fiveWickets"></b></td>
+                                            <td><b id="totalMaidens"></b></td>
+                                            <td><b id="bowlingAvg"></b></td>
+                                            <td><b id="economy"></b></td>
+                                            <td><b id="bestBowling"></b></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 bg-light-blue-active">
+                    <div style="background-color: maroon; color:white">
                         <h4>Fielding</h4>
                     </div>
                     <div class="row">
@@ -349,9 +314,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><span id="onFieldCatch"></span></td>
-                                            <td><span id="onFieldStump"></span></td>
-                                            <td><span id="onFieldRunOut"></span></td>
+                                            <td><b id="onFieldCatch"></b></td>
+                                            <td><b id="onFieldStump"></b></td>
+                                            <td><b id="onFieldRunOut"></b></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -371,9 +336,9 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header  bg-light-blue-active">
-                <button type="button" class="close" onclick="ogShare()" data-dismiss="modal">&times;</button>
-            </div>
+            @*<div class="modal-header  bg-light-blue-active">
+                    <button type="button" class="close" onclick="ogShare()" data-dismiss="modal">&times;</button>
+                </div>*@
             <div class="modal-body">
                 <div class="container-canvas">
                     <div id="screenShotBody"></div>
@@ -513,6 +478,7 @@
 </div>
 
 @section Scripts{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
@@ -520,25 +486,57 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Home/js/html2convas-min.js"></script>
     <script>
 
         $('.js-example-basic-single').select2();
 
-        $('#PlayerTable').DataTable({
-            "paging": false,
-            dom: 'B',
-            "order": [],
-            buttons: [
-                {
-                    extend: 'pdfHtml5',
-                    className: 'btn btn-primary'
-                    //orientation: 'landscape',
-                    //pageSize: 'LEGAL'
-                }
-            ]
-        });
+        //var dataTable = $('#PlayerTable').DataTable({
+        //    processing: true,
+        //    serverSide: true,
+        //    "paging": true,
+        //    dom: 'Brtipl',
+        //    "order": [],
+        //    ajax: {
+        //        url: "/Players/Index?isApi=true",
+        //        type: "GET",
+        //        dataType: "json"
+        //    },
+        //    columns: [
+        //        {
+        //            className: "font-15 text-left",
+        //            orderable: false,
+        //            data: 'player_Name',
+        //            name: 'player_Name'
+        //        },
+        //        {
+        //            className: "font-15 text-left",
+        //            orderable: false,
+        //            data: 'dob',
+        //            name: 'dob'
+        //        },
+        //        {
+        //            className: "font-15 text-left",
+        //            orderable: false,
+        //            data: 'team',
+        //            name: 'team'
+        //        }, {
+        //            className: "font-13 text-left",
+        //            orderable: false,
+        //            data: 'player_Name',
+        //            name: 'player_Name'
+        //        }
+        //    ],
+        //    buttons: [
+        //        {
+        //            extend: 'pdfHtml5',
+        //            className: 'btn btn-default'
+        //            //orientation: 'landscape',
+        //            //pageSize: 'LEGAL'
+        //        }
+        //    ]
+        //});
 
         //Toaster
         function myFunction(data) {
@@ -567,12 +565,58 @@
 
 
         $('#filterdata').click(async function () {
-            // datatable.clear();
-            // datatable.destroy();
-            window.location = `/Players/Index?teamId=${$("#teamId").val()}&playerRoleId=${$("#playerRoleId").val()}&battingStyleId=${$("#battingStyleId").val()}&bowlingStyleId=${$("#bowlingStyleId").val()}&name=${$("#name").val()}`;
-            //await fetch(, {
+
+            var teamId = $("#teamId").val();
+            var playerRoleId = $("#playerRoleId").val();
+            var battingStyleId = $("#battingStyleId").val();
+            var bowlingStyleId = $("#bowlingStyleId").val();
+            var name = $("#name").val();
+            dataTable.ajax.url("/Players/Index?teamId=" + teamId + "&playerRoleId=" + playerRoleId + "&battingStyleId=" + battingStyleId + " & bowlingStyleId=" + bowlingStyleId + " & name=" + name + " & isApi=true");
+            //const getA = (i) => {
+            //    if ($("#hdnAuthenticated").val() === "True") {
+            //        return `<a data-placement="top" data-toggle="tooltip" style="cursor:pointer" onclick="statistics(${i.playerId})" title="Statistics">
+            //                                                                            <i data-toggle="modal" data-target="#playerStatistics" class="fas fa-user"></i>
+            //                                                                        </a>`;
+            //    }
+            //    return "";
+            //}
+            //const response = await fetch(`/Players/Index?teamId=${$("#teamId").val()}&playerRoleId=${$("#playerRoleId").val()}&battingStyleId=${$("#battingStyleId").val()}&bowlingStyleId=${$("#bowlingStyleId").val()}&name=${$("#name").val()}&isApi=true`, {
+            //    method: "Get",
+            //    //     body: JSON.stringify(model),
             //    credentials: 'same-origin'
             //});
+            //if (response.ok) {
+
+            //    const json = Array.from(await response.json());
+            //    console.log(json);
+            //    const tbody = document.getElementsByTagName('TBODY')[0];
+            //    tbody.innerHTML = '';
+            //    const trRows = json.map(i => {
+            //        const tr = document.createElement("tr");
+            //        tr.innerHTML = `
+            //                                                                        <td> <ul class="list-inline">
+            //                                                                            <li><img class="img-responsive" id="Img" src="/Home/images/Players/${i.fileName}"></li>
+            //                                                                            <li><b>${i.player_Name}</b></li>
+            //                                                                        </ul></td>
+            //                                                                        <td><b>${i.dob}</b></td>
+            //                                                                        <td><b>${i.team}</b></td>
+            //                                                                        <td id="tabletd">
+            //                                                                        ${getA(i)}
+
+            //                                                                         </td>`;
+            //        tbody.appendChild(tr);
+
+            //        // const login = document.createElement("td")
+            //        var html = `  `
+
+
+            //        //$('#tabletd').appendTo(html);
+            //        return tr;
+            //    });
+
+            document.getElementById('advSearch').click();
+            clearFilter();
+
         });
 
 
@@ -586,8 +630,8 @@
                 var header = new Headers();
                 header.append("content-type", "application/json");
 
-                const response = await fetch(`/Players/DeleteConfirmed?playerId=${playerId}`, {
-                    method: "POST",
+                const response = await fetch(`/Players/DeleteConfirmed/${playerId}`, {
+                    method: "Delete",
                     body: JSON.stringify(model),
                     credentials: 'same-origin',
                     headers: header
@@ -668,10 +712,13 @@
         }
 
         let statistics = function (playerId) {
+            var season = $('#season').val();
+            var matchTypeId = $('#matchTypeId').val();
+            var season = $('#season').val();
             var header = new Headers();
             header.append("content-type", "application/json");
 
-            fetch(`/Players/PlayerStatistics?playerId=${playerId}&Api=true`, {
+            fetch(`/Players/PlayerStatistics/${playerId}`, {
                 credentials: 'same-origin',
                 headers: header
             })
@@ -679,7 +726,8 @@
                     if (response.ok) {
                         response.json()
                             .then(json => {
-                                document.getElementById("name").innerHTML = json.playerName;
+                                console.log(json);
+                                document.getElementById("playerName").innerHTML = json.playerName;
                                 document.getElementById("teamName").innerHTML = json.teamName;
 
                                 document.getElementById("battingStyle").innerHTML = json.battingStyle;
@@ -780,13 +828,11 @@
                                 document.getElementById("doHitWicket").innerHTML = json.doHitWicket;
                                 document.getElementById("doLBW").innerHTML = json.doLBW;
                                 document.getElementById("doStump").innerHTML = json.doCatch;
+                                document.getElementById("pId").innerHTML = json.playerId;
 
-                                if (json.fileName != null) {
-                                    $('#target').attr('src', `/Home/images/Player/${json.fileName}`);
-                                } else {
-                                    $('#target').attr('src', `/Home/images/noImage.jpg`);
-                                }
-
+                                $('#target').attr('src', `/Home/images/Players/${json.fileName}`);
+                                var prettyPhotoSrc = $("#prettyPhoto").attr("href");
+                                $("#prettyPhoto").attr("href", prettyPhotoSrc.substr(0, prettyPhotoSrc.lastIndexOf('/') + 1) + json.fileName);
                             })
                             .catch(err => {
                                 console.error(err);
@@ -799,7 +845,7 @@
 
         };
 
-        let Delete = new function (PlayerId) {
+        function Delete(PlayerId) {
             document.getElementById("PlayerId").value = PlayerId;
         }
 
@@ -814,6 +860,22 @@
 
     </script>
     <style>
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 20px;
+            width: 25px;
+            /*border: 1px solid #bbb;*/
+        }
+
+        #target {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            width: 120px;
+        }
 
         @@media only screen and (max-width: 768px) {
             /* For mobile phones: */
@@ -842,6 +904,11 @@
             margin-left: auto;
             width: 800px;
             height: 500px;
+        }
+
+
+        body {
+            font-size: 1em;
         }
     </style>
 

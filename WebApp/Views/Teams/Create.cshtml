@@ -111,10 +111,10 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link rel="stylesheet" href="~/plugins/iCheck/square/blue.css">
     <script src="~/plugins/input-mask/jquery.inputmask.js"></script>
     <script src="~/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
     <script src="~/plugins/input-mask/jquery.inputmask.extensions.js"></script>
-    <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
     <script src="~/plugins/iCheck/icheck.min.js"></script>
     <style>
         #Img {
@@ -194,7 +194,7 @@
                     'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                 },
                 dataType: "json",
-                url: "/Teams/Create",
+                url: "/Team/Create",
                 processData: false,
                 contentType: false,
                 success: function (data) {

@@ -270,7 +270,7 @@
                         headers: {
                             'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                         },
-                        method: "POST"
+                        method: "Put"
                     }).done(function (data) {
                         myFunction(data);
                         window.location = '/Players/Index'

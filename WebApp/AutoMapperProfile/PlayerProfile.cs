@@ -8,7 +8,7 @@ namespace WebApp.AutoMapperProfile
     {
         public PlayerProfile()
         {
-            CreateMap<Player, Playersdto>().ReverseMap();
+            CreateMap<Player, MatchBatsman>().ReverseMap();
         }
     }
 }

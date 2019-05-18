@@ -17,6 +17,7 @@ namespace WebApp.ViewModels
         public int NumberOf50s { get; set; }
         public int NumberOf100s { get; set; }
         public string StrikeRate { get; set; }
+        public string Image { get; set; }
         public string BattingAverage { get; set; }
     }
 }

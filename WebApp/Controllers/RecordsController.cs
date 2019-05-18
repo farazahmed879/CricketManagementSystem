@@ -25,13 +25,14 @@ namespace WebApp.Controllers
             _userManager = userManager;
         }
 
-        // View: Records/Index
+        [HttpGet]
         public IActionResult Index()
         {
             ViewBag.Name = "Records";
             return View();
         }
         // GET: Batting
+        [HttpGet]
         public async Task<IActionResult> Batting(int? teamId, int? season, int? overs,
             int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
@@ -44,30 +45,25 @@ namespace WebApp.Controllers
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.Season).ToList().Distinct(), "Season");
 
 
             ViewBag.Overs = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
                 .Select(i => new { i.TeamId, i.Team_Name })
                   , "TeamId", "Team_Name", teamId);
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
             ViewBag.MatchSeries = new SelectList(_context.MatchSeries
                .AsNoTracking()
-               .Where(i => (!userId.HasValue || i.UserId == users.Id))
                .Select(i => new { i.MatchSeriesId, i.Name })
                , "MatchSeriesId", "Name");
 
@@ -117,6 +113,7 @@ namespace WebApp.Controllers
 
         }
         // GET: Bowling
+        [HttpGet]
         public async Task<IActionResult> Bowling(int? teamId, int? season, int? overs, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
@@ -128,24 +125,20 @@ namespace WebApp.Controllers
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.Season).ToList().Distinct(), "Season");
 
 
             ViewBag.Overs = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
                 .Select(i => new { i.TeamId, i.Team_Name })
                   , "TeamId", "Team_Name", teamId);
 
             ViewBag.TournamentId = new SelectList(_context.Tournaments
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
@@ -193,6 +186,7 @@ namespace WebApp.Controllers
 
         }
         // Get: MostRuns
+        [HttpGet]
         public async Task<IActionResult> MostRuns(int? teamId, int? season, int? overs,
           int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
@@ -205,30 +199,25 @@ namespace WebApp.Controllers
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.Season).ToList().Distinct(), "Season");
 
 
             ViewBag.Overs = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
                 .Select(i => new { i.TeamId, i.Team_Name })
                   , "TeamId", "Team_Name", teamId);
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
             ViewBag.MatchSeries = new SelectList(_context.MatchSeries
                .AsNoTracking()
-               .Where(i => (!userId.HasValue || i.UserId == users.Id))
                .Select(i => new { i.MatchSeriesId, i.Name })
                , "MatchSeriesId", "Name");
 
@@ -279,6 +268,7 @@ namespace WebApp.Controllers
         }
 
         // Get: MostFours
+        [HttpGet]
         public async Task<IActionResult> MostFours(int? teamId, int? season, int? overs,
           int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
@@ -291,30 +281,25 @@ namespace WebApp.Controllers
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.Season).ToList().Distinct(), "Season");
 
 
             ViewBag.Overs = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
                 .Select(i => new { i.TeamId, i.Team_Name })
                   , "TeamId", "Team_Name", teamId);
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
             ViewBag.MatchSeries = new SelectList(_context.MatchSeries
                .AsNoTracking()
-               .Where(i => (!userId.HasValue || i.UserId == users.Id))
                .Select(i => new { i.MatchSeriesId, i.Name })
                , "MatchSeriesId", "Name");
 
@@ -366,6 +351,7 @@ namespace WebApp.Controllers
 
 
         // Get: MostSixes
+        [HttpGet]
         public async Task<IActionResult> MostSixes(int? teamId, int? season, int? overs,
           int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
@@ -378,30 +364,25 @@ namespace WebApp.Controllers
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.Season).ToList().Distinct(), "Season");
 
 
             ViewBag.Overs = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
                 .Select(i => new { i.TeamId, i.Team_Name })
                   , "TeamId", "Team_Name", teamId);
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
             ViewBag.MatchSeries = new SelectList(_context.MatchSeries
                .AsNoTracking()
-               .Where(i => (!userId.HasValue || i.UserId == users.Id))
                .Select(i => new { i.MatchSeriesId, i.Name })
                , "MatchSeriesId", "Name");
 
@@ -453,6 +434,7 @@ namespace WebApp.Controllers
 
 
         // Get: MostWickets
+        [HttpGet]
         public async Task<IActionResult> MostWickets(int? teamId, int? season, int? overs,
             int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
@@ -465,30 +447,25 @@ namespace WebApp.Controllers
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.Season).ToList().Distinct(), "Season");
 
 
             ViewBag.Overs = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
                 .Select(i => new { i.TeamId, i.Team_Name })
                   , "TeamId", "Team_Name", teamId);
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
             ViewBag.MatchSeries = new SelectList(_context.MatchSeries
                .AsNoTracking()
-               .Where(i => (!userId.HasValue || i.UserId == users.Id))
                .Select(i => new { i.MatchSeriesId, i.Name })
                , "MatchSeriesId", "Name");
 
@@ -538,6 +515,7 @@ namespace WebApp.Controllers
         }
 
         // Get: MostCatches
+        [HttpGet]
         public async Task<IActionResult> MostCatches(int? teamId, int? season, int? overs,
             int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
@@ -550,30 +528,25 @@ namespace WebApp.Controllers
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.Season).ToList().Distinct(), "Season");
 
 
             ViewBag.Overs = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
                 .Select(i => new { i.TeamId, i.Team_Name })
                   , "TeamId", "Team_Name", teamId);
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
             ViewBag.MatchSeries = new SelectList(_context.MatchSeries
                .AsNoTracking()
-               .Where(i => (!userId.HasValue || i.UserId == users.Id))
                .Select(i => new { i.MatchSeriesId, i.Name })
                , "MatchSeriesId", "Name");
 
@@ -623,6 +596,7 @@ namespace WebApp.Controllers
         }
 
         // Get: MostStumps
+        [HttpGet]
         public async Task<IActionResult> MostStumps(int? teamId, int? season, int? overs,
             int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
@@ -635,30 +609,25 @@ namespace WebApp.Controllers
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.Season).ToList().Distinct(), "Season");
 
 
             ViewBag.Overs = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
                 .Select(i => new { i.TeamId, i.Team_Name })
                   , "TeamId", "Team_Name", teamId);
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
             ViewBag.MatchSeries = new SelectList(_context.MatchSeries
                .AsNoTracking()
-               .Where(i => (!userId.HasValue || i.UserId == users.Id))
                .Select(i => new { i.MatchSeriesId, i.Name })
                , "MatchSeriesId", "Name");
 
@@ -708,6 +677,7 @@ namespace WebApp.Controllers
         }
 
         // Get: MostFifties
+        [HttpGet]
         public async Task<IActionResult> MostFifties(int? teamId, int? season, int? overs, int? position,
             int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
@@ -720,30 +690,25 @@ namespace WebApp.Controllers
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.Season).ToList().Distinct(), "Season");
 
 
             ViewBag.Overs = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
                 .Select(i => new { i.TeamId, i.Team_Name })
                   , "TeamId", "Team_Name", teamId);
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
             ViewBag.MatchSeries = new SelectList(_context.MatchSeries
                .AsNoTracking()
-               .Where(i => (!userId.HasValue || i.UserId == users.Id))
                .Select(i => new { i.MatchSeriesId, i.Name })
                , "MatchSeriesId", "Name");
 
@@ -793,6 +758,7 @@ namespace WebApp.Controllers
 
         }
         // Get: MostFifties
+        [HttpGet]
         public async Task<IActionResult> MostCenturies(int? teamId, int? season, int? overs, int? position,
             int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
         {
@@ -805,30 +771,25 @@ namespace WebApp.Controllers
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.Season).ToList().Distinct(), "Season");
 
 
             ViewBag.Overs = new SelectList(_context.Matches
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.clubAdmin.UserId == users.Id))
                 .Select(i => new { i.TeamId, i.Team_Name })
                   , "TeamId", "Team_Name", teamId);
 
             ViewBag.Tournament = new SelectList(_context.Tournaments
                 .AsNoTracking()
-                .Where(i => (!userId.HasValue || i.UserId == users.Id))
                 .Select(i => new { i.TournamentId, i.TournamentName })
                 , "TournamentId", "TournamentName");
 
             ViewBag.MatchSeries = new SelectList(_context.MatchSeries
                .AsNoTracking()
-               .Where(i => (!userId.HasValue || i.UserId == users.Id))
                .Select(i => new { i.MatchSeriesId, i.Name })
                , "MatchSeriesId", "Name");
 

@@ -19,10 +19,10 @@
         <div class="widget-user-header bg-light-blue-gradient">
             <div class="col-md-4 gallery">
 
-                @{ if (Model.MatchLogo != null)
+                @{ if (Model.FileName != null)
                     {
-                        var base64 = (Model.MatchLogo == null || !Model.MatchLogo.Any()) ? "" : Convert.ToBase64String(@Model.MatchLogo);
-                        <a href="data:image/png;base64,@base64" title="@Model.MatchLogo"><img class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("data:image/png;base64,@base64");' id="Img" /></a>
+                       
+                        <a href="~/Home/images/Matches/@Model.FileName" title="@Model.GroundName"><img class="img-responsive" style='margin-bottom: 2em;' src="~/Home/images/Matches/@Model.FileName" id="Img" /></a>
                     }
                     else
                     {

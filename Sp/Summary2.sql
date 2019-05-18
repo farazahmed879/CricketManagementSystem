@@ -11,8 +11,9 @@ begin
 				homeTeam.Team_Name as 'HomeTeam',
 				Teams.Team_Name as 'OppponentTeam',
 				Result as 'Result',
-				Teams.[FileName] as 'OpponentTeamLogo',
-				homeTeam.[FileName] as 'HomeTeamTeamLogo',
+				case when Teams.[FileName] is null then 'noLogo.png' else  Teams.[FileName] end as 'OpponentTeamLogo',
+				case when homeTeam.[FileName] is null then 'noLogo.png' else  homeTeam.[FileName] end as 'HomeTeamTeamLogo',
+				--homeTeam.[FileName] as 'HomeTeamTeamLogo',
 				Matches.GroundName as 'GroundName',
 				MatchType.MatchTypeName as 'Type',
 				TournamentStages.Name as 'Stage',
@@ -50,42 +51,22 @@ begin
 					---make relation teamscore and matches	 
 						
 				) as 'OpponentTeamWickets'
-				-- (
-				--	select top 1 count (case when HomeTeamWickets.HowOutId != '7' then 1 else null end) over()  as 'HomeTeamWickets'
-				--	FROM Players
-				--	inner join PlayerScores HomeTeamWickets on Players.PlayerId = HomeTeamWickets.PlayerId
-				--	inner join Matches on HomeTeamWickets.MatchId = Matches.MatchId
-				--	WHERE  Players.TeamId = @paramHomeTeamId and 
-				--	Matches.MatchId = @paramMatchId			
-				--) as 'HomeTeamWickets',
-				--(
-				--	select top 1 count (case when TeamWickets.HowOutId != '7' then 1 else null end) over()  as 'OppenentTeamWickets'
-				--	FROM Players
-				--	inner join PlayerScores TeamWickets on Players.PlayerId = TeamWickets.PlayerId
-				--	inner join Matches on TeamWickets.MatchId = Matches.MatchId
-				--	WHERE  Players.TeamId = @paramOpponentTeamId and 
-				--	Matches.MatchId = @paramMatchId
-				--) as 'OppenentTeamWickets'
-			
+		
 		
 		FROM Matches	
 		inner join Teams on  Teams.TeamId = Matches.OppponentTeamId
 		left join Players on  Players.PlayerId = Matches.PlayerOTM
-		inner join TeamScores on TeamScores.TeamId = Teams.TeamId
 		inner join Teams homeTeam on  homeTeam.TeamId = Matches.HomeTeamId
-		inner join TeamScores homeTeamScore on homeTeamScore.TeamId = homeTeam.TeamId
 		left join TournamentStages on  TournamentStages.TournamentStageId = Matches.TournamentStageId
 		inner join MatchType on  MatchType.MatchTypeId = Matches.MatchTypeId
 		left join Tournaments on  Tournaments.TournamentId = Matches.TournamentId
-		
+		left join TeamScores homeTeamScore on homeTeamScore.TeamId = homeTeam.TeamId		
+		left join TeamScores on TeamScores.TeamId = Teams.TeamId
+
 		where Matches.MatchId = @paramMatchId	
 	
 	order by Matches.MatchId 
 	) AS LastMatch
 end
 go
-
---exec [usp_Summary2] 3,5,1026
---select * from TeamScores where TeamId = 3 and MatchId = 1026
-
---select * from TeamScores
+--exec [usp_Summary2] 2,5,1032

@@ -1,0 +1,171 @@
+﻿@model WebApp.ViewModels.MatchDetails
+
+@{
+    ViewData["Title"] = "Tournaments";
+}
+<br />
+
+<div class="container-fluid" id="body" style="padding:0% 9% 9% 9%">
+    <center>
+        <div class="tab" style="padding-top:3%">
+            <img src="~/Home/images/Teams/noLogo.png" style="width : 70px; height: 35px"> &nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/images/ScoreExec.png" style=" width: 110px; height :25px">&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/Home/images/Teams/noLogo.png" style="width : 70px; height: 35px">
+        </div>
+    </center>
+    <br>
+
+
+
+    <div class="row" style="margin-top:-15px">
+        <div class="col-lg-5" style="background-color:#01023b;border-radius:0px 40px 40px 0px; opacity: 0.95;
+  padding-top:0.5%;padding-bottom:0.5%">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8"><b style="font-size:20px; color: white">@Model.HomeTeam</b></div>
+                <div class="col-lg-2"></div>
+            </div>
+        </div>
+
+        <div class="col-lg-2" style="background-color:#2a283d; border-radius: 40px 40px 40px 40px; color:white;
+  text-align:center">
+            <b style="font-size:10px">Friendly Match <br>Inqilab</b>
+        </div>
+
+        <div class="col-lg-5" style="background-color:#010080;border-radius:40px 0px 0px 40px;
+  padding-top:0.5%;padding-bottom:0.5%">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8"><b style="font-size:20px; color: white ">@Model.OppTeam</b></div>
+                <div class="col-lg-2"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table id="BatsmanTable" class="table">
+                    <thead class="bg-primary">
+                        <tr>
+                            <th>
+
+                            </th>
+                            <th>
+                                OVERS
+                            </th>
+                            <th>
+                                MAIDENS
+                            </th>
+                            <th>
+                                RUNS
+                            </th>
+                            <th>
+                                WICKETS
+                            </th>
+                            <th>
+                                ECONOMY
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.matchBowler)
+                        {
+                            <tr>
+                                <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                    <b> @Html.DisplayFor(modelItem => item.PlayerName)</b>
+
+                                </td>
+                                <td style="background-color:white;border-bottom: 2px solid lightgray;border-right: 2px solid lightgray; font-size:15px; text-align: center !important; ">
+                                    <b>@Html.DisplayFor(modelItem => item.Overs)</b>
+                                </td>
+                                <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray; font-size:15px; text-align: center !important; ">
+
+                                    <b> @Html.DisplayFor(modelItem => item.Maiden)</b>
+
+                                </td>
+                                <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px; text-align: center !important; ">
+                                    <b> @Html.DisplayFor(modelItem => item.Runs)</b>
+
+                                </td>
+                                <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px; text-align: center !important; ">
+                                    <b>@Html.DisplayFor(modelItem => item.Wickets)</b>
+                                </td>
+                                <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px; text-align: center !important; ">
+                                    @{
+                                        var overs = Convert.ToDouble(item.Overs);
+                                        var wholeValue = Math.Floor(overs) * 6;
+                                        var decimalballs = Math.Round(overs - Math.Floor(overs), 1).ToString().Replace(".", "");
+                                        var balls = wholeValue + Convert.ToInt32(decimalballs);
+                                        var econ = (Convert.ToDouble(item.Runs) / balls) * 6;
+
+                                        <b>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</b>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+
+    <style>
+        body {
+            background-image: url("/Home/images/bg/bg1.jpg");
+            background-size: 100% 100%;
+            opacity: 0.85;
+        }
+
+        @@media only screen and (max-width: 300px) {
+            /* For tablets: */
+            .tab {
+                width: 8.33%;
+            }
+        }
+        /*td {
+                    text-align: center !important;
+                    margin-left: 2em;
+                }
+
+                th {
+                    text-align: center !important;
+                    margin-left: 2em;
+                }*/
+    </style>
+
+    <script>
+        $(function () {
+            $('#createBtn').click(function () {
+                window.location = '/Tournament/Create'
+            });
+        });
+
+        $(document).ready(function () {
+            $('#MatchTable').DataTable({
+                "paging": false,
+                dom: 'Bfrt',
+                "order": [],
+                buttons: [
+                    {
+                        //orientation: 'landscape',
+                        //pageSize: 'LEGAL'
+                    }
+                ]
+            });
+        });
+    </script>
+
+}

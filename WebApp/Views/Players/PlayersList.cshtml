@@ -6,91 +6,61 @@
 <br />
 <br />
 <br />
-<br />
 <div class="container-fluid">
     <div class='col-md-1'></div>
     <div class="col-md-10">
         <div class="row">
-            <!-- Widget: user widget style 1 -->
-            <div class="box box-widget widget-user-2">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header">
-                    <div class="col-md-12">
+            <center>
+                <img src="~/Home/images/Teams/@Model.FileName" alt="Avatar" style="width:100px">
+                <div style="color: darkgrey; font-size:30px"><b>@Html.DisplayFor(model => model.Team_Name)</b></div>
 
-                        @{ if (Model.TeamLogo != null)
-                            {
-                                var base64 = (Model.TeamLogo == null || !Model.TeamLogo.Any()) ? "" : Convert.ToBase64String(@Model.TeamLogo);
-                                <img class="img-responsive" src="~/Home/images/Teams/@Model.FileName" id="PlayerImg">
-                            }
-                            else
-                            {
-                                <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("/images/no-user-profile-picture-whatsapp.jpg");' id="PlayerImg"></div>
+                <div style="color: black; font-size:15px"><b>Zone @Html.DisplayFor(model => model.Zone)</b></div>
+            </center>
+            <!-- /.widget-user-image -->
 
-                            }
-                        }
+        </div>
+        <br />
+        <div class="box-footer">
+            <nav class="navbar navbar-light bg-light">
+                @*<div class="form-group">
 
+                    </div>*@
+
+
+                @if (Model != null && Model.TeamPlayers.Any())
+                {
+                    @foreach (var item in Model.TeamPlayers)
+                    {
+                        <div class="">
+                            <div class="col-md-2 ">
+                                <a data-toggle="modal" data-target="#playerStatistics" data-placement="top" onclick="statistics(@item.PlayerId)" class="pull-left bounce-in"  >
+                                    <center>
+                                        <img data-toggle="tooltip" title="@item.Player_Name" class="bounce-in" style="cursor: pointer; width:90px" src="~/Home/images/Players/@item.FileName">
+                                        <div class="media-body fade-up"><b>@item.Player_Name</b></div>
+                                    </center>
+                                </a>
+                            </div>
+                        </div>
+                        <div></div>
+                    }
+                }
+                else
+                {
+                    <div class="wizard-header">
+                        <h3 class="wizard-title">
+                            No Player Found
+                        </h3>
                     </div>
 
-                    <!-- /.widget-user-image -->
-                    <h3 class="widget-user-username">@Html.DisplayFor(model => model.Team_Name)</h3>
-                    <h5 class="widget-user-desc">@Html.DisplayFor(model => model.City)</h5>
-                    <h5 class="widget-user-desc">@Html.DisplayFor(model => model.Place)</h5>
-
-                    <h5 class="widget-user-desc">Zone @Html.DisplayFor(model => model.Zone)</h5>
-                    <a asp-controller="Players" class="btn btn-default" asp-action="Create">Add Player</a>
-                </div>
-                <br />
-                <div class="box-footer">
-                    <nav class="navbar navbar-light bg-light">
-                        @*<div class="form-group">
-
-                        </div>*@
-
-
-                        @if (Model != null && Model.TeamPlayers.Any())
-                        {
-                            @foreach (var item in Model.TeamPlayers)
-                            {
-                                <div class="dl-horizontal">
-                                    <div class="col-md-2">
-                                        <a data-placement="top" data-toggle="tooltip" title="@item.Player_Name">
-                                            @{
-                                                if (item.PlayerLogo != null)
-                                                {
-                                                    var base64 = @item.PlayerLogo == null || !item.PlayerLogo.Any() ? "" : Convert.ToBase64String(@item.PlayerLogo);
-                                                    <img class="img-responsive" src="~/Home/images/Players/@Model.FileName" data-toggle="modal" data-target="#playerStatistics" onclick="statistics(@item.PlayerId)" id="PlayerImg">
-                                                
-                                                }
-                                                else
-                                                {
-                                                    <div class="img-responsive" style='margin-bottom: 2em; background-size:cover; background-image: url("/images/no-user-profile-picture-whatsapp.jpg");' data-toggle="modal" data-target="#playerStatistics" onclick="statistics(@item.PlayerId)" id="PlayerImg"></div>
-
-
-                                                }
-                                            }
-                                        </a>
-                                    </div>
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            <div class="wizard-header">
-                                <h3 class="wizard-title">
-                                    No Player Found
-                                </h3>
-                            </div>
-
-                        }
-                    </nav>
-                </div>
-            </div>
-            <!-- /.widget-user -->
+                }
+            </nav>
         </div>
     </div>
-    <div class='col-md-1'></div>
-   
+    <!-- /.widget-user -->
 </div>
+
+<div class='col-md-1'></div>
+
 <div id="screenShot" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -112,52 +82,39 @@
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-body">
+            <div class="modal-body" style="border: solid">
                 <div id="screen">
-                    <!-- Widget: user widget style 1 -->
-                    <div class="box box-widget widget-user">
-                        <!-- Add the bg color to the header using any of the bg-* classes -->
-                        <div class="widget-user-header bg-aqua-active">
-                            <h3 class="widget-user-username" id="name"></h3>
-                            <h5 class="widget-user-desc" id="teamName"></h5>
-                            <h5 class="widget-user-desc" id="age"></h5>
-                        </div>
-                        <div class="widget-user-image">
-                            <img class="img-circle" id="target">
-                        </div>
-                        <div class="box-footer">
-                            <div class="row">
-                                <!-- /.col -->
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">Batting Style</h5>
-                                        <span class="description-text" id="battingStyle"></span>
-                                    </div>
-                                    <!-- /.description-block -->
+                    <center>
+                    </center>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="widget-user-image">
+                                    <img class="img-circle" id="target">
                                 </div>
-                                <div class="col-sm-4 border-right">
-                                    <div class="description-block">
-                                        <h5 class="description-header">Playing Role</h5>
-                                        <span class="description-text" id="playingRole"></span>
-                                    </div>
-                                    <!-- /.description-block -->
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" id="prettyPhoto" href="~/Home/images/Players/Ahmed Raza.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
                                 </div>
-                                <!-- /.col -->
-                                <div class="col-sm-4">
-                                    <div class="description-block">
-                                        <h5 class="description-header">Bowling Style</h5>
-                                        <span class="description-text" id="bowlingStyle"></span>
-                                    </div>
-                                    <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
                             </div>
-                            <!-- /.row -->
+                            <div class="col-md-8">
+                                <ul>
+                                    <li> <b id="playerName"></b></li>
+                                    <li> <span class="description-header">Playing Role</span> <b id="playingRole"></b></li>
+                                    <li> <span class="description-header">Batting Style</span> <b id="battingStyle"></b></li>
+                                    <li> <span class="description-header">Bowling Style</span> <b id="bowlingStyle"></b></li>
+                                    <li> <span class="description-header">Birth</span> <b id="age"></b></li>
+                                    <li> <b id="teamName"></b></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+
+
+
                     <!-- /.widget-user -->
-                    <div class="col-md-12 bg-light-blue-active">
-                        <h3>Batting<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BattingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h3>
+                    <div style="background-color: maroon; color:white">
+                        <h4>Batting<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BattingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h4>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -181,25 +138,25 @@
                                     <tbody>
 
                                         <tr>
-                                            <td><span id="totalMatch"></span></td>
-                                            <td><span id="totalInnings"></span></td>
-                                            <td><span id="totalBatRuns"></span></td>
-                                            <td><span id="totalBatBalls"></span></td>
-                                            <td><span id="numberOf50s"></span></td>
-                                            <td><span id="numberOf100s"></span></td>
-                                            <td><span id="battingAverage"></span></td>
-                                            <td><span id="strikeRate"></span></td>
-                                            <td><span id="bestScore"></span></td>
-                                            <td><span id="totalFours"></span></td>
-                                            <td><span id="totalSixes"></span></td>
+                                            <td><b id="totalMatch"></b></td>
+                                            <td><b id="totalInnings"></b></td>
+                                            <td><b id="totalBatRuns"></b></td>
+                                            <td><b id="totalBatBalls"></b></td>
+                                            <td><b id="numberOf50s"></b></td>
+                                            <td><b id="numberOf100s"></b></td>
+                                            <td><b id="battingAverage"></b></td>
+                                            <td><b id="strikeRate"></b></td>
+                                            <td><b id="bestScore"></b></td>
+                                            <td><b id="totalFours"></b></td>
+                                            <td><b id="totalSixes"></b></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 bg-light-blue-active">
-                        <h3>Bowling<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BowlingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h3>
+                    <div style="background-color: maroon; color:white">
+                        <h4>Bowling<a data-placement="top" style="cursor: pointer" data-toggle="modal" data-target="#BowlingModal"><i title="More" data-toggle="tooltip" class="fa fa-arrow-circle-down"></i></a></h4>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -219,22 +176,22 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><span id="totalOvers"></span></td>
-                                            <td><span id="totalWickets"></span></td>
-                                            <td><span id="totalBallRuns"></span></td>
-                                            <td><span id="fiveWickets"></span></td>
-                                            <td><span id="totalMaidens"></span></td>
-                                            <td><span id="bowlingAvg"></span></td>
-                                            <td><span id="economy"></span></td>
-                                            <td><span id="bestBowling"></span></td>
+                                            <td><b id="totalOvers"></b></td>
+                                            <td><b id="totalWickets"></b></td>
+                                            <td><b id="totalBallRuns"></b></td>
+                                            <td><b id="fiveWickets"></b></td>
+                                            <td><b id="totalMaidens"></b></td>
+                                            <td><b id="bowlingAvg"></b></td>
+                                            <td><b id="economy"></b></td>
+                                            <td><b id="bestBowling"></b></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 bg-light-blue-active">
-                        <h3>Fielding</h3>
+                    <div style="background-color: maroon; color:white">
+                        <h4>Fielding</h4>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -249,9 +206,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><span id="onFieldCatch"></span></td>
-                                            <td><span id="onFieldStump"></span></td>
-                                            <td><span id="onFieldRunOut"></span></td>
+                                            <td><b id="onFieldCatch"></b></td>
+                                            <td><b id="onFieldStump"></b></td>
+                                            <td><b id="onFieldRunOut"></b></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -446,7 +403,7 @@
             var header = new Headers();
             header.append("content-type", "application/json");
 
-            fetch(`/Players/PlayerStatistics?playerId=${playerId}&Api=true`, {
+             fetch(`/Players/PlayerStatistics/${playerId}`, {
                 credentials: 'same-origin',
                 headers: header
             })
@@ -454,7 +411,7 @@
                     if (response.ok) {
                         response.json()
                             .then(json => {
-                                document.getElementById("name").innerHTML = json.playerName;
+                                document.getElementById("playerName").innerHTML = json.playerName;
                                 document.getElementById("teamName").innerHTML = json.teamName;
 
                                 document.getElementById("battingStyle").innerHTML = json.battingStyle;
@@ -550,11 +507,9 @@
                                 document.getElementById("doLBW").innerHTML = json.doLBW;
                                 document.getElementById("doStump").innerHTML = json.doCatch;
 
-                                if (json.fileName != null) {
-                                    $('#target').attr('src', '/Home/images/Player/${json.fileName}');
-                                } else {
-                                    $('#target').attr('src', `/Home/images/noImage.jpg`);
-                                }
+                                $('#target').attr('src', `/Home/images/Players/${json.fileName}`);
+                                var prettyPhotoSrc = $("#prettyPhoto").attr("href");
+                                $("#prettyPhoto").attr("href", prettyPhotoSrc.substr(0, prettyPhotoSrc.lastIndexOf('/') + 1) + json.fileName);
 
 
 
@@ -571,7 +526,7 @@
         };
     </script>
     <style>
-        #PlayerImg {
+        /*#PlayerImg {
             background-image: url('');
             background-size: cover;
             background-position: center;
@@ -579,6 +534,29 @@
             width: 140px;
             border: 1px solid #bbb;
             cursor: pointer;
+        }*/
+        img {
+            border-radius: 50%;
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 80px;
+            width: 100px;
+        }
+        #target {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 80px;
+            width: 100px;
+        }
+        body {
+            background-image: url("/Home/images/bg/bg1.jpg");
+            background-size: 100% 100%;
+            opacity: 0.90;
+        }
+        .modal-dialog {
+            height: 500px;
         }
     </style>
 

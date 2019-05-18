@@ -1,5 +1,7 @@
 ﻿Alter PROCEDURE [usp_GetSinglePlayerStatistics]
-@paramPlayerId AS INT
+@paramPlayerId AS INT,
+@paramSeason AS INT,
+@paramMatchTypeId AS INT
 AS
 BEGIN
 		SELECT  * 
@@ -81,7 +83,7 @@ BEGIN
 				Players.Player_Name AS 'PlayerName',
 				Players.TeamId As 'TeamId',					
 				Teams.Team_Name As 'TeamName',
-				Players.[FileName] As 'FileName',
+				Case When Players.[FileName] is null then 'noImage.jpg' else Players.[FileName] end As 'FileName',
 				Players.DOB AS 'DOB',
 				--Convert(varchar(10), Players.DOB) as 'DOB',
 				BattingStyle.Name As 'BattingStyle',
@@ -97,7 +99,9 @@ BEGIN
 		left join BowlingStyle On Players.BowlingStyleId = BowlingStyle.BowlingStyleId
 		left join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
 	
-		WHERE Players.PlayerId = @paramPlayerId
+		WHERE (@paramSeason Is NUll or Matches.Season = @paramSeason) And 
+				(@paramMatchTypeId Is NUll or Matches.MatchTypeId = @paramMatchTypeId) And 
+				Players.PlayerId = @paramPlayerId
 		GROUP BY PlayerScores.PlayerId,
 				 Players.Player_Name,
 				 Players.TeamId,			 

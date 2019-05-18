@@ -94,7 +94,7 @@
         <div class="footer">
             <ul class="list-inline">
                 <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-                <li><input id="TeamCreate" type="button" value="Add" class="btn btn-primary"></li>
+                <li><input id="TeamCreate" type="button" value="Save" class="btn btn-primary"></li>
             </ul>
         </div>
     </div>
@@ -107,11 +107,10 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link rel="stylesheet" href="~/plugins/iCheck/square/blue.css">
     <script src="~/plugins/input-mask/jquery.inputmask.js"></script>
     <script src="~/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
     <script src="~/plugins/input-mask/jquery.inputmask.extensions.js"></script>
-    <link rel="stylesheet" href="../../plugins/iCheck/square/Blue.css">
-    <script src="../../plugins/iCheck/icheck.min.js"></script>
     <script src="~/plugins/iCheck/icheck.min.js"></script>
 
     <style>
@@ -185,7 +184,7 @@
             var form = $("#TeamForm").closest("form");
             var formData = new FormData(form[0]);
             $.ajax({
-                type: "POST",
+                type: "Put",
                 data: formData,
                 headers: {
                     'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,

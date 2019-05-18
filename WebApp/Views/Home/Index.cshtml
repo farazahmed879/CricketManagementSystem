@@ -17,7 +17,7 @@
                                     <h2 class="boxed animation animated-item-1 fade-down">Next Stop Cricket</h2>
                                     @*<p class="boxed animation animated-item-2 fade-up">Next Stop Cricket</p>*@
                                     <br>
-                                    <a class="btn btn-md animation bounce-in" >Get Started</a>
+                                    <a class="btn btn-md animation bounce-in">Get Started</a>
                                 </div>
                             </div>
                         </div>
@@ -39,69 +39,60 @@
                 </div>
                 <div class="gap"></div>
                 <div class="row">
-                    <ul class="list">
+                    
                         @foreach (var item in Model.RecentMatches)
                         {
-                        <li>
-                            <div class="col-md-4">
-                                <div class="post">
-                                    <div class="content ">
-                                        <h2 class="post-title ">@item.Type</h2>
-                                        <div class="post-img-content ">
-                                            <div class="form-inline table-bordered">
-                                                <ul class="list-inline">
-                                                    <li>
-                                                        @{
-                                                            if (item.HomeTeamTeamLogo != null)
-                                                            {
-                                                                <img class="img-responsive" id="Img" src="~/Home/images/Teams/@item.HomeTeamTeamLogo">
+                          
+                                <div class="col-md-4">
+                                    <div class="post">
+                                        <div class="content ">
+                                            @if (item.Type == "Fiendly")
+                                            {
+                                                <h2 class="post-title ">@item.Type</h2>
+                                            }
+                                            else
+                                            {
+                                                <h2 class="post-title ">@item.Tournament</h2>
+                                            }
 
-                                                            }
-                                                            else
-                                                            {
-                                                                <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
+                                            <div class="post-img-content ">
+                                                <div class="form-inline table-bordered">
 
-                                                            }
-                                                        }
-                                                    </li>
-                                                    <li>  <strong> @item.HomeTeam </strong> @item.HomeTeamScore/@item.HomeTeamWickets</li>
-                                                </ul>
-                                                <ul class="list-inline">
-                                                    <li>
-                                                        @{
-                                                            if (item.OpponentTeamLogo != null)
-                                                            {
-                                                                <img class="img-responsive" id="Img" src="~/Home/images/Teams/@item.OpponentTeamLogo">
-                                                            }
-                                                            else
-                                                            {
-                                                                <img class="img-responsive" id="Img" src="~/Home/images/Teams/noLogo.png">
+                                                    <ul class="list-inline" style="padding-top: 10px; padding-left:10px">
+                                                        <li>
+                                                            <img class="img-responsive" id="Img" src="~/Home/images/Teams/@item.HomeTeamTeamLogo">
+                                                        </li>
+                                                        <li>  <strong> @item.HomeTeam </strong> @item.HomeTeamScore/@item.HomeTeamWickets</li>
+                                                    </ul>
+                                                    <ul class="list-inline" style="padding-top: 10px; padding-left:10px">
+                                                        <li>
 
-                                                            }
-                                                        }
-                                                    </li>
-                                                    <li>
-                                                        <strong> @item.OppponentTeam </strong> @item.OpponentsTeamScore/@item.OppenentTeamWickets
-                                                    </li>
-                                                </ul>
-                                                <div class="col-md-12">
-                                                    <p>@item.Summary</p>
+                                                            <img class="img-responsive" id="Img" src="~/Home/images/Teams/@item.OpponentTeamLogo">
+
+                                                        </li>
+                                                        <li>
+                                                            <strong> @item.OppponentTeam </strong> @item.OpponentsTeamScore/@item.OppenentTeamWickets
+                                                        </li>
+                                                    </ul>
+                                                    <div class="col-md-12" style="padding-top:10px">
+                                                        <b >@item.Summary</b>
+                                                        
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="author">
-                                            <i class="fa fa-user"></i> By <b> @item.UserName</b> | <i class="fa fa-clock-o"></i> <time datetime="2014-01-20">@item.DateOfMatch.ToString("dddd, dd MMMM yyyy")</time>
-                                        </div>
-                                        <div class="read-more-wrapper">
-                                            <a href="#" class="btn btn-outlined btn-primary">More</a>
+                                            <div class="author">
+                                                <i class="fa fa-user"></i> By <b> @item.UserName</b> | <i class="fa fa-clock-o"></i> <b><time datetime="2014-01-20">@item.DateOfMatch.ToString("dddd, dd MMMM yyyy")</time></b>
+                                            </div>
+                                            <div class="read-more-wrapper">
+                                                <a asp-controller="MatchSummary" asp-action="Index" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" asp-route-oppTeamId="@item.OppTeamId" class="btn btn-outlined btn-primary">More</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
+                           
                         }
 
-                    </ul>
+                
                 </div>
                 <div class="gap"></div>
             </div>
@@ -209,7 +200,7 @@
                         <div class="tile-progress tile-red bounce-in">
                             <div class="tile-header">
                                 <h3>Top 10 Batsman</h3>
-                                <span>Our cutting room floor is messy.</span>
+                                <span></span>
                             </div>
                             <div class="tile-progressbar">
                                 <span data-fill="65.5%" style="width: 65.5%;"></span>
@@ -225,7 +216,7 @@
                         <div class="tile-progress tile-cyan bounce-in">
                             <div class="tile-header">
                                 <h3>Top 10 Bowlers</h3>
-                                <span>How well we can sell you and your brand.</span>
+                                <span></span>
                             </div>
                             <div class="tile-progressbar">
                                 <span data-fill="98.5%" style="width: 98.5%;"></span>
@@ -241,7 +232,7 @@
                         <div class="tile-progress tile-primary bounce-in">
                             <div class="tile-header">
                                 <h3>Most Runs</h3>
-                                <span>We love servers and stuff.</span>
+                                <span></span>
                             </div>
                             <div class="tile-progressbar">
                                 <span data-fill="90%" style="width: 90%;"></span>
@@ -257,7 +248,7 @@
                         <div class="tile-progress tile-pink bounce-in">
                             <div class="tile-header">
                                 <h3>Most Wickets</h3>
-                                <span>We done make good joe, though.</span>
+                                <span></span>
                             </div>
                             <div class="tile-progressbar">
                                 <span data-fill="10%" style="width: 10%;"></span>
@@ -806,8 +797,8 @@
             background-image: url('');
             background-size: cover;
             background-position: center;
-            height: 30px;
-            width: 30px;
+            height: 25px;
+            width: 40px;
         }
     </style>
 

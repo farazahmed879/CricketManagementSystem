@@ -12,6 +12,7 @@ BEGIN
 	SELECT  top 10
 			count (PlayerScores.MatchId) as 'TotalMatch',
 			sum (Catches) as 'MostCatches',
+			Players.[FileName] AS 'Image',
 			Players.Player_Name AS 'PlayerName'
 			
 	
@@ -40,7 +41,8 @@ BEGIN
 	GROUP BY PlayerScores.PlayerId,
 			Players.Player_Name,
 			PlayerRole.Name,
-			Players.TeamId
+			Players.TeamId,
+			Players.[FileName]
 		--	PlayerScores.Bat_Runs
 
 	order by sum(Catches) desc ;

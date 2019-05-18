@@ -11,7 +11,7 @@
                 <img id="logo" src="~/images/ScoreExec copy.png" />
             </div>
             <div class="login-box well">
-                <form asp-action="Login" method="post">
+                <form asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl" method="post">
                     <legend>Sign In</legend>
                     <div class="form-group">
                         <label for="username-email">Username</label>

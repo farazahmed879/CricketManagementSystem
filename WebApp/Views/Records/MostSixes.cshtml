@@ -8,8 +8,8 @@
 <br />
 <br />
 <div class="container-fluid">
-    <div class='col-md-3'></div>
-    <div class="col-md-6">
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
         <div class="row">
             <ol class="breadcrumb">
                 <li><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -17,7 +17,13 @@
                 <li><a>Most Six</a></li>
             </ol>
         </div>
-        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="center fade-down section-heading">
+                    <h2 class="main-title">Most Six</h2>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="form-group">
                 <div id="filter-panel" class="collapse filter-panel">
@@ -93,21 +99,21 @@
                         <div class="footer" style="margin-top : .5em">
                             <ul class="list-inline">
                                 <li><input id="Clear" onclick="clearFilter()" type="button" value="Clear" class="btn btn-default"></li>
-                                <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
+                                <li><input type="button" id="filterdata" value="Search" class="btn btn-outlined btn-primary filter-col"></li>
                             </ul>
                         </div>
                     </div>
 
                 </div>
                 <br />
-                <button id="advSearch" class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
+                <button id="advSearch" class="btn btn-default" data-toggle="collapse" data-target="#filter-panel">
                     Advanced Search
                 </button>
             </div>
 
             <div class="table-responsive">
                 <table id="RecordTable" class="table table-bordered table-striped">
-                    <thead class="bg-blue-active">
+                    <thead style="background-color: maroon; color: white">
                         <tr>
                             <th>
                                 Name
@@ -130,16 +136,16 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.PlayerName)
+                                    <b>@Html.DisplayFor(modelItem => item.PlayerName)</b>
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.TotalMatch)
+                                    <b>@Html.DisplayFor(modelItem => item.TotalMatch)</b> 
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.TotalInnings)
+                                    <b>@Html.DisplayFor(modelItem => item.TotalInnings)</b> 
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.MostSixes)
+                                    <b>@Html.DisplayFor(modelItem => item.MostSixes)</b>
                                 </td>
 
                             </tr>
@@ -149,7 +155,7 @@
             </div>
         </div>
     </div>
-    <div class='col-md-3'></div>
+    <div class='col-md-1'></div>
   
 </div>
 
@@ -178,7 +184,7 @@
                 buttons: [
                     {
                         extend: 'pdfHtml5',
-                        className: 'btn btn-primary'
+                        className: 'btn btn-default'
                         //orientation: 'landscape',
                         //pageSize: 'LEGAL'
                     }
@@ -193,7 +199,7 @@
                 try {
 
                     const response = await fetch(`/Records/MostSixes?teamId=${$("#homeTeamId").val()}&position=${$("#position").val()}&season=${$("#season").val()}&overs=${$("#overs").val()}&playerRoleId=${$("#playerRoleId").val()}&matchTypeId=${$("#matchTypeId").val()}&tournamentId=${$("#tournamentId").val()}&matchSeriesId=${$("#matchSeriesId").val()}&isApi=true`, {
-                        method: "POST",
+                        method: "Get",
                         //     body: JSON.stringify(model),
                         credentials: 'same-origin'
 
@@ -205,10 +211,10 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-                                <td> ${i.playerName} </td>
-                                <td>${i.totalMatch}</td>
-                                <td> ${i.totalInnings} </td>
-                                <td> ${i.mostSixes} </td>
+                                <td><b>${i.playerName}</b>  </td>
+                                <td><b>${i.totalMatch}</b></td>
+                                <td><b>${i.totalInnings}</b>  </td>
+                                <td><b>${i.mostSixes}</b></td>
 
 
                                                                                                                                                                                                                                                                             `;

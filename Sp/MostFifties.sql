@@ -15,6 +15,7 @@ BEGIN
 			count (PlayerScores.MatchId) as 'TotalMatch',
 			count (case when IsPlayedInning = 1 then 1 else null end) as 'TotalInnings',
 			COUNT(CASE WHEN Bat_Runs >= 50 THEN 1 ELSE NULL END) AS 'NumberOf50s',
+			Players.[FileName] AS 'Image',
 			Players.Player_Name AS 'PlayerName'
 			
 	
@@ -44,7 +45,8 @@ BEGIN
 	GROUP BY PlayerScores.PlayerId,
 			Players.Player_Name,
 			PlayerRole.Name,
-			Players.TeamId
+			Players.TeamId,
+			Players.[FileName]
 		--	PlayerScores.Bat_Runs
 
 	order by COUNT(CASE WHEN Bat_Runs >= 50 THEN 1 ELSE NULL END) desc ;

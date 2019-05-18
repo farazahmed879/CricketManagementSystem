@@ -13,8 +13,7 @@ namespace WebApp.ViewModels
         public int PlayerId { get; set; }
         [Required]
         public string Player_Name { get; set; }
-        [Column(TypeName = "varbinary(max)")]
-        public byte[] PlayerLogo { get; set; }
+        public string FileName { get; set; }
         public TeamDetailsdto TeamDetails { get; set; }
         public int TeamId { get; set; }
 

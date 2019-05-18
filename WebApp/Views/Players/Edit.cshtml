@@ -141,10 +141,10 @@
                 <div class="col-md-4">
                     <span id="span" style="color: red"></span>
                     @*@{
-                var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
-                <img class="img-responsive" id="PlayerImg" style='background-size:cover; background-image: url("data:image/png;base64,@base64");' />
-                <input type="hidden" value="@base64" id="base64Pic" name="playerImage" />
-            }*@
+                            var base64 = Model.PlayerLogo == null || !Model.PlayerLogo.Any() ? "" : Convert.ToBase64String(Model.PlayerLogo);
+                            <img class="img-responsive" id="PlayerImg" style='background-size:cover; background-image: url("data:image/png;base64,@base64");' />
+                            <input type="hidden" value="@base64" id="base64Pic" name="playerImage" />
+                        }*@
 
                     <img class="img-responsive" id="PlayerImg" src="~/Home/images/Players/@Model.FileName" />
                     <label asp-for="PlayerImage" class="btn btn-box-tool">
@@ -161,7 +161,7 @@
         <div class="footer">
             <ul class="list-inline">
                 <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-                <li><input id="PlayerCreate" type="button" value="Save" class="btn btn-primary"></li>
+                <li><input id="PlayerCreate" type="button" value="Save" class="btn btn-outlined btn-primary"></li>
             </ul>
         </div>
     </div>
@@ -170,14 +170,15 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link rel="stylesheet" href="~/plugins/iCheck/square/blue.css">
     <script src="~/plugins/input-mask/jquery.inputmask.js"></script>
     <script src="~/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
     <script src="~/plugins/input-mask/jquery.inputmask.extensions.js"></script>
-    <link rel="stylesheet" href="~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script src="~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
+    <script src="~/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
     <script src="~/plugins/iCheck/icheck.min.js"></script>
     <style>
         #PlayerImg {
@@ -264,7 +265,7 @@
             var form = $("#PlayerForm").closest("form");
             var formData = new FormData(form[0]);
             $.ajax({
-                type: "POST",
+                type: "Put",
                 data: formData,
                 headers: {
                     'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,

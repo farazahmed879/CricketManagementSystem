@@ -29,7 +29,7 @@ namespace WebApp.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("RoleManagement/Role")]
         [AllowAnonymous]
         public async Task<IActionResult> Role()
         {
@@ -57,7 +57,7 @@ namespace WebApp.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet("RoleManagement/Edit/{userId}/{userName}")]
         [AllowAnonymous]
         public async Task<IActionResult> Edit(int userId, string UserName)
         {
@@ -82,7 +82,7 @@ namespace WebApp.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("RoleManagement/Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromForm]ClubAdmindto role)
         {

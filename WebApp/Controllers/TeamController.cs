@@ -39,41 +39,44 @@ namespace WebApp.Controllers
             _hosting = hosting;
         }
 
-        [HttpGet]
-        [Route("Team/GetAllTeams")]
+        [HttpGet("Team/GetAllTeams")]
         public List<TeamDropDowndto> GetAllTeams()
         {
             var teams = _teams.GetAllTeams();
             return teams;
         }
 
-        // GET: Teams
-        [HttpGet]
-        public async Task<IActionResult> Index(string zone, string location, string name, int? page, int? userId)
+        [HttpGet("Team/Index")]
+        public async Task<IActionResult> Index(DataTableAjaxPostModel model, string zone, string location, string name, int? page, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             if (users != null)
-                userId = users.Id;
             ViewBag.Name = "Team";
-            var model = await _teams.GetAllTeams(zone, location, name, page, userId);
-            return View(model);
+            var result = await _teams.GetAllTeamsList(model.Init(), zone, location, name, page);
+            if (isApi == true)
+                return Json(new
+                {
+                    data = result,
+                    draw = model.Draw,
+                    recordsTotal = result.TotalCount,
+                    recordsFiltered = result.TotalCount,
+                });
+            else
+                return View(result);
         }
 
 
-        [HttpGet]
-        [Route("Team/List")]
-        public async Task<IActionResult> List(string zone, string location, string name, int? page, int? userId)
-        {
-            var users = await _userManager.GetUserAsync(HttpContext.User);
-            if (users != null)
-                userId = users.Id;
-            ViewBag.Name = "Team";
-            var model = await _teams.GetAllTeams(zone, location, name, page, userId);
-            return Json(model);
-        }
+        //[HttpGet("Team/List")]
+        //public async Task<IActionResult> List(string zone, string location, string name, int? page)
+        //{
+
+        //    ViewBag.Name = "Team";
+        //    var model = await _teams.GetAllTeamsList(zone, location, name, page);
+        //    return Json(model);
+        //}
 
 
-        [HttpGet]
+        [HttpGet("Team/Details/{teamId}")]
         // GET: Teams/Details/5
         public async Task<IActionResult> Details(int? teamId)
         {
@@ -99,7 +102,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Teams/Create
-        [HttpGet]
+        [HttpGet("Team/Create")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create()
         {
@@ -108,17 +111,21 @@ namespace WebApp.Controllers
         }
 
         // Post: Teams/Create
-        [HttpPost]
+        [HttpPost("Team/Create")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Create(Teamdto team)
         {
             if (ModelState.IsValid)
             {
-                team.FileName = team.TeamImage.FileName;
-                if (team.TeamImage.Length > 0)
+                var directory = Path.Combine(_hosting.WebRootPath, "Home", "images", "Teams");
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+                if (team.TeamImage != null)
                 {
-                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Teams", team.FileName), FileMode.Create))
+                    team.FileName = team.TeamImage.FileName;
+
+                    using (var stream = new FileStream(Path.Combine(directory, team.FileName), FileMode.Create))
                     {
                         await team.TeamImage.CopyToAsync(stream);
                     }
@@ -139,7 +146,7 @@ namespace WebApp.Controllers
             return Json(ResponseHelper.UnSuccess());
         }
 
-        [HttpGet]
+        [HttpGet("Team/Edit/{id}")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -163,8 +170,8 @@ namespace WebApp.Controllers
 
         // POST: Teams/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPut]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(Teamdto team)
@@ -175,7 +182,7 @@ namespace WebApp.Controllers
                 if (team.TeamImage != null)
                 {
                     team.FileName = team.TeamImage.FileName;
-                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "Images", "Teams", team.FileName), FileMode.Create))
+                    using (var stream = new FileStream(Path.Combine(_hosting.WebRootPath, "Home", "images", "Teams", team.FileName), FileMode.Create))
                     {
                         await team.TeamImage.CopyToAsync(stream);
                     }
@@ -189,7 +196,7 @@ namespace WebApp.Controllers
         }
 
         [HttpDelete]
-        [Route("Team/DeleteConfirmed")]
+        [Route("Team/DeleteConfirmed/{teamId}")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int teamId)
         {

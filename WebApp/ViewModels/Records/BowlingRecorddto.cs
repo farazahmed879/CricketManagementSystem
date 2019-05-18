@@ -15,6 +15,7 @@ namespace WebApp.ViewModels
         public int TotalMaidens { get; set; }
         public string BowlingAvg { get; set; }
         public string Economy { get; set; }
+        public string Image { get; set; }
         public int FiveWickets { get; set; }
         public int TotalCatches { get; set; }
         public int TotalRunOuts { get; set; }

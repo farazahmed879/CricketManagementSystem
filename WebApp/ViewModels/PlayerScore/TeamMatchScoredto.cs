@@ -16,5 +16,6 @@ namespace WebApp.ViewModels
         public List<MatchSummarydto> OpponentTeamScoreCard { get; set; }
         public List<TeamScoredto> TeamScore { get; set; }
         public List<FallOfWicketdto> FallOfWicket { get; set; }
+        public Summary2dto Summary2dto { get; set; }
     }
 }

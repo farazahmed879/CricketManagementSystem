@@ -11,11 +11,15 @@ namespace WebApp.ViewModels.Home
         public DateTime DateOfMatch { get; set; }
         public string Type { get; set; }
         public string UserName { get; set; }
+        public string Tournament { get; set; }
         public string Summary { get; set; }
         public string HomeTeam { get; set; }
         public string OppponentTeam { get; set; }
         public int HomeTeamScore { get; set; }
         public int OpponentsTeamScore { get; set; }
+        public int HomeTeamId { get; set; }
+        public int OppTeamId { get; set; }
+        public int MatchId { get; set; }
         public int HomeTeamWickets { get; set; }
         public int OppenentTeamWickets { get; set; }
         public string OpponentTeamLogo { get; set; }

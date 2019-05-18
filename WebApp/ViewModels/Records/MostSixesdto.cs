@@ -8,6 +8,6 @@ namespace WebApp.ViewModels
         public int TotalInnings { get; set; }
         public long MostSixes { get; set; }
         public string PlayerName { get; set; }
-       
+        public string Image { get; set; }
     }
 }

@@ -112,7 +112,7 @@
                         headers: {
                             'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
                         },
-                        method: "POST"
+                        method: "Put"
                     }).done(function (data) {
                         window.location = '/Schedule/Index'
                         myFunction(data);

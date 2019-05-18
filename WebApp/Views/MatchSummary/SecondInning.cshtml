@@ -1,0 +1,304 @@
+﻿@model WebApp.ViewModels.MatchDetails
+@{
+    ViewData["Title"] = "Match Summary";
+}
+<br />
+<br />
+<div class="container" id="body" style="padding-top: 20px">
+    <center>
+        <div class="tab">
+            <img src="~/Home/images/Teams/@Model.HomeTeamLogo" style="width : 70px; height: 35px"> &nbsp;&nbsp;&nbsp;&nbsp;
+            <span src="~/images/ScoreExec.png" style="font-size: 15px"><b>@Model.Tournament</b></span>
+            <img src="~/Home/images/Teams/@Model.OppTeamLogo" style="width : 70px; height: 35px">
+        </div>
+    </center>
+    <div class="col-md-2">
+        <a asp-controller="MatchSummary" asp-action="FirstInning" asp-route-matchId="@ViewBag.matchId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-homeTeamId="@ViewBag.homeTeamId" style="width: 150px" class="btn btn-primary">First Inning</a>
+        <a asp-controller="MatchSummary" asp-action="SecondInning" asp-route-matchId="@ViewBag.matchId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-homeTeamId="@ViewBag.homeTeamId" style="width: 150px" class="btn btn-primary">Second Inning</a>
+        <a asp-controller="MatchSummary" asp-action="Summary" asp-route-matchId="@ViewBag.matchId" asp-route-oppTeamId="@ViewBag.oppTeamId" asp-route-homeTeamId="@ViewBag.homeTeamId" style="width: 150px" class="btn btn-primary"><center>Summary</center></a>
+    </div>
+    <div class="col-md-8">
+
+        <!-- Custom Tabs -->
+        <ul class="nav nav-pills" role="tablist">
+            <li id="tab1"><a href="#tab_1" data-toggle="tab"><span class="">Batting</span></a></li>
+            <li><a href="#tab_2" data-toggle="tab"><span>Bowling</span></a></li>
+        </ul>
+        <div class="tab-content clearfix">
+            <div class="tab-pane active" id="tab_1">
+
+
+
+                <div style="font-size: 16px; padding-bottom: 20px; color: darkgray"><b>Second Inning</b></div>
+                <div class="row" style="margin-top:-15px">
+                    <div class="col-lg-5" style="background-color:#01023b;border-radius:0px 40px 40px 0px; opacity: 0.95;
+                          padding-top:0.5%;padding-bottom:0.5%">
+                        <div class="row">
+                            <div class="col-lg-2"><img src="~/images/bal.png"></div>
+                            <div class="col-lg-10"><b style="font-size:20px; color: white">@Model.HomeTeam</b></div>
+                            @*<div class="col-lg-2"></div>*@
+                        </div>
+                    </div>
+                    @if (Model.Type != "Tournament")
+                    {
+                        <div class="col-lg-2" style="background-color:maroon; border-radius: 40px 40px 40px 40px; color:white;
+                        text-align:center">
+                            <b style="font-size:15px">@Model.Type <br>@Model.Ground</b>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2" style="background-color:maroon; border-radius: 40px 40px 40px 40px; color:white;
+                        text-align:center">
+                            <b style="font-size:15px">@Model.Stage <br>@Model.Ground</b>
+                        </div>
+                    }
+
+
+                    <div class="col-lg-5" style="background-color:#010080;border-radius:40px 0px 0px 40px;
+  padding-top:0.5%;padding-bottom:0.5%">
+                        <div class="row">
+                            @*<div class="col-lg-2"></div>*@
+                            <div class="col-lg-10"><b style="font-size:20px; color: white ">@Model.OppTeam</b></div>
+                            <div class="col-lg-2"><img src="https://img.icons8.com/color/32/000000/cricket.png"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="BatsmanTable" class="table">
+                                <thead style="background-color:maroon; color:white">
+                                    <tr>
+                                        <th>
+
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+                                            Runs
+                                        </th>
+                                        <th>
+                                            Balls
+                                        </th>
+                                        <th>
+                                            4s
+                                        </th>
+                                        <th>
+                                            6s
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.matchBatsman)
+                                    {
+                                        <tr>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                                <b> @Html.DisplayFor(modelItem => item.PlayerName)</b>
+
+                                            </td>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; font-size:15px ">
+                                                <b>@Html.DisplayFor(modelItem => item.HowOut)</b>
+                                            </td>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray; font-size:15px ">
+                                                @if (item.Bowler != null)
+                                                {
+                                                    <b>b</b> @Html.DisplayFor(modelItem => item.Bowler)
+                                                }
+                                            </td>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                                <b> @Html.DisplayFor(modelItem => item.Runs)</b>
+
+                                            </td>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                                <b>@Html.DisplayFor(modelItem => item.Balls)</b>
+                                            </td>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                                <b>@Html.DisplayFor(modelItem => item.Four)</b>
+                                            </td>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                                <b>@Html.DisplayFor(modelItem => item.Six)</b>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="tab_2">
+                <div style="font-size: 16px; padding-bottom: 20px; color: darkgray"><b>Second Inning</b></div>
+                <div class="row" style="margin-top:-15px">
+                    <div class="col-lg-5" style="background-color:#01023b;border-radius:0px 40px 40px 0px; opacity: 0.95;
+  padding-top:0.5%;padding-bottom:0.5%">
+                        <div class="row">
+                            <div class="col-lg-2"><img src="~/images/bal.png"></div>
+                            <div class="col-lg-10"><b style="font-size:20px; color: white">@Model.HomeTeam</b></div>
+                            @*<div class="col-lg-2"></div>*@
+                        </div>
+                    </div>
+
+                    @if (Model.Type != "Tournament")
+                    {
+                        <div class="col-lg-2" style="background-color:maroon; border-radius: 40px 40px 40px 40px; color:white;
+                        text-align:center">
+                            <b style="font-size:15px">@Model.Type <br>@Model.Ground</b>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2" style="background-color:maroon; border-radius: 40px 40px 40px 40px; color:white;
+                        text-align:center">
+                            <b style="font-size:15px">@Model.Stage <br>@Model.Ground</b>
+                        </div>
+                    }
+
+                    <div class="col-lg-5" style="background-color:#010080;border-radius:40px 0px 0px 40px;
+  padding-top:0.5%;padding-bottom:0.5%">
+                        <div class="row">
+                            @*<div class="col-lg-2"></div>*@
+                            <div class="col-lg-10"><b style="font-size:20px; color: white ">@Model.OppTeam</b></div>
+                            <div class="col-lg-2"><img src="https://img.icons8.com/color/32/000000/cricket.png"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="BatsmanTable" class="table">
+                                <thead style="background-color:maroon; color:white">
+                                    <tr>
+                                        <th>
+
+                                        </th>
+                                        <th>
+                                            OVERS
+                                        </th>
+                                        <th>
+                                            MAIDENS
+                                        </th>
+                                        <th>
+                                            RUNS
+                                        </th>
+                                        <th>
+                                            WICKETS
+                                        </th>
+                                        <th>
+                                            ECONOMY
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.matchBowler)
+                                    {
+                                        <tr>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                                <b> @Html.DisplayFor(modelItem => item.PlayerName)</b>
+
+                                            </td>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray;border-right: 2px solid lightgray; font-size:15px; text-align: center !important; ">
+                                                <b>@Html.DisplayFor(modelItem => item.Overs)</b>
+                                            </td>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray; font-size:15px; text-align: center !important; ">
+
+                                                <b> @Html.DisplayFor(modelItem => item.Maiden)</b>
+
+                                            </td>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px; text-align: center !important; ">
+                                                <b> @Html.DisplayFor(modelItem => item.Runs)</b>
+
+                                            </td>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px; text-align: center !important; ">
+                                                <b>@Html.DisplayFor(modelItem => item.Wickets)</b>
+                                            </td>
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px; text-align: center !important; ">
+                                                @{
+                                                    var overs = Convert.ToDouble(item.Overs);
+                                                    var wholeValue = Math.Floor(overs) * 6;
+                                                    var decimalballs = Math.Round(overs - Math.Floor(overs), 1).ToString().Replace(".", "");
+                                                    var balls = wholeValue + Convert.ToInt32(decimalballs);
+                                                    var econ = (Convert.ToDouble(item.Runs) / balls) * 6;
+
+                                                    <b>@(Double.IsNaN(econ) || Double.IsInfinity(econ) ? "" : econ.ToString("0.00"))</b>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <center>
+            <div class="footer">
+                <ul class="list-inline">
+                    <li><input id="BackBtn" style="background-color: maroon; color: white;" type="button" value="Back" class="btn"></li>
+                    <li><center><img src="~/images/ScoreExec.png" style=" width: 110px; height :25px"></center></li>
+                </ul>
+            </div>
+        </center>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+
+
+@section Scripts{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap-wizard/1.2/jquery.bootstrap.wizard.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#rootwizard').bootstrapWizard();
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#BackBtn').click(function () {
+                window.history.back();
+            });
+
+        });
+
+
+    </script>
+    <style>
+        body {
+            background-image: url("/Home/images/bg/bg1.jpg");
+            background-size: 100% 100%;
+            opacity: 0.85;
+        }
+
+        @@media only screen and (max-width: 300px) {
+            /* For tablets: */
+            .tab {
+                width: 8.33%;
+            }
+        }
+        /*td {
+                    text-align: center !important;
+                    margin-left: 2em;
+                }
+
+                th {
+                    text-align: center !important;
+                    margin-left: 2em;
+                }*/
+    </style>
+}

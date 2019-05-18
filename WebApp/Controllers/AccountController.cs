@@ -59,7 +59,7 @@ namespace WebApp.Controllers
             }
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             ViewBag.Name = "Login";
-            ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -90,7 +90,15 @@ namespace WebApp.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToAction("Index", "Home");
+                    if (returnUrl != null)
+                       {
+                        return LocalRedirect(returnUrl);
+                      }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+
                 }
                 else
                 {
@@ -279,7 +287,7 @@ namespace WebApp.Controllers
                       protocol: Request.Scheme
                       );
 
-                    //var link = $"http://{url}/Account/ConfirmEmail?userId={user.Id}&code={code}";
+                    //var link = $"https://{url}/Account/ConfirmEmail?userId={user.Id}&code={code}";
                     var htmlString = await razorViewToStringRenderer.RenderViewToStringAsync("EmailTemplate", new EmailTemplate
                     {
                         Title = "Email Confirmation",
@@ -302,12 +310,12 @@ namespace WebApp.Controllers
 
                     //    adminEmail = "farazahmed879@yahoo.com";
                     //}
-                   
+
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
 
-                   // await _userManager.AddToRoleAsync(user, model.RoleName);
+                    // await _userManager.AddToRoleAsync(user, model.RoleName);
 
                     await EmailExtensions.Execute(adminEmail, model.UserName, htmlString, subject);
 
@@ -321,7 +329,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost("Logout")]
-       // [ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
 
         public async Task<IActionResult> Logout()
         {
@@ -362,7 +370,7 @@ namespace WebApp.Controllers
                   protocol: Request.Scheme
                   );
 
-                //var link = $"http://{url}/Account/ConfirmEmail?userId={user.Id}&code={code}";
+                //var link = $"https://{url}/Account/ConfirmEmail?userId={user.Id}&code={code}";
                 var htmlString = await razorViewToStringRenderer.RenderViewToStringAsync("EmailTemplate", new EmailTemplate
                 {
                     Title = "Congratulation",
@@ -381,7 +389,7 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult ApprovedUser()
         {
-          
+
             return View();
         }
 
@@ -395,7 +403,7 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            
+
             return View();
         }
 
@@ -404,7 +412,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-           
+
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
@@ -423,7 +431,7 @@ namespace WebApp.Controllers
                 string adminEmail = model.Email;
                 string subject = "Reset Password";
 
-                var link = $"http://{url}/Account/ResetPassword?userId={user.Id}&code={code}";
+                var link = $"https://{url}/Account/ResetPassword?userId={user.Id}&code={code}";
                 var htmlString = await razorViewToStringRenderer.RenderViewToStringAsync("EmailTemplate", new EmailTemplate
                 {
                     Title = "Reset Password",
@@ -446,7 +454,7 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult PendingResertPasswordRequest()
         {
-          
+
             return View();
         }
 
@@ -454,7 +462,7 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
-        
+
             return View();
         }
 
@@ -462,7 +470,7 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
         {
-           
+
             if (code == null)
             {
                 throw new ApplicationException("A code must be supplied for password reset.");
@@ -476,7 +484,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-           
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -500,7 +508,7 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
         {
-           
+
             return View();
         }
 
@@ -552,7 +560,7 @@ namespace WebApp.Controllers
         }
 
 
-       
+
 
         #endregion
     }

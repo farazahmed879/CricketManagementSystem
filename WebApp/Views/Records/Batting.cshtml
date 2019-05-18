@@ -245,7 +245,7 @@
 
 
                     const response = await fetch(`/Records/Batting?teamId=${$("#homeTeamId").val()}&season=${$("#season").val()}&overs=${$("#overs").val()}&position=${$("#position").val()}&playerRoleId=${$("#playerRoleId").val()}&matchTypeId=${$("#matchTypeId").val()}&tournamentId=${$("#tournamentId").val()}&matchSeriesId=${$("#matchSeriesId").val()}&isApi=true`, {
-                        method: "POST",
+                        method: "Get",
                         //     body: JSON.stringify(model),
                         credentials: 'same-origin'
                     });

@@ -7,6 +7,6 @@ namespace WebApp.ViewModels
         public int TotalMatch { get; set; }
         public long MostWickets { get; set; }
         public string PlayerName { get; set; }
-       
+        public string Image { get; set; }
     }
 }

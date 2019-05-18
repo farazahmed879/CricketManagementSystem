@@ -60,10 +60,10 @@ namespace WebApp.Models
         {
             get
             {
-                return ( PageIndex + 1 < TotalPages);
+                return (PageIndex + 1 < TotalPages);
             }
         }
-         public bool HasNext3
+        public bool HasNext3
         {
             get
             {
