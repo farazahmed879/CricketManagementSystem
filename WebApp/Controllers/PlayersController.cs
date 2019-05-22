@@ -56,6 +56,11 @@ namespace WebApp.Controllers
 
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Players";
+            ViewBag.Season = new SelectList(_context.Matches
+              .Select(i => i.Season)
+              .ToList().Distinct(), "Season");
+
+            ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
             ViewBag.PlayerRoleId = new SelectList(_context.PlayerRole
                 .AsNoTracking()
                 .Select(i => new { i.Name, i.PlayerRoleId }), "PlayerRoleId", "Name");
@@ -426,7 +431,7 @@ namespace WebApp.Controllers
         }
         // GET: PlayerStatistics
 
-        [HttpGet("Players/PlayerStatistics/{playerId}")]
+        [HttpGet("Players/PlayerStatistics/PlayerId/{playerId}/Season/{season}/MatchTypeId/{matchTypeId}")]
         public IActionResult PlayerStatistics(int playerId,int? season,int? matchTypeId, bool Api)
         {
 

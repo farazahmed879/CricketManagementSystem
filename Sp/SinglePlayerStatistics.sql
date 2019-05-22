@@ -88,7 +88,8 @@ BEGIN
 				--Convert(varchar(10), Players.DOB) as 'DOB',
 				BattingStyle.Name As 'BattingStyle',
 				BowlingStyle.Name As 'BowlingStyle',
-				PlayerRole.Name As 'PlayerRole'
+				PlayerRole.Name As 'PlayerRole',
+				Players.PlayerId
 	
 		FROM Players
 		left join PlayerPastRecord On Players.PlayerId = PlayerPastRecord.PlayerId
@@ -102,7 +103,7 @@ BEGIN
 		WHERE (@paramSeason Is NUll or Matches.Season = @paramSeason) And 
 				(@paramMatchTypeId Is NUll or Matches.MatchTypeId = @paramMatchTypeId) And 
 				Players.PlayerId = @paramPlayerId
-		GROUP BY PlayerScores.PlayerId,
+		GROUP BY Players.PlayerId,
 				 Players.Player_Name,
 				 Players.TeamId,			 
 				 Teams.Team_Name,

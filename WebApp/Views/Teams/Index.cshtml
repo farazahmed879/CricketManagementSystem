@@ -90,58 +90,58 @@
                     </tr>
                 </thead>
                 @*<tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                <ul class="list-inline">
-                                    <li>
-                                        <img class="img-responsive" id="Img" src="~/Home/images/Teams/@item.FileName">
-                                    </li>
-                                    <li> <b>@Html.DisplayFor(modelItem => item.Team_Name)</b></li>
-                                </ul>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <img class="img-responsive" id="Img" src="~/Home/images/Teams/@item.FileName">
+                                        </li>
+                                        <li> <b>@Html.DisplayFor(modelItem => item.Team_Name)</b></li>
+                                    </ul>
 
 
 
 
-                            </td>
+                                </td>
 
-                            <td>
-                                <b> @Html.DisplayFor(modelItem => item.City) zone-@item.Zone </b>
-                            </td>
-
-
-                            <td>
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-
-                                            <li><a data-placement="left" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayersList" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-2"></i> Team Players</a></li>
-                                            <li><a data-placement="left" data-toggle="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-4"></i> Team Matches</a></li>
-                                            <li><a data-placement="left" data-toggle="tooltip" title="Schedule" asp-controller="Schedule" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-history"></i> Schedule</a></li>
-                                            <li><a data-placement="left" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-teamId="@item.TeamId"><i class="flaticon-appointment"></i> Details</a></li>
-                                        </ul>
-                                    </div>
-                                    <a data-placement="top" data-toggle="tooltip" title="Add Player" asp-controller="Players" asp-action="create" asp-route-teamId="@item.TeamId"><i class="fas fa-user-alt"></i></a>
-                                    <a data-placement="top" data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TeamId"><i class="fas fa-edit"></i></a>
-                                    <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.TeamId)" class="fas fa-trash-alt"></i></a>
+                                <td>
+                                    <b> @Html.DisplayFor(modelItem => item.City) zone-@item.Zone </b>
+                                </td>
 
 
-                                }
-                                else
-                                {
-                                    <a data-placement="top" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayersList" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-helmet"></i></a>
-                                    <a data-placement="top" data-toggle="tooltip" title="Schedule" asp-controller="Schedule" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="fas fa-clock-o"></i></a>
-                                    <a data-placement="left" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-teamId="@item.TeamId"><i class="fas fa-info-circle"></i></a>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>*@
+                                <td>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+
+                                                <li><a data-placement="left" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayersList" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-2"></i> Team Players</a></li>
+                                                <li><a data-placement="left" data-toggle="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-4"></i> Team Matches</a></li>
+                                                <li><a data-placement="left" data-toggle="tooltip" title="Schedule" asp-controller="Schedule" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="flaticon-history"></i> Schedule</a></li>
+                                                <li><a data-placement="left" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-teamId="@item.TeamId"><i class="flaticon-appointment"></i> Details</a></li>
+                                            </ul>
+                                        </div>
+                                        <a data-placement="top" data-toggle="tooltip" title="Add Player" asp-controller="Players" asp-action="create" asp-route-teamId="@item.TeamId"><i class="fas fa-user-alt"></i></a>
+                                        <a data-placement="top" data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="@item.TeamId"><i class="fas fa-edit"></i></a>
+                                        <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.TeamId)" class="fas fa-trash-alt"></i></a>
+
+
+                                    }
+                                    else
+                                    {
+                                        <a data-placement="top" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayersList" asp-route-teamId="@item.TeamId"><i class="flaticon-cricket-helmet"></i></a>
+                                        <a data-placement="top" data-toggle="tooltip" title="Schedule" asp-controller="Schedule" asp-action="Index" asp-route-teamId="@item.TeamId"><i class="fas fa-clock-o"></i></a>
+                                        <a data-placement="left" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-teamId="@item.TeamId"><i class="fas fa-info-circle"></i></a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>*@
             </table>
 
 
@@ -219,10 +219,18 @@
                     name: 'zone'
                 },
                 {
-                    className: "font-15 text-left",
-                    orderable: false,
-                    data: 'team_Name',
-                    name: 'team_Name'
+                    "render": function (data, type, row, meta) {
+                        return ' <div class="btn-group"><button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">'+
+                        '<span class="caret"></span></button>'+
+                        '<ul class="dropdown-menu">'+
+                        '<li><a data-placement="left" data-toggle="tooltip" title="Players" asp-controller="Players" asp-action="PlayersList" asp-route-teamId="data.TeamId"><i class="flaticon-cricket-2"></i> Team Players</a></li>' +
+                            '<li><a data-placement="left" data-toggle="tooltip" title="Matches" asp-controller="Matches" asp-action="Index" asp-route-teamId="data.TeamId"><i class="flaticon-cricket-4"></i> Team Matches</a></li>' +
+                            '<li><a data-placement="left" data-toggle="tooltip" title="Schedule" asp-controller="Schedule" asp-action="Index" asp-route-teamId="data.TeamId"><i class="flaticon-history"></i> Schedule</a></li>' +
+                            '<li><a data-placement="left" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-teamId="data.TeamId"><i class="flaticon-appointment"></i> Details</a></li> </ul> </div>' +
+                            ' <a data-placement="top" data-toggle="tooltip" title="Add Player" asp-controller="Players" asp-action="create" asp-route-teamId="data.TeamId"><i class="fas fa-user-alt"></i></a>' +
+                            ' <a data-placement="top" data-toggle="tooltip" title="Edit Mode" asp-action="Edit" asp-route-id="data.TeamId"><i class="fas fa-edit"></i></a>' +
+                            ' <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(data.TeamId)" class="fas fa-trash-alt"></i></a>';
+                    }
                 }
             ],
             buttons: [

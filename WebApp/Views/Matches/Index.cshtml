@@ -145,7 +145,7 @@
 
                         </tr>
                     </thead>
-                    <tbody>
+                    @*<tbody>
                         @foreach (var item in Model)
                         {
                             <tr>
@@ -242,7 +242,7 @@
                                 </td>
                             </tr>
                         }
-                    </tbody>
+                    </tbody>*@
                 </table>
             </div>
 
@@ -333,78 +333,87 @@
         });
 
 
-        //var dataTable = $('#MatchTable').DataTable({
-        //    processing: true,
-        //    serverSide: true,
-        //    "paging": true,
-        //    dom: 'Brtipl',
-        //    "order": [],
-        //    ajax: {
-        //        url: "/Matches/Index?isApi=true",
-        //        type: "GET",
-        //        dataType: "json"
-        //    },
-        //    columns: [
-        //        {
-        //            className: "font-15 text-left",
-        //            orderable: false,
-        //            data: 'result',
-        //            name: 'result'
-        //        },
-        //        {
-        //            className: "font-15 text-left",
-        //            orderable: false,
-        //            data: 'homeTeam',
-        //            name: 'homeTeam'
-        //        },
-        //        {
-        //            className: "font-15 text-left",
-        //            orderable: false,
-        //            data: 'oppponentTeam',
-        //            name: 'oppponentTeam'
-        //        }, {
-        //            className: "font-13 text-left",
-        //            orderable: false,
-        //            data: 'hasFilledTeamScoreData',
-        //            name: 'hasFilledTeamScoreData'
-        //        }
-        //        , {
-        //            className: "font-13 text-left",
-        //            orderable: false,
-        //            data: 'matchType',
-        //            name: 'matchType'
-        //        }
-        //        , {
-        //            className: "font-13 text-left",
-        //            orderable: false,
-        //            data: 'dateOfMatch',
-        //            name: 'dateOfMatch'
-        //        }, {
-        //            className: "font-13 text-left",
-        //            orderable: false,
-        //            data: 'matchOvers',
-        //            name: 'matchOvers'
-        //        }, {
-        //            className: "font-13 text-left",
-        //            orderable: false,
-        //            data: 'result',
-        //            name: 'result'
-        //        }, {
-        //            className: "font-13 text-left",
-        //            orderable: false,
-        //            data: 'matchOvers',
-        //            name: 'matchOvers'
-        //        }
-        //    ],
-        //    buttons: [
-        //        {
-        //            extend: 'pdfHtml5',
-        //            className: 'btn btn-default'
-        //            //orientation: 'landscape',
-        //            //pageSize: 'LEGAL'
-        //        }
-        //    ]
-        //});
+        var dataTable = $('#MatchTable').DataTable({
+            processing: true,
+            serverSide: true,
+            "paging": true,
+            dom: 'Brtipl',
+            "order": [],
+            ajax: {
+                url: "/Matches/Index?isApi=true",
+                type: "GET",
+                dataType: "json"
+            },
+            columns: [
+                {
+                    className: "font-15 text-left",
+                    orderable: false,
+                    data: 'result',
+                    name: 'result'
+                },
+                {
+                    className: "font-15 text-left",
+                    orderable: false,
+                    data: 'homeTeam',
+                    name: 'homeTeam'
+                },
+                {
+                    className: "font-15 text-left",
+                    orderable: false,
+                    data: 'oppponentTeam',
+                    name: 'oppponentTeam'
+                }, {
+                    className: "font-13 text-left",
+                    orderable: false,
+                    data: 'hasFilledTeamScoreData',
+                    name: 'hasFilledTeamScoreData'
+                }
+                , {
+                    className: "font-13 text-left",
+                    orderable: false,
+                    data: 'matchType',
+                    name: 'matchType'
+                }
+                , {
+                    className: "font-13 text-left",
+                    orderable: false,
+                    data: 'dateOfMatch',
+                    name: 'dateOfMatch'
+                }, {
+                    className: "font-13 text-left",
+                    orderable: false,
+                    data: 'matchOvers',
+                    name: 'matchOvers'
+                }, {
+                    className: "font-13 text-left",
+                    orderable: false,
+                    data: 'result',
+                    name: 'result'
+                },
+                {
+                    "render": function (data, type, row, meta) {
+                        return ' <div class="btn-group">'+
+                                            '<button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">'+
+                                               '<span class="caret"></span></button>'+
+                                            '<ul class="dropdown-menu">'+
+                                               '<li><a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="data.OppponentTeamId" asp-route-homeTeamId="data.HomeTeamId" asp-route-matchId="data.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card">Scorecard</a></li>'+
+                                               '<li><a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-matchId="data.MatchId">Details</a></li>'+
+                                               '<li><a asp-controller="MatchSummary" asp-action="FirstInning" asp-route-oppTeamId="data.OppponentTeamId" asp-route-homeTeamId="data.HomeTeamId" asp-route-matchId="data.MatchId" data-placement="top" data-toggle="tooltip" title="Summary">Summary</a></li></ul></div>'+
+                                        ' <a data-placement="top" data-toggle="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="data.MatchId"><i class="fas fa-edit"></i></a>'+
+                                        ' <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(data.MatchId)" class="fas fa-trash-alt"></i></a>';
+
+                    }
+                }
+            ],
+            buttons: [
+                {
+                    extend: 'pdfHtml5',
+                    className: 'btn btn-default'
+                    //orientation: 'landscape',
+                    //pageSize: 'LEGAL'
+                }
+            ]
+        });
 
 
         $('#filterdata').click(async function () {

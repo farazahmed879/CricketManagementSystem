@@ -52,50 +52,50 @@
                         </tr>
                     </thead>
                     @*<tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    <b>@Html.DisplayFor(modelItem => item.Name)</b>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <b>@Html.DisplayFor(modelItem => item.Name)</b>
 
-                                </td>
-                                <td>
-                                    <b> @Html.DisplayFor(modelItem => item.Organizor)</b>
+                                    </td>
+                                    <td>
+                                        <b> @Html.DisplayFor(modelItem => item.Organizor)</b>
 
-                                </td>
-                                <td>
-                                    <b>  @Html.DisplayFor(modelItem => item.StartingDate)</b>
+                                    </td>
+                                    <td>
+                                        <b>  @Html.DisplayFor(modelItem => item.StartingDate)</b>
 
-                                </td>
-                                <td>
-                                    @if (User.Identity.IsAuthenticated)
-                                    {
+                                    </td>
+                                    <td>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
 
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a asp-controller="Matches" asp-action="Create" asp-route-matchSeriesId="@item.MatchSeriesId" data-placement="left" data-toggle="tooltip" title="Add Match">New Match</a></li>
-                                                <li> <a asp-controller="Matches" asp-action="Index" asp-route-matchSeriesId="@item.MatchSeriesId" data-placement="left" data-toggle="tooltip" title="Match List">Matches</a></li>
-                                            </ul>
-                                        </div>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a asp-controller="Matches" asp-action="Create" asp-route-matchSeriesId="@item.MatchSeriesId" data-placement="left" data-toggle="tooltip" title="Add Match">New Match</a></li>
+                                                    <li> <a asp-controller="Matches" asp-action="Index" asp-route-matchSeriesId="@item.MatchSeriesId" data-placement="left" data-toggle="tooltip" title="Match List">Matches</a></li>
+                                                </ul>
+                                            </div>
 
-                                        <a data-toggle="tooltip" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="@item.MatchSeriesId"><i class="fas fa-edit"></i></a>
+                                            <a data-toggle="tooltip" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="@item.MatchSeriesId"><i class="fas fa-edit"></i></a>
 
-                                        <a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(@item.MatchSeriesId)"></i></a>
+                                            <a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(@item.MatchSeriesId)"></i></a>
 
-                                    }
-                                    else
-                                    {
-                                        <div class="btn-group">
-                                            <a asp-controller="Matches" asp-action="Index" asp-route-matchSeriesId="@item.MatchSeriesId" data-placement="top" data-toggle="tooltip" title="Matches"><i class="flaticon-cricket-4"></i></a>
-                                        </div>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    </tbody>*@
+                                        }
+                                        else
+                                        {
+                                            <div class="btn-group">
+                                                <a asp-controller="Matches" asp-action="Index" asp-route-matchSeriesId="@item.MatchSeriesId" data-placement="top" data-toggle="tooltip" title="Matches"><i class="flaticon-cricket-4"></i></a>
+                                            </div>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>*@
                 </table>
 
 
@@ -195,11 +195,19 @@
                     orderable: false,
                     data: 'startingDate',
                     name: 'startingDate'
-                }, {
-                    className: "font-13 text-left",
-                    orderable: false,
-                    data: 'startingDate',
-                    name: 'startingDate'
+                },
+                {
+                    "render": function (data, type, row, meta) {
+                        return ' <div class="btn-group">'+
+                                            '<button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">'+
+                                                '<span class="caret"></span></button>'+
+                                                 '<ul class="dropdown-menu">'+
+                                                '<li><a asp-controller="Matches" asp-action="Create" asp-route-matchSeriesId="data.MatchSeriesId" data-placement="left" data-toggle="tooltip" title="Add Match">New Match</a></li>'+
+                                               ' <li> <a asp-controller="Matches" asp-action="Index" asp-route-matchSeriesId="data.MatchSeriesId" data-placement="left" data-toggle="tooltip" title="Match List">Matches</a></li> </ul></div>'+
+                                       ' <a data-toggle="tooltip" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="data.MatchSeriesId"><i class="fas fa-edit"></i></a>'+
+                                       ' <a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(data.MatchSeriesId)"></i></a>';
+
+                    }
                 }
             ],
             buttons: [

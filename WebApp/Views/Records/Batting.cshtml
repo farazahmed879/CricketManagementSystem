@@ -94,21 +94,21 @@
                         <div class="footer" style="margin-top : .5em">
                             <ul class="list-inline">
                                 <li><input id="Clear" onclick="clearFilter()" type="button" value="Clear" class="btn btn-default"></li>
-                                <li><input type="button" id="filterdata" value="Search" class="btn btn-primary filter-col"></li>
+                                <li><input type="button" id="filterdata" value="Search" class="btn btn-primary btn-outlined"></li>
                             </ul>
                         </div>
                     </div>
 
                 </div>
                 <br />
-                <button id="advSearch" class="btn btn-box-tool" data-toggle="collapse" data-target="#filter-panel">
+                <button id="advSearch" class="btn btn-default" data-toggle="collapse" data-target="#filter-panel">
                     Advanced Search
                 </button>
             </div>
 
             <div class="table-responsive">
                 <table id="RecordTable" class="table table-bordered table-striped">
-                    <thead class="bg-blue-active">
+                    <thead style="background-color: maroon; color: white">
                         <tr>
                             <th>
                                 Name
@@ -201,11 +201,12 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 <div class='col-md-1'></div>
 
 @section Scripts{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
@@ -213,7 +214,7 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script>
 
         //Select2
@@ -223,12 +224,13 @@
 
         $(document).ready(function () {
             $('#RecordTable').DataTable({
-                dom: 'Bfrtip',
+                dom: 'Brtipl',
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "order": [],
                 buttons: [
                     {
                         extend: 'pdfHtml5',
-                        className: 'btn btn-primary'
+                        className: 'btn btn-default'
                         //orientation: 'landscape',
                         //pageSize: 'LEGAL'
                     }
@@ -256,16 +258,16 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-                                    <td> ${i.playerName} </td>
-                                    <td>${i.totalMatch}</td>
-                                    <td>${i.totalInnings}</td>
-                                    <td>${i.totalBatRuns}</td>
-                                    <td> ${i.battingAverage} </td>
-                                    <td> ${i.strikeRate}</td>
-                                    <td> ${i.totalFours} </td>
-                                    <td> ${i.totalSixes}</td>
-                                    <td> ${i.numberOf50s} </td>
-                                    <td>${i.numberOf100s}</td>                                                                                                                                                                                                                    `;
+                                        <td> ${i.playerName} </td>
+                                        <td>${i.totalMatch}</td>
+                                        <td>${i.totalInnings}</td>
+                                        <td>${i.totalBatRuns}</td>
+                                        <td> ${i.battingAverage} </td>
+                                        <td> ${i.strikeRate}</td>
+                                        <td> ${i.totalFours} </td>
+                                        <td> ${i.totalSixes}</td>
+                                        <td> ${i.numberOf50s} </td>
+                                        <td>${i.numberOf100s}</td>                                                                                                                                                                                                                    `;
                             tbody.appendChild(tr);
                             return tr;
                         });
