@@ -46,7 +46,7 @@ namespace WebApp.Controllers
             return teams;
         }
 
-        [HttpGet("Team/Index")]
+        [HttpGet]
         public async Task<IActionResult> Index(DataTableAjaxPostModel model, string zone, string location, string name, int? page, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);

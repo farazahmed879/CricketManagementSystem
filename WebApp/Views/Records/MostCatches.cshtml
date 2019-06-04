@@ -124,7 +124,10 @@
                         {
                             <tr>
                                 <td>
-                                    <b>@Html.DisplayFor(modelItem => item.PlayerName)</b>
+                                    <ul class="list-inline">
+                                        <li><img class="img-responsive" id="Img" src="~/Home/images/Players/@item.Image"></li>
+                                        <li><b>@item.PlayerName</b></li>
+                                    </ul>
                                 </td>
                                 <td>
                                     <b> @Html.DisplayFor(modelItem => item.TotalMatch)</b>
@@ -204,7 +207,10 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-<td> <b>${i.playerName}</b> </td>
+                                                <td><ul class="list-inline">
+                                                    <li><img class="img-responsive" id="Img" src="~/Home/images/Players/${i.image}"></li>
+                                                     <li><b>${i.playerName}</b></li>
+                                                </ul></td>
 <td> <b>${i.totalMatch}</b></td>
 <td> <b> ${i.mostCatches}</b> </td>
 
@@ -260,7 +266,14 @@
         #filter-panel {
             border: 1px solid #bbb;
         }
-
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 30px;
+            width: 35px;
+            /*border: 1px solid #bbb;*/
+        }
         td {
             text-align: center !important;
             font-size: 1em;

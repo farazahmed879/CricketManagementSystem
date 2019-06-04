@@ -50,13 +50,10 @@ namespace WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(DataTableAjaxPostModel model, int? teamId, int? matchTypeId,
                                                int? tournamentId, int? matchSeriesId,
-                                                int? season, int? matchOvers, int? userId, int? page, bool isApi)
+                                                int? season, int? matchOvers, bool isApi)
         {
-            var users = await _userManager.GetUserAsync(HttpContext.User);
 
             ViewBag.Name = "Match";
-            if (users != null)
-                userId = users.Id;
 
             ViewBag.Overs = new SelectList(_context.Matches
                 .Select(i => i.MatchOvers)
@@ -84,7 +81,7 @@ namespace WebApp.Controllers
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
 
-            var result = await _matches.GetAllMatchesList(model.Init() ,teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers, userId, page);
+            var result = await _matches.GetAllMatchesList(model.Init() ,teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers);
             if (isApi == true)
                 return Json(new
                 {
@@ -131,7 +128,7 @@ namespace WebApp.Controllers
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
 
-            var result = await _matches.GetAllMatchesList(model.Init(),teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers, userId, page);
+            var result = await _matches.GetAllMatchesList(model.Init(),teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers);
             if (isApi == true)
                 return Json(new
                 {
@@ -261,7 +258,6 @@ namespace WebApp.Controllers
         //GET: Matches/Create
         [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
-        [Route("Matches/Create")]
         public async Task<IActionResult> Create(int? tournamentId, int? matchSeriesId)
         {
             ViewBag.Name = "Add Match";

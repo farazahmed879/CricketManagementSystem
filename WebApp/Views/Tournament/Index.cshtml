@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="center fade-down section-heading">
-                        <h2 class="main-title">Tournament</h2>
+                        <h2 class="main-title">Manage Tournament</h2>
                         <hr />
                     </div>
                 </div>
@@ -145,7 +145,7 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-
+    <input id="IsAuthenticated" hidden value="@Html.Raw(User.Identity.IsAuthenticated)" />
     <style>
         td {
             text-align: center !important;
@@ -159,6 +159,7 @@
     </style>
 
     <script>
+        var IsAuthenticated = $("#IsAuthenticated").val() === "True";
         $(function () {
             $('#createBtn').click(function () {
                 window.location = '/Tournament/Create'
@@ -186,10 +187,14 @@
             },
             columns: [
                 {
-                    className: "font-15 text-left",
-                    orderable: false,
                     data: 'tournamentName',
-                    name: 'tournamentName'
+                    render: function (PlayerName, Image, row, meta) {
+                        debugger;
+                        return '<ul class="list-inline">' +
+                            '<li><img class="img-responsive" id="Img" src="~/Home/images/Players/' + row.fileName + '"></li>' +
+                            '<li><b>' + row.tournamentName + '</b></li>' +
+                            '</ul>';
+                    }
                 },
                 {
                     className: "font-15 text-left",
@@ -204,15 +209,16 @@
                     name: 'startingDate'
                 },
                 {
+                    data: "tournamentId",
                     "render": function (data, type, row, meta) {
-                        return  '<div class="btn-group">'+
-                                        '<button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">'+
-                                         '<span class="caret"></span></button >'+
-                                            '<ul class="dropdown-menu">'+
-                                            '<li><a asp-controller="Matches" asp-action="Create" asp-route-tournamentId="data.TournamentId" data-placement="left" data-toggle="tooltip" title="New Match">New Match</a></li>'+
-                                            '<li> <a asp-controller="Matches" asp-action="Index" asp-route-tournamentId="data.TournamentId" data-placement="left" data-toggle="tooltip" title="Match List">All Matches</a></li></ul></div>'+
-                                    '<a data-toggle="tooltip" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="data.TournamentId"><i class="fas fa-edit"></i></a>'+
-                                    '<a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(data.TournamentId)"></i></a>';
+                        return (IsAuthenticated ? '<div class="btn-group">' +
+                            '<button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">' +
+                            '<span class="caret"></span></button >' +
+                            '<ul class="dropdown-menu">' +
+                            '<li><a onclick="NewMatch(' + data + ')" data-placement="left" data-toggle="tooltip" class="cursor" title="New Match">New Match</a></li>' +
+                            '<li><a onclick="AllMatches(' + data + ')" data-placement="left" data-toggle="tooltip" class="cursor" title="Match List">All Matches</a></li></ul></div>' : '<a onclick="AllMatches(' + data + ')" data-placement="left" data-toggle="tooltip" title="Match List"><i class="flaticon-cricket-4"></i></a>') +
+                            (IsAuthenticated ? ' <a data-toggle="tooltip" data-placement="top" title="Edit Mode" onclick="EditMode(' + data + ')"><i class="fas fa-edit cursor"></i></a>': "") +
+                            (IsAuthenticated ? ' <a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt cursor" style="cursor: pointer" onclick="Delete(' + data + ')"></i></a>': "");
                     }
                 }
             ],
@@ -234,6 +240,18 @@
         $("#deleteBtn")
             .off()
             .on("click", async () => await DeleteData());
+
+        let EditMode = function (id) {
+            window.location = `/Tournament/Edit/${id}`
+        }
+
+        let AllMatches = function (id) {
+            window.location = `/Matches/Index?TournamentId=${id}`
+        }
+
+        let NewMatch = function (id) {
+            window.location = `/Matches/Create?TournamentId=${id}`
+        }
 
         const DeleteData = async () => {
             const tournamentId = document.getElementById('TournamentId').value;

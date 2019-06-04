@@ -7,7 +7,7 @@ namespace WebApp.IServices
 {
     public interface IPlayers
     {
-        Task<PaginatedList<Playersdto>> GetAllPlayersList(DataTableAjaxPostModel model, int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId);
+        Task<PaginatedList<Playersdto>> GetAllPlayersList(DataTableAjaxPostModel model, int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name);
         List<PlayersDropDowndto> GetAllPlayers();
         Task<PlayerPastRecorddto> GetPlayerPastRecordByPlayerId(int? playerId);
     }

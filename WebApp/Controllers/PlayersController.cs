@@ -49,9 +49,9 @@ namespace WebApp.Controllers
             return players;
         }
 
-
-        [HttpGet("Players/Index")]
-        public async Task<IActionResult> Index(DataTableAjaxPostModel model, int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId, bool isApi)
+        [HttpGet]
+        // [HttpGet("Players/Index/teamId/{teamId}/playerRoleId/{playerRoleId}/battingStyleId/{battingStyleId}/bowlingStyleId/{bowlingStyleId}/name/{name}/isApi/{isApi}")]
+        public async Task<IActionResult> Index(DataTableAjaxPostModel model, int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name,bool isApi)
         {
 
             var users = await _userManager.GetUserAsync(HttpContext.User);
@@ -72,15 +72,14 @@ namespace WebApp.Controllers
             ViewBag.BowlingStyleId = new SelectList(_context.BowlingStyle
                .AsNoTracking()
                .Select(i => new { i.Name, i.BowlingStyleId }), "BowlingStyleId", "Name");
-            if (users != null)
-                userId = users.Id;
+
 
 
             ViewBag.TeamId = new SelectList(_context.Teams
                 .AsNoTracking()
                 .Select(i => new { i.TeamId, i.Team_Name })
            , "TeamId", "Team_Name");
-            var result = await _players.GetAllPlayersList(model.Init() ,teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId);
+            var result = await _players.GetAllPlayersList(model.Init() ,teamId, playerRoleId, battingStyleId, bowlingStyleId, name);
             if (isApi == true)
                 return Json(new
                 {
@@ -120,7 +119,7 @@ namespace WebApp.Controllers
                 .AsNoTracking()
                 .Select(i => new { i.TeamId, i.Team_Name })
            , "TeamId", "Team_Name");
-            var result = await _players.GetAllPlayersList(model, teamId, playerRoleId, battingStyleId, bowlingStyleId, name, userId);
+            var result = await _players.GetAllPlayersList(model, teamId, playerRoleId, battingStyleId, bowlingStyleId, name);
             //if (partialView)
             //    return PartialView("_PlayerPartial", model);
             //else
@@ -131,7 +130,7 @@ namespace WebApp.Controllers
         }
 
         // GET: PlayerList
-        [HttpGet("Players/PlayersList")]
+        [HttpGet("Players/PlayersList/{teamId}")]
         public async Task<IActionResult> PlayersList(int? teamId)
         {
             ViewBag.Name = "Players";
@@ -181,7 +180,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Players/Create
-        [HttpGet("Players/Create")]
+        [HttpGet]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Create(int? teamId)
         {

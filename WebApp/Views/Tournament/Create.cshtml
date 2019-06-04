@@ -19,18 +19,19 @@
 <br />
 
 <div class="container-fluid">
-        <div class='col-md-1'></div>
-        <div class="col-md-10">
-            <div class="row">
-                <ol class="breadcrumb">
-                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-controller="Tournament" asp-action="Index">Tournament</a></li>
-                    <li><a>Add</a></li>
-                </ol>
-            </div>
-            <div class="row">
-                <form id="TournamentForm">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Tournament" asp-action="Index">Tournament</a></li>
+                <li><a>Add</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <form id="TournamentForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-md-8">
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="form-group label-floating">
@@ -61,17 +62,30 @@
                             <!-- /.input group -->
                         </div>
                     </div>
-                </form>
-            </div>
-            <div id="snackbar"></div>
-            <div class="footer">
-                <ul class="list-inline">
-                    <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
-                    <li><input id="TournamentCreate" type="button" value="Add" class="btn btn-outlined btn-primary"></li>
-                </ul>
-            </div>
+                </div>
+
+                <div class="col-md-4">
+                    <span id="span" style="color: red"></span>
+                    <img class="img-responsive" id="TournamentImg" style="background-size:cover" />
+
+                    <label asp-for="TournamentImage" class="btn btn-box-tool">
+                        <i class="far fa-picture-o"> Upload</i> <input asp-for="TournamentImage" type="file" class="hidden" style="height:auto" />
+                    </label>
+                    <label id="RemoveImage" class="btn btn-box-tool">
+                        <i class="far fa-trash-alt"> Remove</i>
+                    </label>
+                </div>
+            </form>
         </div>
-        <div class='col-md-1'></div>
+        <div id="snackbar"></div>
+        <div class="footer">
+            <ul class="list-inline">
+                <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
+                <li><input id="TournamentCreate" type="button" value="Add" class="btn btn-outlined btn-primary"></li>
+            </ul>
+        </div>
+    </div>
+    <div class='col-md-1'></div>
 </div>
 
 
@@ -95,37 +109,110 @@
             });
         });
 
+
+        $(function () {
+            $('#RemoveImage').click(function () {
+
+                const TournamentImg = document.getElementById('TournamentImg');
+                TournamentImg.style.backgroundImage = "";
+            });
+
+        });
+
+        $("#TournamentImage").change(function () {
+            readURL(this);
+        });
+
+        function readURL(input) {
+            var size = input.files[0].size / 1021 / 1024;
+            if (size <= 2) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        //$('#PlayerImg').attr('src', e.target.result);
+                        const TournamentImg = document.getElementById('TournamentImg');
+                        TournamentImg.style.backgroundImage = "url(" + e.target.result + ")";
+                        TournamentImg.style.backgroundPosition = "cover";
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                    document.getElementById("span").innerHTML = ""
+                }
+            } else {
+                //var data = "image size must be less than 2mb";
+                document.getElementById("span").innerHTML = "max 2mb"
+                const TournamentImg = document.getElementById('TournamentImg');
+                TournamentImg.style.backgroundImage = "";
+            }
+        }
+
         function myFunction(data) {
             var snackBar = document.getElementById('snackbar');
             snackBar.textContent = data;
             snackBar.className = "show";
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
-        $(function () {
-            $('#TournamentCreate').click(function () {
-                $('#TournamentCreate').attr("disabled", "disabled");
-                try {
-                    var formData = $("#TournamentForm").serialize();
-                    $.ajax(`/Tournament/Create`, {
-                        data: formData,
-                        headers: {
-                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
-                        },
-                        method: "POST"
-                    }).done(function (data) {
-                        window.location = '/Tournament/Index'
-                        myFunction(data);
-                    }).fail(function (data) {
-                        myFunction(data);
-                    });
 
-
-                } catch (ex) {
-                    console.error(ex);
+        $(document).on('click', '#TournamentCreate', function (e) {
+            $('#TournamentCreate').attr("disabled", "disabled");
+            var form = $("#TournamentForm").closest("form");
+            var formData = new FormData(form[0]);
+            $.ajax({
+                type: "POST",
+                data: formData,
+                headers: {
+                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                },
+                dataType: "json",
+                url: "/Tournament/Create",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    myFunction(data);
+                    window.location = '/Tournament/Index'
+                },
+                fail: function (data) {
+                    myFunction(data);
                 }
-            });
+            })
         });
+        //$(function () {
+        //    $('#TournamentCreate').click(function () {
+        //        $('#TournamentCreate').attr("disabled", "disabled");
+        //        try {
+        //            var formData = $("#TournamentForm").serialize();
+        //            $.ajax(`/Tournament/Create`, {
+        //                data: formData,
+        //                headers: {
+        //                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+        //                },
+        //                method: "POST"
+        //            }).done(function (data) {
+        //                window.location = '/Tournament/Index'
+        //                myFunction(data);
+        //            }).fail(function (data) {
+        //                myFunction(data);
+        //            });
+
+
+        //        } catch (ex) {
+        //            console.error(ex);
+        //        }
+        //    });
+        //});
 
     </script>
+
+    <style>
+        #TournamentImg {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 160px;
+            width: 170px;
+            border: 1px solid #bbb;
+        }
+    </style>
 }
 

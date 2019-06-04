@@ -13,7 +13,7 @@ BEGIN
 			count (PlayerScores.MatchId) as 'TotalMatch',
 			count (case when Overs != null and Overs != 0 then 1 else null end) as 'TotalInnings',
 			sum (Wickets) as 'MostWickets',
-			Players.[FileName] AS 'Image',
+			Case When Players.[FileName] is null  then  'noImage.jpg' else Players.[FileName] end  AS 'Image',
 			Players.Player_Name AS 'PlayerName'
 			
 	

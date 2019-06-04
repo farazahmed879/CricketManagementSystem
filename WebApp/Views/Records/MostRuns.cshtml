@@ -127,21 +127,24 @@
                     <tbody id="myTable">
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PlayerName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TotalMatch)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TotalInnings)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TotalBatRuns)
-                                </td>
+                        <tr>
+                            <td>
+                                <ul class="list-inline">
+                                    <li><img class="img-responsive" id="Img" src="~/Home/images/Players/@item.Image"></li>
+                                    <li><b>@item.PlayerName</b></li>
+                                </ul>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalMatch)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalInnings)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalBatRuns)
+                            </td>
 
-                            </tr>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -204,7 +207,10 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-<td> ${i.playerName} </td>
+<td><ul class="list-inline">
+                                                    <li><img class="img-responsive" id="Img" src="~/Home/images/Players/${i.image}"></li>
+                                                     <li><b>${i.playerName}</b></li>
+                                                </ul></td>
 <td>${i.totalMatch}</td>
 <td> ${i.totalInnings} </td>
 <td> ${i.totalBatRuns} </td>
@@ -270,6 +276,14 @@
         th {
             text-align: center !important;
             font-size: 1em;
+        }
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 30px;
+            width: 35px;
+            /*border: 1px solid #bbb;*/
         }
     </style>
 

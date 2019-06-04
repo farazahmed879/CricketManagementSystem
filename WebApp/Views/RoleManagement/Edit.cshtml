@@ -1,4 +1,5 @@
-﻿<br />
+﻿@model WebApp.ViewModels.RoleManagement.AspUserdto
+<br />
 <br />
 <br />
 <br />
@@ -9,21 +10,67 @@
         return Xsrf.GetAndStoreTokens(Context).RequestToken;
     }
 }
+<input type="hidden" id="RequestVerificationToken"
+       name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
 <div class="container">
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <h2>@ViewBag.User</h2>
-            <div class="pull-right">
-                <select asp-items="@ViewBag.Team" name="teams[]" class="js-example-basic-multiple" style="width: 400px" multiple="multiple"></select>
-            </div>
+            <form id="PlayerForm" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group label-floating">
+                            <label asp-for="UserName" class="control-label">User Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input asp-for="UserName" required class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group label-floating">
+                            <label asp-for="Email" class="control-label">Email<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input asp-for="Email" required class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group label-floating">
+                            <label asp-for="PhoneNumber" class="control-label">Contact<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input asp-for="PhoneNumber" required class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group label-floating">
+                            <label asp-for="Password" class="control-label">Password<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input asp-for="Password" required class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group label-floating">
+                            <label asp-for="ConfirmPassword" class="control-label">Confirm Password<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input asp-for="ConfirmPassword" required class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="col-md-2"></div>
     </div>
     <div class="footer">
         <ul class="list-inline">
             <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-            <li><input id="PlayerCreate" type="button" value="Add" class="btn btn-primary"></li>
+            <li><input id="PlayerCreate" type="button" value="Add" class="btn btn-primary btn-outlined"></li>
         </ul>
     </div>
 </div>
@@ -47,12 +94,36 @@
             placeholder: "--Select Club Admin--";
         });
 
-        $('#Login').click(function () {
+        $('#BackBtn').click(function () {
             $(function () {
-                window.location = '/Account/Login'
+                window.history.back();
             });
 
         })
+
+        $(document).on('click', '#PlayerCreate', function (e) {
+            $('#PlayerCreate').attr("disabled", "disabled");
+            var form = $("#PlayerForm").closest("form");
+            var formData = new FormData(form[0]);
+            $.ajax({
+                type: "Put",
+                data: formData,
+                headers: {
+                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                },
+                dataType: "json",
+                url: "/RoleManagement/Edit",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    myFunction(data);
+                    window.location = '/RoleManagement/Role'
+                },
+                fail: function (data) {
+                    myFunction(data);
+                }
+            })
+        });
 
     </script>
 }

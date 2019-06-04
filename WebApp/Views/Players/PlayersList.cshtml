@@ -27,7 +27,7 @@
                     </div>*@
 
 
-                @if (Model != null && Model.TeamPlayers.Any())
+                @if (Model != null && Model.TeamPlayers != null && Model.TeamPlayers.Any())
                 {
                     @foreach (var item in Model.TeamPlayers)
                     {

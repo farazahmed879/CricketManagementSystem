@@ -35,6 +35,7 @@ namespace WebApp.Services
                      MatchSeriesId = i.MatchSeriesId,
                      Name = i.Name,
                      Organizor = i.Organizor,
+                     FileName = i.FileName,
                      StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToString("dddd, dd MMMM yyyy") : "",
 
                  })

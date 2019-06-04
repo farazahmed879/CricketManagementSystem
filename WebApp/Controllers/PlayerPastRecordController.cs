@@ -41,17 +41,16 @@ namespace WebApp.Controllers
 
 
         // GET: PlayerPastRecord
-        [HttpGet("PlayerPastRecord/PastRecord")]
+        [HttpGet("PlayerPastRecord/PastRecord/{playerId}")]
         [Authorize(Roles = "Club Admin,Administrator")]
-        public async Task<IActionResult> PastRecord(int? playerId,string PlayerName)
+        public async Task<IActionResult> PastRecord(int? playerId)
         {
             ViewBag.Name = "Past Record";
             if (playerId == null)
             {
                 return NotFound();
             }
-
-            ViewBag.PlayerName = PlayerName;
+            
             var playerPastRecord = await _players.GetPlayerPastRecordByPlayerId(playerId);
             return View(playerPastRecord);
         }

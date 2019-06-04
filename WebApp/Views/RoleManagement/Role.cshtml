@@ -1,4 +1,4 @@
-﻿@model List<WebApp.ViewModels.RoleManagement.ClubAdmindto>
+﻿@model List<WebApp.ViewModels.RoleManagement.AspUserdto>
 <br />
 <br />
 <br />
@@ -29,8 +29,8 @@
                 <table class="table">
                     <thead class="bg-blue-active">
                         <tr>
-                            <th>Club Admin</th>
-                            <th>Teams</th>
+                            <th>User</th>
+                            <th>Email</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -39,16 +39,15 @@
                         {
                             <tr>
                                 <td>
-                                    <h4>@item.UserName</h4>
+                                    @item.UserName
                                 </td>
                                 <td>
-                                    <div>
-                                        <select asp-items="ViewBag.Team" asp-for="Select(i => i.TeamId)" class="js-example-basic-single" style="width: 100%">
-                                            <option value="">--Select Team--</option>
-                                        </select>
-                                    </div>
+                                    @item.Email
                                 </td>
-                                <td><a asp-action="Edit" asp-route-userId="@item.UserId" asp-route-userName="@item.UserName" class="btn btn-default">Edit</a></td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-default">Delete</a>
+                                </td>
                             </tr>
                         }
                     </tbody>

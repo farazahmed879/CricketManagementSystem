@@ -15,7 +15,7 @@ BEGIN
 			count (PlayerScores.MatchId) as 'TotalMatch',
 			count (case when IsPlayedInning = 1 then 1 else null end) as 'TotalInnings',
 			COUNT(CASE WHEN Bat_Runs >= 50 THEN 1 ELSE NULL END) AS 'NumberOf50s',
-			Players.[FileName] AS 'Image',
+			Case When Players.[FileName] is null  then  'noImage.jpg' else Players.[FileName] end  AS 'Image',
 			Players.Player_Name AS 'PlayerName'
 			
 	

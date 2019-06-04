@@ -24,7 +24,7 @@ namespace WebApp.Services
             _userManager = userManager;
         }
 
-        public async Task<PaginatedList<Playersdto>> GetAllPlayersList(DataTableAjaxPostModel model,int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name, int? userId)
+        public async Task<PaginatedList<Playersdto>> GetAllPlayersList(DataTableAjaxPostModel model,int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name)
         {
             var result = await PaginatedList<Playersdto>.CreateAsync(
                           _context.Players
@@ -101,6 +101,7 @@ namespace WebApp.Services
                     OnFieldRunOut = i.OnFieldRunOut,
                     OnFieldStump = i.OnFieldStump,
                     BestScore = i.BestScore,
+                    Name = i.Player.Player_Name
 
 
                 })

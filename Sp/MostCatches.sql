@@ -12,7 +12,7 @@ BEGIN
 	SELECT  top 10
 			count (PlayerScores.MatchId) as 'TotalMatch',
 			sum (Catches) as 'MostCatches',
-			Players.[FileName] AS 'Image',
+			Case When Players.[FileName] is null  then  'noImage.jpg' else Players.[FileName] end  AS 'Image',
 			Players.Player_Name AS 'PlayerName'
 			
 	

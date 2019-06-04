@@ -31,82 +31,86 @@
             <form id="PlayerPastRecordId">
                 <input type="hidden" asp-for="PlayerId" />
                 <input type="hidden" asp-for="PlayerPastRecordId" />
-                <div class="col-md-12">
-                    <div class="col-md-12 bg-black-gradient">
-                        <h1>@ViewBag.PlayerName</h1>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="center fade-down section-heading">
+                            <h2 class="main-title">@Model.Name</h2>
+                        </div>
                     </div>
-                    <div class="col-md-12" style="background-color:powderblue;">
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-12" style="background-color:maroon; color:white">
                         <h4>Batting</h4>
                     </div>
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="TotalMatch" class="control-label">Matches</label>
                                 <input asp-for="TotalMatch" class="form-control" />
                                 <span asp-validation-for="TotalMatch" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="TotalInnings" class="control-label">Innings</label>
                                 <input asp-for="TotalInnings" id="playerContact" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="TotalBatRuns" class="control-label">Runs</label>
                                 <input asp-for="TotalBatRuns" id="playerCnic" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="TotalBatBalls" class="control-label">Balls</label>
                                 <input asp-for="TotalBatBalls" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="TotalFours" class="control-label">Fours</label>
                                 <input asp-for="TotalFours" id="playerContact" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="TotalSixes" class="control-label">Sixes</label>
                                 <input asp-for="TotalSixes" id="playerCnic" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="NumberOf50s" class="control-label">50s</label>
                                 <input asp-for="NumberOf50s" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="NumberOf100s" class="control-label">100s</label>
                                 <input asp-for="NumberOf100s" id="playerContact" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="TotalNotOut" class="control-label">N/O</label>
                                 <input asp-for="TotalNotOut" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="BestScore" class="control-label">Best Score</label>
                                 <input asp-for="BestScore" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="GetBowled" class="control-label">Bowled</label>
                                 <input asp-for="GetBowled" id="playerContact" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group">
                                 <div class="form-group label-floating">
                                     <label asp-for="GetCatch" class="control-label">Catch</label>
@@ -114,25 +118,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="GetHitWicket" class="control-label">Hit Wicket</label>
                                 <input asp-for="GetHitWicket" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="GetLBW" class="control-label">Lbw</label>
                                 <input asp-for="GetLBW" id="playerContact" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="GetRunOut" class="control-label">Run Out</label>
                                 <input asp-for="GetRunOut" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="GetStump" class="control-label">Stump</label>
                                 <input asp-for="GetStump" class="form-control" />
@@ -141,12 +145,12 @@
                     </div>
 
 
-                    <div class="col-md-12" style="background-color:powderblue;">
+                    <div class="col-md-12" style="background-color:maroon; color:white">
                         <h4>Bowling</h4>
                     </div>
                     <div class="row">
 
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group">
                                 <div class="form-group label-floating">
                                     <label asp-for="TotalOvers" class="control-label">Overs</label>
@@ -154,55 +158,55 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="TotalBallRuns" class="control-label">Runs</label>
                                 <input asp-for="TotalBallRuns" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="TotalWickets" class="control-label">Wickets</label>
                                 <input asp-for="TotalWickets" id="playerContact" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="TotalMaidens" class="control-label">Maidens</label>
                                 <input asp-for="TotalMaidens" id="playerCnic" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="FiveWickets" class="control-label">5Ws</label>
                                 <input asp-for="FiveWickets" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="DoBowled" class="control-label">Bowled</label>
                                 <input asp-for="DoBowled" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="DoCatch" class="control-label">Catch</label>
                                 <input asp-for="DoCatch" id="playerContact" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="DoHitWicket" class="control-label">Hit Wicket</label>
                                 <input asp-for="DoHitWicket" id="playerCnic" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="DoLBW" class="control-label">Lbw</label>
                                 <input asp-for="DoLBW" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="DoStump" class="control-label">Stump</label>
                                 <input asp-for="DoStump" class="form-control" />
@@ -210,23 +214,23 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12" style="background-color:powderblue;">
+                    <div class="col-md-12" style="background-color:maroon; color:white">
                         <h4>Fielding</h4>
                     </div>
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="OnFieldCatch" class="control-label">Catches</label>
                                 <input asp-for="OnFieldCatch" id="playerContact" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="OnFieldRunOut" class="control-label">R/O</label>
                                 <input asp-for="OnFieldRunOut" id="playerCnic" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <div class="form-group label-floating">
                                 <label asp-for="OnFieldStump" class="control-label">Stumps</label>
                                 <input asp-for="OnFieldStump" id="playerCnic" class="form-control" />
@@ -240,7 +244,7 @@
         <div class="footer">
             <ul class="list-inline">
                 <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-                <li><input id="PlayerPastCreate" type="button" value="Save" class="btn btn-primary"></li>
+                <li><input id="PlayerPastCreate" type="button" value="Save" class="btn btn-primary btn-outlined"></li>
             </ul>
         </div>
     </div>

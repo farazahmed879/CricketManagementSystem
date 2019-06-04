@@ -94,7 +94,7 @@
         <div class="footer">
             <ul class="list-inline">
                 <li><input id="BackBtn" type="button" value="Back" class="btn btn-default prev-step"></li>
-                <li><input id="TeamCreate" type="button" value="Save" class="btn btn-primary"></li>
+                <li><input id="TeamCreate" type="button" value="Save" class="btn btn-primary btn-outlined"></li>
             </ul>
         </div>
     </div>
@@ -128,7 +128,7 @@
 
         $(function () {
             $('#BackBtn').click(function () {
-                window.location = '/Teams/Index'
+                window.history.back();
             });
         });
         $(function () {

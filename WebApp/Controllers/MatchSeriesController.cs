@@ -12,6 +12,8 @@ using WebApp.ViewModels;
 using AutoMapper.QueryableExtensions;
 using WebApp.Helper;
 using WebApp.IServices;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebApp.Controllers
 {
@@ -22,16 +24,17 @@ namespace WebApp.Controllers
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
         private readonly ISeries _series;
+        private readonly IHostingEnvironment _hosting;
 
         public MatchSeriesController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager, ISeries series,
+            UserManager<IdentityUser<int>> userManager, ISeries series, IHostingEnvironment hosting,
             IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
             _series = series;
-
+            _hosting = hosting;
         }
 
         // GET: MatchSeries
@@ -39,7 +42,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Index(DataTableAjaxPostModel model, int? page, bool isApi)
         {
             ViewBag.Name = "Series";
-            var result = await _series.GetAllSeries(model.Init(),page);
+            var result = await _series.GetAllSeries(model.Init(), page);
             if (isApi == true)
                 return Json(new
                 {
@@ -58,12 +61,12 @@ namespace WebApp.Controllers
         public async Task<IActionResult> List(DataTableAjaxPostModel model, int? page)
         {
             ViewBag.Name = "Series";
-            var result = await _series.GetAllSeries(model.Init(),page);
+            var result = await _series.GetAllSeries(model.Init(), page);
             return Json(result);
 
         }
 
-        // GET: MatchSeries/Details/5
+
         [HttpGet("MatchSeries/Details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
@@ -82,7 +85,7 @@ namespace WebApp.Controllers
             return View(matchSeries);
         }
 
-        // GET: MatchSeries/Create
+
         [HttpGet("MatchSeries/Create")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public IActionResult Create()
@@ -91,7 +94,7 @@ namespace WebApp.Controllers
             return View();
         }
 
-        // POST: MatchSeries/Create
+
         [HttpPost("MatchSeries/Create")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
@@ -99,6 +102,17 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var directory = Path.Combine(_hosting.WebRootPath, "Home", "images", "Series");
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+                if (matchSeries.SeriesImage != null)
+                {
+                    matchSeries.FileName = matchSeries.SeriesImage.FileName;
+                    using (var stream = new FileStream(Path.Combine(directory, matchSeries.FileName), FileMode.Create))
+                    {
+                        await matchSeries.SeriesImage.CopyToAsync(stream);
+                    }
+                }
                 var users = await _userManager.GetUserAsync(HttpContext.User);
                 var matchSeriesModal = _mapper.Map<MatchSeries>(matchSeries);
                 matchSeriesModal.UserId = users.Id;
@@ -109,7 +123,6 @@ namespace WebApp.Controllers
             return View(matchSeries);
         }
 
-        // GET: MatchSeries/Edit/5
         [HttpGet("MatchSeries/Edit/{id}")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Edit(int? id)
@@ -128,6 +141,7 @@ namespace WebApp.Controllers
                     Name = i.Name,
                     Organizor = i.Organizor,
                     StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToShortDateString() : "",
+                    FileName = i.FileName
 
                 })
                 .SingleOrDefaultAsync(m => m.MatchSeriesId == id);
@@ -147,6 +161,17 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
+                var directory = Path.Combine(_hosting.WebRootPath, "Home", "images", "Series");
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+                if (matchSeries.SeriesImage != null)
+                {
+                    matchSeries.FileName = matchSeries.SeriesImage.FileName;
+                    using (var stream = new FileStream(Path.Combine(directory, matchSeries.FileName), FileMode.Create))
+                    {
+                        await matchSeries.SeriesImage.CopyToAsync(stream);
+                    }
+                }
 
                 var users = await _userManager.GetUserAsync(HttpContext.User);
                 var matchSeriesModal = _mapper.Map<MatchSeries>(matchSeries);
@@ -161,7 +186,7 @@ namespace WebApp.Controllers
         }
 
 
-        // POST: MatchSeries/Delete/5
+
         [HttpDelete("MatchSeries/DeleteConfirmed/{matchSeriesId}")]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int matchSeriesId)

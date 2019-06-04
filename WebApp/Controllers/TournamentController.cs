@@ -10,6 +10,8 @@ using AutoMapper;
 using WebApp.ViewModels;
 using WebApp.Helper;
 using WebApp.IServices;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebApp.Controllers
 {
@@ -20,15 +22,17 @@ namespace WebApp.Controllers
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IMapper _mapper;
         private readonly ITournaments _tournaments;
+        private readonly IHostingEnvironment _hosting;
 
         public TournamentController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager, ITournaments tournaments,
+            UserManager<IdentityUser<int>> userManager, ITournaments tournaments, IHostingEnvironment hosting,
             IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
             _tournaments = tournaments;
+            _hosting = hosting;
         }
 
         // GET: Tournaments
@@ -97,6 +101,18 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var directory = Path.Combine(_hosting.WebRootPath, "Home", "images", "Tournament");
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+                if (tournament.TournamentImage != null)
+                {
+                    tournament.FileName = tournament.TournamentImage.FileName;
+                    using (var stream = new FileStream(Path.Combine(directory, tournament.FileName), FileMode.Create))
+                    {
+                        await tournament.TournamentImage.CopyToAsync(stream);
+                    }
+                }
+
                 var users = await _userManager.GetUserAsync(HttpContext.User);
                 var tournamentModel = _mapper.Map<Tournament>(tournament);
                 tournamentModel.UserId = users.Id;
@@ -125,6 +141,7 @@ namespace WebApp.Controllers
                     TournamentId = i.TournamentId,
                     TournamentName = i.TournamentName,
                     Organizor = i.Organizor,
+                    FileName = i.FileName,
                     StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToShortDateString() : "",
 
                 })
@@ -145,7 +162,17 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-
+                var directory = Path.Combine(_hosting.WebRootPath, "Home", "images", "Tournament");
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+                if (tournament.TournamentImage != null)
+                {
+                    tournament.FileName = tournament.TournamentImage.FileName;
+                    using (var stream = new FileStream(Path.Combine(directory, tournament.FileName), FileMode.Create))
+                    {
+                        await tournament.TournamentImage.CopyToAsync(stream);
+                    }
+                }
                 var users = await _userManager.GetUserAsync(HttpContext.User);
                 var tournamentModal = _mapper.Map<Tournament>(tournament);
                 tournamentModal.UserId = users.Id;

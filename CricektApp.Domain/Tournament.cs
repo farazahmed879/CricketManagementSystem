@@ -13,6 +13,7 @@ namespace CricketApp.Domain
         public int TournamentId { get; set; }
         [Required]
         public string TournamentName { get; set; }
+        public string FileName { get; set; }
         public string Organizor { get; set; }
         public DateTime? StartingDate { get; set; }
         public List<Match> Matches { get; set; }

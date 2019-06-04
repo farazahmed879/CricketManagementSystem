@@ -45,7 +45,7 @@
                         <li><a asp-controller="Players" asp-action="Index">Player</a></li>
                         <li><a asp-controller="MatchSeries" asp-action="Index">Series</a></li>
                         <li><a asp-controller="Matches" asp-action="Index">Match</a></li>
-                        <li><a asp-controller="Records" asp-action="Index">Records</a></li>
+                        <li><a asp-controller="Records" asp-action="Index">Statistics</a></li>
                         @*<li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span class="hidden-xs">Records</span>
@@ -139,6 +139,10 @@
         //        time: 1000
         //    });
         //});
+        let Players = function () {
+            //window.location = `Players/Index/teamId/${null}/playerRoleId/${null}/battingStyleId/${null}/bowlingStyleId/${null}/name/${null}/isApi/${false}`;
+            window.location = `Players/Index?isApi=false`;
+        }
 
         $(function () {
             $('#Logout').click(function () {

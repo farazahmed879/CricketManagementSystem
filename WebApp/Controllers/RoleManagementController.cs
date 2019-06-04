@@ -39,13 +39,13 @@ namespace WebApp.Controllers
             //    return RedirectToAction("Index", "Home");
             //}
 
-            var model = await _context.ClubAdmins
-                 .Select(i => new ClubAdmindto
+            var model = await _context.Users
+                 .Select(i => new AspUserdto
                  {
-                     UserId = i.User.Id,
-                     UserName = i.User.UserName,
-                     TeamId = i.Team.TeamId,
-                     TeamName = i.Team.Team_Name
+                     Id = i.Id,
+                     UserName = i.UserName,
+                     Email = i.Email,
+                     PhoneNumber = i.PhoneNumber
                  }).ToListAsync();
 
             ViewBag.Team = new SelectList(_context.Teams
@@ -57,20 +57,20 @@ namespace WebApp.Controllers
             return View(model);
         }
 
-        [HttpGet("RoleManagement/Edit/{userId}/{userName}")]
+        [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Edit(int userId, string UserName)
+        public async Task<IActionResult> Edit(int id)
         {
 
-            ViewBag.User = UserName;
-            var model = await _context.ClubAdmins
-                .Where(i => i.UserId == userId)
-                 .Select(i => new ClubAdmindto
+            var model = await _context.Users
+                .Where(i => i.Id == id)
+                 .Select(i => new AspUserdto
                  {
-                     UserName = i.User.UserName,
-                     TeamId = i.TeamId,
-                     TeamName = i.Team.Team_Name
-                 }).ToListAsync();
+                     Id = i.Id,
+                     UserName = i.UserName,
+                     Email = i.Email,
+                     PhoneNumber = i.PhoneNumber
+                 }).SingleOrDefaultAsync();
 
             ViewBag.Team = new SelectList(_context.Teams
                 .Select(i => new { i.TeamId, i.Team_Name })
@@ -79,6 +79,27 @@ namespace WebApp.Controllers
             // await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             ViewBag.Name = "RoleManagement";
             return View(model);
+        }
+
+        [HttpPut]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<IActionResult> Edit(AspUserdto model)
+        {
+            if (ModelState.IsValid)
+            {
+                var users = new AspUserdto();
+                users.UserName = model.UserName;
+                users.Email = model.Email;
+                users.PhoneNumber = model.PhoneNumber;
+                users.Password = model.Password;
+                users.ConfirmPassword = model.ConfirmPassword;
+                _context.Update(users);
+                await _context.SaveChangesAsync();
+
+                return Json(ResponseHelper.UpdateSuccess());
+            }
+            return Json(ResponseHelper.UpdateUnSuccess());
         }
 
 
@@ -102,7 +123,7 @@ namespace WebApp.Controllers
         {
 
 
-            ViewBag.Users = new SelectList( _context.User
+            ViewBag.Users = new SelectList(_context.User
                 .Select(i => new { i.Id, i.UserName })
                 , "Id", "UserName");
             ViewBag.Team = new SelectList(_context.Teams

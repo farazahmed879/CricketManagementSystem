@@ -27,7 +27,7 @@ namespace WebApp.Services
 
         public async Task<PaginatedList<Matchdto>> GetAllMatchesList(DataTableAjaxPostModel model, int? teamId, int? matchTypeId,
                                                int? tournamentId, int? matchSeriesId,
-                                                int? season, int? matchOvers, int? userId, int? page)
+                                                int? season, int? matchOvers)
         {
             var result = await PaginatedList<Matchdto>.CreateAsync(
                 _context.Matches

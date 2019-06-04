@@ -1,4 +1,5 @@
 ﻿using CricketApp.Domain;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,9 @@ namespace WebApp.ViewModels
         public string TournamentName { get; set; }
         public string Organizor { get; set; }
         public string StartingDate { get; set; }
+        public string FileName { get; set; }
+        [Display(Name = "Tournament Image")]
+        public IFormFile TournamentImage { get; set; }
         public int UserId { get; set; }
         public IdentityUser<int> TenantUser { get; set; }
     }

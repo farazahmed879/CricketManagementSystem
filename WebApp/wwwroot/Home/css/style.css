@@ -25,6 +25,10 @@
     border: 0;
 }
 
+.cursor {
+    cursor: pointer;
+}
+
 .input-block-level {
     display: block;
     width: 100%;

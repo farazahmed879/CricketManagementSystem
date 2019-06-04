@@ -100,8 +100,7 @@ BEGIN
 		left join BowlingStyle On Players.BowlingStyleId = BowlingStyle.BowlingStyleId
 		left join PlayerRole On Players.PlayerRoleId = PlayerRole.PlayerRoleId
 	
-		WHERE (@paramSeason Is NUll or Matches.Season = @paramSeason) And 
-				(@paramMatchTypeId Is NUll or Matches.MatchTypeId = @paramMatchTypeId) And 
+		WHERE 
 				Players.PlayerId = @paramPlayerId
 		GROUP BY Players.PlayerId,
 				 Players.Player_Name,
@@ -158,3 +157,5 @@ GO
 
 
 
+--(@paramSeason Is NUll or Matches.Season = @paramSeason) And 
+--				(@paramMatchTypeId Is NUll or Matches.MatchTypeId = @paramMatchTypeId) And 

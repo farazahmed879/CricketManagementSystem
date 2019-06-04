@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="center fade-down section-heading">
-                    <h2 class="main-title">Match Series</h2>
+                    <h2 class="main-title">Manage Series</h2>
                 </div>
             </div>
         </div>
@@ -145,7 +145,7 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-
+    <input id="IsAuthenticated" hidden value="@Html.Raw(User.Identity.IsAuthenticated)" />
     <style>
         td {
             text-align: center !important;
@@ -159,6 +159,7 @@
     </style>
 
     <script>
+        var IsAuthenticated = $("#IsAuthenticated").val() === "True";
         $(function () {
             $('#createBtn').click(function () {
                 window.location = '/MatchSeries/Create'
@@ -198,14 +199,15 @@
                 },
                 {
                     "render": function (data, type, row, meta) {
-                        return ' <div class="btn-group">'+
-                                            '<button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">'+
-                                                '<span class="caret"></span></button>'+
-                                                 '<ul class="dropdown-menu">'+
-                                                '<li><a asp-controller="Matches" asp-action="Create" asp-route-matchSeriesId="data.MatchSeriesId" data-placement="left" data-toggle="tooltip" title="Add Match">New Match</a></li>'+
-                                               ' <li> <a asp-controller="Matches" asp-action="Index" asp-route-matchSeriesId="data.MatchSeriesId" data-placement="left" data-toggle="tooltip" title="Match List">Matches</a></li> </ul></div>'+
-                                       ' <a data-toggle="tooltip" data-placement="top" title="Edit Mode" asp-action="Edit" asp-route-id="data.MatchSeriesId"><i class="fas fa-edit"></i></a>'+
-                                       ' <a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(data.MatchSeriesId)"></i></a>';
+                        return (IsAuthenticated ? ' <div class="btn-group">' +
+                            '<button type="button"  class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">' +
+                            '<span class="caret"></span></button>' +
+                            '<ul class="dropdown-menu">' +
+                            '<li><a class="cursor" onclick="NewMatch(' + row.matchSeriesId + ')" data-placement="left" data-toggle="tooltip" title="Add Match">New Match</a></li>' +
+                            '<li> <a class="cursor" onclick="AllMatches(' + row.matchSeriesId + ')" data-placement="left" data-toggle="tooltip" title="Match List">Matches</a></li> </ul></div>' :
+                            '<a class="cursor" onclick="AllMatches(' + row.matchSeriesId + ')" data-placement="left" data-toggle="tooltip" title="Match List"><i class="flaticon-cricket-4"></i></a>') +
+                            (IsAuthenticated ? ' <a  onclick="EditMode(' + row.matchSeriesId + ')" class="cursor" data-toggle="tooltip" data-placement="top" title="Edit Mode"><i class="fas fa-edit"></i></a>' : "") +
+                            (IsAuthenticated ? ' <a  class="cursor" data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt" style="cursor: pointer" onclick="Delete(' + row.matchSeriesId + ')"></i></a>' : "");
 
                     }
                 }
@@ -229,6 +231,18 @@
 
         function Delete(MatchSeriesId) {
             document.getElementById("MatchSeriesId").value = MatchSeriesId;
+        }
+
+        let EditMode = function (id) {
+            window.location = `/MatchSeries/Edit/${id}`
+        }
+
+        let AllMatches = function (id) {
+            window.location = `/Matches/Index?MatchSeriesId=${id}`
+        }
+
+        let NewMatch = function (id) {
+            window.location = `/Matches/Create?MatchSeriesId=${id}`
         }
 
         $("#deleteBtn")

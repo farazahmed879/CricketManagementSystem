@@ -216,6 +216,8 @@ namespace CricketApp.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("FileName");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
@@ -502,6 +504,8 @@ namespace CricketApp.Data.Migrations
                     b.Property<int>("TournamentId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FileName");
 
                     b.Property<string>("Organizor");
 

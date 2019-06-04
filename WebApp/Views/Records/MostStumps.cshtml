@@ -112,19 +112,22 @@
                     <tbody id="myTable">
                         @foreach (var item in Model)
                         {
-                            <tr>
+                        <tr>
 
-                                <td>
-                                    <b>@Html.DisplayFor(modelItem => item.PlayerName)</b> 
-                                </td>
-                                <td>
-                                    <b>@Html.DisplayFor(modelItem => item.TotalMatch)</b> 
-                                </td>
-                                <td>
-                                    <b>@Html.DisplayFor(modelItem => item.MostStumps)</b> 
-                                </td>
+                            <td>
+                                <ul class="list-inline">
+                                    <li><img class="img-responsive" id="Img" src="~/Home/images/Players/@item.Image"></li>
+                                    <li><b>@item.PlayerName</b></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <b>@Html.DisplayFor(modelItem => item.TotalMatch)</b>
+                            </td>
+                            <td>
+                                <b>@Html.DisplayFor(modelItem => item.MostStumps)</b>
+                            </td>
 
-                            </tr>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -186,13 +189,16 @@
                         const trRows = json.map(i => {
                             const tr = document.createElement("tr");
                             tr.innerHTML = `
-                                <td><b>${i.playerName}</b>  </td>
+                                <td><ul class="list-inline">
+                                                    <li><img class="img-responsive" id="Img" src="~/Home/images/Players/${i.image}"></li>
+                                                     <li><b>${i.playerName}</b></li>
+                                                </ul></td>
                                 <td><b>${i.totalMatch}</b></td>
                                 <td><b>${i.mostStumps}</b>  </td>                                                                                                                                                                                                                                   `;
                             tbody.appendChild(tr);
                             return tr;
                         });
-
+                        $('#Img').attr('src', `~/Home/images/Players/${i.image}`);
                         document.getElementById('advSearch').click();
                         clearFilter();
                     }
@@ -247,6 +253,14 @@
         th {
             text-align: center !important;
             font-size: 1em;
+        }
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 30px;
+            width: 35px;
+            /*border: 1px solid #bbb;*/
         }
     </style>
 

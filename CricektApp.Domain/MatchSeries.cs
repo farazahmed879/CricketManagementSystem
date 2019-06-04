@@ -14,6 +14,7 @@ namespace CricketApp.Domain
         [Required]
         public string Name { get; set; }
         public string Organizor { get; set; }
+        public string FileName { get; set; }
         public DateTime? StartingDate { get; set; }
         public List<Match> Matches { get; set; }
         public int UserId { get; set; }

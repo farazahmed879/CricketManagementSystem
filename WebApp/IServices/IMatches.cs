@@ -10,6 +10,6 @@ namespace WebApp.IServices
 
          Task<PaginatedList<Matchdto>> GetAllMatchesList(DataTableAjaxPostModel model, int? teamId, int? matchTypeId,
                                                int? tournamentId, int? matchSeriesId,
-                                                int? season, int? matchOvers, int? userId, int? page);
+                                                int? season, int? matchOvers);
     }
 }
