@@ -38,7 +38,7 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
-            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(config =>
+            services.AddIdentity<ApplicationUser, ApplicationUserRole>(config =>
             {
                 config.SignIn.RequireConfirmedEmail = true;
             })
@@ -79,6 +79,8 @@ namespace WebApp
             });
 
             services.AddAutoMapper();
+
+            services.AddAntiforgery(options => options.HeaderName = "X-CSRF-TOKEN");
 
             services.AddMvc();
             services.AddDbContext<CricketContext>(options =>

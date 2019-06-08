@@ -35,7 +35,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="form-group label-floating">
-                                    <label asp-for="GroundName" class="control-label">Vanue<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                                    <label asp-for="GroundName" class="control-label">Venue<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                                     <input asp-for="GroundName" required class="form-control" />
                                     <span asp-validation-for="GroundName" class="text-danger"></span>
                                 </div>
@@ -289,7 +289,7 @@
                 type: "POST",
                 data: formData,
                 headers: {
-                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                    'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
                 },
                 dataType: "json",
                 url: "/Matches/Create",

@@ -24,12 +24,12 @@ namespace WebApp.Controllers
     public class PlayerPastRecordController : Controller
     {
         private readonly CricketContext _context;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IPlayers _players;
 
         public PlayerPastRecordController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager, IPlayers players,
+            UserManager<ApplicationUser> userManager, IPlayers players,
             IMapper mapper)
         {
             _context = context;

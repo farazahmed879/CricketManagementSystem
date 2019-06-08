@@ -27,7 +27,7 @@ namespace WebApp.Controllers
     public class MatchSummaryController : Controller
     {
         private readonly CricketContext _context;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IMatchSummary _matchSummary;
         private IHostingEnvironment _env;
@@ -35,7 +35,7 @@ namespace WebApp.Controllers
 
         public MatchSummaryController(
             CricketContext context,
-            UserManager<IdentityUser<int>> userManager, IMatchSummary matchSummary,
+            UserManager<ApplicationUser> userManager, IMatchSummary matchSummary,
             IMapper mapper, IHostingEnvironment env, IHostingEnvironment hosting)
         {
             _context = context;

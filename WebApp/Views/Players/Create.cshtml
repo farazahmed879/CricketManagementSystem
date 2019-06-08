@@ -59,7 +59,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label>Role</label>
-                            <select asp-for="PlayerRoleId" asp-items="ViewBag.PlayerRole" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                            <select @(true ? "disabled=\"disabled\"" : "") asp-for="PlayerRoleId" asp-items="ViewBag.PlayerRole" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
                         </div>
@@ -286,7 +286,7 @@
                 type: "POST",
                 data: formData,
                 headers: {
-                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                    'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
                 },
                 dataType: "json",
                 url: "/Players/Create",

@@ -1,4 +1,5 @@
 ﻿using CricketApp.Data;
+using CricketApp.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,10 @@ namespace WebApp.Services
     public class Matches : IMatches
     {
         private readonly CricketContext _context;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public Matches(CricketContext context,
-            UserManager<IdentityUser<int>> userManager)
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -44,9 +45,7 @@ namespace WebApp.Services
                     MatchOvers = i.MatchOvers,
                     Result = i.Result,
                     MatchType = i.MatchType.MatchTypeName,
-                    //TournamentId = i.TournamentId,
                     MatchTypeId = i.MatchTypeId,
-                    //Tournament = i.Tournament.TournamentName,
                     HomeTeam = i.HomeTeam.Team_Name,
                     OppponentTeam = i.OppponentTeam.Team_Name,
                     HomeTeamId = i.HomeTeamId,
@@ -56,7 +55,7 @@ namespace WebApp.Services
                     HasFilledOpponentTeamData = i.PlayerScores.Any() && i.PlayerScores.Any(o => o.Player != null && o.Player.TeamId == i.OppponentTeamId),
                     HasFilledTeamScoreData = i.TeamScores.Any() && i.TeamScores.Any(o => i.MatchId == i.MatchId)
                 })
-               .OrderByDescending(i => i.DateOfMatch)
+               .OrderBy(i => i.DateOfMatch)
                                  , model.Start, model.Length);
             return result;
         }

@@ -26,6 +26,7 @@
     <link rel="apple-touch-icon" href="/Home/images/ico/apple-touch-icon-57x57.png">
     @RenderSection("styles", false)
 </head>
+@Html.AntiForgeryToken()
 <body style=" font-size: 13px;">
     <div class="wrapper fixed">
         <div id="preloader"></div>
@@ -71,7 +72,7 @@
                                     <i class="icon-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a style="cursor: pointer" asp-controller="Account" asp-action="Logout">Log Out</a></li>
+                                    <li><a style="cursor: pointer" id="Logout">Log Out</a></li>
                                     @*<li><a style="cursor: pointer" id="Logout">Log Out</a></li>*@
                                     <li><a asp-controller="RoleManagement" asp-action="Role">Role Management</a></li>
                                 </ul>
@@ -146,14 +147,13 @@
 
         $(function () {
             $('#Logout').click(function () {
-
-                const header = new Headers();
-                header.append("RequestVerificationToken", $(".AntiForge" + " input").val());
                 $.ajax({
                     type: "POST",
-                    headers: header,
+                    headers: {
+                        'X-CSRF-TOKEN': $("input[name=__RequestVerificationToken]").val()
+                    },
                     dataType: "json",
-                    url: "/Account/Logout/Logout",
+                    url: "/Account/Logout",
                     processData: false,
                     contentType: false,
                     success: function (data) {

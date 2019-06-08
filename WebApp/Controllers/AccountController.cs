@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using CricketApp.Data;
+using CricketApp.Domain;
 using IdentityDemo.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -20,18 +21,18 @@ namespace WebApp.Controllers
 {
 
     [Route("[controller]/[action]")]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly CricketContext _context;
-        private readonly UserManager<IdentityUser<int>> _userManager;
-        private readonly SignInManager<IdentityUser<int>> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         //private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly IRazorViewToStringRenderer razorViewToStringRenderer;
 
         public AccountController(
-            UserManager<IdentityUser<int>> userManager,
-            SignInManager<IdentityUser<int>> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             CricketContext cricketContext,
             // IEmailSender emailSender,
             ILogger<AccountController> logger,
@@ -255,7 +256,7 @@ namespace WebApp.Controllers
             _logger.LogInformation($"Server: {conn.DataSource}");
             //    var Roles = _context.UserRole.ToList();
             ViewBag.Teams = new SelectList(_context.Teams, "TeamId", "Team_Name");
-            ViewBag.RoleName = new SelectList(_context.Role
+            ViewBag.RoleName = new SelectList(_context.Roles
                .Where(i => i.Id != 19)
                 , "NormalizedName");
             ViewData["ReturnUrl"] = returnUrl;
@@ -270,8 +271,9 @@ namespace WebApp.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser<int> { UserName = model.UserName, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
+                
                 if (result.Succeeded)
                 {
 
@@ -328,9 +330,8 @@ namespace WebApp.Controllers
             return View(model);
         }
 
-        [HttpPost("Logout")]
-        // [ValidateAntiForgeryToken]
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -546,7 +547,7 @@ namespace WebApp.Controllers
         [HttpGet]
         public IActionResult IsEmailAvailable(string email)
         {
-            return Json(_context.User
+            return Json(_context.Users
                 .AsNoTracking()
                 .Any(i => i.Email == email));
         }
@@ -554,7 +555,7 @@ namespace WebApp.Controllers
         [HttpGet]
         public IActionResult IsUserAvailable(string user)
         {
-            return Json(_context.User
+            return Json(_context.Users
                 .AsNoTracking()
                 .Any(i => i.UserName == user));
         }

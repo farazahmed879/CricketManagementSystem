@@ -40,6 +40,7 @@ namespace WebApp
                 var context = serviceScope.ServiceProvider.GetService<CricketContext>();
                 Console.WriteLine(context.Database.GetDbConnection().ConnectionString);
                 await context.Database.MigrateAsync();
+            
             }
         }
     }

@@ -9,6 +9,7 @@ using Dapper;
 using System.Data;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using CricketApp.Domain;
 
 namespace WebApp.Controllers
 {
@@ -16,10 +17,10 @@ namespace WebApp.Controllers
     public class RecordsController : Controller
     {
         private readonly CricketContext _context;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public RecordsController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager)
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;

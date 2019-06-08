@@ -1,4 +1,5 @@
 ﻿using CricketApp.Data;
+using CricketApp.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,10 @@ namespace WebApp.Services
     public class Players : IPlayers
     {
         private readonly CricketContext _context;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public Players(CricketContext context,
-            UserManager<IdentityUser<int>> userManager)
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;

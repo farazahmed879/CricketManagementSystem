@@ -4,7 +4,7 @@ namespace CricketApp.Domain
 {
     public  class UserRole : IdentityUserRole<int>
     {
-        public IdentityUser<int> User { get; set; }
-        public IdentityRole<int> Role { get; set; }
+        public ApplicationUser User { get; set; }
+        public ApplicationUserRole Role { get; set; }
     }
 }

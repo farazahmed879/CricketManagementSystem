@@ -21,13 +21,13 @@ namespace WebApp.Controllers
     public class MatchSeriesController : Controller
     {
         private readonly CricketContext _context;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly ISeries _series;
         private readonly IHostingEnvironment _hosting;
 
         public MatchSeriesController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager, ISeries series, IHostingEnvironment hosting,
+            UserManager<ApplicationUser> userManager, ISeries series, IHostingEnvironment hosting,
             IMapper mapper)
         {
             _context = context;

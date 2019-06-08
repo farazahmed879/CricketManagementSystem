@@ -19,6 +19,6 @@ namespace WebApp.ViewModels
         [Display(Name = "Tournament Image")]
         public IFormFile TournamentImage { get; set; }
         public int UserId { get; set; }
-        public IdentityUser<int> TenantUser { get; set; }
+        public ApplicationUser TenantUser { get; set; }
     }
 }

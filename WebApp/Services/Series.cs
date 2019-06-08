@@ -1,4 +1,5 @@
 ﻿using CricketApp.Data;
+using CricketApp.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,10 @@ namespace WebApp.Services
     public class Series : ISeries
     {
         private readonly CricketContext _context;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public Series(CricketContext context,
-            UserManager<IdentityUser<int>> userManager)
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -35,7 +36,7 @@ namespace WebApp.Services
                      MatchSeriesId = i.MatchSeriesId,
                      Name = i.Name,
                      Organizor = i.Organizor,
-                     FileName = i.FileName,
+                     FileName = i.FileName ?? "noImage.jpg",
                      StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToString("dddd, dd MMMM yyyy") : "",
 
                  })

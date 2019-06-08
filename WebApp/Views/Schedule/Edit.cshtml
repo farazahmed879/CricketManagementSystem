@@ -110,7 +110,7 @@
                     $.ajax(`/Schedule/Edit`, {
                         data: formData,
                         headers: {
-                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                            'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
                         },
                         method: "Put"
                     }).done(function (data) {

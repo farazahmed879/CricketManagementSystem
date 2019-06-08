@@ -369,7 +369,7 @@
                 },
                 {
                     "render": function (data, type, row, meta) {
-                        return '<span>' + row.OppponentTeam + '</span><span>' +
+                        return '<span>' + row.oppponentTeam + '</span><span>' +
                             (row.hasFilledOpponentTeamData ? '<span data-placement="top" data-toggle="tooltip" title="Has Filled" class="label  pull-right label-success"><i class="fas fa-check"></i></span>' :
                                 '<span data-placement="top" data-toggle="tooltip" title="No Data" class="label pull-right label-warning"><i class="fas fa-question"></i></span>'
                             )
@@ -438,7 +438,7 @@
             var matchOvers = $("#matchOvers").val();
             var season = $("#season").val();
             var matchSeriesId = $("#matchSeriesId").val();
-            dataTable.ajax.url = ("/Matches/Index?teamId=" + teamId + "&matchTypeId=" + matchTypeId + "&tournamentId=" + tournamentId + "&matchSeriesId=" + matchSeriesId + "&season=" + season + "&matchOvers=" + matchOvers + "&isApi=true").load();
+            dataTable.ajax.url("/Matches/Index?teamId=" + teamId + "&matchTypeId=" + matchTypeId + "&tournamentId=" + tournamentId + "&matchSeriesId=" + matchSeriesId + "&season=" + season + "&matchOvers=" + matchOvers + "&isApi=true").load();
         });
 
         let PlayerScores = function (homeTeamId, oppponentTeamId, matchId) {

@@ -156,6 +156,15 @@
             text-align: center !important;
             margin-left: 2em;
         }
+
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 20px;
+            width: 25px;
+            /*border: 1px solid #bbb;*/
+        }
     </style>
 
     <script>
@@ -191,7 +200,7 @@
                     render: function (PlayerName, Image, row, meta) {
                         debugger;
                         return '<ul class="list-inline">' +
-                            '<li><img class="img-responsive" id="Img" src="~/Home/images/Players/' + row.fileName + '"></li>' +
+                            '<li><img class="img-responsive" id="Img" src="Home/images/Tournament/' + row.fileName + '"></li>' +
                             '<li><b>' + row.tournamentName + '</b></li>' +
                             '</ul>';
                     }

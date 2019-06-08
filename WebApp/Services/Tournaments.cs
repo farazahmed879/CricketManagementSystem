@@ -1,4 +1,5 @@
 ﻿using CricketApp.Data;
+using CricketApp.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,10 @@ namespace WebApp.Services
     public class Tournaments : ITournaments
     {
         private readonly CricketContext _context;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public Tournaments(CricketContext context,
-            UserManager<IdentityUser<int>> userManager)
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -36,6 +37,7 @@ namespace WebApp.Services
                 TournamentName = i.TournamentName,
                 Organizor = i.Organizor,
                 StartingDate = i.StartingDate.HasValue ? i.StartingDate.Value.ToString("dddd, dd MMMM yyyy") : "",
+                FileName = i.FileName ?? "noImage.jpg"
 
             })
             .OrderByDescending(i => i.TournamentId)

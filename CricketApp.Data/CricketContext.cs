@@ -6,28 +6,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CricketApp.Data
 {
-    public class CricketContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
+    public class CricketContext : IdentityDbContext<ApplicationUser, ApplicationUserRole, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public CricketContext(DbContextOptions<CricketContext> options)
             : base(options)
         { }
-        
+
         public DbSet<Team> Teams { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<PlayerScore> PlayerScores { get; set; }
-        public DbSet<Tournament> Tournaments { get; set; }   
+        public DbSet<Tournament> Tournaments { get; set; }
         public DbSet<TeamScore> TeamScores { get; set; }
         public DbSet<FallOfWicket> FallOFWickets { get; set; }
         public DbSet<MatchType> MatchType { get; set; }
-        public DbSet<IdentityUser<int>> User { get; set; }
-        public DbSet<IdentityRole<int>> Role { get; set; }
-        public DbSet<UserRole> UserRole { get; set; }
         public DbSet<HowOut> HowOut { get; set; }
         public DbSet<BattingStyle> BattingStyle { get; set; }
         public DbSet<BowlingStyle> BowlingStyle { get; set; }
         public DbSet<PlayerRole> PlayerRole { get; set; }
-        public DbSet<ClubAdmin> ClubAdmins { get; set; }
         public DbSet<PlayerPastRecord> PlayerPastRecord { get; set; }
         public DbSet<MatchSeries> MatchSeries { get; set; }
         public DbSet<MatchSchedule> MatchSchedule { get; set; }
@@ -69,15 +65,13 @@ namespace CricketApp.Data
                 .IsRequired();
             });
 
-         
-
-            modelBuilder.Entity<UserRole>(entity =>
+            modelBuilder.Entity<ApplicationUser>(entity =>
             {
-                //entity.HasOne(i => i.RoleId)
-                //    .WithOne(i => i.Role)
-                
+                entity
+                .HasOne(i => i.Role)
+                .WithMany(i => i.User)
+                .OnDelete(DeleteBehavior.Restrict);
             });
-
 
             //modelBuilder.Entity<IdentityUserLogin<int>>(entity =>
             //{

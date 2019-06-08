@@ -27,7 +27,7 @@ namespace WebApp.Controllers
     public class MatchesController : Controller
     {
         private readonly CricketContext _context;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IMatches _matches;
         private IHostingEnvironment _env;
@@ -35,7 +35,7 @@ namespace WebApp.Controllers
 
         public MatchesController(
             CricketContext context,
-            UserManager<IdentityUser<int>> userManager, IMatches matches,
+            UserManager<ApplicationUser> userManager, IMatches matches,
             IMapper mapper, IHostingEnvironment env, IHostingEnvironment hosting)
         {
             _context = context;
@@ -267,7 +267,6 @@ namespace WebApp.Controllers
                 , "TeamId", "Team_Name");
 
             ViewBag.PlayerOTM = new SelectList(_context.Players
-                        .Where(i => i.Team.clubAdmin.UserId == users.Id)
                       .Select(i => new { i.PlayerId, i.Player_Name })
                       , "PlayerId", "Player_Name");
 
@@ -373,7 +372,6 @@ namespace WebApp.Controllers
                 , "TeamId", "Team_Name");
 
             ViewBag.PlayerOTM = new SelectList(_context.Players
-                     .Where(i => i.Team.clubAdmin.UserId == users.Id)
                    .Select(i => new { i.PlayerId, i.Player_Name })
                    , "PlayerId", "Player_Name");
 

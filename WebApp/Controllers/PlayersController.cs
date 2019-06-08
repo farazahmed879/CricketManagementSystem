@@ -23,13 +23,13 @@ namespace WebApp.Controllers
     public class PlayersController : Controller
     {
         private readonly CricketContext _context;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IPlayers _players;
         private readonly IHostingEnvironment _hosting;
 
         public PlayersController(CricketContext context,
-            UserManager<IdentityUser<int>> userManager, IPlayers players, IHostingEnvironment hosting,
+            UserManager<ApplicationUser> userManager, IPlayers players, IHostingEnvironment hosting,
             IMapper mapper)
         {
             _context = context;

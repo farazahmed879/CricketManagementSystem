@@ -63,6 +63,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <label>Club/Team<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                    <select asp-for="TeamId" required asp-items="ViewBag.Team" placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
+                        <option value="">--Select Team--</option>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6">
+                    <label>Type<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                    <select asp-for="RoleId" required asp-items="ViewBag.Roles" placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
+                        <option value="">--Select Role--</option>
+                    </select>
+                </div>
             </form>
         </div>
         <div class="col-md-2"></div>
@@ -77,6 +90,7 @@
 @section scripts {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap-wizard/1.2/jquery.bootstrap.wizard.min.js"></script>
     <style>
         #logo {
             background-image: url('');
@@ -90,8 +104,7 @@
 
         //Select2
         $(document).ready(function () {
-            $('.js-example-basic-multiple').select2();
-            placeholder: "--Select Club Admin--";
+            $('.js-example-basic-single').select2();
         });
 
         $('#BackBtn').click(function () {
@@ -109,18 +122,18 @@
                 type: "Put",
                 data: formData,
                 headers: {
-                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                    'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
                 },
                 dataType: "json",
                 url: "/RoleManagement/Edit",
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    myFunction(data);
+                    //myFunction(data);
                     window.location = '/RoleManagement/Role'
                 },
                 fail: function (data) {
-                    myFunction(data);
+                    // myFunction(data);
                 }
             })
         });

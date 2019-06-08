@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-md-4">
                     <span id="span" style="color: red"></span>
-                    <img class="img-responsive" id="SeriesImg" src="~/Home/images/Tournament/@Model.FileName" />
+                    <img class="img-responsive" id="SeriesImg" src="~/Home/images/Series/@Model.FileName" />
                     <label asp-for="SeriesImage" class="btn btn-box-tool">
                         <i class="far fa-picture-o"> Upload</i> <input asp-for="SeriesImage" type="file" class="hidden" style="height:auto" />
                     </label>
@@ -154,7 +154,7 @@
                 type: "Put",
                 data: formData,
                 headers: {
-                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                    'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
                 },
                 dataType: "json",
                 url: "/MatchSeries/Edit",

@@ -18,7 +18,7 @@ namespace CricketApp.Domain
         public DateTime? StartingDate { get; set; }
         public List<Match> Matches { get; set; }
         public int UserId { get; set; }
-        public IdentityUser<int> TenantUser { get; set; }
+        public ApplicationUser TenantUser { get; set; }
  
     }
 }

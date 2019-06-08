@@ -163,7 +163,7 @@
                 type: "POST",
                 data: formData,
                 headers: {
-                    'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                    'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
                 },
                 dataType: "json",
                 url: "/MatchSeries/Create",

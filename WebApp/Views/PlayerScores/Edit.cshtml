@@ -56,7 +56,6 @@
                     {
 
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 bg-warning center">
-
                             <h5>@Model.Summary2dto.Stage</h5>
                             <h5>@Model.Summary2dto.GroundName</h5>
                             <h5>@Model.Summary2dto.DateOfMatch.ToString("dddd, dd MMMM yyyy")</h5>
@@ -646,7 +645,7 @@
                     $.ajax(`/PLayerScores/HomeTeamUpdate`, {
                         data: model,
                         headers: {
-                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                            'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
                         },
                         method: "Put"
                     }).done(function (data) {
@@ -687,7 +686,7 @@
                     $.ajax(`/PLayerScores/OpponentTeamUpdate`, {
                         data: model,
                         headers: {
-                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                            'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
                         },
                         method: "Put"
                     }).done(function (data) {
@@ -722,7 +721,7 @@
                     $.ajax(`/PLayerScores/UpdateTeamScore`, {
                         data: model,
                         headers: {
-                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                            'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
                         },
                         method: "Put"
                     }).done(function (data) {
@@ -758,7 +757,7 @@
                     $.ajax(`/PLayerScores/UpdateFallOfWicket`, {
                         data: model,
                         headers: {
-                            'RequestVerificationToken': document.getElementById("RequestVerificationToken").value,
+                            'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
                         },
                         method: "Put"
                     }).done(function (data) {
