@@ -41,7 +41,6 @@ namespace WebApp.ViewModels
         public int? OnFieldCatch { get; set; }
         public int? OnFieldStump { get; set; }
         public int? OnFieldRunOut { get; set; }
-        public Player Player { get; set; }
         public int PlayerId { get; set; }
         public string Name { get; set; }
 

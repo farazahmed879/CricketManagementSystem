@@ -5,30 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20180928102618_PlayerPastRecord.cs" />
-    <Compile Remove="Migrations\20181019101324_MatchSchedule.cs" />
-    <Compile Remove="Migrations\20181019101934_MatchSchedule1.cs" />
-    <Compile Remove="Migrations\20181019102952_MatchSchedule.cs" />
-    <Compile Remove="Migrations\20181019110124_MatchSchedulepk.cs" />
-    <Compile Remove="Migrations\20181019110808_TeamMatchSchedule.cs" />
-    <Compile Remove="Migrations\20181019111029_MatchScheduleBothRelation.cs" />
-    <Compile Remove="Migrations\20181203133756_TournamentStages.cs" />
-    <Compile Remove="Migrations\20181203150017_TournamentStages2.cs" />
-    <Compile Remove="Migrations\20190415161234_Bowler.cs" />
-    <Compile Remove="Migrations\20190415161442_bowlerR.cs" />
-    <Compile Remove="Migrations\20190608172045_RemoveClubAdminAddRoles.cs" />
-    <Compile Remove="Migrations\20190608172726_RemoveClubAdminAddRoles.cs" />
-    <Compile Remove="Migrations\20190608173405_RemoveClubAdminAddRoles.cs" />
-    <Compile Remove="Migrations\20190608174717_addTeamReferenceInUSers.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.3" PrivateAssets="All" />
     <PackageReference Include="SendGrid" Version="9.10.0" />
     <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

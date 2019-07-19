@@ -81,7 +81,7 @@ namespace WebApp.Controllers
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
 
-            var result = await _matches.GetAllMatchesList(model.Init() ,teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers);
+            var result = await _matches.GetAllMatchesList(model.Init(), teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers);
             if (isApi == true)
                 return Json(new
                 {
@@ -94,7 +94,6 @@ namespace WebApp.Controllers
                 return View(result);
         }
         [HttpGet]
-        //[Route("Matches/List/teamId/{teamId}/matchTypeId/{matchTypeId}/tournamentId/{tournamentId}/matchSeriesId/{matchSeriesId}/season/{season}/matchOvers/{matchOvers}/userId/{userId}/page/{page}")]
         [Route("Matches/List")]
         public async Task<IActionResult> List(DataTableAjaxPostModel model, int? teamId, int? matchTypeId,
                                               int? tournamentId, int? matchSeriesId,
@@ -128,7 +127,7 @@ namespace WebApp.Controllers
                 .Select(i => new { i.TeamId, i.Team_Name })
                 , "TeamId", "Team_Name");
 
-            var result = await _matches.GetAllMatchesList(model.Init(),teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers);
+            var result = await _matches.GetAllMatchesList(model.Init(), teamId, matchTypeId, tournamentId, matchSeriesId, season, matchOvers);
             if (isApi == true)
                 return Json(new
                 {
@@ -141,7 +140,7 @@ namespace WebApp.Controllers
                 return View(result);
         }
 
-        // GET: MatchSummary
+
         [HttpGet("Matches/Summary")]
         public IActionResult Summary(int matchId, int homeTeamId, int oppTeamId, bool isApi)
         {
@@ -150,7 +149,7 @@ namespace WebApp.Controllers
             var matchSummary = new Summary();
 
             var HomeTeamBatting = connection.Query<HomeTeamBatting>(
-               "[usp_HomeTeamBatting]",
+               "usp_HomeTeamBatting",
                new
                {
                    paramMatchId = matchId,
@@ -161,7 +160,7 @@ namespace WebApp.Controllers
                {
                };
             var HomeTeamBowling = connection.Query<HomeTeamBowling>(
-              "[usp_HomeTeamBowling]",
+              "usp_HomeTeamBowling",
               new
               {
                   paramMatchId = matchId,
@@ -172,7 +171,7 @@ namespace WebApp.Controllers
               {
               };
             var OppTeamBatting = connection.Query<OppTeamBatting>(
-             "[usp_OppTeamBatting]",
+             "usp_OppTeamBatting",
              new
              {
                  paramMatchId = matchId,
@@ -183,7 +182,7 @@ namespace WebApp.Controllers
              {
              };
             var OppTeamBowling = connection.Query<OppTeamBowling>(
-             "[usp_OppTeamBowling]",
+             "usp_OppTeamBowling",
              new
              {
                  paramMatchId = matchId,
@@ -195,7 +194,7 @@ namespace WebApp.Controllers
              };
 
             var s = connection.Query<Summary2dto>(
-                "[usp_Summary2]",
+                "usp_Summary2",
                 new
                 {
                     paramMatchId = matchId,
@@ -234,13 +233,13 @@ namespace WebApp.Controllers
                     HomeTeam = i.HomeTeam.Team_Name,
                     OppponentTeam = i.OppponentTeam.Team_Name,
                     DateOfMatch = i.DateOfMatch.HasValue ? i.DateOfMatch.Value.ToString("dddd, dd MMMM yyyy") : "",
-                    GroundName = i.GroundName,
+                    GroundName = i.Ground.Name,
                     Season = i.Season,
                     MatchType = i.MatchType.MatchTypeName,
                     Tournament = i.Tournament.TournamentName,
                     Series = i.MatchSeries.Name,
                     MatchOvers = i.MatchOvers,
-                    Place = i.Place,
+                    // Place = i.Place,
                     Result = i.Result,
                     PlayerOfTheMatch = i.Player.Player_Name
 
@@ -260,6 +259,11 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> Create(int? tournamentId, int? matchSeriesId)
         {
+
+            ViewBag.Ground = new SelectList(_context.Ground
+              .Select(i => new { i.GroundId, i.Name })
+         , "GroundId", "Name");
+
             ViewBag.Name = "Add Match";
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.TeamId = new SelectList(_context.Teams
@@ -364,7 +368,9 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-
+            ViewBag.Ground = new SelectList(_context.Ground
+            .Select(i => new { i.GroundId, i.Name })
+            , "GroundId", "Name");
             ViewBag.Name = "Edit Match";
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewData["TeamId"] = new SelectList(_context.Teams
@@ -398,7 +404,7 @@ namespace WebApp.Controllers
                 .Select(i => new Matchdto
                 {
                     MatchId = i.MatchId,
-                    GroundName = i.GroundName,
+                    GroundId = i.GroundId,
                     FileName = i.FileName,
                     MatchOvers = i.MatchOvers,
                     MatchSeriesId = i.MatchSeriesId,
@@ -406,7 +412,7 @@ namespace WebApp.Controllers
                     HomeTeamId = i.HomeTeamId,
                     OppponentTeamId = i.OppponentTeamId,
                     DateOfMatch = i.DateOfMatch.HasValue ? i.DateOfMatch.Value.ToShortDateString() : "",
-                    Place = i.Place,
+                    //Place = i.Place,
                     Result = i.Result,
                     Season = i.Season,
                     TournamentId = i.TournamentId,

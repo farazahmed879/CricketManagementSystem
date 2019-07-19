@@ -33,7 +33,7 @@ namespace WebApp.Services
                     HomeTeam = i.HomeTeam.Team_Name,
                     OppTeam = i.OppponentTeam.Team_Name,
                     Type = i.MatchType.MatchTypeName,
-                    Ground = i.GroundName,
+                   //Ground = i.GroundName,
                     Stage = i.TournamentStage.Name,
                     Tournament = i.Tournament.TournamentName,
                     HomeTeamLogo = i.HomeTeam.FileName ?? "noLogo.png",
@@ -47,8 +47,10 @@ namespace WebApp.Services
                         Balls = o.Bat_Balls,
                         Six = o.Six,
                         Four = o.Four,
+                        Fielder = o.Fielder,
                         Bowler = o.Bowler.Player_Name,
-                        HowOut = o.HowOut.Normalize,
+                        HowOutNormalized = o.HowOut.Normalize,
+                        HowOut = o.HowOut.Name,
 
                     }).ToList(),
                     matchBowler = i.PlayerScores
@@ -77,7 +79,7 @@ namespace WebApp.Services
                     HomeTeam = i.HomeTeam.Team_Name,
                     OppTeam = i.OppponentTeam.Team_Name,
                     Type = i.MatchType.MatchTypeName,
-                    Ground = i.GroundName,
+                    //Ground = i.GroundName,
                     Stage =i.TournamentStage.Name,
                     Tournament = i.Tournament.TournamentName,
                     HomeTeamLogo = i.HomeTeam.FileName ?? "noLogo.png",
@@ -91,8 +93,10 @@ namespace WebApp.Services
                         Balls = o.Bat_Balls,
                         Six = o.Six,
                         Four = o.Four,
+                        Fielder = o.Fielder,
                         Bowler = o.Bowler.Player_Name,
-                        HowOut = o.HowOut.Normalize,
+                        HowOutNormalized = o.HowOut.Normalize,
+                        HowOut = o.HowOut.Name,
 
                     }).ToList(),
                     matchBowler = i.PlayerScores
@@ -121,7 +125,7 @@ namespace WebApp.Services
                     HomeTeam = i.HomeTeam.Team_Name,
                     OppTeam = i.OppponentTeam.Team_Name,
                     Type = i.MatchType.MatchTypeName,
-                    Ground = i.GroundName,
+                    //Ground = i.GroundName,
                     Tournament = i.Tournament.TournamentName,
                     matchBatsman = i.PlayerScores
                     .Where(o => o.MatchId == matchId && o.TeamId == teamId)
@@ -151,7 +155,7 @@ namespace WebApp.Services
                     HomeTeam = i.HomeTeam.Team_Name,
                     OppTeam = i.OppponentTeam.Team_Name,
                     Type = i.MatchType.MatchTypeName,
-                    Ground = i.GroundName,
+                    //Ground = i.GroundName,
                     Tournament = i.Tournament.TournamentName,
                     matchBowler = i.PlayerScores
                     .Where(o => o.MatchId == matchId && o.TeamId == teamId && o.Overs != 0 && o.Overs != null)

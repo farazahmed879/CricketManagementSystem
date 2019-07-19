@@ -1,0 +1,166 @@
+﻿@model WebApp.ViewModels.Grounddto
+
+@{
+    ViewData["Title"] = "Edit Ground";
+}
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+<br />
+<br />
+<br />
+<input type="hidden" id="RequestVerificationToken"
+       name="RequestVerificationToken" value="@GetAntiXsrfRequestToken()">
+
+<div class="container-fluid">
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <div class="container-fluid">
+                <ol class="breadcrumb">
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-controller="Ground" asp-action="Index">Ground</a></li>
+                    <li><a>Edit</a></li>
+                </ol>
+            </div>
+            <form id="GroundForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-md-8">
+                    <input type="hidden" id="GroundId" asp-for="GroundId" />
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Ground<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Location" class="control-label"></label>
+                            <input asp-for="Location" class="form-control" />
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+        <div id="snackbar"></div>
+        <div class="footer">
+            <ul class="list-inline">
+                <li><input id="BackBtn" type="button" value="Back" class="btn btn-default"></li>
+                <li><input id="GroundCreate" type="button" value="Save" class="btn btn-outlined btn-primary"></li>
+            </ul>
+        </div>
+    </div>
+    <div class='col-md-1'></div>
+
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link rel="stylesheet" href="~/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <script src="~/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/plugins/iCheck/icheck.min.js"></script>
+    <style>
+        #GroundImg {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 160px;
+            width: 170px;
+            border: 1px solid #bbb;
+        }
+    </style>
+    <script>
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        })
+
+
+        $(function () {
+            $('#BackBtn').click(function () {
+                window.location = '/Ground/Index'
+            });
+        });
+
+        $(function () {
+            $('#RemoveImage').click(function () {
+                $('#GroundImg').removeAttr('src');
+            });
+
+        });
+
+        $("#GroundImage").change(function () {
+            readURL(this);
+        });
+
+        function readURL(input) {
+            var size = input.files[0].size / 1021 / 1024;
+            if (size <= 2) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        //$('#PlayerImg').attr('src', e.target.result);
+                        const GroundImg = document.getElementById('GroundImg');
+                        GroundImg.style.backgroundImage = "url(" + e.target.result + ")";
+                        GroundImg.style.backgroundPosition = "cover";
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                    document.getElementById("span").innerHTML = ""
+                }
+            } else {
+                //var data = "image size must be less than 2mb";
+                document.getElementById("span").innerHTML = "max 2mb"
+                const GroundImg = document.getElementById('GroundImg');
+                GroundImg.style.backgroundImage = "";
+            }
+        }
+
+        function myFunction(data) {
+            var snackBar = document.getElementById('snackbar');
+            snackBar.textContent = data;
+            snackBar.className = "show";
+            setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+        }
+        $(document).on('click', '#GroundCreate', function (e) {
+            if ($('#GroundForm').valid() == true) {
+                $('#GroundCreate').attr("disabled", "disabled");
+                var form = $("#GroundForm").closest("form");
+                var formData = new FormData(form[0]);
+                $.ajax({
+                    type: "Put",
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
+                    },
+                    dataType: "json",
+                    url: "/Ground/Edit",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        myFunction(data);
+                        window.location = '/Ground/Index'
+                    },
+                    fail: function (data) {
+                        myFunction(data);
+                    }
+                })
+            }
+            
+        });
+
+
+    </script>
+}

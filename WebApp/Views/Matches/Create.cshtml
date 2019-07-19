@@ -33,21 +33,10 @@
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <div class="form-group label-floating">
-                                    <label asp-for="GroundName" class="control-label">Venue<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                                    <input asp-for="GroundName" required class="form-control" />
-                                    <span asp-validation-for="GroundName" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <div class="form-group label-floating">
-                                    <label asp-for="Place" class="control-label">Place<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                                    <input asp-for="Place" class="form-control" />
-                                </div>
-                            </div>
+                            <label>Ground<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <select asp-for="GroundId" asp-items="ViewBag.Ground" required placeholder="--Select Ground--" style="width: 100%" class="js-example-basic-single">
+                                <option value="">--Select Ground--</option>
+                            </select>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
@@ -81,13 +70,14 @@
                                 <!-- /.input group -->
                             </div>
                         </div>
+
                     </div>
                     <div class="row">
                         <hr />
 
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <label>First Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
+                            <select asp-for="HomeTeamId" required placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select Team--</option>
                             </select>
                         </div>
@@ -99,7 +89,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-2">
+                            <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Add Team"><i data-toggle="modal" data-target="#NewTeamModal" class="fas flaticon-add-1"></i></a>
+                        </div>
+                        <div class="col-md-6">
                             <label>Secong Inning Player By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
                             <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select--</option>
@@ -195,6 +188,45 @@
 
 </div>
 
+<div id="NewTeamModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header bg-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New Team</h4>
+            </div>
+            <div class="modal-body">
+                <form id="TeamForm" enctype="multipart/form-data">
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Team Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input id="TeamName" required class="form-control" />
+                            <span id="TeamNameSpan" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">City<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input id="City" required class="form-control" />
+                            <span id="CitySpan" class="text-danger"></span>
+                        </div>
+                    </div>
+                </form>
+                <div class="wizard-footer">
+                    <div class="pull-left">
+                        <input type='button' class='btn btn-default' data-dismiss="modal" value='Cancel' />
+                        <input id="AddTeam" onclick="AddTeam()" data-dismiss="modal" type="button" class='btn btn-outlined btn-primary' value='Add' />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 
 @section Scripts {
@@ -226,6 +258,7 @@
         //Select2
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
+            TeamDropDown();
         });
 
         //Date picker
@@ -264,7 +297,78 @@
                 window.location = '/Matches/Index'
             });
         });
+        let AddTeam = function () {
+            debugger;
+            var teamName = $('#TeamName').val()
+            var city = $('#City').val()
+            if (teamName == null || teamName == undefined || teamName == "") {
+                document.getElementById('TeamNameSpan').innerHTML = "Required";
+                $('#TeamNameSpan').css('color', 'red');
+            }
+            else {
+                document.getElementById('TeamNameSpan').innerHTML = "";
+            }
 
+            if (city == null || city == undefined || city == "") {
+                document.getElementById('CitySpan').innerHTML = "Required";
+                $('#CitySpan').css('color', 'red');
+            }
+            else {
+                document.getElementById('CitySpan').innerHTML = "";
+            }
+
+
+            if (teamName == null || teamName == undefined || teamName == "" || city == null || city == undefined || city == "")
+                return
+            const TeamName = document.getElementById('TeamName').value;
+            const City = document.getElementById('City').value;
+            debugger;
+            const model = {
+                team_Name: TeamName,
+                city: City,
+                fileName: null,
+                place: null,
+                zone: null,
+                contact: null,
+                isRegistered: false
+            };
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            const response = fetch('/Team/Add', {
+                method: "Put",
+                body: JSON.stringify(model),
+                credentials: 'same-origin',
+                headers: header
+            }).then(response => {
+                if (response.ok) {
+                    //teamName.tex('');
+                    //city.val('');
+                    TeamDropDown();
+                }
+                else {
+                    alert("Error");
+                }
+            });
+        }
+
+
+        var TeamDropDown = function () {
+            $.ajax({
+                type: "GET",
+                url: "/Team/GetAllTeams",
+                data: "{}",
+                success: function (data) {
+                    console.log(data);
+                    console.log("asd==asd")
+                    var s = '<option value="-1">--Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        s += '<option value="' + data[i].teamId + '">' + data[i].team_Name + '</option>';
+                    }
+                    $("#HomeTeamId").html(s);
+                }
+            });
+        }
 
         $(function () {
             $('#RemoveImage').click(function () {
@@ -282,27 +386,29 @@
         }
 
         $(document).on('click', '#MatchCreate', function (e) {
-            $('#MatchCreate').attr("disabled", "disabled");
-            var form = $("#MatchForm").closest("form");
-            var formData = new FormData(form[0]);
-            $.ajax({
-                type: "POST",
-                data: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
-                },
-                dataType: "json",
-                url: "/Matches/Create",
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    window.location = '/Matches/Index'
-                    myFunction(data);
-                },
-                fail: function (data) {
-                    myFunction(data);
-                }
-            })
+            if ($("#MatchForm").valid() == true) {
+                $('#MatchCreate').attr("disabled", "disabled");
+                var form = $("#MatchForm").closest("form");
+                var formData = new FormData(form[0]);
+                $.ajax({
+                    type: "POST",
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
+                    },
+                    dataType: "json",
+                    url: "/Matches/Create",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        window.location = '/Matches'
+                        myFunction(data);
+                    },
+                    fail: function (data) {
+                        myFunction(data);
+                    }
+                })
+            }       
         });
 
         var _URL = window.URL || window.webkitURL;

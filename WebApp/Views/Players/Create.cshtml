@@ -57,9 +57,15 @@
                         </div>
                     </div>
                     <div class="row">
+                        @*<div class="col-md-4">
+                                <label>Role</label>
+                                <select @(true ? "disabled=\"disabled\"" : "") asp-for="PlayerRoleId" asp-items="ViewBag.PlayerRole" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                    <option value="">--Select--</option>
+                                </select>
+                            </div>*@
                         <div class="col-md-4">
                             <label>Role</label>
-                            <select @(true ? "disabled=\"disabled\"" : "") asp-for="PlayerRoleId" asp-items="ViewBag.PlayerRole" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                            <select asp-for="PlayerRoleId" asp-items="ViewBag.PlayerRole" placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
                         </div>
@@ -279,27 +285,30 @@
         }
 
         $(document).on('click', '#PlayerCreate', function (e) {
-            $('#PlayerCreate').attr("disabled", "disabled");
-            var form = $("#PlayerForm").closest("form");
-            var formData = new FormData(form[0]);
-            $.ajax({
-                type: "POST",
-                data: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
-                },
-                dataType: "json",
-                url: "/Players/Create",
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    myFunction(data);
-                    window.location = '/Players/Index'
-                },
-                fail: function (data) {
-                    myFunction(data);
-                }
-            })
+            if ($('#PlayerForm').valid() == true) {
+                $('#PlayerCreate').attr("disabled", "disabled");
+                var form = $("#PlayerForm").closest("form");
+                var formData = new FormData(form[0]);
+                $.ajax({
+                    type: "POST",
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
+                    },
+                    dataType: "json",
+                    url: "/Players/Create",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        myFunction(data);
+                        window.location = '/Players'
+                    },
+                    fail: function (data) {
+                        myFunction(data);
+                    }
+                })
+            }
+           
         });
 
     </script>

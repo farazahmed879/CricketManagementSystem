@@ -17,9 +17,7 @@ namespace CricketApp.Domain
 
         public int MatchId { get; set; }
 
-        public string GroundName { get; set; }
-
-        public string Place { get; set; }
+        public int? GroundId { get; set; }
         [Required]
         public int MatchOvers { get; set; }
         [Required]
@@ -55,6 +53,7 @@ namespace CricketApp.Domain
         public int? MatchSeriesId { get; set; }
         public int? PlayerOTM { get; set; }
         public Player Player { get; set; }
+        public Ground Ground { get; set; }
 
     }
 }

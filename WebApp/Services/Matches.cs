@@ -40,7 +40,7 @@ namespace WebApp.Services
                 .Select(i => new ViewModels.Matchdto
                 {
                     MatchId = i.MatchId,
-                    GroundName = i.GroundName,
+                    GroundName = i.Ground.Name,
                     DateOfMatch = i.DateOfMatch.HasValue ? i.DateOfMatch.Value.ToString("dddd, dd MMMM yyyy") : "",
                     MatchOvers = i.MatchOvers,
                     Result = i.Result,

@@ -11,6 +11,9 @@ E:\ScoreExec\CricketManagementSystem\WebApp
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\Register.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\ResetPassword.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Account\ResetPasswordConfirmation.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Ground\Create.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Ground\Edit.cshtml
+--file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Ground\Index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Home\index.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Create.cshtml
 --file=E:\ScoreExec\CricketManagementSystem\WebApp\Views\Matches\Details.cshtml

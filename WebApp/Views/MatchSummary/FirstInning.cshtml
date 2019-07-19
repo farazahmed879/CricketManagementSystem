@@ -27,12 +27,12 @@
         <div class="tab-content clearfix">
             <div class="tab-pane active" id="tab_1">
                 @*<center>
-                    <div class="tab">
-                        <img src="~/Home/images/Teams/@Model.HomeTeamLogo" style="width : 70px; height: 35px"> &nbsp;&nbsp;&nbsp;&nbsp;
-                        <span src="~/images/ScoreExec.png" style="font-size: 15px"><b>@Model.Tournament</b></span>
-                        <img src="~/Home/images/Teams/@Model.OppTeamLogo" style="width : 70px; height: 35px">
-                    </div>
-                </center>*@
+                        <div class="tab">
+                            <img src="~/Home/images/Teams/@Model.HomeTeamLogo" style="width : 70px; height: 35px"> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span src="~/images/ScoreExec.png" style="font-size: 15px"><b>@Model.Tournament</b></span>
+                            <img src="~/Home/images/Teams/@Model.OppTeamLogo" style="width : 70px; height: 35px">
+                        </div>
+                    </center>*@
                 <div style="font-size: 16px; padding-bottom: 20px; color: darkgray"><b>First Inning</b></div>
                 <div class="row" style="margin-top:-15px">
                     <div class="col-lg-5" style="background-color:#01023b;border-radius:0px 40px 40px 0px; opacity: 0.95;
@@ -100,34 +100,44 @@
                                 <tbody>
                                     @foreach (var item in Model.matchBatsman)
                                     {
-                                        <tr>
-                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
-                                                <b> @Html.DisplayFor(modelItem => item.PlayerName)</b>
+                                    <tr>
+                                        <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                            <b> @Html.DisplayFor(modelItem => item.PlayerName)</b>
 
-                                            </td>
+                                        </td>
+                                        @if (item.Bowler != null)
+                                        {
                                             <td style="background-color:white;border-bottom: 2px solid lightgray; font-size:15px ">
-                                                <b>@Html.DisplayFor(modelItem => item.HowOut)</b>
+                                                <b>@Html.DisplayFor(modelItem => item.HowOutNormalized)</b> (@Html.DisplayFor(modelItem => item.Fielder))
                                             </td>
                                             <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray; font-size:15px ">
-                                                @if (item.Bowler != null)
-                                                {
-                                                    <b>b</b> @Html.DisplayFor(modelItem => item.Bowler)
-                                                }
+                                                <b>b</b> @Html.DisplayFor(modelItem => item.Bowler)
                                             </td>
-                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
-                                                <b> @Html.DisplayFor(modelItem => item.Runs)</b>
+                                        }
+                                        else
+                                        {
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray; font-size:15px ">
+                                                 @Html.DisplayFor(modelItem => item.HowOut)
+                                            </td>
 
+                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray; font-size:15px ">
+                                                 @Html.DisplayFor(modelItem => item.Fielder)
                                             </td>
-                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
-                                                <b>@Html.DisplayFor(modelItem => item.Balls)</b>
-                                            </td>
-                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
-                                                <b>@Html.DisplayFor(modelItem => item.Four)</b>
-                                            </td>
-                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
-                                                <b>@Html.DisplayFor(modelItem => item.Six)</b>
-                                            </td>
-                                        </tr>
+                                        }
+                                        <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                            <b> @Html.DisplayFor(modelItem => item.Runs)</b>
+
+                                        </td>
+                                        <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                            <b>@Html.DisplayFor(modelItem => item.Balls)</b>
+                                        </td>
+                                        <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                            <b>@Html.DisplayFor(modelItem => item.Four)</b>
+                                        </td>
+                                        <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
+                                            <b>@Html.DisplayFor(modelItem => item.Six)</b>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

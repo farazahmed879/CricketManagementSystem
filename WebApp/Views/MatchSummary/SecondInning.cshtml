@@ -101,15 +101,25 @@
                                                 <b> @Html.DisplayFor(modelItem => item.PlayerName)</b>
 
                                             </td>
-                                            <td style="background-color:white;border-bottom: 2px solid lightgray; font-size:15px ">
-                                                <b>@Html.DisplayFor(modelItem => item.HowOut)</b>
-                                            </td>
-                                            <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray; font-size:15px ">
-                                                @if (item.Bowler != null)
-                                                {
+                                            @if (item.Bowler != null)
+                                            {
+                                                <td style="background-color:white;border-bottom: 2px solid lightgray; font-size:15px ">
+                                                    <b>@Html.DisplayFor(modelItem => item.HowOutNormalized)</b> (@Html.DisplayFor(modelItem => item.Fielder))
+                                                </td>
+                                                <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray; font-size:15px ">
                                                     <b>b</b> @Html.DisplayFor(modelItem => item.Bowler)
-                                                }
-                                            </td>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray; font-size:15px ">
+                                                    @Html.DisplayFor(modelItem => item.HowOut)
+                                                </td>
+
+                                                <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray; font-size:15px ">
+                                                    @Html.DisplayFor(modelItem => item.Fielder)
+                                                </td>
+                                            }
                                             <td style="background-color:white;border-bottom: 2px solid lightgray; border-right: 2px solid lightgray;font-size:15px ">
                                                 <b> @Html.DisplayFor(modelItem => item.Runs)</b>
 

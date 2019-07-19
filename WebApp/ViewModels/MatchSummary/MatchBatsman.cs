@@ -17,6 +17,8 @@ namespace WebApp.ViewModels
         public int? Six { get; set; }
         public int? Four { get; set; }
         public string HowOut { get; set; }
+        public string HowOutNormalized { get; set; }
+        public string Fielder { get; set; }
         public string Bowler { get; set; }
         public string HomeTeam { get; set; }
         public string OppTeam { get; set; }

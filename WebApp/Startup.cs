@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ using RazorHtmlToPdfDemo.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using WebApp.IServices;
 using WebApp.Services;
+using Ground = WebApp.Services.Ground;
 
 namespace WebApp
 {
@@ -67,7 +69,7 @@ namespace WebApp
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
-                options.Cookie.HttpOnly = true;
+                options.Cookie.HttpOnly = false;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 // If the LoginPath isn't set, ASP.NET Core defaults 
                 // the path to /Account/Login.
@@ -78,18 +80,31 @@ namespace WebApp
                 options.SlidingExpiration = true;
             });
 
+            services.Configure<MvcOptions>(options =>
+            {
+#if RELEASE
+                options.Filters.Add(new RequireHttpsAttribute());
+#endif
+            });
+
             services.AddAutoMapper();
 
             services.AddAntiforgery(options => options.HeaderName = "X-CSRF-TOKEN");
 
             services.AddMvc();
-            services.AddDbContext<CricketContext>(options =>
+          
+            services.AddDbContextPool<CricketContext>(options =>
             {
                 string connectionString = hostingEnvironment.IsDevelopment() ?
                     Configuration.GetConnectionString("CricketAppConnection") :
                     Configuration.GetConnectionString("Production");
                 options
-                .UseSqlServer(connectionString)
+                .UseMySql(connectionString,
+                mySqlOptions =>
+                {
+                    mySqlOptions.ServerVersion(new Version(5, 7, 26), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MySql);
+
+                })
                 .EnableSensitiveDataLogging()
                 .ConfigureWarnings(i => i.Log());
             });
@@ -105,6 +120,7 @@ namespace WebApp
             services.AddScoped<ISeries, Series>();
             services.AddScoped<ITeams, Teams>();
             services.AddScoped<IMatchSummary, MatchSummary>();
+            services.AddScoped<IGround, Ground>();
 
         }
 
@@ -136,7 +152,10 @@ namespace WebApp
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseHsts();
+                
             }
+            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
             app.UseForwardedHeaders(new ForwardedHeadersOptions

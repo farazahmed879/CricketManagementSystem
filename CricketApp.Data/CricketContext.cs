@@ -17,6 +17,7 @@ namespace CricketApp.Data
         public DbSet<Match> Matches { get; set; }
         public DbSet<PlayerScore> PlayerScores { get; set; }
         public DbSet<Tournament> Tournaments { get; set; }
+        public DbSet<Ground> Ground { get; set; }
         public DbSet<TeamScore> TeamScores { get; set; }
         public DbSet<FallOfWicket> FallOFWickets { get; set; }
         public DbSet<MatchType> MatchType { get; set; }

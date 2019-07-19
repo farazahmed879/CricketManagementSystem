@@ -30,7 +30,7 @@ namespace WebApp.Controllers
             var HomeScreendto = new HomeScreendto();
             var connection = _context.Database.GetDbConnection();
             var recentMatchesdtos = connection.Query<RecentMatchesdto>(
-                "[usp_RecentMatches]",
+                "usp_RecentMatches",
                 new
                 { },
                 commandType: CommandType.StoredProcedure) ?? new List<RecentMatchesdto>()
@@ -41,7 +41,7 @@ namespace WebApp.Controllers
             
 
                 var count = connection.Query<TotalAchievedto>(
-                "[usp_TotalAchieve]",
+                "usp_TotalAchieve",
                 new
                 { },
                 commandType: CommandType.StoredProcedure) ?? new List<TotalAchievedto>()

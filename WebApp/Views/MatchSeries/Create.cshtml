@@ -156,27 +156,30 @@
 
 
         $(document).on('click', '#SeriesCreate', function (e) {
-            $('#SeriesCreate').attr("disabled", "disabled");
-            var form = $("#SeriesForm").closest("form");
-            var formData = new FormData(form[0]);
-            $.ajax({
-                type: "POST",
-                data: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
-                },
-                dataType: "json",
-                url: "/MatchSeries/Create",
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    myFunction(data);
-                    window.location = '/MatchSeries/Index'
-                },
-                fail: function (data) {
-                    myFunction(data);
-                }
-            })
+            if ($('#SeriesForm').valid() == true) {
+                $('#SeriesCreate').attr("disabled", "disabled");
+                var form = $("#SeriesForm").closest("form");
+                var formData = new FormData(form[0]);
+                $.ajax({
+                    type: "POST",
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
+                    },
+                    dataType: "json",
+                    url: "/MatchSeries/Create",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        myFunction(data);
+                        window.location = '/MatchSeries/Index'
+                    },
+                    fail: function (data) {
+                        myFunction(data);
+                    }
+                })
+            }
+
         });
 
 

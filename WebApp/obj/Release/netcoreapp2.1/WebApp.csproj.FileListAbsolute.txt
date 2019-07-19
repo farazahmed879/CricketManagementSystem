@@ -7,7 +7,6 @@ E:\ScoreExec\CricketManagementSystem\WebApp\bin\Release\netcoreapp2.1\CricketApp
 E:\ScoreExec\CricketManagementSystem\WebApp\bin\Release\netcoreapp2.1\CricketApp.Domain.dll
 E:\ScoreExec\CricketManagementSystem\WebApp\bin\Release\netcoreapp2.1\CricketApp.Domain.pdb
 E:\ScoreExec\CricketManagementSystem\WebApp\bin\Release\netcoreapp2.1\CricketApp.Data.pdb
-E:\ScoreExec\CricketManagementSystem\WebApp\obj\Release\netcoreapp2.1\WebApp.csprojAssemblyReference.cache
 E:\ScoreExec\CricketManagementSystem\WebApp\obj\Release\netcoreapp2.1\WebApp.csproj.CoreCompileInputs.cache
 E:\ScoreExec\CricketManagementSystem\WebApp\obj\Release\netcoreapp2.1\WebApp.AssemblyInfoInputs.cache
 E:\ScoreExec\CricketManagementSystem\WebApp\obj\Release\netcoreapp2.1\WebApp.AssemblyInfo.cs

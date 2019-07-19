@@ -45,7 +45,7 @@ namespace WebApp.Controllers
 
             var connection = _context.Database.GetDbConnection();
             var s = connection.Query<Summary2dto>(
-              "[usp_Summary2]",
+              "usp_Summary2",
               new
               {
                   paramMatchId = matchId,
@@ -158,7 +158,7 @@ namespace WebApp.Controllers
 
             var connection = _context.Database.GetDbConnection();
             var s = connection.Query<Summary2dto>(
-              "[usp_Summary2]",
+              "usp_Summary2",
               new
               {
                   paramMatchId = matchId,
@@ -240,7 +240,7 @@ namespace WebApp.Controllers
             var scoreDto = new ScoreCarddto();
             var connection = _context.Database.GetDbConnection();
             var s = connection.Query<Summary2dto>(
-              "[usp_Summary2]",
+              "usp_Summary2",
               new
               {
                   paramMatchId = matchId,
@@ -411,7 +411,7 @@ namespace WebApp.Controllers
                 return Json(ResponseHelper.Success());
                 // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }
-            return Json(ResponseHelper.UnSuccess());
+            return BadRequest(ModelState);
         }
 
 

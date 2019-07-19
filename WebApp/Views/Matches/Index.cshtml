@@ -145,104 +145,7 @@
 
                         </tr>
                     </thead>
-                    @*<tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        <b>@Html.DisplayFor(modelItem => item.GroundName)</b>
-                                    </td>
 
-                                    <td>
-
-                                        @if (item.HasFilledHomeTeamData == true)
-                                        {
-                                            <b>@item.HomeTeam</b> <span data-placement="top" data-toggle="tooltip" title="Has Filled" class="label  pull-right label-success"><i class="fas fa-check"></i></span>
-
-                                        }
-                                        else
-                                        {
-                                            <b>@item.HomeTeam</b> <span data-placement="top" data-toggle="tooltip" title="No Data" class="label pull-right label-warning"><i class="fas fa-question"></i></span>
-
-                                        }
-
-
-                                    </td>
-                                    <td>
-
-                                        @if (item.HasFilledOpponentTeamData == true)
-                                        {
-                                            <b>@item.OppponentTeam</b> <span data-placement="top" data-toggle="tooltip" title="Has Filled" class="label pull-right label-success"><i class="fas fa-check"></i></span>
-
-                                        }
-                                        else
-                                        {
-                                            <b>@item.OppponentTeam</b><span data-placement="top" data-toggle="tooltip" title="No Data" class="label pull-right label-warning"><i class="fas fa-question"></i></span>
-
-                                        }
-
-                                    </td>
-                                    <td>
-
-                                        @if (item.HasFilledTeamScoreData == true)
-                                        {
-                                            <h1 data-placement="top" data-toggle="tooltip" title="Has Filled" class="label label-success">Read<i class="fas fa-check"></i></h1>
-
-                                        }
-                                        else
-
-                                        {
-                                            <h3 data-placement="top" data-toggle="tooltip" title="No Data" class="label label-warning">Pending<i class="fas fa-question"></i></h3>
-                                        }
-
-
-                                    </td>
-                                    <td>
-                                        <b> @Html.DisplayFor(modelItem => item.MatchType)</b>
-                                    </td>
-                                    <td>
-                                        <b>@Html.DisplayFor(modelItem => item.DateOfMatch)</b>
-                                    </td>
-                                    <td>
-                                        <b>@Html.DisplayFor(modelItem => item.MatchOvers)</b>
-                                    </td>
-
-                                    <td>
-                                        <b>@Html.DisplayFor(modelItem => item.Result)</b>
-                                    </td>
-
-                                    <td>
-                                        @if (User.Identity.IsAuthenticated)
-                                        {
-
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card">Scorecard</a></li>
-                                                    <li><a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-matchId="@item.MatchId">Details</a></li>
-
-                                                    <li><a asp-controller="MatchSummary" asp-action="FirstInning" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Summary">Summary</a></li>
-                                                </ul>
-                                            </div>
-
-                                            <a data-placement="top" data-toggle="tooltip" title="Edit Match" asp-action="Edit" asp-route-id="@item.MatchId"><i class="fas fa-edit"></i></a>
-                                            <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(@item.MatchId)" class="fas fa-trash-alt"></i></a>
-
-                                        }
-                                        else
-                                        {
-                                            <a asp-controller="PlayerScores" asp-action="Index" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Score Card"></a>
-                                            <a data-placement="top" data-toggle="tooltip" title="Details" asp-action="Details" asp-route-matchId="@item.MatchId"><i class="fas fa-info-circle"></i></a>
-                                            <a asp-controller="MatchSummary" asp-action="FirstInning" asp-route-oppTeamId="@item.OppponentTeamId" asp-route-homeTeamId="@item.HomeTeamId" asp-route-matchId="@item.MatchId" data-placement="top" data-toggle="tooltip" title="Summary"></a>
-
-                                        }
-
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>*@
                 </table>
             </div>
 
@@ -354,8 +257,8 @@
                 {
                     className: "font-15 text-left",
                     orderable: false,
-                    data: 'result',
-                    name: 'result'
+                    data: 'groundName',
+                    name: 'groundName'
                 },
                 {
 
@@ -414,7 +317,7 @@
                             '<li><a  data-placement="top" data-toggle="tooltip" title="Summary">Summary</a></li></ul></div>' :
                             '<a class="cursor" onclick="PlayerScores(' + row.homeTeamId + ',' + row.oppponentTeamId + ',' + row.matchId + ')" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="flaticon-cricket-18"></i></a>' +
                             '<a class="cursor" onclick="MatchSummary(' + row.homeTeamId + ',' + row.oppponentTeamId + ',' + row.matchId + ')" data-placement="top" data-toggle="tooltip" title="Summary"><i class="fas fa-baseball-ball"></i></a>') +
-                            (IsAuthenticated ? ' <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Edit Match" asp-action="Edit" asp-route-id="data.MatchId"><i class="fas fa-edit"></i></a>' : "") +
+                            (IsAuthenticated ? ' <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Edit Match" onclick="EditMode(' + row.matchId + ')"><i class="fas fa-edit"></i></a>' : "") +
                             (IsAuthenticated ? ' <a  data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Delete"><i data-toggle="modal" data-target="#DeleteModal" onclick="Delete(data.MatchId)" class="fas fa-trash-alt"></i></a>' : "");
 
                     }
@@ -450,6 +353,10 @@
         }
         let Details = function (id) {
             window.location = `/Matches/Details/${id}`
+        }
+
+        let EditMode = function (id) {
+            window.location = `/Matches/Edit/${id}`
         }
 
         function Delete(MatchId) {

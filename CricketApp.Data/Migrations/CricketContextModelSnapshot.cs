@@ -3,7 +3,6 @@ using System;
 using CricketApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CricketApp.Data.Migrations
@@ -15,15 +14,13 @@ namespace CricketApp.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("CricketApp.Domain.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -73,8 +70,7 @@ namespace CricketApp.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -82,8 +78,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.ApplicationUserRole", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -98,8 +93,7 @@ namespace CricketApp.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -107,8 +101,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.BattingStyle", b =>
                 {
                     b.Property<int>("BattingStyleId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
@@ -120,8 +113,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.BowlingStyle", b =>
                 {
                     b.Property<int>("BowlingStyleId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
@@ -133,8 +125,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.FallOfWicket", b =>
                 {
                     b.Property<int>("FallOfWicketId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("Eight");
 
@@ -169,11 +160,26 @@ namespace CricketApp.Data.Migrations
                     b.ToTable("FallOFWickets");
                 });
 
+            modelBuilder.Entity("CricketApp.Domain.Ground", b =>
+                {
+                    b.Property<int>("GroundId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Location")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(25);
+
+                    b.HasKey("GroundId");
+
+                    b.ToTable("Ground");
+                });
+
             modelBuilder.Entity("CricketApp.Domain.HowOut", b =>
                 {
                     b.Property<int>("HowOutId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
@@ -187,14 +193,13 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.Match", b =>
                 {
                     b.Property<int>("MatchId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime?>("DateOfMatch");
 
                     b.Property<string>("FileName");
 
-                    b.Property<string>("GroundName");
+                    b.Property<int?>("GroundId");
 
                     b.Property<int>("HomeTeamId");
 
@@ -211,8 +216,6 @@ namespace CricketApp.Data.Migrations
                     b.Property<float?>("OppTeamOvers");
 
                     b.Property<int>("OppponentTeamId");
-
-                    b.Property<string>("Place");
 
                     b.Property<int?>("PlayerId");
 
@@ -232,6 +235,8 @@ namespace CricketApp.Data.Migrations
                     b.Property<int>("UserId");
 
                     b.HasKey("MatchId");
+
+                    b.HasIndex("GroundId");
 
                     b.HasIndex("HomeTeamId");
 
@@ -253,8 +258,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.MatchSchedule", b =>
                 {
                     b.Property<long>("MatchScheduleId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("Day");
 
@@ -278,8 +282,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.MatchSeries", b =>
                 {
                     b.Property<int>("MatchSeriesId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("FileName");
 
@@ -304,8 +307,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.MatchType", b =>
                 {
                     b.Property<int>("MatchTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("MatchTypeName");
 
@@ -317,8 +319,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.Player", b =>
                 {
                     b.Property<int>("PlayerId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
 
@@ -364,8 +365,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.PlayerPastRecord", b =>
                 {
                     b.Property<int>("PlayerPastRecordId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("BestScore");
 
@@ -437,8 +437,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.PlayerRole", b =>
                 {
                     b.Property<int>("PlayerRoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
@@ -450,8 +449,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.PlayerScore", b =>
                 {
                     b.Property<int>("PlayerScoreId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("Ball_Runs");
 
@@ -509,8 +507,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.Team", b =>
                 {
                     b.Property<int>("TeamId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("City")
                         .IsRequired();
@@ -534,8 +531,7 @@ namespace CricketApp.Data.Migrations
                     b.HasKey("TeamId");
 
                     b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Teams");
                 });
@@ -543,8 +539,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.TeamScore", b =>
                 {
                     b.Property<int>("TeamScoreId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("Byes");
 
@@ -574,8 +569,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.Tournament", b =>
                 {
                     b.Property<int>("TournamentId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("FileName");
 
@@ -600,8 +594,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("CricketApp.Domain.TournamentStage", b =>
                 {
                     b.Property<int>("TournamentStageId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
@@ -634,8 +627,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -653,8 +645,7 @@ namespace CricketApp.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -724,6 +715,10 @@ namespace CricketApp.Data.Migrations
 
             modelBuilder.Entity("CricketApp.Domain.Match", b =>
                 {
+                    b.HasOne("CricketApp.Domain.Ground", "Ground")
+                        .WithMany()
+                        .HasForeignKey("GroundId");
+
                     b.HasOne("CricketApp.Domain.Team", "HomeTeam")
                         .WithMany("HomeTeamMatches")
                         .HasForeignKey("HomeTeamId")

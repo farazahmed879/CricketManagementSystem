@@ -180,27 +180,30 @@
             setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
         }
         $(document).on('click', '#TeamCreate', function (e) {
-            $('#TeamCreate').attr("disabled", "disabled");
-            var form = $("#TeamForm").closest("form");
-            var formData = new FormData(form[0]);
-            $.ajax({
-                type: "Put",
-                data: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
-                },
-                dataType: "json",
-                url: "/Teams/Edit",
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    window.location = '/Teams/Index'
-                    myFunction(data);
-                },
-                fail: function (data) {
-                    myFunction(data);
-                }
-            })
+            if ($('#TeamForm').valid() == true) {
+                $('#TeamCreate').attr("disabled", "disabled");
+                var form = $("#TeamForm").closest("form");
+                var formData = new FormData(form[0]);
+                $.ajax({
+                    type: "Put",
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
+                    },
+                    dataType: "json",
+                    url: "/Teams/Edit",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        window.location = '/Teams/Index'
+                        myFunction(data);
+                    },
+                    fail: function (data) {
+                        myFunction(data);
+                    }
+                });
+            }
+         
         });
 
     </script>

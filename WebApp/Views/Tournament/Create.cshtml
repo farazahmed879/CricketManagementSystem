@@ -155,27 +155,30 @@
         }
 
         $(document).on('click', '#TournamentCreate', function (e) {
-            $('#TournamentCreate').attr("disabled", "disabled");
-            var form = $("#TournamentForm").closest("form");
-            var formData = new FormData(form[0]);
-            $.ajax({
-                type: "POST",
-                data: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
-                },
-                dataType: "json",
-                url: "/Tournament/Create",
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    myFunction(data);
-                    window.location = '/Tournament/Index'
-                },
-                fail: function (data) {
-                    myFunction(data);
-                }
-            })
+            if ($('#TournamentForm').valid() == true) {
+                $('#TournamentCreate').attr("disabled", "disabled");
+                var form = $("#TournamentForm").closest("form");
+                var formData = new FormData(form[0]);
+                $.ajax({
+                    type: "POST",
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.getElementById("RequestVerificationToken").value,
+                    },
+                    dataType: "json",
+                    url: "/Tournament/Create",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        myFunction(data);
+                        window.location = '/Tournament/Index'
+                    },
+                    fail: function (data) {
+                        myFunction(data);
+                    }
+                })
+            }
+          
         });
         //$(function () {
         //    $('#TournamentCreate').click(function () {

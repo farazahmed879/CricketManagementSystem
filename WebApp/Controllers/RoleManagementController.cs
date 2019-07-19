@@ -143,19 +143,19 @@ namespace WebApp.Controllers
         }
 
 
-        [HttpPost("RoleManagement/Create")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([FromForm]ClubAdmindto role)
-        {
-            if (ModelState.IsValid)
-            {
-                //var item = _mapper.Map<ClubAdmin>(role);
-                //_context.ClubAdmins.Add(item);
-                //await _context.SaveChangesAsync();
-                //return Json(ResponseHelper.Success());
-            }
-            return Json(ResponseHelper.UnSuccess());
-        }
+        //[HttpPost("RoleManagement/Create")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([FromForm]ClubAdmindto role)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //var item = _mapper.Map<ClubAdmin>(role);
+        //        //_context.ClubAdmins.Add(item);
+        //        //await _context.SaveChangesAsync();
+        //        //return Json(ResponseHelper.Success());
+        //    }
+        //    return Json(ResponseHelper.UnSuccess());
+        //}
 
 
         [HttpGet]

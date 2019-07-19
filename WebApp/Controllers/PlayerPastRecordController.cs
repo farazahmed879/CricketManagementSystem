@@ -17,6 +17,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using WebApp.Helper;
 using WebApp.IServices;
+using System;
 
 namespace WebApp.Controllers
 {
@@ -56,7 +57,7 @@ namespace WebApp.Controllers
         }
 
         // POST: Players/Edit/5
-        [HttpPost("PlayerPastRecord/PastRecordSave")]
+        [HttpPut("PlayerPastRecord/PastRecordSave")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Club Admin,Administrator")]
         public async Task<IActionResult> PastRecordSave(PlayerPastRecorddto playerPastRecord)
@@ -64,12 +65,20 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(playerPastRecord);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    var model = _mapper.Map<PlayerPastRecord>(playerPastRecord);
+                    _context.Update(model);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { Error = ex, Data = playerPastRecord, ModelState });
+                }
 
                 return Json(ResponseHelper.UpdateSuccess());
             }
-            return Json(ResponseHelper.UpdateUnSuccess());
+            return BadRequest(ModelState);
         }
 
     }

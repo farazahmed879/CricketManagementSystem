@@ -1,0 +1,243 @@
+﻿@model PaginatedList<WebApp.ViewModels.Grounddto>
+
+@{
+    ViewData["Title"] = "Ground";
+}
+<br />
+<br />
+<br />
+<br />
+
+<div class="container-fluid">
+
+    <div class='col-md-1'></div>
+    <div class="col-md-10">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a>Ground</a></li>
+            </ol>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="center fade-down section-heading">
+                        <h2 class="main-title">Manage Ground</h2>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+
+
+            }
+            <div class="form-group">
+                <a asp-controller="Ground" class="btn btn-outlined btn-primary" asp-action="Create">Add</a>
+            </div>
+            <div class="table-responsive">
+                <table id="GroundTable" class="table table-bordered table-striped">
+                    <thead style="background-color: maroon; color: white">
+                        <tr>
+                            <th>
+                                Ground
+                            </th>
+                            <th>
+                                Location
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                </table>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class='col-md-1'></div>
+</div>
+
+<div id="snackbar"></div>
+<div id="DeleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header bg-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="GroundId" />
+                <h3>Are you sure you want to delete this?</h3>
+
+                <div class="wizard-footer">
+                    <div class="pull-right">
+
+                    </div>
+                    <div class="pull-left">
+                        <input type='button' class='btn btn-previous btn-fill btn-primary btn-wd' data-dismiss="modal" value='Cancel' />
+                        <input id="deleteBtn" type="button" class='btn btn-finish btn-fill btn-primary btn-wd' data-dismiss="modal" value='Delete' />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <input id="IsAuthenticated" hidden value="@Html.Raw(User.Identity.IsAuthenticated)" />
+    <style>
+        td {
+            text-align: center !important;
+            margin-left: 2em;
+        }
+
+        th {
+            text-align: center !important;
+            margin-left: 2em;
+        }
+
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 20px;
+            width: 25px;
+            /*border: 1px solid #bbb;*/
+        }
+    </style>
+
+    <script>
+        var IsAuthenticated = $("#IsAuthenticated").val() === "True";
+        $(function () {
+            $('#createBtn').click(function () {
+                window.location = '/Ground/Create'
+            });
+        });
+
+        function myFunction(data) {
+            var snackBar = document.getElementById('snackbar');
+            snackBar.textContent = data;
+            snackBar.className = "show";
+            setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+        }
+
+
+        var dataTable = $('#GroundTable').DataTable({
+            processing: true,
+            serverSide: true,
+            "paging": true,
+            dom: 'Brtipl',
+            "order": [],
+            ajax: {
+                url: "/Ground/Index?isApi=true",
+                type: "GET",
+                dataType: "json"
+            },
+            columns: [
+                {
+                    data: 'name',
+                    //render: function (PlayerName, Image, row, meta) {
+                    //    debugger;
+                    //    return '<ul class="list-inline">' +
+                    //        '<li><img class="img-responsive" id="Img" src="Home/images/Ground/' + row.fileName + '"></li>' +
+                    //        '<li><b>' + row.GroundName + '</b></li>' +
+                    //        '</ul>';
+                    //}
+                },
+                {
+                    className: "font-15 text-left",
+                    orderable: false,
+                    data: 'location',
+                    name: 'location'
+                },
+                {
+                    data: "groundId",
+                    "render": function (data, type, row, meta) {
+                        return (IsAuthenticated ? '<div class="btn-group">' +
+                            '<button type="button" class="btn btn-outlined btn-primary dropdown-toggle" data-toggle="dropdown">' +
+                            '<span class="caret"></span></button >' +
+                            '<ul class="dropdown-menu">' +
+                            '<li><a onclick="NewMatch(' + data + ')" data-placement="left" data-toggle="tooltip" class="cursor" title="New Match">New Match</a></li>' +
+                            '<li><a onclick="AllMatches(' + data + ')" data-placement="left" data-toggle="tooltip" class="cursor" title="Match List">All Matches</a></li></ul></div>' : '<a onclick="AllMatches(' + data + ')" data-placement="left" data-toggle="tooltip" title="Match List"><i class="flaticon-cricket-4"></i></a>') +
+                            (IsAuthenticated ? ' <a data-toggle="tooltip" data-placement="top" title="Edit Mode" onclick="EditMode(' + data + ')"><i class="fas fa-edit cursor"></i></a>': "") +
+                            (IsAuthenticated ? ' <a data-placement="top" title="Delete" data-toggle="tooltip"><i data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash-alt cursor" style="cursor: pointer" onclick="Delete(' + data + ')"></i></a>': "");
+                    }
+                }
+            ],
+            buttons: [
+                {
+                    extend: 'pdfHtml5',
+                    className: 'btn btn-default'
+                    //orientation: 'landscape',
+                    //pageSize: 'LEGAL'
+                }
+            ]
+        });
+
+
+        function Delete(GroundId) {
+            document.getElementById("GroundId").value = GroundId;
+        }
+
+        $("#deleteBtn")
+            .off()
+            .on("click", async () => await DeleteData());
+
+        let EditMode = function (id) {
+            window.location = `/Ground/Edit/${id}`
+        }
+
+        let AllMatches = function (id) {
+            window.location = `/Matches/Index?GroundId=${id}`
+        }
+
+        let NewMatch = function (id) {
+            window.location = `/Matches/Create?GroundId=${id}`
+        }
+
+        const DeleteData = async () => {
+            const groundId = document.getElementById('GroundId').value;
+            const model = {
+                groundId: Number(groundId),
+            };
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            const response = await fetch(`/Ground/DeleteConfirmed/${groundId}`, {
+                method: "Delete",
+                body: JSON.stringify(model),
+                credentials: 'same-origin',
+                headers: header
+            });
+
+            if (response.ok) {
+                var data = "Record is deleted successfully";
+                window.location.reload();
+                myFunction(data);
+                return;
+            } else {
+                var data = "Record could not be deleted";
+                myFunction(data);
+            }
+        };
+
+    </script>
+
+}

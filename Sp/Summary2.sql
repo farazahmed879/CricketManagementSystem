@@ -1,56 +1,53 @@
-﻿Alter procedure [usp_Summary2]
-@paramHomeTeamId AS INT,
-@paramOpponentTeamId AS INT,
-@paramMatchId AS INT
-AS
+﻿﻿delimiter //
+create procedure usp_Summary2(@paramHomeTeamId AS INT,@paramOpponentTeamId AS INT,@paramMatchId AS INT)
 begin
 	SELECT *
 	FROM
 		(
 		SELECT	top 1
-				homeTeam.Team_Name as 'HomeTeam',
-				Teams.Team_Name as 'OppponentTeam',
-				Result as 'Result',
-				case when Teams.[FileName] is null then 'noLogo.png' else  Teams.[FileName] end as 'OpponentTeamLogo',
-				case when homeTeam.[FileName] is null then 'noLogo.png' else  homeTeam.[FileName] end as 'HomeTeamTeamLogo',
-				--homeTeam.[FileName] as 'HomeTeamTeamLogo',
-				Matches.GroundName as 'GroundName',
-				MatchType.MatchTypeName as 'Type',
-				TournamentStages.Name as 'Stage',
-				Players.Player_Name as 'ManOfTheMatch',
-				Matches.Place as 'Place',
-				Tournaments.TournamentName as 'TournamentName',
-				Matches.DateOfMatch as 'DateOfMatch',
-				Matches.HomeTeamOvers as 'HomeTeamOvers',
-				Matches.OppTeamOvers as 'OppTeamOvers',
+				homeTeam.Team_Name as `HomeTeam`,
+				Teams.Team_Name as `OppponentTeam`,
+				Result as `Result`,
+				case when Teams.[FileName] is null then `noLogo.png` else  Teams.[FileName] end as `OpponentTeamLogo`,
+				case when homeTeam.[FileName] is null then `noLogo.png` else  homeTeam.[FileName] end as `HomeTeamTeamLogo`,
+				--homeTeam.[FileName] as `HomeTeamTeamLogo`,
+				Matches.GroundName as `GroundName`,
+				MatchType.MatchTypeName as `Type`,
+				TournamentStages.Name as `Stage`,
+				Players.Player_Name as `ManOfTheMatch`,
+				Matches.Place as `Place`,
+				Tournaments.TournamentName as `TournamentName`,
+				Matches.DateOfMatch as `DateOfMatch`,
+				Matches.HomeTeamOvers as `HomeTeamOvers`,
+				Matches.OppTeamOvers as `OppTeamOvers`,
 				 (
-					select TotalScore as 'HomeTeamScore'
+					select TotalScore as `HomeTeamScore`
 					FROM TeamScores
 					WHERE TeamId = @paramHomeTeamId and MatchId = @paramMatchId
 					---make relation teamscore and matches	 
 						
-				) as 'HomeTeamScore',
+				) as `HomeTeamScore`,
 				 (
-					select TotalScore as 'OpponentsTeamScore'
+					select TotalScore as `OpponentsTeamScore`
 					FROM TeamScores
 					WHERE TeamId = @paramOpponentTeamId and MatchId = @paramMatchId
 					---make relation teamscore and matches	 
 						
-				) as 'OpponentsTeamScore',
+				) as `OpponentsTeamScore`,
 				 (
-					select Wickets as 'HomeTeamWickets'
+					select Wickets as `HomeTeamWickets`
 					FROM TeamScores
 					WHERE TeamId = @paramHomeTeamId and MatchId = @paramMatchId
 					---make relation teamscore and matches	 
 						
-				) as 'HomeTeamWickets',
+				) as `HomeTeamWickets`,
 				 (
-					select Wickets as 'OpponentTeamWickets'
+					select Wickets as `OpponentTeamWickets`
 					FROM TeamScores
 					WHERE TeamId = @paramOpponentTeamId and MatchId = @paramMatchId
 					---make relation teamscore and matches	 
 						
-				) as 'OpponentTeamWickets'
+				) as `OpponentTeamWickets`
 		
 		
 		FROM Matches	
@@ -66,7 +63,6 @@ begin
 		where Matches.MatchId = @paramMatchId	
 	
 	order by Matches.MatchId 
-	) AS LastMatch
-end
-go
---exec [usp_Summary2] 2,5,1032
+	) AS `LastMatch`
+end //
+delimiter ;

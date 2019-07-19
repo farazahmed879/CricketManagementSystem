@@ -51,7 +51,7 @@ namespace WebApp.Controllers
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             if (users != null)
-            ViewBag.Name = "Team";
+                ViewBag.Name = "Team";
             var result = await _teams.GetAllTeamsList(model.Init(), zone, location, name, page);
             if (isApi == true)
                 return Json(new
@@ -178,7 +178,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+
                 if (team.TeamImage != null)
                 {
                     team.FileName = team.TeamImage.FileName;
@@ -204,6 +204,42 @@ namespace WebApp.Controllers
             _context.Teams.Remove(team);
             await _context.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpPut]
+        [Route("Team/Add")]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<int> AddTeamAsync([FromBody]Teamdto team)
+        {
+            if (ModelState.IsValid)
+            {
+                var directory = Path.Combine(_hosting.WebRootPath, "Home", "images", "Teams");
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+                if (team.TeamImage != null)
+                {
+                    team.FileName = team.TeamImage.FileName;
+
+                    using (var stream = new FileStream(Path.Combine(directory, team.FileName), FileMode.Create))
+                    {
+                        await team.TeamImage.CopyToAsync(stream);
+                    }
+                }
+
+                var teamModel = _mapper.Map<Team>(team);
+                await _context.Teams.AddAsync(teamModel);
+                //var users = await _userManager.GetUserAsync(HttpContext.User);
+                //_context.ClubAdmins.Add(new ClubAdmin
+                //{
+                //    TeamId = teamModel.TeamId,
+                //    UserId = users.Id
+
+                //});
+                await _context.SaveChangesAsync();
+                return teamModel.TeamId;
+            }
+            return 0;
+
         }
 
 
