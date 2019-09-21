@@ -18,8 +18,8 @@ SELECT
      INNER JOIN
          Matches ON PlayerScores.MatchId = Matches.MatchId
      WHERE 
-         (Teams.TeamId = @paramOppTeamId)
-         AND (Matches.MatchId = @paramMatchId)
+         (Teams.TeamId = paramOppTeamId)
+         AND (Matches.MatchId = paramMatchId)
      GROUP BY 
          Players.Player_Name,
          PlayerScores.Bat_Runs,

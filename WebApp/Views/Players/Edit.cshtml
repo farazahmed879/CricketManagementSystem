@@ -83,6 +83,7 @@
                             <select asp-for="TeamId" asp-items="ViewBag.TeamId" style="width: 100%" required placeholder="--Select--" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
+                            <span asp-validation-for="TeamId" class="text-danger"></span>
                         </div>
                         <div class="col-md-4" style="margin-top: 20px">
                             <label>Gender<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
@@ -91,6 +92,7 @@
                                 <option selected>Male</option>
                                 <option>Female</option>
                             </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
                         </div>
                         <div class="col-md-4" style="margin-top: 20px">
                             <div class="form-group">
@@ -216,7 +218,7 @@
 
         $(function () {
             $('#BackBtn').click(function () {
-                window.location = '/Players/Index'
+                window.location = '/Players'
             });
         });
         function readURL(input) {
@@ -277,7 +279,7 @@
                     contentType: false,
                     success: function (data) {
                         myFunction(data);
-                        window.location = '/Players/Index'
+                        window.location = '/Players'
                     },
                     fail: function (data) {
                         myFunction(data);

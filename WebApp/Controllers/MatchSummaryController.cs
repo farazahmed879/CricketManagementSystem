@@ -81,7 +81,7 @@ namespace WebApp.Controllers
             var matchSummary = new Summary();
 
             var HomeTeamBatting = connection.Query<HomeTeamBatting>(
-               "[usp_HomeTeamBatting]",
+               "usp_HomeTeamBatting",
                new
                {
                    paramMatchId = matchId,
@@ -92,7 +92,7 @@ namespace WebApp.Controllers
                {
                };
             var HomeTeamBowling = connection.Query<HomeTeamBowling>(
-              "[usp_HomeTeamBowling]",
+              "usp_HomeTeamBowling",
               new
               {
                   paramMatchId = matchId,
@@ -103,7 +103,7 @@ namespace WebApp.Controllers
               {
               };
             var OppTeamBatting = connection.Query<OppTeamBatting>(
-             "[usp_OppTeamBatting]",
+             "usp_OppTeamBatting",
              new
              {
                  paramMatchId = matchId,
@@ -114,7 +114,7 @@ namespace WebApp.Controllers
              {
              };
             var OppTeamBowling = connection.Query<OppTeamBowling>(
-             "[usp_OppTeamBowling]",
+             "usp_OppTeamBowling",
              new
              {
                  paramMatchId = matchId,
@@ -126,7 +126,7 @@ namespace WebApp.Controllers
              };
 
             var s = connection.Query<Summary2dto>(
-                "[usp_Summary2]",
+                "usp_Summary2",
                 new
                 {
                     paramMatchId = matchId,
@@ -157,7 +157,7 @@ namespace WebApp.Controllers
             var matchSummary = new Summary();
             var connection = _context.Database.GetDbConnection();
             var summary = connection.Query<Summary2dto>(
-               "[usp_Summary2]",
+               "usp_Summary2",
                new
                {
                    paramMatchId = matchId,

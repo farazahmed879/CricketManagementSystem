@@ -80,7 +80,7 @@ namespace WebApp.Controllers
                                  Six = i.Six,
                                  Stump = i.Stump,
                                  Wickets = i.Wickets,
-                                 Player = i.Player,
+                                 PlayerName = i.Player.Player_Name,
                                  HowOutName = i.HowOut.Name,
                                  TeamId = i.TeamId,
                                  Fielder = i.Fielder
@@ -411,7 +411,7 @@ namespace WebApp.Controllers
                 return Json(ResponseHelper.Success());
                 // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }
-            return BadRequest(ModelState);
+            return Json(ResponseHelper.UnSuccess());
         }
 
 

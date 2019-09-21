@@ -49,6 +49,6 @@ namespace WebApp.ViewModels
         public int HightScore { get; set; }
         public int MostWickets { get; set; }
         public int BestBowlingFigureRuns { get; set; }
-        public Team Team { get; set; }
+       // public Team Team { get; set; }
     }
 }

@@ -150,7 +150,7 @@
                                                                     <b>@Html.DisplayFor(modelItem => item.Position)</b>
                                                                 </td>
                                                                 <td>
-                                                                    <b> @Html.DisplayFor(modelItem => item.Player.Player_Name)</b>
+                                                                    <b> @Html.DisplayFor(modelItem => item.PlayerName)</b>
                                                                 </td>
                                                                 <td>
                                                                     <b>@Html.DisplayFor(modelItem => item.Bat_Runs)</b>
@@ -258,7 +258,7 @@
                                                             <tr id="trBall_@item.PlayerScoreId">
 
                                                                 <td>
-                                                                    <b>@Html.DisplayFor(modelItem => item.Player.Player_Name)</b>
+                                                                    <b>@Html.DisplayFor(modelItem => item.PlayerName)</b>
                                                                 </td>
 
                                                                 <td>
@@ -380,7 +380,7 @@
                                                                     <b>@Html.DisplayFor(modelItem => item.Position)</b>
                                                                 </td>
                                                                 <td>
-                                                                    <b> @Html.DisplayFor(modelItem => item.Player.Player_Name)</b>
+                                                                    <b> @Html.DisplayFor(modelItem => item.PlayerName)</b>
                                                                 </td>
                                                                 <td>
                                                                     <b>@Html.DisplayFor(modelItem => item.Bat_Runs)</b>
@@ -486,7 +486,7 @@
                                                             <tr id="trBall_@item.PlayerScoreId">
 
                                                                 <td>
-                                                                    <b> @Html.DisplayFor(modelItem => item.Player.Player_Name)</b>
+                                                                    <b> @Html.DisplayFor(modelItem => item.PlayerName)</b>
                                                                 </td>
 
                                                                 <td>
@@ -1042,6 +1042,7 @@
                     credentials: 'same-origin'
                 });
                 if (response.ok) {
+                    debugger;
                     const json = await response.json();
                     var id = json[0].playerScoreId;
                     var runs = json[0].bat_Runs;

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CricketApp.Domain", "Cricek
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CricketApp.Data", "CricketApp.Data\CricketApp.Data.csproj", "{DC5DAE18-6B7D-4876-A894-A79EE42E7F61}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{998B5607-0518-4065-8121-4DD55A4B042E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{DFE67077-D9D5-4376-AEA8-3808082935B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{DC5DAE18-6B7D-4876-A894-A79EE42E7F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC5DAE18-6B7D-4876-A894-A79EE42E7F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC5DAE18-6B7D-4876-A894-A79EE42E7F61}.Release|Any CPU.Build.0 = Release|Any CPU
-		{998B5607-0518-4065-8121-4DD55A4B042E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{998B5607-0518-4065-8121-4DD55A4B042E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{998B5607-0518-4065-8121-4DD55A4B042E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{998B5607-0518-4065-8121-4DD55A4B042E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFE67077-D9D5-4376-AEA8-3808082935B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFE67077-D9D5-4376-AEA8-3808082935B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFE67077-D9D5-4376-AEA8-3808082935B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFE67077-D9D5-4376-AEA8-3808082935B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

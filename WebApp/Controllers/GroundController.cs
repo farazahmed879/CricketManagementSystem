@@ -192,5 +192,23 @@ namespace WebApp.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
+
+
+
+        [HttpPut]
+        [Route("Ground/Add")]
+        [Authorize(Roles = "Club Admin,Administrator")]
+        public async Task<int> AddGroundAsync([FromBody]Grounddto ground)
+        {
+            if (ModelState.IsValid)
+            {
+                var groundModel = _mapper.Map<Ground>(ground);
+                await _context.Ground.AddAsync(groundModel);
+                await _context.SaveChangesAsync();
+                return groundModel.GroundId;
+            }
+            return 0;
+
+        }
     }
 }

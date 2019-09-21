@@ -12,6 +12,6 @@ namespace WebApp.ViewModels
         public int? Day { get; set; }
         public int? Year { get; set; }
         public int TeamId { get; set; }
-        public Team Team { get; set; }
+       //public Team Team { get; set; }
     }
 }

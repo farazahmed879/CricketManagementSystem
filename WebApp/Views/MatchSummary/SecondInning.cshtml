@@ -258,7 +258,7 @@
         <center>
             <div class="footer">
                 <ul class="list-inline">
-                    <li><input id="BackBtn" style="background-color: maroon; color: white;" type="button" value="Back" class="btn"></li>
+                    <li><input id="BackBtn" style="background-color: maroon; color: white;" type="button" value="Close" class="btn"></li>
                     <li><center><img src="~/images/ScoreExec.png" style=" width: 110px; height :25px"></center></li>
                 </ul>
             </div>
@@ -281,7 +281,7 @@
     <script>
         $(function () {
             $('#BackBtn').click(function () {
-                window.history.back();
+                window.location = '/Matches'
             });
 
         });

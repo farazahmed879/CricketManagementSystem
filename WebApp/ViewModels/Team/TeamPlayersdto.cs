@@ -14,7 +14,7 @@ namespace WebApp.ViewModels
         [Required]
         public string Player_Name { get; set; }
         public string FileName { get; set; }
-        public TeamDetailsdto TeamDetails { get; set; }
+       // public TeamDetailsdto TeamDetails { get; set; }
         public int TeamId { get; set; }
 
     }

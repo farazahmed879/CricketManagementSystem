@@ -1,4 +1,4 @@
-﻿@model PaginatedList<WebApp.ViewModels.Matchdto>
+﻿@model PaginatedList<WebApp.ViewModels.MatchListdto>
 @{
     ViewData["Title"] = "Matches";
 }
@@ -349,7 +349,7 @@
         }
 
         let MatchSummary = function (homeTeamId, oppponentTeamId, matchId) {
-            window.location = "/MatchSummary/FirstInning?homeTeamId=" + homeTeamId + "&oppTeamId=" + oppponentTeamId + "&matchId=" + matchId + "";
+            window.location = "/MatchSummary/Summary?matchId=" + matchId + "&oppTeamId=" + oppponentTeamId + "&homeTeamId=" + homeTeamId + "";
         }
         let Details = function (id) {
             window.location = `/Matches/Details/${id}`

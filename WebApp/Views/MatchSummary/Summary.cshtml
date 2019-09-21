@@ -35,7 +35,7 @@
             {
                 <div class="col-lg-2" style="background-color:maroon; border-radius: 40px 40px 40px 40px; color:white;
             text-align:center">
-                    <b style="font-size:15px">@Model.Summary2dto.Stage <br>@Model.Summary2dto.GroundName <br> @Model.Summary2dto.DateOfMatch.ToString("dd MMMM yyyy")</b>
+                    <b style="font-size:15px">@Model.Summary2dto.Stage <br>@Model.Summary2dto.GroundName <br> @Model.Summary2dto.DateOfMatch.ToString("MM/dd/yyyy")</b>
                 </div>
             }
             else
@@ -83,7 +83,7 @@
                             {
                                 <tr>
                                     <td style="background-color:white; border-right: 1px solid;border-bottom: 2px solid lightgray; font-size:15px"><b>@item.HomeTeamBatsman</b></td>
-                                    @if (item.HowOut == 4 || item.HowOut == 8)
+                                    @if (item.HowOut == 7 || item.HowOut == 8)
                                     {
                                         <td class="center" style="background-color:white;border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px"><b>@item.Runs</b><i class="fa fa-asterisk" style="color: black" aria-hidden="true"></i></td>
                                     }
@@ -159,7 +159,7 @@
                             {
                                 <tr>
                                     <td style="background-color:white; border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px "><b>@item.OppTeamBatsman</b></td>
-                                    @if (item.HowOut == 4 || item.HowOut == 8)
+                                    @if (item.HowOut == 7 || item.HowOut == 8)
                                     {
                                         <td class="center" style="background-color:white;border-right: 1px solid;border-bottom: 2px solid lightgray;font-size:15px"><b>@item.Runs</b><i class="fa fa-asterisk" style="color: black" aria-hidden="true"></i></td>
                                     }
@@ -219,7 +219,7 @@
         <center>
             <div class="footer">
                 <ul class="list-inline">
-                    <li><input id="BackBtn" style="background-color: maroon; color: white;" type="button" value="Back" class="btn"></li>
+                    <li><input id="BackBtn" style="background-color: maroon; color: white;" type="button" value="Close" class="btn"></li>
                     <li><center><img src="~/images/ScoreExec.png" style=" width: 110px; height :25px"></center></li>
                 </ul>
             </div>
@@ -260,7 +260,7 @@
     <script>
         $(function () {
             $('#BackBtn').click(function () {
-                window.history.back();
+                window.location = '/Matches'
             });
         });
         (function (d, s, id) {

@@ -12,9 +12,9 @@ namespace WebApp.ViewModels
         public int Byes { get; set; }
         public int LegByes { get; set; }
         public int TeamId { get; set; }
-        public Team Team { get; set; }
+       // public Team Team { get; set; }
         public string TeamName { get; set; }
         public int MatchId { get; set; }
-        public Match Match { get; set; }
+        //public Match Match { get; set; }
     }
 }

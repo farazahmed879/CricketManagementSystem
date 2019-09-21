@@ -35,14 +35,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Ground<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <input asp-for="Name" class="form-control" />
+                            <input asp-for="Name" required class="form-control" />
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Location" class="control-label"></label>
-                            <input asp-for="Location" class="form-control" />
+                            <input asp-for="Location" required class="form-control" />
                             <span asp-validation-for="Location" class="text-danger"></span>
                         </div>
                     </div>

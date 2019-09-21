@@ -26,9 +26,9 @@ namespace WebApp.ViewModels
         public int? Six { get; set; }
         public int TeamId { get; set; }
         public bool IsPlayedInning { get; set; }
-        public Player Player { get; set; }
-        public Match Match { get; set; }
-        public HowOut HowOut { get; set; }
-        public Team Team { get; set; }
+        //public Player Player { get; set; }
+        //public Match Match { get; set; }
+        //public HowOut HowOut { get; set; }
+        //public Team Team { get; set; }
     }
 }

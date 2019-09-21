@@ -8,7 +8,7 @@ namespace WebApp.IServices
     public interface IMatches
     {
 
-         Task<PaginatedList<Matchdto>> GetAllMatchesList(DataTableAjaxPostModel model, int? teamId, int? matchTypeId,
+         Task<PaginatedList<MatchListdto>> GetAllMatchesList(DataTableAjaxPostModel model, int? teamId, int? matchTypeId,
                                                int? tournamentId, int? matchSeriesId,
                                                 int? season, int? matchOvers);
     }

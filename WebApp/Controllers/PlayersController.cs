@@ -430,27 +430,23 @@ namespace WebApp.Controllers
         }
         // GET: PlayerStatistics
 
-        [HttpGet("Players/PlayerStatistics/PlayerId/{playerId}/Season/{season}/MatchTypeId/{matchTypeId}")]
-        public IActionResult PlayerStatistics(int playerId,int? season,int? matchTypeId, bool Api)
+        [HttpGet("Players/PlayerStatistics/PlayerId/{playerId}")]
+        public IActionResult PlayerStatistics(int playerId)
         {
 
-            ViewBag.Season = new SelectList(_context.Matches
-              .Select(i => i.Season)
-              .ToList().Distinct(), "Season");
+            //ViewBag.Season = new SelectList(_context.Matches.Select(i => i.Season).ToList().Distinct(), "Season");
 
-            ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
+           // ViewBag.MatchType = new SelectList(_context.MatchType, "MatchTypeId", "MatchTypeName");
             ViewBag.Name = "Players / Profile";
-            ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
+             //ViewBag.Overs = new SelectList(_context.Matches.Select(i => i.MatchOvers).ToList().Distinct(), "MatchOvers");
             try
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.QuerySingleOrDefault<PlayerStatisticsdto>(
-                    "[usp_GetSinglePlayerStatistics]",
+                    "usp_GetSinglePlayerStatistics",
                     new
                     {
-                        @paramPlayerId = playerId,
-                        @paramSeason = season,
-                        @paramMatchTypeId = matchTypeId
+                        @paramPlayerId = playerId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new PlayerStatisticsdto

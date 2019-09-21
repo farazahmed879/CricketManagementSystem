@@ -32,11 +32,18 @@
 
                 <div class="col-md-8">
                     <div class="row">
+                       
                         <div class="col-md-6">
-                            <label>Ground<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select asp-for="GroundId" asp-items="ViewBag.Ground" required placeholder="--Select Ground--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select Ground--</option>
-                            </select>
+                            <div class="col-md-10">
+                                <label>Ground<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                                <select asp-for="GroundId" asp-items="ViewBag.Ground" required placeholder="--Select Ground--" style="width: 100%" class="js-example-basic-single">
+                                    <option value="">--Select Ground--</option>
+                                </select>
+                                <span asp-validation-for="GroundId" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-2">
+                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Add Ground"><i data-toggle="modal" data-target="#NewGroundModal" class="fas flaticon-add-1"></i></a>
+                            </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
@@ -80,6 +87,7 @@
                             <select asp-for="HomeTeamId" required placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select Team--</option>
                             </select>
+                            <span asp-validation-for="HomeTeamId" class="text-danger"></span>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -94,9 +102,10 @@
                         </div>
                         <div class="col-md-6">
                             <label>Secong Inning Player By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
+                            <select asp-for="OppponentTeamId" required placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
+                            <span asp-validation-for="OppponentTeamId" class="text-danger"></span>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -115,6 +124,7 @@
                             <select id="MatchTypeId" asp-for="MatchTypeId" asp-items="ViewBag.MatchType" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
+                            <span asp-validation-for="MatchTypeId" class="text-danger"></span>
                         </div>
                         <div class="col-md-4" style="margin-top: 10px" id="tourSection">
                             <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
@@ -218,6 +228,45 @@
                     <div class="pull-left">
                         <input type='button' class='btn btn-default' data-dismiss="modal" value='Cancel' />
                         <input id="AddTeam" onclick="AddTeam()" data-dismiss="modal" type="button" class='btn btn-outlined btn-primary' value='Add' />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="NewGroundModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header bg-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Ground</h4>
+            </div>
+            <div class="modal-body">
+                <form id="TeamForm" enctype="multipart/form-data">
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Ground Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input id="GroundName" required class="form-control" />
+                            <span id="GroundNameSpan" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Location<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input id="location" required class="form-control" />
+                            <span id="locationSpan" class="text-danger"></span>
+                        </div>
+                    </div>
+                </form>
+                <div class="wizard-footer">
+                    <div class="pull-left">
+                        <input type='button' class='btn btn-default' data-dismiss="modal" value='Cancel' />
+                        <input id="AddGround" onclick="AddGround()" data-dismiss="modal" type="button" class='btn btn-outlined btn-primary' value='Add' />
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -353,6 +402,56 @@
         }
 
 
+        let AddGround = function () {
+            debugger;
+            var groundName = $('#GroundName').val();
+            var location = $('#location').val();
+            if (groundName == null || groundName == undefined || groundName == "") {
+                document.getElementById('GroundNameSpan').innerHTML = "Required";
+                $('#GroundNameSpan').css('color', 'red');
+            }
+            else {
+                document.getElementById('GroundNameSpan').innerHTML = "";
+            }
+
+            if (location == null || location == undefined || location == "") {
+                document.getElementById('locationSpan').innerHTML = "Required";
+                $('#locationSpan').css('color', 'red');
+            }
+            else {
+                document.getElementById('locationSpan').innerHTML = "";
+            }
+
+
+            if (groundName == null || groundName == undefined || groundName == "" || location == null || location == undefined || location == "")
+                return
+            const ground = document.getElementById('GroundName').value;
+            const loc = document.getElementById('location').value;
+            debugger;
+            const model = {
+                name: ground,
+                location: loc
+            };
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            const response = fetch('/Ground/Add', {
+                method: "Put",
+                body: JSON.stringify(model),
+                credentials: 'same-origin',
+                headers: header
+            }).then(response => {
+                if (response.ok) {
+                    //teamName.tex('');
+                    //city.val('');
+                    TeamDropDown();
+                }
+                else {
+                    alert("Error");
+                }
+            });
+        }
+
         var TeamDropDown = function () {
             $.ajax({
                 type: "GET",
@@ -366,6 +465,7 @@
                         s += '<option value="' + data[i].teamId + '">' + data[i].team_Name + '</option>';
                     }
                     $("#HomeTeamId").html(s);
+                    $("#OppponentTeamId").html(s);
                 }
             });
         }

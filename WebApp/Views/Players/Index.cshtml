@@ -662,7 +662,7 @@
             var header = new Headers();
             header.append("content-type", "application/json");
 
-            fetch(`/Players/PlayerStatistics/PlayerId/${playerId}/Season/${season}/MatchTypeId/${matchTypeId}`, {
+            fetch(`/Players/PlayerStatistics/PlayerId/${playerId}`, {
                 credentials: 'same-origin',
                 headers: header
             })

@@ -39,6 +39,7 @@
                             <select asp-for="GroundId" asp-items="ViewBag.Ground" required placeholder="--Select Ground--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select Ground--</option>
                             </select>
+                            <span asp-validation-for="GroundId" class="text-danger"></span>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
@@ -77,10 +78,12 @@
                         <hr />
 
                         <div class="col-md-8">
+                            <input type="hidden" asp-for="HomeTeamId" id="hdnHomeTeamId" />
                             <label>First Inning Played By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select asp-for="HomeTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
+                            <select asp-for="HomeTeamId" required placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select Team--</option>
                             </select>
+                            <span asp-validation-for="HomeTeamId" class="text-danger"></span>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -91,10 +94,12 @@
                             </div>
                         </div>
                         <div class="col-md-8">
+                            <input type="hidden" asp-for="OppponentTeamId" id="hdnOppTeamId" />
                             <label>Secong Inning Player By<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select asp-for="OppponentTeamId" required asp-items="ViewBag.TeamId" placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
+                            <select asp-for="OppponentTeamId" required placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
+                            <span asp-validation-for="OppponentTeamId" class="text-danger"></span>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -113,6 +118,7 @@
                             <select id="MatchTypeId" asp-for="MatchTypeId" asp-items="ViewBag.MatchType" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
                                 <option value="">--Select--</option>
                             </select>
+                            <span asp-validation-for="MatchTypeId" class="text-danger"></span>
                         </div>
                         <div class="col-md-4" style="margin-top: 10px" id="tourSection">
                             <label>Tournament<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
@@ -210,10 +216,11 @@
         //Select2
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
+            TeamDropDown();
         });
         $(function () {
             $('#BackBtn').click(function () {
-                window.location = '/Matches/Index'
+                window.location = '/Matches'
             });
         });
 
@@ -317,6 +324,91 @@
             }
            
         });
+
+        var TeamDropDown = function () {
+            $.ajax({
+                type: "GET",
+                url: "/Team/GetAllTeams",
+                data: "{}",
+                success: function (data) {
+                    console.log(data);
+                    console.log("asd==asd")
+                    var selectedValue = $("#hdnHomeTeamId").val();
+                    var selectedValue1 = $("#hdnOppTeamId").val();
+                    var s = '<option value="-1">--Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        s += '<option value="' + data[i].teamId + '" ' + (selectedValue && selectedValue == data[i].teamId ? 'selected="selected"' : "") +'>' + data[i].team_Name + '</option>';
+                    }
+                    $("#HomeTeamId")
+                        .select2("destroy")
+                        .html(s)
+                        .select2();
+                    for (var i = 0; i < data.length; i++) {
+                        s += '<option value="' + data[i].teamId + '" ' + (selectedValue1 && selectedValue1 == data[i].teamId ? 'selected="selected"' : "") + '>' + data[i].team_Name + '</option>';
+                    }
+
+                    $("#OppponentTeamId")
+                        .select2("destroy")
+                        .html(s)
+                        .select2();
+                }
+            });
+        }
+
+        let AddTeam = function () {
+            debugger;
+            var teamName = $('#TeamName').val()
+            var city = $('#City').val()
+            if (teamName == null || teamName == undefined || teamName == "") {
+                document.getElementById('TeamNameSpan').innerHTML = "Required";
+                $('#TeamNameSpan').css('color', 'red');
+            }
+            else {
+                document.getElementById('TeamNameSpan').innerHTML = "";
+            }
+
+            if (city == null || city == undefined || city == "") {
+                document.getElementById('CitySpan').innerHTML = "Required";
+                $('#CitySpan').css('color', 'red');
+            }
+            else {
+                document.getElementById('CitySpan').innerHTML = "";
+            }
+
+
+            if (teamName == null || teamName == undefined || teamName == "" || city == null || city == undefined || city == "")
+                return
+            const TeamName = document.getElementById('TeamName').value;
+            const City = document.getElementById('City').value;
+            debugger;
+            const model = {
+                team_Name: TeamName,
+                city: City,
+                fileName: null,
+                place: null,
+                zone: null,
+                contact: null,
+                isRegistered: false
+            };
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            const response = fetch('/Team/Add', {
+                method: "Put",
+                body: JSON.stringify(model),
+                credentials: 'same-origin',
+                headers: header
+            }).then(response => {
+                if (response.ok) {
+                    //teamName.tex('');
+                    //city.val('');
+                    TeamDropDown();
+                }
+                else {
+                    alert("Error");
+                }
+            });
+        }
 
     </script>
 }

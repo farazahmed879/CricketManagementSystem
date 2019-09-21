@@ -11,7 +11,6 @@ namespace WebApp.ViewModels
     {
 
         public int MatchId { get; set; }
-        public string GroundName { get; set; }
         public int? GroundId { get; set; }
         public string FileName { get; set; }
         [Required]
@@ -25,17 +24,17 @@ namespace WebApp.ViewModels
         public int HomeTeamId { get; set; }
         [Required]
         public int OppponentTeamId { get; set; }
-        public string OppponentTeam { get; set; }
+       // public string OppponentTeam { get; set; }
         public float? HomeTeamOvers { get; set; }
         public float? OppTeamOvers { get; set; }
-        public string HomeTeam { get; set; }
-        public string Tournament { get; set; }
-        public string Series { get; set; }
+       // public string HomeTeam { get; set; }
+       // public string Tournament { get; set; }
+      //  public string Series { get; set; }
         [NotMapped]
         [Display(Name = "Match Image")]
         public IFormFile MatchImage { get; set; }
         public int UserId { get; set; }
-        public string MatchType { get; set; }
+      //  public string MatchType { get; set; }
         public int MatchTypeId { get; set; }
         public int? MatchSeriesId { get; set; }
         public int? TournamentStageId { get; set; }

@@ -26,18 +26,18 @@ namespace WebApp.Services
             _userManager = userManager;
         }
 
-        public async Task<PaginatedList<Matchdto>> GetAllMatchesList(DataTableAjaxPostModel model, int? teamId, int? matchTypeId,
+        public async Task<PaginatedList<MatchListdto>> GetAllMatchesList(DataTableAjaxPostModel model, int? teamId, int? matchTypeId,
                                                int? tournamentId, int? matchSeriesId,
                                                 int? season, int? matchOvers)
         {
-            var result = await PaginatedList<Matchdto>.CreateAsync(
+            var result = await PaginatedList<MatchListdto>.CreateAsync(
                 _context.Matches
                 .AsNoTracking()
                .Where(i => (!matchTypeId.HasValue || i.MatchTypeId == matchTypeId) &&
                            (!teamId.HasValue || i.HomeTeamId == teamId || i.OppponentTeamId == teamId) &&
                            (!tournamentId.HasValue || i.TournamentId == tournamentId) && (!season.HasValue || i.Season == season) &&
                            (!matchSeriesId.HasValue || i.MatchSeriesId == matchSeriesId) && (!matchOvers.HasValue || i.MatchOvers == matchOvers))
-                .Select(i => new ViewModels.Matchdto
+                .Select(i => new ViewModels.MatchListdto
                 {
                     MatchId = i.MatchId,
                     GroundName = i.Ground.Name,
@@ -55,7 +55,7 @@ namespace WebApp.Services
                     HasFilledOpponentTeamData = i.PlayerScores.Any() && i.PlayerScores.Any(o => o.Player != null && o.Player.TeamId == i.OppponentTeamId),
                     HasFilledTeamScoreData = i.TeamScores.Any() && i.TeamScores.Any(o => i.MatchId == i.MatchId)
                 })
-               .OrderBy(i => i.DateOfMatch)
+               .OrderByDescending(i => i.DateOfMatch)
                                  , model.Start, model.Length);
             return result;
         }

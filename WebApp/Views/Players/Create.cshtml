@@ -105,14 +105,15 @@
                             }
                         }
 
-                        <div class="col-md-4" style="margin-top: 20px">
-                            <label>Gender<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
-                            <select asp-for="Gender" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
-                                <option value="">--Select--</option>
-                                <option selected>Male</option>
-                                <option>Female</option>
-                            </select>
-                        </div>
+                                <div class="col-md-4" style="margin-top: 20px">
+                                    <label>Gender<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                                    <select asp-for="Gender" required placeholder="--Select--" style="width: 100%" class="js-example-basic-single">
+                                        <option value="">--Select--</option>
+                                        <option selected>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                    <span asp-validation-for="Gender" class="text-danger"></span>
+                                </div>
                         <div class="col-md-4" style="margin-top: 20px">
                             <div class="form-group">
                                 <label>Date of birth</label>
@@ -236,7 +237,7 @@
 
         $(function () {
             $('#BackBtn').click(function () {
-                window.location = '/Players/Index'
+                window.location = '/Players'
             });
 
         });

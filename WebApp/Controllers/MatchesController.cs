@@ -227,7 +227,7 @@ namespace WebApp.Controllers
             }
 
             var match = await _context.Matches
-                .Select(i => new Matchdto
+                .Select(i => new MatchListdto
                 {
                     MatchId = i.MatchId,
                     HomeTeam = i.HomeTeam.Team_Name,

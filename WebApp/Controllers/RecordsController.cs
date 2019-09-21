@@ -35,14 +35,13 @@ namespace WebApp.Controllers
         // GET: Batting
         [HttpGet]
         public async Task<IActionResult> Batting(int? teamId, int? season, int? overs,
-            int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+            int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Players Records";
 
 
-            if (users != null)
-                userId = users.Id;
+
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
@@ -79,7 +78,7 @@ namespace WebApp.Controllers
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<BattingRecorddto>(
-                    "[usp_GetAllBattingStatistics]",
+                    "usp_GetAllBattingStatistics",
                     new
                     {
                         paramTeamId = teamId,
@@ -89,8 +88,7 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId,
-                        paramUserId = userId
+                        paramPlayerRoleId = playerRoleId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<BattingRecorddto>();
@@ -115,14 +113,11 @@ namespace WebApp.Controllers
         }
         // GET: Bowling
         [HttpGet]
-        public async Task<IActionResult> Bowling(int? teamId, int? season, int? overs, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+        public async Task<IActionResult> Bowling(int? teamId, int? season, int? overs, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Players Records";
 
-
-            if (users != null)
-                userId = users.Id;
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
@@ -153,7 +148,7 @@ namespace WebApp.Controllers
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<BowlingRecorddto>(
-                    "[usp_GetAllBowlingStatistics]",
+                    "usp_GetAllBowlingStatistics",
                     new
                     {
                         paramTeamId = teamId,
@@ -162,8 +157,7 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId,
-                        paramUserId = userId
+                        paramPlayerRoleId = playerRoleId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<BowlingRecorddto>();
@@ -189,14 +183,12 @@ namespace WebApp.Controllers
         // Get: MostRuns
         [HttpGet]
         public async Task<IActionResult> MostRuns(int? teamId, int? season, int? overs,
-          int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+          int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Most Runs";
 
-
-            if (users != null)
-                userId = users.Id;
+            
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
@@ -233,7 +225,7 @@ namespace WebApp.Controllers
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<MostRunsdto>(
-                    "[usp_GetMostRuns]",
+                    "usp_GetMostRuns",
                     new
                     {
                         paramTeamId = teamId,
@@ -243,8 +235,7 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId,
-                        paramUserId = userId
+                        paramPlayerRoleId = playerRoleId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostRunsdto>();
@@ -271,14 +262,11 @@ namespace WebApp.Controllers
         // Get: MostFours
         [HttpGet]
         public async Task<IActionResult> MostFours(int? teamId, int? season, int? overs,
-          int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+          int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Most Fours";
 
-
-            if (users != null)
-                userId = users.Id;
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
@@ -315,7 +303,7 @@ namespace WebApp.Controllers
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<MostFoursdto>(
-                    "[usp_GetMostFours]",
+                    "usp_GetMostFours",
                     new
                     {
                         paramTeamId = teamId,
@@ -325,8 +313,7 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId,
-                        paramUserId = userId
+                        paramPlayerRoleId = playerRoleId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostFoursdto>();
@@ -354,14 +341,12 @@ namespace WebApp.Controllers
         // Get: MostSixes
         [HttpGet]
         public async Task<IActionResult> MostSixes(int? teamId, int? season, int? overs,
-          int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+          int? position, int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Most Six";
 
 
-            if (users != null)
-                userId = users.Id;
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
@@ -398,7 +383,7 @@ namespace WebApp.Controllers
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<MostSixesdto>(
-                    "[usp_GetMostSixes]",
+                    "usp_GetMostSixes",
                     new
                     {
                         paramTeamId = teamId,
@@ -408,9 +393,7 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId,
-                        paramUserId = userId
-
+                        paramPlayerRoleId = playerRoleId
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostSixesdto>();
                 if (isApi)
@@ -437,14 +420,12 @@ namespace WebApp.Controllers
         // Get: MostWickets
         [HttpGet]
         public async Task<IActionResult> MostWickets(int? teamId, int? season, int? overs,
-            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId,bool isApi)
         {
-            var users = await _userManager.GetUserAsync(HttpContext.User);
+           var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Most Runs";
 
 
-            if (users != null)
-                userId = users.Id;
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
@@ -481,7 +462,7 @@ namespace WebApp.Controllers
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<MostWicketsdto>(
-                    "[usp_GetMostWickets]",
+                    "usp_GetMostWickets",
                     new
                     {
                         paramTeamId = teamId,
@@ -490,8 +471,7 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId,
-                        paramUserId = userId
+                        paramPlayerRoleId = playerRoleId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostWicketsdto>();
@@ -518,14 +498,13 @@ namespace WebApp.Controllers
         // Get: MostCatches
         [HttpGet]
         public async Task<IActionResult> MostCatches(int? teamId, int? season, int? overs,
-            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Most Catch";
 
 
-            if (users != null)
-                userId = users.Id;
+
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
@@ -562,7 +541,7 @@ namespace WebApp.Controllers
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<MostCatchesdto>(
-                    "[usp_GetMostCatches]",
+                    "usp_GetMostCatches",
                     new
                     {
                         paramTeamId = teamId,
@@ -571,8 +550,7 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId,
-                        paramUserId = userId
+                        paramPlayerRoleId = playerRoleId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostCatchesdto>();
@@ -599,14 +577,11 @@ namespace WebApp.Controllers
         // Get: MostStumps
         [HttpGet]
         public async Task<IActionResult> MostStumps(int? teamId, int? season, int? overs,
-            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Most Catch";
 
-
-            if (users != null)
-                userId = users.Id;
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
@@ -643,7 +618,7 @@ namespace WebApp.Controllers
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<MostStumpsdto>(
-                    "[usp_GetMostStumps]",
+                    "usp_GetMostStumps",
                     new
                     {
                         paramTeamId = teamId,
@@ -652,8 +627,7 @@ namespace WebApp.Controllers
                         paramMatchType = matchTypeId,
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
-                        paramPlayerRoleId = playerRoleId,
-                        paramUserId = userId
+                        paramPlayerRoleId = playerRoleId
 
                     },
                     commandType: CommandType.StoredProcedure) ?? new List<MostStumpsdto>();
@@ -680,14 +654,12 @@ namespace WebApp.Controllers
         // Get: MostFifties
         [HttpGet]
         public async Task<IActionResult> MostFifties(int? teamId, int? season, int? overs, int? position,
-            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Most 50s";
 
 
-            if (users != null)
-                userId = users.Id;
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
@@ -724,7 +696,7 @@ namespace WebApp.Controllers
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<MostFiftiesdto>(
-                    "[usp_GetMostFifties]",
+                    "usp_GetMostFifties",
                     new
                     {
                         paramTeamId = teamId,
@@ -734,7 +706,6 @@ namespace WebApp.Controllers
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
                         paramPlayerRoleId = playerRoleId,
-                        paramUserId = userId,
                         paramPosition = position
 
                     },
@@ -761,14 +732,11 @@ namespace WebApp.Controllers
         // Get: MostFifties
         [HttpGet]
         public async Task<IActionResult> MostCenturies(int? teamId, int? season, int? overs, int? position,
-            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, int? userId, bool isApi)
+            int? matchTypeId, int? tournamentId, int? matchseriesId, int? playerRoleId, bool isApi)
         {
             var users = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.Name = "Most 100s";
 
-
-            if (users != null)
-                userId = users.Id;
 
             ViewBag.Season = new SelectList(_context.Matches
                 .AsNoTracking()
@@ -805,7 +773,7 @@ namespace WebApp.Controllers
             {
                 var connection = _context.Database.GetDbConnection();
                 var model = connection.Query<MostCenturiesdto>(
-                    "[usp_GetMostCenturies]",
+                    "usp_GetMostCenturies",
                     new
                     {
                         paramTeamId = teamId,
@@ -815,7 +783,6 @@ namespace WebApp.Controllers
                         paramTournamentId = tournamentId,
                         paramMatchseriesId = matchseriesId,
                         paramPlayerRoleId = playerRoleId,
-                        paramUserId = userId,
                         paramPosition = position,
 
 
