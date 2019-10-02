@@ -51,6 +51,7 @@ namespace WebApp.Services
                     HomeTeamId = i.HomeTeamId,
                     OppponentTeamId = i.OppponentTeamId,
                     //MatchLogo = i.MatchLogo,
+                    TeamDataCout = i.PlayerScores.Count(o => o.Player.TeamId == i.HomeTeamId),
                     HasFilledHomeTeamData = i.PlayerScores.Any() && i.PlayerScores.Any(o => o.Player != null && o.Player.TeamId == i.HomeTeamId),
                     HasFilledOpponentTeamData = i.PlayerScores.Any() && i.PlayerScores.Any(o => o.Player != null && o.Player.TeamId == i.OppponentTeamId),
                     HasFilledTeamScoreData = i.TeamScores.Any() && i.TeamScores.Any(o => i.MatchId == i.MatchId)

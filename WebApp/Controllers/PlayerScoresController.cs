@@ -28,7 +28,7 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-       // [Route("PlayerScores/Index/matchId{matchId}/homeTeamId{homeTeamId}/oppTeamId{oppTeamId}/playerScoreId{playerScoreId}")]
+        // [Route("PlayerScores/Index/matchId{matchId}/homeTeamId{homeTeamId}/oppTeamId{oppTeamId}/playerScoreId{playerScoreId}")]
         public IActionResult Index(int? matchId, int? homeTeamId, int? oppTeamId, bool api)
         {
             ViewBag.Name = "Score Card";
@@ -205,22 +205,22 @@ namespace WebApp.Controllers
                 });
 
 
-            for (int i = 0; i < 15; i++)
-            {
-                model.HomeTeamScoreCard.Add(new MatchSummarydto
-                {
-                    MatchId = matchId,
+            //for (int i = 0; i < 15; i++)
+            //{
+            //    model.HomeTeamScoreCard.Add(new MatchSummarydto
+            //    {
+            //        MatchId = matchId,
 
-                });
-            }
-            for (int i = 0; i < 15; i++)
-            {
-                model.OpponentTeamScoreCard.Add(new MatchSummarydto
-                {
-                    MatchId = matchId,
+            //    });
+            //}
+            //for (int i = 0; i < 15; i++)
+            //{
+            //    model.OpponentTeamScoreCard.Add(new MatchSummarydto
+            //    {
+            //        MatchId = matchId,
 
-                });
-            }
+            //    });
+            //}
 
             model.Summary2dto = s.SingleOrDefault();
             return View(model);
@@ -394,22 +394,29 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
 
-                _context.AddRange(HomeTeamplayers.HomeTeamScoreCard.Select(i => new PlayerScore
-                {
-                    Position = i.Position,
-                    IsPlayedInning = i.IsPlayedInning,
-                    PlayerId = i.PlayerId,
-                    HowOutId = i.HowOutId,
-                    BowlerId = i.Bowler,
-                    MatchId = i.MatchId,
-                    TeamId = i.TeamId,
-                    Fielder = i.Fielder
-                }
-                ));
-
+                var model = new PlayerScore();
+                model.Position = HomeTeamplayers.HomeTeamScoreCard.Position;
+                model.IsPlayedInning = HomeTeamplayers.HomeTeamScoreCard.IsPlayedInning;
+                model.PlayerId = HomeTeamplayers.HomeTeamScoreCard.PlayerId;
+                model.HowOutId = HomeTeamplayers.HomeTeamScoreCard.HowOutId;
+                model.BowlerId = HomeTeamplayers.HomeTeamScoreCard.Bowler;
+                model.MatchId = HomeTeamplayers.HomeTeamScoreCard.MatchId;
+                model.TeamId = HomeTeamplayers.HomeTeamScoreCard.TeamId;
+                model.Fielder = HomeTeamplayers.HomeTeamScoreCard.Fielder;
+                model.Bat_Runs = HomeTeamplayers.HomeTeamScoreCard.Bat_Runs;
+                model.Bat_Balls = HomeTeamplayers.HomeTeamScoreCard.Bat_Balls;
+                model.Four = HomeTeamplayers.HomeTeamScoreCard.Four;
+                model.Six = HomeTeamplayers.HomeTeamScoreCard.Six;
+                model.Ball_Runs = HomeTeamplayers.HomeTeamScoreCard.Ball_Runs;
+                model.Overs = HomeTeamplayers.HomeTeamScoreCard.Overs;
+                model.Wickets = HomeTeamplayers.HomeTeamScoreCard.Wickets;
+                model.Maiden = HomeTeamplayers.HomeTeamScoreCard.Maiden;
+                model.RunOut = HomeTeamplayers.HomeTeamScoreCard.RunOut;
+                model.Catches = HomeTeamplayers.HomeTeamScoreCard.Catches;
+                model.Stump = HomeTeamplayers.HomeTeamScoreCard.Stump;
+                _context.PlayerScores.Add(model);
                 await _context.SaveChangesAsync();
                 return Json(ResponseHelper.Success());
-                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }
             return Json(ResponseHelper.UnSuccess());
         }
@@ -422,22 +429,28 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
 
-                _context.AddRange(OpponentTeamplayers.OpponentTeamScoreCard.Select(i => new PlayerScore
-                {
-                    Position = i.Position,
-                    IsPlayedInning = i.IsPlayedInning,
-                    PlayerId = i.PlayerId,
-                    HowOutId = i.HowOutId,
-                    BowlerId = i.Bowler,
-                    MatchId = i.MatchId,
-                    TeamId = i.TeamId,
-                    Fielder = i.Fielder
-                }
-                ));
-
+                var model = new PlayerScore();
+                model.Position = OpponentTeamplayers.OppoTeamScoreCard.Position;
+                model.IsPlayedInning = OpponentTeamplayers.OppoTeamScoreCard.IsPlayedInning;
+                model.PlayerId = OpponentTeamplayers.OppoTeamScoreCard.PlayerId;
+                model.HowOutId = OpponentTeamplayers.OppoTeamScoreCard.HowOutId;
+                model.BowlerId = OpponentTeamplayers.OppoTeamScoreCard.Bowler;
+                model.MatchId = OpponentTeamplayers.OppoTeamScoreCard.MatchId;
+                model.TeamId = OpponentTeamplayers.OppoTeamScoreCard.TeamId;
+                model.Fielder = OpponentTeamplayers.OppoTeamScoreCard.Fielder;
+                model.Bat_Runs = OpponentTeamplayers.OppoTeamScoreCard.Bat_Runs;
+                model.Bat_Balls = OpponentTeamplayers.OppoTeamScoreCard.Bat_Balls;
+                model.Four = OpponentTeamplayers.OppoTeamScoreCard.Four;
+                model.Six = OpponentTeamplayers.OppoTeamScoreCard.Six;
+                model.Ball_Runs = OpponentTeamplayers.OppoTeamScoreCard.Ball_Runs;
+                model.Overs = OpponentTeamplayers.OppoTeamScoreCard.Overs;
+                model.Wickets = OpponentTeamplayers.OppoTeamScoreCard.Wickets;
+                model.Maiden = OpponentTeamplayers.OppoTeamScoreCard.Maiden;
+                model.RunOut = OpponentTeamplayers.OppoTeamScoreCard.RunOut;
+                model.Catches = OpponentTeamplayers.OppoTeamScoreCard.Catches;
+                model.Stump = OpponentTeamplayers.OppoTeamScoreCard.Stump;
+                _context.PlayerScores.Add(model);
                 await _context.SaveChangesAsync();
-                return Json(ResponseHelper.Success());
-                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }
             return Json(ResponseHelper.UnSuccess());
         }
@@ -511,29 +524,30 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var playerScoreIds = Matchplayers.OpponentTeamScoreCard.Select(i => i.PlayerScoreId).ToList();
+                var model = await _context.PlayerScores.Where(i => i.PlayerScoreId == Matchplayers.OppoTeamScoreCard.PlayerScoreId).SingleOrDefaultAsync();
 
 
-                foreach (var mp in Matchplayers.OpponentTeamScoreCard)
-                {
-                    var matchScore = new PlayerScore { PlayerScoreId = mp.PlayerScoreId };
-
-                    _context.PlayerScores.Attach(matchScore);
-                    matchScore.PlayerScoreId = mp.PlayerScoreId;
-                    matchScore.Position = mp.Position;
-                    matchScore.IsPlayedInning = mp.IsPlayedInning;
-                    matchScore.PlayerId = mp.PlayerId;
-                    matchScore.HowOutId = mp.HowOutId;
-                    matchScore.BowlerId = mp.Bowler;
-                    matchScore.MatchId = mp.MatchId;
-                    matchScore.TeamId = mp.TeamId;
-                    matchScore.Fielder = mp.Fielder;
-
-                    await _context.SaveChangesAsync();
-
-                }
+                model.Position = Matchplayers.OppoTeamScoreCard.Position;
+                model.IsPlayedInning = Matchplayers.OppoTeamScoreCard.IsPlayedInning;
+                model.PlayerId = Matchplayers.OppoTeamScoreCard.PlayerId;
+                model.HowOutId = Matchplayers.OppoTeamScoreCard.HowOutId;
+                model.BowlerId = Matchplayers.OppoTeamScoreCard.Bowler;
+                model.MatchId = Matchplayers.OppoTeamScoreCard.MatchId;
+                model.TeamId = Matchplayers.OppoTeamScoreCard.TeamId;
+                model.Fielder = Matchplayers.OppoTeamScoreCard.Fielder;
+                model.Bat_Runs = Matchplayers.OppoTeamScoreCard.Bat_Runs;
+                model.Bat_Balls = Matchplayers.OppoTeamScoreCard.Bat_Balls;
+                model.Four = Matchplayers.OppoTeamScoreCard.Four;
+                model.Six = Matchplayers.OppoTeamScoreCard.Six;
+                model.Ball_Runs = Matchplayers.OppoTeamScoreCard.Ball_Runs;
+                model.Overs = Matchplayers.OppoTeamScoreCard.Overs;
+                model.Wickets = Matchplayers.OppoTeamScoreCard.Wickets;
+                model.Maiden = Matchplayers.OppoTeamScoreCard.Maiden;
+                model.RunOut = Matchplayers.OppoTeamScoreCard.RunOut;
+                model.Catches = Matchplayers.OppoTeamScoreCard.Catches;
+                model.Stump = Matchplayers.OppoTeamScoreCard.Stump;
+                _context.PlayerScores.Update(model);
                 return Json(ResponseHelper.UpdateSuccess());
-                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }
             return Json(ResponseHelper.UpdateUnSuccess());
         }
@@ -545,25 +559,30 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                foreach (var mp in Matchplayers.HomeTeamScoreCard)
-                {
-                    var matchScore = new PlayerScore { PlayerScoreId = mp.PlayerScoreId };
+                var model = await _context.PlayerScores.Where(i => i.PlayerScoreId == Matchplayers.HomeTeamScoreCard.PlayerScoreId).SingleOrDefaultAsync();
 
-                    _context.PlayerScores.Attach(matchScore);
-                    matchScore.PlayerScoreId = mp.PlayerScoreId;
-                    matchScore.Position = mp.Position;
-                    matchScore.IsPlayedInning = mp.IsPlayedInning;
-                    matchScore.PlayerId = mp.PlayerId;
-                    matchScore.HowOutId = mp.HowOutId;
-                    matchScore.BowlerId = mp.Bowler;
-                    matchScore.MatchId = mp.MatchId;
-                    matchScore.TeamId = mp.TeamId;
-                    matchScore.Fielder = mp.Fielder;
-                    await _context.SaveChangesAsync();
 
-                }
+                model.Position = Matchplayers.HomeTeamScoreCard.Position;
+                model.IsPlayedInning = Matchplayers.HomeTeamScoreCard.IsPlayedInning;
+                model.PlayerId = Matchplayers.HomeTeamScoreCard.PlayerId;
+                model.HowOutId = Matchplayers.HomeTeamScoreCard.HowOutId;
+                model.BowlerId = Matchplayers.HomeTeamScoreCard.Bowler;
+                model.MatchId = Matchplayers.HomeTeamScoreCard.MatchId;
+                model.TeamId = Matchplayers.HomeTeamScoreCard.TeamId;
+                model.Fielder = Matchplayers.HomeTeamScoreCard.Fielder;
+                model.Bat_Runs = Matchplayers.HomeTeamScoreCard.Bat_Runs;
+                model.Bat_Balls = Matchplayers.HomeTeamScoreCard.Bat_Balls;
+                model.Four = Matchplayers.HomeTeamScoreCard.Four;
+                model.Six = Matchplayers.HomeTeamScoreCard.Six;
+                model.Ball_Runs = Matchplayers.HomeTeamScoreCard.Ball_Runs;
+                model.Overs = Matchplayers.HomeTeamScoreCard.Overs;
+                model.Wickets = Matchplayers.HomeTeamScoreCard.Wickets;
+                model.Maiden = Matchplayers.HomeTeamScoreCard.Maiden;
+                model.RunOut = Matchplayers.HomeTeamScoreCard.RunOut;
+                model.Catches = Matchplayers.HomeTeamScoreCard.Catches;
+                model.Stump = Matchplayers.HomeTeamScoreCard.Stump;
+                _context.PlayerScores.Update(model);
                 return Json(ResponseHelper.UpdateSuccess());
-                // return RedirectToAction(nameof(Index), new { matchId = Matchplayers.Select(i => i.MatchId).First(), teamId });
             }
             return Json(ResponseHelper.UpdateUnSuccess());
         }
@@ -669,7 +688,7 @@ namespace WebApp.Controllers
                     playercoreCard.Catches = playerScores.Catches;
                     playercoreCard.Stump = playerScores.Stump;
                     _context.Update(playercoreCard);
-                     _context.SaveChangesAsync();
+                    _context.SaveChangesAsync();
                     return playerScores.PlayerScoreId;
                 }
                 else
@@ -714,7 +733,34 @@ namespace WebApp.Controllers
         }
 
 
-      
+        public IActionResult MatchScore(int homeTeamId, int oppTeamId, int matchId)
+        {
+            var model = new TeamMatchScoredto();
+            var connection = _context.Database.GetDbConnection();
+            ViewBag.HowOut = new SelectList(_context.HowOut
+          .AsNoTracking()
+          .Select(i => new { i.HowOutId, i.Name })
+          , "HowOutId", "Name");
+
+            var s = connection.Query<Summary2dto>(
+              "usp_Summary2",
+              new
+              {
+                  paramMatchId = matchId,
+                  paramHomeTeamId = homeTeamId,
+                  paramOpponentTeamId = oppTeamId
+              },
+              commandType: CommandType.StoredProcedure) ?? new List<Summary2dto>()
+              {
+              };
+           
+            model.Summary2dto = s.SingleOrDefault();
+            
+            //ViewBag.homeTeamId = homeTeamId;
+            //ViewBag.o = homeTeamId;
+            return View(model);
+
+        }
 
     }
 }

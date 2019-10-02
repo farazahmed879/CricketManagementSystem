@@ -10,5 +10,6 @@ namespace WebApp.IServices
         Task<PaginatedList<Playersdto>> GetAllPlayersList(DataTableAjaxPostModel model, int? teamId, int? playerRoleId, int? battingStyleId, int? bowlingStyleId, string name);
         List<PlayersDropDowndto> GetAllPlayers();
         Task<PlayerPastRecorddto> GetPlayerPastRecordByPlayerId(int? playerId);
+        List<PlayersDropDowndto> GetAllPlayersByTeamId(int teamId);
     }
 }

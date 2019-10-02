@@ -1,0 +1,52 @@
+========================================================
+SQL
+sqlcmd -S LOCALHOST -d ScoreExecDb -U SA -P Super@samad123
+
+
+Root 
+user: root
+pass: Super@123Samad
+
+SHOW DATABASES;
+SHOW TABLES;
+
+mysql -u root -p
+===========================================================
+Publish : dotnet publish --configuration Release
+
+Copy publishFile File: scp publish.zip root@139.59.30.220:production
+
+scp SP file: MySqlSp.zip root@139.59.30.220:sp
+
+===========================================================
+sudo systemctl stop kestrel-helloapp.service
+
+sudo systemctl enable kestrel-helloapp.service
+
+
+sudo systemctl start kestrel-helloapp.service
+
+sudo systemctl status kestrel-helloapp.service
+
+sudo nano /etc/systemd/system/kestrel-helloapp.service
+===========================================================
+
+mysql -u root -p Super@samad123 ScoreExecDb < usp_Summary2.sql
+
+mysql -h "server-name" -u "your_username" "-pyour_password" "database-name" < "filename.sql"
+
+mysql < usp_Summary2.sql
+
+mysql -u root -pSuper@samad123  ScoreExecDb < sp_GetAllBattingStatistics.sql
+
+
+http://139.59.30.220:8080/adminer.php?username=root&db=ScoreExecDb
+
+============================================================
+1. 
+
+dotnet /root/production/WebApp.dll --urls "http://*:5010;"
+
+2.
+
+screen -d -m dotnet /root/production/WebApp.dll --urls "http://*:5010;"

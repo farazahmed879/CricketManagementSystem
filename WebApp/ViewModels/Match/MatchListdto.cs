@@ -39,6 +39,7 @@ namespace WebApp.ViewModels
         public int MatchTypeId { get; set; }
         public int? MatchSeriesId { get; set; }
         public int? TournamentStageId { get; set; }
+        public int TeamDataCout { get; set; }
         public bool HasFilledHomeTeamData { get; set; }
         public bool HasFilledOpponentTeamData { get; set; }
         public bool HasFilledTeamScoreData { get; set; }

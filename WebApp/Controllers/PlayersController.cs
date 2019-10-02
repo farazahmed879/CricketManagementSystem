@@ -462,7 +462,13 @@ namespace WebApp.Controllers
         }
 
 
-
+        [HttpGet]
+        [Route("Players/GetAllPlayers/TeamId/{teamId}")]
+        public List<PlayersDropDowndto> GetAllPlayers(int teamId)
+        {
+            var players = _players.GetAllPlayersByTeamId(teamId);
+            return players;
+        }
 
         private bool PlayerExists(int id)
         {

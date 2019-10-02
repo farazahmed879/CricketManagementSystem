@@ -313,6 +313,7 @@
                             '<span class="caret"></span></button>' +
                             '<ul class="dropdown-menu">' +
                             '<li><a class="cursor" onclick="PlayerScores(' + row.homeTeamId + ',' + row.oppponentTeamId + ',' + row.matchId + ')" data-placement="top" data-toggle="tooltip" title="Score Card">Scorecard</a></li>' +
+                            '<li><a class="cursor" onclick="MatchScore(' + row.homeTeamId + ',' + row.oppponentTeamId + ',' + row.matchId + ')" data-placement="top" data-toggle="tooltip" title="Score Card">Match Score</a></li>' +
                             '<li><a class="cursor" onclick="MatchSummary(' + row.homeTeamId + ',' + row.oppponentTeamId + ',' + row.matchId + ')" data-placement="top" data-toggle="tooltip" title="Summary" onclick="Details(' + row.matchId + ')>Summary</a></li>' +
                             '<li><a  data-placement="top" data-toggle="tooltip" title="Summary">Summary</a></li></ul></div>' :
                             '<a class="cursor" onclick="PlayerScores(' + row.homeTeamId + ',' + row.oppponentTeamId + ',' + row.matchId + ')" data-placement="top" data-toggle="tooltip" title="Score Card"><i class="flaticon-cricket-18"></i></a>' +
@@ -346,6 +347,9 @@
 
         let PlayerScores = function (homeTeamId, oppponentTeamId, matchId) {
             window.location = "/PlayerScores/Index?homeTeamId=" + homeTeamId + "&oppTeamId=" + oppponentTeamId + "&matchId=" + matchId + "";
+        }
+        let MatchScore = function (homeTeamId, oppponentTeamId, matchId) {
+            window.location = "/PlayerScores/MatchScore?homeTeamId=" + homeTeamId + "&oppTeamId=" + oppponentTeamId + "&matchId=" + matchId + "";
         }
 
         let MatchSummary = function (homeTeamId, oppponentTeamId, matchId) {

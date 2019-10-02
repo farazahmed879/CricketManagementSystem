@@ -65,6 +65,19 @@ namespace WebApp.Services
             return model;
         }
 
+        public List<PlayersDropDowndto> GetAllPlayersByTeamId(int teamId)
+        {
+            var model = _context.Players
+                .AsNoTracking()
+                .Where(i=> i.TeamId == teamId)
+                .Select(i => new PlayersDropDowndto
+                {
+                    PlayerId = i.PlayerId,
+                    Player_Name = i.Player_Name
+                }).ToList();
+            return model;
+        }
+
         public async Task<PlayerPastRecorddto> GetPlayerPastRecordByPlayerId(int? playerId)
         {
             var playerPastRecord =  await _context.PlayerPastRecord
