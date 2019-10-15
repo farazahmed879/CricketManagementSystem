@@ -399,10 +399,10 @@ namespace WebApp.Controllers
                 model.IsPlayedInning = HomeTeamplayers.HomeTeamScoreCard.IsPlayedInning;
                 model.PlayerId = HomeTeamplayers.HomeTeamScoreCard.PlayerId;
                 model.HowOutId = HomeTeamplayers.HomeTeamScoreCard.HowOutId;
-                model.BowlerId = HomeTeamplayers.HomeTeamScoreCard.Bowler;
+                model.BowlerId = 24;
                 model.MatchId = HomeTeamplayers.HomeTeamScoreCard.MatchId;
                 model.TeamId = HomeTeamplayers.HomeTeamScoreCard.TeamId;
-                model.Fielder = HomeTeamplayers.HomeTeamScoreCard.Fielder;
+                model.Fielder = "";
                 model.Bat_Runs = HomeTeamplayers.HomeTeamScoreCard.Bat_Runs;
                 model.Bat_Balls = HomeTeamplayers.HomeTeamScoreCard.Bat_Balls;
                 model.Four = HomeTeamplayers.HomeTeamScoreCard.Four;
@@ -732,7 +732,7 @@ namespace WebApp.Controllers
             return Json(playerScore);
         }
 
-
+        [HttpGet]
         public IActionResult MatchScore(int homeTeamId, int oppTeamId, int matchId)
         {
             var model = new TeamMatchScoredto();
@@ -759,7 +759,69 @@ namespace WebApp.Controllers
             //ViewBag.homeTeamId = homeTeamId;
             //ViewBag.o = homeTeamId;
             return View(model);
+        }
+        [HttpGet("PlayerScore/GetHomeTeamScore/MatchId/{matchId}/HomeTeamId/{homeTeamId}")]
+        public List<MatchSummarydto> GetHomeTeamScore(int? matchId, int? homeTeamId,bool api)
+        {
+            var model = _context.PlayerScores
+                .Where(i => i.MatchId == matchId && i.TeamId == homeTeamId && i.PlayerId != null)
+                .Select(i => new MatchSummarydto
+                {
+                    PlayerScoreId = i.PlayerScoreId,
+                    PlayerId = i.PlayerId,
+                    PlayerName = i.Player.Player_Name,
+                    HowOutId = i.HowOutId,
+                    HowOutName = i.HowOut.Name,
+                    Position = i.Position,
+                    IsPlayedInning = i.IsPlayedInning,
+                    Bat_Runs = i.Bat_Runs,
+                    Bat_Balls = i.Bat_Balls,
+                    Four = i.Four,
+                    Six = i.Six,
+                    Overs = i.Overs,
+                    Ball_Runs = i.Ball_Runs,
+                    Wickets = i.Wickets,
+                    Maiden = i.Maiden,
+                    Catches = i.Catches,
+                    RunOut = i.RunOut,
+                    Stump = i.Stump
 
+
+                }).OrderBy(i => i.Position).ToList();
+
+            return model;
+        }
+
+        [HttpGet("PlayerScore/GetOpponentTeamScore/MatchId/{matchId}/OppTeamId/{oppTeamId}")]
+        public List<MatchSummarydto> GetOpponentTeamScore(int? matchId, int? oppTeamId, bool api)
+        {
+            var model = _context.PlayerScores
+                .Where(i => i.MatchId == matchId && i.Match.OppponentTeamId == oppTeamId)
+                .Select(i => new MatchSummarydto
+                {
+                    PlayerScoreId = i.PlayerScoreId,
+                    PlayerId = i.PlayerId,
+                    PlayerName = i.Player.Player_Name,
+                    HowOutId = i.HowOutId,
+                    HowOutName = i.HowOut.Name,
+                    Position = i.Position,
+                    IsPlayedInning = i.IsPlayedInning,
+                    Bat_Runs = i.Bat_Runs,
+                    Bat_Balls = i.Bat_Balls,
+                    Four = i.Four,
+                    Six = i.Six,
+                    Overs = i.Overs,
+                    Ball_Runs = i.Ball_Runs,
+                    Wickets = i.Wickets,
+                    Maiden = i.Maiden,
+                    Catches = i.Catches,
+                    RunOut = i.RunOut,
+                    Stump = i.Stump
+
+
+                }).OrderBy(i => i.Position).ToList();
+
+            return model;
         }
 
     }

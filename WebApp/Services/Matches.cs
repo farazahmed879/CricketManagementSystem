@@ -56,7 +56,7 @@ namespace WebApp.Services
                     HasFilledOpponentTeamData = i.PlayerScores.Any() && i.PlayerScores.Any(o => o.Player != null && o.Player.TeamId == i.OppponentTeamId),
                     HasFilledTeamScoreData = i.TeamScores.Any() && i.TeamScores.Any(o => i.MatchId == i.MatchId)
                 })
-               .OrderByDescending(i => i.DateOfMatch)
+               .OrderByDescending(i => i.MatchId)
                                  , model.Start, model.Length);
             return result;
         }

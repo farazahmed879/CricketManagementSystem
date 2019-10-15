@@ -34,3 +34,12 @@ E:\ScoreExec\CricketManagementSystem\CricektApp.Domain\obj\Debug\netstandard2.0\
 E:\ScoreExec\CricketManagementSystem\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.AssemblyInfo.cs
 E:\ScoreExec\CricketManagementSystem\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.dll
 E:\ScoreExec\CricketManagementSystem\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.pdb
+E:\ScoreExecutive\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.dll
+E:\ScoreExecutive\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.pdb
+E:\ScoreExecutive\CricektApp.Domain\bin\Debug\netstandard2.0\CricketApp.Domain.deps.json
+E:\ScoreExecutive\CricektApp.Domain\bin\Debug\netstandard2.0\CricketApp.Domain.dll
+E:\ScoreExecutive\CricektApp.Domain\bin\Debug\netstandard2.0\CricketApp.Domain.pdb
+E:\ScoreExecutive\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.csprojAssemblyReference.cache
+E:\ScoreExecutive\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.csproj.CoreCompileInputs.cache
+E:\ScoreExecutive\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.AssemblyInfoInputs.cache
+E:\ScoreExecutive\CricektApp.Domain\obj\Debug\netstandard2.0\CricketApp.Domain.AssemblyInfo.cs

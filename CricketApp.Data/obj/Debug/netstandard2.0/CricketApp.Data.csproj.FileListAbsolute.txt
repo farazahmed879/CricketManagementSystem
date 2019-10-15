@@ -46,3 +46,15 @@ E:\ScoreExec\CricketManagementSystem\CricketApp.Data\obj\Debug\netstandard2.0\Cr
 E:\ScoreExec\CricketManagementSystem\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.csproj.CopyComplete
 E:\ScoreExec\CricketManagementSystem\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.dll
 E:\ScoreExec\CricketManagementSystem\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.pdb
+E:\ScoreExecutive\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.dll
+E:\ScoreExecutive\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.pdb
+E:\ScoreExecutive\CricketApp.Data\bin\Debug\netstandard2.0\CricketApp.Data.deps.json
+E:\ScoreExecutive\CricketApp.Data\bin\Debug\netstandard2.0\CricketApp.Data.dll
+E:\ScoreExecutive\CricketApp.Data\bin\Debug\netstandard2.0\CricketApp.Data.pdb
+E:\ScoreExecutive\CricketApp.Data\bin\Debug\netstandard2.0\CricketApp.Domain.dll
+E:\ScoreExecutive\CricketApp.Data\bin\Debug\netstandard2.0\CricketApp.Domain.pdb
+E:\ScoreExecutive\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.csprojAssemblyReference.cache
+E:\ScoreExecutive\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.csproj.CoreCompileInputs.cache
+E:\ScoreExecutive\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.AssemblyInfoInputs.cache
+E:\ScoreExecutive\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.AssemblyInfo.cs
+E:\ScoreExecutive\CricketApp.Data\obj\Debug\netstandard2.0\CricketApp.Data.csproj.CopyComplete
