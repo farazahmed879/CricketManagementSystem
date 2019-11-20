@@ -16,3 +16,12 @@ E:\ScoreExec\CricketManagementSystem\CricektApp.Domain\obj\Release\netstandard2.
 E:\ScoreExec\CricketManagementSystem\CricektApp.Domain\obj\Release\netstandard2.0\CricketApp.Domain.AssemblyInfo.cs
 E:\ScoreExec\CricketManagementSystem\CricektApp.Domain\obj\Release\netstandard2.0\CricketApp.Domain.dll
 E:\ScoreExec\CricketManagementSystem\CricektApp.Domain\obj\Release\netstandard2.0\CricketApp.Domain.pdb
+E:\ScoreExec Portal\CricektApp.Domain\bin\Release\netstandard2.0\CricketApp.Domain.deps.json
+E:\ScoreExec Portal\CricektApp.Domain\bin\Release\netstandard2.0\CricketApp.Domain.dll
+E:\ScoreExec Portal\CricektApp.Domain\bin\Release\netstandard2.0\CricketApp.Domain.pdb
+E:\ScoreExec Portal\CricektApp.Domain\obj\Release\netstandard2.0\CricketApp.Domain.csprojAssemblyReference.cache
+E:\ScoreExec Portal\CricektApp.Domain\obj\Release\netstandard2.0\CricketApp.Domain.csproj.CoreCompileInputs.cache
+E:\ScoreExec Portal\CricektApp.Domain\obj\Release\netstandard2.0\CricketApp.Domain.AssemblyInfoInputs.cache
+E:\ScoreExec Portal\CricektApp.Domain\obj\Release\netstandard2.0\CricketApp.Domain.AssemblyInfo.cs
+E:\ScoreExec Portal\CricektApp.Domain\obj\Release\netstandard2.0\CricketApp.Domain.dll
+E:\ScoreExec Portal\CricektApp.Domain\obj\Release\netstandard2.0\CricketApp.Domain.pdb

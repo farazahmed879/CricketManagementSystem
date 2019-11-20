@@ -1,0 +1,16 @@
+E:\ScoreExec Portal\WebApp\bin\Release\netcoreapp2.1\WebApp.deps.json
+E:\ScoreExec Portal\WebApp\bin\Release\netcoreapp2.1\WebApp.runtimeconfig.json
+E:\ScoreExec Portal\WebApp\bin\Release\netcoreapp2.1\WebApp.runtimeconfig.dev.json
+E:\ScoreExec Portal\WebApp\bin\Release\netcoreapp2.1\WebApp.dll
+E:\ScoreExec Portal\WebApp\bin\Release\netcoreapp2.1\WebApp.pdb
+E:\ScoreExec Portal\WebApp\bin\Release\netcoreapp2.1\CricketApp.Data.dll
+E:\ScoreExec Portal\WebApp\bin\Release\netcoreapp2.1\CricketApp.Domain.dll
+E:\ScoreExec Portal\WebApp\bin\Release\netcoreapp2.1\CricketApp.Domain.pdb
+E:\ScoreExec Portal\WebApp\bin\Release\netcoreapp2.1\CricketApp.Data.pdb
+E:\ScoreExec Portal\WebApp\obj\Release\netcoreapp2.1\WebApp.csprojAssemblyReference.cache
+E:\ScoreExec Portal\WebApp\obj\Release\netcoreapp2.1\WebApp.csproj.CoreCompileInputs.cache
+E:\ScoreExec Portal\WebApp\obj\Release\netcoreapp2.1\WebApp.AssemblyInfoInputs.cache
+E:\ScoreExec Portal\WebApp\obj\Release\netcoreapp2.1\WebApp.AssemblyInfo.cs
+E:\ScoreExec Portal\WebApp\obj\Release\netcoreapp2.1\WebApp.csproj.CopyComplete
+E:\ScoreExec Portal\WebApp\obj\Release\netcoreapp2.1\WebApp.dll
+E:\ScoreExec Portal\WebApp\obj\Release\netcoreapp2.1\WebApp.pdb

@@ -223,6 +223,7 @@ namespace WebApp.Controllers
             //}
 
             model.Summary2dto = s.SingleOrDefault();
+            model.HomeTeamScoreCard.MatchId = matchId;
             return View(model);
         }
 
@@ -399,10 +400,10 @@ namespace WebApp.Controllers
                 model.IsPlayedInning = HomeTeamplayers.HomeTeamScoreCard.IsPlayedInning;
                 model.PlayerId = HomeTeamplayers.HomeTeamScoreCard.PlayerId;
                 model.HowOutId = HomeTeamplayers.HomeTeamScoreCard.HowOutId;
-                model.BowlerId = 24;
+                model.BowlerId = HomeTeamplayers.HomeTeamScoreCard.Bowler == -1 ? null : HomeTeamplayers.HomeTeamScoreCard.Bowler;
                 model.MatchId = HomeTeamplayers.HomeTeamScoreCard.MatchId;
                 model.TeamId = HomeTeamplayers.HomeTeamScoreCard.TeamId;
-                model.Fielder = "";
+                model.Fielder = HomeTeamplayers.HomeTeamScoreCard.Fielder;
                 model.Bat_Runs = HomeTeamplayers.HomeTeamScoreCard.Bat_Runs;
                 model.Bat_Balls = HomeTeamplayers.HomeTeamScoreCard.Bat_Balls;
                 model.Four = HomeTeamplayers.HomeTeamScoreCard.Four;
@@ -434,7 +435,7 @@ namespace WebApp.Controllers
                 model.IsPlayedInning = OpponentTeamplayers.OppoTeamScoreCard.IsPlayedInning;
                 model.PlayerId = OpponentTeamplayers.OppoTeamScoreCard.PlayerId;
                 model.HowOutId = OpponentTeamplayers.OppoTeamScoreCard.HowOutId;
-                model.BowlerId = OpponentTeamplayers.OppoTeamScoreCard.Bowler;
+                model.BowlerId = OpponentTeamplayers.OppoTeamScoreCard.Bowler == -1 ? null : OpponentTeamplayers.OppoTeamScoreCard.Bowler;
                 model.MatchId = OpponentTeamplayers.OppoTeamScoreCard.MatchId;
                 model.TeamId = OpponentTeamplayers.OppoTeamScoreCard.TeamId;
                 model.Fielder = OpponentTeamplayers.OppoTeamScoreCard.Fielder;
@@ -689,7 +690,7 @@ namespace WebApp.Controllers
                     playercoreCard.Stump = playerScores.Stump;
                     _context.Update(playercoreCard);
                     _context.SaveChangesAsync();
-                    return playerScores.PlayerScoreId;
+                    return playerScores.TeamId;
                 }
                 else
                     return 0;
@@ -725,7 +726,8 @@ namespace WebApp.Controllers
           Six = i.Six,
           Stump = i.Stump,
           Wickets = i.Wickets,
-          PlayerScoreId = i.PlayerScoreId
+          PlayerScoreId = i.PlayerScoreId,
+          TeamId= i.TeamId
       })
       .ToList();
 
@@ -755,9 +757,6 @@ namespace WebApp.Controllers
               };
            
             model.Summary2dto = s.SingleOrDefault();
-            
-            //ViewBag.homeTeamId = homeTeamId;
-            //ViewBag.o = homeTeamId;
             return View(model);
         }
         [HttpGet("PlayerScore/GetHomeTeamScore/MatchId/{matchId}/HomeTeamId/{homeTeamId}")]
@@ -796,7 +795,7 @@ namespace WebApp.Controllers
         public List<MatchSummarydto> GetOpponentTeamScore(int? matchId, int? oppTeamId, bool api)
         {
             var model = _context.PlayerScores
-                .Where(i => i.MatchId == matchId && i.Match.OppponentTeamId == oppTeamId)
+                .Where(i => i.MatchId == matchId && i.TeamId == oppTeamId)
                 .Select(i => new MatchSummarydto
                 {
                     PlayerScoreId = i.PlayerScoreId,

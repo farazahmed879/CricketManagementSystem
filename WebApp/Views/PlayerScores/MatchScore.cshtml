@@ -127,12 +127,12 @@
                                         <div class="form-inline" role="form" id="Filters">
                                             <div class="row">
                                                 <form class="form-inline" role="form" id="HomeTeamData">
-                                                    <input type="hidden" asp-for="@Model.HomeTeamScoreCard.MatchId" id="matchId" />
+                                                    <input type="hidden" asp-for="@Model.HomeTeamScoreCard.MatchId" id="HomeMatchId" />
                                                     <input type="hidden" asp-for="@Model.HomeTeamScoreCard.TeamId" id="homeTeamId" value="@ViewBag.homeTeamId" />
                                                     <div class="row">
                                                         <div class="col-md-2 margin-top">
                                                             @*<label>Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>*@
-                                                            <select asp-for="@Model.HomeTeamScoreCard.Position" required placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
+                                                            <select asp-for="@Model.HomeTeamScoreCard.Position" id="HomePosition" required placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
                                                                 <option value="" selected>--Select Position--</option>
                                                                 <option value=1>1</option>
                                                                 <option value=2>2</option>
@@ -152,20 +152,27 @@
                                                             </select>
                                                             <span class="text-danger"></span>
                                                         </div>
-                                                        <div class="checkbox col-md-2">
+                                                        <div class="checkbox col-md-1 margin-top" style="margin-top: 10px;">
                                                             <label>
                                                                 Inning
-                                                                <input type="checkbox" value="true" asp-for="@Model.HomeTeamScoreCard.IsPlayedInning">
+                                                                <input type="checkbox" value="true" id="HomeInning" asp-for="@Model.HomeTeamScoreCard.IsPlayedInning">
                                                             </label>
                                                         </div>
-                                                        <div class="col-md-2 margin-top">
-                                                            <select required placeholder="--Select Player--" id="HomeTeamBatsman" style="width: 100%" class="js-example-basic-single" asp-for="@Model.HomeTeamScoreCard.PlayerId">
-                                                                <option value="">--Select Player--</option>
-                                                            </select>
-                                                            <span class="text-danger"></span>
+                                                        <div class="col-md-3 margin-top">
+                                                            <div class="col-md-2">
+                                                                <a data-placement="top" data-toggle="tooltip" style="cursor:pointer" title="Add Team"><i data-toggle="modal" data-target="#NewTeamModal" class="fas flaticon-add-1"></i></a>
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <select required placeholder="--Select Player--" id="HomeTeamBatsman" style="width: 100%" class="js-example-basic-single" asp-for="@Model.HomeTeamScoreCard.PlayerId">
+                                                                    <option value="">--Select Player--</option>
+                                                                </select>
+                                                                <span class="text-danger"></span>
+                                                            </div>
+
+
                                                         </div>
                                                         <div class="col-sm-2 margin-top">
-                                                            <select asp-items="ViewBag.HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single howOut" asp-for="@Model.HomeTeamScoreCard.HowOutId">
+                                                            <select asp-items="ViewBag.HowOut" placeholder="--How Out--" id="HomeHowOut" style="width: 100%" class="js-example-basic-single howOut" asp-for="@Model.HomeTeamScoreCard.HowOutId">
                                                                 <option value="">--How Out--</option>
                                                             </select>
                                                         </div>
@@ -188,97 +195,90 @@
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <label class="control-label">Runs</label>
-                                                                <input id="battingRuns" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Bat_Runs">
+                                                                <input id="H_Bat_Runs" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Bat_Runs">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <label class="control-label">Balls</label>
-                                                                <input id="battingBalls" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Bat_Balls">
+                                                                <input id="H_Bat_Balls" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Bat_Balls">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <label class="control-label">4s</label>
-                                                                <input id="fours" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Four">
+                                                                <input id="H_Four" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Four">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <label class="control-label">6s</label>
-                                                                <input id="sixes" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Six">
+                                                                <input id="H_Six" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Six">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <label class="control-label">Overs</label>
-                                                                <input id="overs" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Overs">
+                                                                <input id="H_Overs" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Overs">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <label class="control-label">Runs</label>
-                                                                <input id="bowlingRuns" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Ball_Runs">
+                                                                <input id="H_Ball_Runs" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Ball_Runs">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <label class="control-label">Wickets</label>
-                                                                <input id="wickets" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Wickets">
+                                                                <input id="H_Wickets" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Wickets">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <label class="control-label">Maidens</label>
-                                                                <input id="maidens" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Maiden">
+                                                                <input id="H_Maiden" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Maiden">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <label class="control-label">Catches</label>
-                                                                <input id="catches" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Catches">
+                                                                <input id="H_Catches" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Catches">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <label class="control-label">Run Out</label>
-                                                                <input id="runOuts" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.RunOut">
+                                                                <input id="H_RunOut" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.RunOut">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <label class="control-label">Stump</label>
-                                                                <input id="stumps" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Stump">
+                                                                <input id="H_Stump" type="number" class="form-control" asp-for="@Model.HomeTeamScoreCard.Stump">
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <ul class="list-inline pull-right">
-                                                        <li><input type="button" value="Skip" class="btn btn-default next-step"></li>
-                                                        <li><input type="button" id="HomeTeamBtn" value="Save and Continue" class="btn btn-outlined btn-primary next-step"></li>
+                                                        <li><input type="button" id="HomeTeamBtn" value="Add" class="btn btn-outlined btn-primary"></li>
+                                                        <li><a id="ClearHomeFields" value="Clear" onclick="ClearHomeFields()" class="btn btn-outlined btn-primary">Clear</a></li>
                                                     </ul>
                                                 </form>
-                                            </div>
-                                            <br />
-                                            <div class="footer" style="margin-top : .5em">
-                                                <ul class="list-inline">
-                                                    <li><input id="Clear" type="button" value="Clear" class="btn btn-default"></li>
-                                                    <li><input type="button" id="filterdata" value="Search" class="btn btn-outlined btn-primary filter-col"></li>
-                                                </ul>
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
-                                <ul class="list-inline">                                 
+                                <ul class="list-inline">
                                     <li>
                                         <button id="advSearch" class="btn btn-default" data-toggle="collapse" data-target="#filter-panel">
-                                            Advanced Search
+                                            Add Score
                                         </button>
                                     </li>
                                 </ul>
                             </div>
-                            
+
                             <div class="col-md-12">
                                 <div class="table-responsive">
 
@@ -338,138 +338,209 @@
                             <div class="col-md-12" style="background-color: maroon; color: white">
                                 <h4>@Model.Summary2dto.OppponentTeam Players</h4>
                             </div>
-                            <form class="form-inline" role="form" id="HomeTeamData">
-                                <input type="hidden" asp-for="@Model.OppoTeamScoreCard.MatchId" id="matchId" />
-                                <input type="hidden" asp-for="@Model.OppoTeamScoreCard.TeamId" id="oppTeamId" />
-                                <div class="row">
-                                    <div class="col-md-2 margin-top">
-                                        @*<label>Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>*@
-                                        <select asp-for="@Model.OppoTeamScoreCard.Position" required placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
-                                            <option value="" selected>--Select Position--</option>
-                                            <option value=1>1</option>
-                                            <option value=2>2</option>
-                                            <option value=3>3</option>
-                                            <option value=4>4</option>
-                                            <option value=5>5</option>
-                                            <option value=6>6</option>
-                                            <option value=7>7</option>
-                                            <option value=8>8</option>
-                                            <option value=9>9</option>
-                                            <option value=10>10</option>
-                                            <option value=11>11</option>
-                                            <option value=12>12</option>
-                                            <option value=13>13</option>
-                                            <option value=14>14</option>
-                                            <option value=15>15</option>
-                                        </select>
-                                        <span class="text-danger"></span>
-                                    </div>
-                                    <div class="checkbox col-md-2">
-                                        <label>
-                                            Inning
-                                            <input type="checkbox" value="true" asp-for="@Model.OppoTeamScoreCard.IsPlayedInning">
-                                        </label>
-                                    </div>
-                                    <div class="col-md-2 margin-top">
-                                        <select required placeholder="--Select Player--" id="OppTeamBatsman" style="width: 100%" class="js-example-basic-single" asp-for="@Model.OppoTeamScoreCard.PlayerId">
-                                            <option value="">--Select Player--</option>
-                                        </select>
-                                        <span class="text-danger"></span>
-                                    </div>
-                                    <div class="col-sm-2 margin-top">
-                                        <select asp-items="ViewBag.HowOut" placeholder="--How Out--" style="width: 100%" class="js-example-basic-single howOut" asp-for="@Model.OppoTeamScoreCard.HowOutId">
-                                            <option value="">--How Out--</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2 margin-top">
-                                        @*<label>Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>*@
-                                        <select required placeholder="--Select Team--" id="HomeTeamBowler" style="width: 100%" class="js-example-basic-single" asp-for="@Model.OppoTeamScoreCard.Bowler">
-                                            <option value="">--Select Bowler--</option>
-                                        </select>
-                                        <span class="text-danger"></span>
-                                    </div>
-                                    <div class="col-md-2 margin-top">
-                                        @*<label>Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>*@
-                                        <select required placeholder="--Select Team--" id="HomeTeamFielder" style="width: 100%" class="js-example-basic-single" asp-for="@Model.OppoTeamScoreCard.Fielder">
-                                            <option value="">--Select Fielder--</option>
-                                        </select>
-                                        <span class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label class="control-label">Runs</label>
-                                            <input id="battingRuns" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Bat_Runs">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label class="control-label">Balls</label>
-                                            <input id="battingBalls" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Bat_Balls">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label class="control-label">4s</label>
-                                            <input id="fours" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Four">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label class="control-label">6s</label>
-                                            <input id="sixes" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Six">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label class="control-label">Overs</label>
-                                            <input id="overs" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Overs">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label class="control-label">Runs</label>
-                                            <input id="bowlingRuns" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Ball_Runs">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label class="control-label">Wickets</label>
-                                            <input id="wickets" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Wickets">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label class="control-label">Maidens</label>
-                                            <input id="maidens" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Maiden">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label class="control-label">Catches</label>
-                                            <input id="catches" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Catches">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label class="control-label">Run Out</label>
-                                            <input id="runOuts" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.RunOut">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label class="control-label">Stump</label>
-                                            <input id="stumps" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Stump">
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <div id="filter-panel1" class="collapse filter-panel">
+                                    <div class="panel-body">
+                                        <div class="form-inline" role="form" id="Filters">
+                                            <div class="row">
+                                                <form class="form-inline" role="form" id="OpponentTeamData">
+                                                    <input type="hidden" asp-for="@Model.OppoTeamScoreCard.MatchId" id="OppMatchId" />
+                                                    <input type="hidden" asp-for="@Model.OppoTeamScoreCard.TeamId" id="oppTeamId" />
+                                                    <div class="row">
+                                                        <div class="col-md-2 margin-top">
+                                                            @*<label>Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>*@
+                                                            <select asp-for="@Model.OppoTeamScoreCard.Position" id="OppPosition" required placeholder="--Select Team--" style="width: 100%" class="js-example-basic-single">
+                                                                <option value="" selected>--Select Position--</option>
+                                                                <option value=1>1</option>
+                                                                <option value=2>2</option>
+                                                                <option value=3>3</option>
+                                                                <option value=4>4</option>
+                                                                <option value=5>5</option>
+                                                                <option value=6>6</option>
+                                                                <option value=7>7</option>
+                                                                <option value=8>8</option>
+                                                                <option value=9>9</option>
+                                                                <option value=10>10</option>
+                                                                <option value=11>11</option>
+                                                                <option value=12>12</option>
+                                                                <option value=13>13</option>
+                                                                <option value=14>14</option>
+                                                                <option value=15>15</option>
+                                                            </select>
+                                                            <span class="text-danger"></span>
+                                                        </div>
+                                                        <div class="checkbox col-md-2">
+                                                            <label>
+                                                                Inning
+                                                                <input type="checkbox" id="OppInning" value="true" asp-for="@Model.OppoTeamScoreCard.IsPlayedInning">
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-2 margin-top">
+                                                            <select required placeholder="--Select Player--" id="OppTeamBatsman" style="width: 100%" class="js-example-basic-single" asp-for="@Model.OppoTeamScoreCard.PlayerId">
+                                                                <option value="">--Select Player--</option>
+                                                            </select>
+                                                            <span class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-sm-2 margin-top">
+                                                            <select asp-items="ViewBag.HowOut" placeholder="--How Out--" id="OppHowOut" style="width: 100%" class="js-example-basic-single howOut" asp-for="@Model.OppoTeamScoreCard.HowOutId">
+                                                                <option value="">--How Out--</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 margin-top">
+                                                            @*<label>Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>*@
+                                                            <select required placeholder="--Select Team--" id="HomeTeamBowler" style="width: 100%" class="js-example-basic-single" asp-for="@Model.OppoTeamScoreCard.Bowler">
+                                                                <option value="">--Select Bowler--</option>
+                                                            </select>
+                                                            <span class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-2 margin-top">
+                                                            @*<label>Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>*@
+                                                            <select required placeholder="--Select Team--" id="HomeTeamFielder" style="width: 100%" class="js-example-basic-single" asp-for="@Model.OppoTeamScoreCard.Fielder">
+                                                                <option value="">--Select Fielder--</option>
+                                                            </select>
+                                                            <span class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-1">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Runs</label>
+                                                                <input id="O_Bat_Runs" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Bat_Runs">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Balls</label>
+                                                                <input id="O_Bat_Balls" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Bat_Balls">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <div class="form-group">
+                                                                <label class="control-label">4s</label>
+                                                                <input id="O_Four" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Four">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <div class="form-group">
+                                                                <label class="control-label">6s</label>
+                                                                <input id="O_Six" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Six">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Overs</label>
+                                                                <input id="O_Overs" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Overs">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Runs</label>
+                                                                <input id="O_Ball_Runs" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Ball_Runs">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Wickets</label>
+                                                                <input id="O_Wickets" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Wickets">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Maidens</label>
+                                                                <input id="O_Maiden" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Maiden">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Catches</label>
+                                                                <input id="O_Catches" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Catches">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Run Out</label>
+                                                                <input id="O_RunOut" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.RunOut">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Stump</label>
+                                                                <input id="O_Stump" type="number" class="form-control" asp-for="@Model.OppoTeamScoreCard.Stump">
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                <ul class="list-inline pull-right">
-                                    <li><input type="button" value="Skip" class="btn btn-default next-step"></li>
-                                    <li><input type="button" id="HomeTeamBtn" value="Save and Continue" class="btn btn-outlined btn-primary next-step"></li>
+                                                    <ul class="list-inline pull-right">
+                                                        <li><input type="button" id="OpponentTeamBtn" value="Add" class="btn btn-outlined btn-primary"></li>
+                                                        <li><a id="ClearHomeFields" value="Clear" onclick="ClearOppFields()" class="btn btn-outlined btn-primary">Clear</a></li>
+                                                    </ul>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <ul class="list-inline">
+                                    <li>
+                                        <button id="advSearch" class="btn btn-default" data-toggle="collapse" data-target="#filter-panel1">
+                                            Add Score
+                                        </button>
+                                    </li>
                                 </ul>
-                            </form>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered table-striped">
+                                        <thead style="background-color: maroon; color: white">
+                                            <tr>
+                                                <th>
+                                                    S.
+                                                </th>
+                                                <th>
+                                                    Batsman
+                                                </th>
+                                                <th>
+                                                    R
+                                                </th>
+                                                <th>
+                                                    B
+                                                </th>
+                                                <th>
+                                                    S/R
+                                                </th>
+                                                <th>
+                                                    H/O
+                                                </th>
+                                                <th>
+                                                    4s
+                                                </th>
+                                                <th>
+                                                    6s
+                                                </th>
+                                                <th>
+                                                    Ct.
+                                                </th>
+                                                <th>
+                                                    R/O
+                                                </th>
+                                                <th>
+                                                    St.
+                                                </th>
+
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <th>Action</th>
+                                                }
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="OppTeamTable"></tbody>
+                                    </table>
+
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane" role="tabpanel" id="complete">
                             <div class="col-md-12" style="background-color: maroon; color: white">
@@ -715,11 +786,169 @@
 
         </div>
     </div>
+
     <div class='col-md-1'></div>
 
 </div>
+<div id="PlayerScoreModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="pName" class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div id="rootwizard">
+                    <input type="hidden" id="PlayerScoreId" />
+                    <input type="hidden" id="TeamId" />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Runs</label>
+                                <input id="battingRuns" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Balls</label>
+                                <input id="battingBalls" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">4s</label>
+                                <input id="fours" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">6s</label>
+                                <input id="sixes" type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Overs</label>
+                                <input id="overs" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Runs</label>
+                                <input id="bowlingRuns" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Wickets</label>
+                                <input id="wickets" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Maidens</label>
+                                <input id="maidens" type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Catches</label>
+                                <input id="catches" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Run Out</label>
+                                <input id="runOuts" type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Stump</label>
+                                <input id="stumps" type="number" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                    <input id="btnFinish" type='button' class='btn btn-outlined btn-primary' data-dismiss="modal" value='Save' />
+                </div>
 
 
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="NewTeamModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header bg-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Player</h4>
+            </div>
+            <div class="modal-body">
+                <form id="TeamForm" enctype="multipart/form-data">
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">Player Name<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input id="PlayerName" required class="form-control" />
+                            <span id="PlayerNameSpan" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label">City<i class="fa fa-asterisk" style="color: red" aria-hidden="true"></i></label>
+                            <input id="City" required class="form-control" />
+                            <span id="CitySpan" class="text-danger"></span>
+                        </div>
+                    </div>
+                </form>
+                <div class="wizard-footer">
+                    <div class="pull-left">
+                        <input type='button' class='btn btn-default' data-dismiss="modal" value='Cancel' />
+                        <input id="AddPlayer" onclick="AddPlayer()" data-dismiss="modal" type="button" class='btn btn-outlined btn-primary' value='Add' />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="DeleteModal" class="modal fade" style="z-index: auto" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header bg-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="deleteId" />
+                <h3>Are you sure you want to delete this?</h3>
+
+                <div class="wizard-footer">
+                    <div class="pull-right">
+
+                    </div>
+                    <div class="pull-left">
+                        <input type='button' class='btn btn-previous btn-fill btn-primary btn-wd' data-dismiss="modal" value='Cancel' />
+                        <input id="deleteBtn" type="button" class='btn btn-finish btn-fill btn-primary btn-wd' data-dismiss="modal" value='Delete' />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -735,21 +964,25 @@
 
     <script>
         $(document).ready(function () {
+            debugger;
             $('.js-example-basic-single').select2();
             $('.fielder').prop('disabled', true);
             $('.bowler').prop('disabled', true);
             var homeTeamId = getUrlParameter('homeTeamId');
             var oppTeamId = getUrlParameter('oppTeamId');
             var matchId = getUrlParameter('matchId');
-            debugger;
+
             $("#homeTeamId").val(homeTeamId);
             $("#oppTeamId").val(oppTeamId);
-            $("#matchId").val(oppTeamId);
+            $("#HomeMatchId").val(matchId);
+            $("#OppMatchId").val(matchId);
             HomeTeamPlayers(homeTeamId);
             OppTeamPlayers(oppTeamId);
             GetHomeTeamScore(matchId, homeTeamId);
+            GetOppTeamScore(matchId, oppTeamId);
+
         });
-        
+
         $(function () {
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
@@ -757,6 +990,60 @@
                 increaseArea: '20%' /* optional */
             });
         });
+
+        $("#btnFinish")
+            .off()
+            .on("click", async () => await postData());
+
+        const postData = async () => {
+            const battingRun = document.getElementById('battingRuns').value;
+            const battingBall = document.getElementById('battingBalls').value;
+            const battingFour = document.getElementById('fours').value;
+            const battingSix = document.getElementById('sixes').value;
+            const bowlingOver = document.getElementById('overs').value;
+            const bowlingRun = document.getElementById('bowlingRuns').value;
+            const bowlingWicket = document.getElementById('wickets').value;
+            const bowlingMaiden = document.getElementById('maidens').value;
+            const fieldingCatch = document.getElementById('catches').value;
+            const fieldingRunOut = document.getElementById('runOuts').value;
+            const fieldingStump = document.getElementById('stumps').value;
+            const PlayerScoreId = document.getElementById('PlayerScoreId').value;
+            const teamId = document.getElementById('TeamId').value;
+            const model = {
+                bat_Runs: Number(battingRun) || 0,
+                bat_Balls: Number(battingBall) || 0,
+                four: Number(battingFour) || 0,
+                six: Number(battingSix) || 0,
+                overs: Number(bowlingOver) || 0,
+                ball_Runs: Number(bowlingRun) || 0,
+                wickets: Number(bowlingWicket) || 0,
+                maiden: Number(bowlingMaiden) || 0,
+                catches: Number(fieldingCatch) || 0,
+                runOut: Number(fieldingRunOut) || 0,
+                stump: Number(fieldingStump) || 0,
+                PlayerScoreId: Number(PlayerScoreId),
+                TeamId: Number(teamId)
+            };
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            const response = await fetch('/PlayerScores/PlayerScoreModal', {
+                method: "Put",
+                body: JSON.stringify(model),
+                credentials: 'same-origin',
+                headers: header
+            });
+
+            if (response.ok) {
+                debugger;
+                var homeTeamId = getUrlParameter('homeTeamId');
+                var oppTeamId = getUrlParameter('oppTeamId');
+                HomeTeamPlayers(homeTeamId);
+                OppTeamPlayers(oppTeamId);
+            } else {
+                alert("Error");
+            }
+        };
 
         var HomeTeamPlayers = function (teamId) {
             $.ajax({
@@ -771,6 +1058,8 @@
                         s += '<option value="' + data[i].playerId + '">' + data[i].player_Name + '</option>';
                     }
                     $("#HomeTeamBatsman").html(s);
+                    $("#HomeTeamFielder").html(s);
+                    $("#HomeTeamBowler").html(s);
                 }
             });
         }
@@ -786,12 +1075,57 @@
                     for (var i = 0; i < data.length; i++) {
                         s += '<option value="' + data[i].playerId + '">' + data[i].player_Name + '</option>';
                     }
+                    $("#OppTeamBatsman").html(s);
                     $("#OppTeamFielder").html(s);
                     $("#OppTeamBowler").html(s);
                 }
             });
         }
 
+        function Player(PlayerScoreId) {
+
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            fetch(`/PlayerScores/GetPlayerScoreModal?playerScoreId=${PlayerScoreId}`, {
+                credentials: 'same-origin',
+                headers: header
+            })
+                .then(response => {
+                    if (response.ok) {
+                        response.json()
+                            .then(json => {
+                                document.getElementById("battingRuns").value = json[0].bat_Runs;
+                                document.getElementById("battingBalls").value = json[0].bat_Balls;
+                                document.getElementById("fours").value = json[0].four;
+                                document.getElementById("sixes").value = json[0].six;
+                                document.getElementById("overs").value = json[0].overs;
+                                document.getElementById("bowlingRuns").value = json[0].ball_Runs;
+                                document.getElementById("wickets").value = json[0].wickets;
+                                document.getElementById("maidens").value = json[0].maiden;
+                                document.getElementById("catches").value = json[0].catches;
+                                document.getElementById("runOuts").value = json[0].runOut;
+                                document.getElementById("stumps").value = json[0].stump;
+                                document.getElementById("PlayerScoreId").value = json[0].playerScoreId;
+                                document.getElementById("pName").innerHTML = json[0].playerName;
+                                document.getElementById("TeamId").innerHTML = json[0].teamId;
+
+
+                            })
+                            .catch(err => {
+                                console.error(err);
+                            })
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        }
+
+
+        function Delete(playerScoreId) {
+            document.getElementById("deleteId").value = playerScoreId;
+        }
 
         var getUrlParameter = function getUrlParameter(sParam) {
             var sPageURL = window.location.search.substring(1),
@@ -808,10 +1142,10 @@
             }
         };
 
-        var GetHomeTeamScore = function (matchId,homeTeamId) {
+        var GetHomeTeamScore = function (matchId, homeTeamId) {
             $.ajax({
                 type: "GET",
-                url: '/PlayerScore/GetHomeTeamScore/MatchId/' + matchId + '/HomeTeamId/' + homeTeamId+'',
+                url: '/PlayerScore/GetHomeTeamScore/MatchId/' + matchId + '/HomeTeamId/' + homeTeamId + '',
                 data: "{}",
                 success: function (data) {
                     console.log(data);
@@ -819,7 +1153,7 @@
                     for (var i = 0; i < data.length; i++) {
                         debugger;
                         var html = '<tr><td>' + data[i].position + '</td>'
-                            + '<td>' + data[i].playerName + '</td>'
+                            + '<td><i style="cursor:pointer;" title="Edit" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(' + data[i].playerScoreId + ')">' + data[i].playerName + '</i></td>'
                             + '<td>' + data[i].bat_Runs + '</td>'
                             + '<td>' + data[i].bat_Balls + '</td>'
                             + '<td>' + data[i].bat_Balls + '</td>'
@@ -829,11 +1163,12 @@
                             + '<td>' + data[i].catches + '</td>'
                             + '<td>' + data[i].runOut + '</td>'
                             + '<td>' + data[i].stump + '</td>'
-                            + '<td><span><i title="Add Score" data-toggle="tooltip" class="fas fa-walking"></i></span></td>'
+                            //+ '<td><span><i title="Add Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(' + data[i].playerScoreId + ')" class="fas fa-walking"></i></span></td>'
+                            + '<td><span><i title="Delete" data-toggle="modal" data-target="#DeleteModal" onclick="Delete(' + data[i].playerScoreId + ')" class="fas fa-trash-alt"></i></span></td>'
                             + '</tr>';
                         $("#HomeTeamTable").append(html);
                     }
-                    
+
                 }
             });
         }
@@ -844,14 +1179,27 @@
                 url: '/PlayerScore/GetOpponentTeamScore/MatchId/' + matchId + '/OppTeamId/' + oppTeamId + '',
                 data: "{}",
                 success: function (data) {
-                    console.log(data);
-                    console.log("asd==asd")
-                    var s = '<option value="-1">--Select--</option>';
+                    console.log("opponent Team Score", data);
+                    debugger;
+                    $("#OppTeamTable").children().remove();
                     for (var i = 0; i < data.length; i++) {
-                        s += '<option value="' + data[i].teamId + '">' + data[i].team_Name + '</option>';
+
+                        var html = '<tr><td>' + data[i].position + '</td>'
+                            + '<td><i style="cursor:pointer;" title="Edit" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(' + data[i].playerScoreId + ')" >' + data[i].playerName + '</i></td>'
+                            + '<td>' + data[i].bat_Runs + '</td>'
+                            + '<td>' + data[i].bat_Balls + '</td>'
+                            + '<td>' + data[i].bat_Balls + '</td>'
+                            + '<td>' + data[i].howOutName + '</td>'
+                            + '<td>' + data[i].four + '</td>'
+                            + '<td>' + data[i].six + '</td>'
+                            + '<td>' + data[i].catches + '</td>'
+                            + '<td>' + data[i].runOut + '</td>'
+                            + '<td>' + data[i].stump + '</td>'
+                            //+ '<td><span><i title="Add Score" data-toggle="modal" data-target="#PlayerScoreModal" onclick="Player(' + data[i].playerScoreId + ')" class="fas fa-walking"></i></span></td>'
+                            + '<td><span><i title="Delete" data-toggle="modal" data-target="#DeleteModal" onclick="Delete(' + data[i].playerScoreId + ')" class="fas fa-trash-alt"></i></span></td>'
+                            + '</tr>';
+                        $("#OppTeamTable").append(html);
                     }
-                    $("#HomeTeamId").html(s);
-                    $("#OppponentTeamId").html(s);
                 }
             });
         }
@@ -871,6 +1219,7 @@
         const openModal = (id) => {
             document.getElementById('Modal_PlayerId').value = document.getElementById(`Grid_${id}__PlayerId`).value;
         };
+        //HomeTeamData
         $(function () {
             $('#HomeTeamBtn').click(function () {
                 try {
@@ -885,10 +1234,10 @@
 
                         myFunction(data);
                         var homeTeamId = getUrlParameter('homeTeamId');
-                        var oppTeamId = getUrlParameter('oppTeamId');
                         var matchId = getUrlParameter('matchId');
                         GetHomeTeamScore(matchId, homeTeamId);
-                       // $('#HomeTeamBtn').attr('disabled', true);
+                        ClearHomeFields();
+                        // $('#HomeTeamBtn').attr('disabled', true);
 
                     }).fail(function () {
                         myFunction(data);
@@ -900,6 +1249,7 @@
                 }
             });
         });
+        //OpponentTeamData
         $(function () {
             $('#OpponentTeamBtn').click(function () {
                 try {
@@ -911,11 +1261,12 @@
                         },
                         method: "POST"
                     }).done(function (data) {
+
                         var oppTeamId = getUrlParameter('oppTeamId');
                         var matchId = getUrlParameter('matchId');
                         myFunction(data);
-                       // $('#OpponentTeamBtn').attr('disabled', true);
                         GetOppTeamScore(matchId, oppTeamId);
+                        ClearOppFields();
                     }).fail(function () {
                         myFunction(data);
                     });
@@ -975,7 +1326,100 @@
         });
 
 
+        var ClearHomeFields = function () {
+            debugger;
+            $("#HomePosition").val('').trigger('change');
+            $("#HomeInning").prop('checked', false);
+            $("#HomeTeamBatsman").val('').trigger('change');
+            $("#HomeHowOut").val('').trigger('change');
+            $("#HomePosition").val('').trigger('change');
+            $("#OppTeamBowler").val('').trigger('change');
+            $("#OppTeamFielder").val('').trigger('change');
+            $("#H_Bat_Runs").val('').trigger('change');
+            $("#H_Bat_Balls").val('').trigger('change');
+            $("#H_Four").val('').trigger('change');
+            $("#H_Six").val('').trigger('change');
+            $("#H_Overs").val('').trigger('change');
+            $("#H_Ball_Runs").val('').trigger('change');
+            $("#H_Wickets").val('').trigger('change');
+            $("#H_Maiden").val('').trigger('change');
+            $("#H_Catches").val('').trigger('change');
+            $("#H_RunOut").val('').trigger('change');
+            $("#H_Stump").val('').trigger('change');
+        }
 
+        var ClearOppFields = function () {
+            debugger;
+            $("#OppPosition").val('').trigger('change');
+            $("#OppInning").prop('checked', false);
+            $("#OppTeamBatsman").val('').trigger('change');
+            $("#OppHowOut").val('').trigger('change');
+            $("#OppPosition").val('').trigger('change');
+            $("#HomeTeamBowler").val('').trigger('change');
+            $("#HomeTeamFielder").val('').trigger('change');
+            $("#O_Bat_Runs").val('').trigger('change');
+            $("#O_Bat_Balls").val('').trigger('change');
+            $("#O_Four").val('').trigger('change');
+            $("#O_Six").val('').trigger('change');
+            $("#O_Overs").val('').trigger('change');
+            $("#O_Ball_Runs").val('').trigger('change');
+            $("#O_Wickets").val('').trigger('change');
+            $("#O_Maiden").val('').trigger('change');
+            $("#O_Catches").val('').trigger('change');
+            $("#O_RunOut").val('').trigger('change');
+            $("#O_Stump").val('').trigger('change');
+        }
+
+        let AddPlayer = function () {
+            debugger;
+            var playerName = $('#PlayerName').val()
+            var city = $('#City').val()
+            if (playerName == null || playerName == undefined || playerName == "") {
+                document.getElementById('PlayerNameSpan').innerHTML = "Required";
+                $('#PlayerNameSpan').css('color', 'red');
+            }
+            else {
+                document.getElementById('PlayerNameSpan').innerHTML = "";
+            }
+
+            if (city == null || city == undefined || city == "") {
+                document.getElementById('CitySpan').innerHTML = "Required";
+                $('#CitySpan').css('color', 'red');
+            }
+            else {
+                document.getElementById('CitySpan').innerHTML = "";
+            }
+
+
+            if (teamName == null || teamName == undefined || teamName == "")
+                return
+            const TeamName = document.getElementById('PlayerName').value;
+            const City = document.getElementById('City').value;
+            debugger;
+            const model = {
+                team_Name: TeamName,
+
+                fileName: null,
+            };
+            var header = new Headers();
+            header.append("content-type", "application/json");
+
+            const response = fetch('/Team/Add', {
+                method: "Put",
+                body: JSON.stringify(model),
+                credentials: 'same-origin',
+                headers: header
+            }).then(response => {
+                if (response.ok) {
+                    //teamName.tex('');
+                    //city.val('');
+                    TeamDropDown();
+                }
+                else {
+                    alert("Error");
+                }
+            });
+        }
 
         $(document).ready(function () {
             //Initialize tooltips
@@ -1037,6 +1481,13 @@
 
     </script>
     <style>
+        #Img {
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            width: 70px;
+        }
     </style>
 }
 

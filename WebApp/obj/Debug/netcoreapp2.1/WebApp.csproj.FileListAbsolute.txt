@@ -1,32 +1,16 @@
-E:\ScoreExec\CricketManagementSystem\WebApp\bin\Debug\netcoreapp2.1\WebApp.deps.json
-E:\ScoreExec\CricketManagementSystem\WebApp\bin\Debug\netcoreapp2.1\WebApp.runtimeconfig.json
-E:\ScoreExec\CricketManagementSystem\WebApp\bin\Debug\netcoreapp2.1\WebApp.runtimeconfig.dev.json
-E:\ScoreExec\CricketManagementSystem\WebApp\bin\Debug\netcoreapp2.1\WebApp.dll
-E:\ScoreExec\CricketManagementSystem\WebApp\bin\Debug\netcoreapp2.1\WebApp.pdb
-E:\ScoreExec\CricketManagementSystem\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Data.dll
-E:\ScoreExec\CricketManagementSystem\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Domain.dll
-E:\ScoreExec\CricketManagementSystem\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Domain.pdb
-E:\ScoreExec\CricketManagementSystem\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Data.pdb
-E:\ScoreExec\CricketManagementSystem\WebApp\obj\Debug\netcoreapp2.1\WebApp.csprojAssemblyReference.cache
-E:\ScoreExec\CricketManagementSystem\WebApp\obj\Debug\netcoreapp2.1\WebApp.csproj.CoreCompileInputs.cache
-E:\ScoreExec\CricketManagementSystem\WebApp\obj\Debug\netcoreapp2.1\WebApp.AssemblyInfoInputs.cache
-E:\ScoreExec\CricketManagementSystem\WebApp\obj\Debug\netcoreapp2.1\WebApp.AssemblyInfo.cs
-E:\ScoreExec\CricketManagementSystem\WebApp\obj\Debug\netcoreapp2.1\WebApp.csproj.CopyComplete
-E:\ScoreExec\CricketManagementSystem\WebApp\obj\Debug\netcoreapp2.1\WebApp.dll
-E:\ScoreExec\CricketManagementSystem\WebApp\obj\Debug\netcoreapp2.1\WebApp.pdb
-E:\ScoreExecutive\WebApp\obj\Debug\netcoreapp2.1\WebApp.dll
-E:\ScoreExecutive\WebApp\obj\Debug\netcoreapp2.1\WebApp.pdb
-E:\ScoreExecutive\WebApp\bin\Debug\netcoreapp2.1\WebApp.deps.json
-E:\ScoreExecutive\WebApp\bin\Debug\netcoreapp2.1\WebApp.runtimeconfig.json
-E:\ScoreExecutive\WebApp\bin\Debug\netcoreapp2.1\WebApp.runtimeconfig.dev.json
-E:\ScoreExecutive\WebApp\bin\Debug\netcoreapp2.1\WebApp.dll
-E:\ScoreExecutive\WebApp\bin\Debug\netcoreapp2.1\WebApp.pdb
-E:\ScoreExecutive\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Data.dll
-E:\ScoreExecutive\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Domain.dll
-E:\ScoreExecutive\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Domain.pdb
-E:\ScoreExecutive\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Data.pdb
-E:\ScoreExecutive\WebApp\obj\Debug\netcoreapp2.1\WebApp.csprojAssemblyReference.cache
-E:\ScoreExecutive\WebApp\obj\Debug\netcoreapp2.1\WebApp.csproj.CoreCompileInputs.cache
-E:\ScoreExecutive\WebApp\obj\Debug\netcoreapp2.1\WebApp.AssemblyInfoInputs.cache
-E:\ScoreExecutive\WebApp\obj\Debug\netcoreapp2.1\WebApp.AssemblyInfo.cs
-E:\ScoreExecutive\WebApp\obj\Debug\netcoreapp2.1\WebApp.csproj.CopyComplete
+E:\ScoreExec Portal\WebApp\bin\Debug\netcoreapp2.1\WebApp.deps.json
+E:\ScoreExec Portal\WebApp\bin\Debug\netcoreapp2.1\WebApp.runtimeconfig.json
+E:\ScoreExec Portal\WebApp\bin\Debug\netcoreapp2.1\WebApp.runtimeconfig.dev.json
+E:\ScoreExec Portal\WebApp\bin\Debug\netcoreapp2.1\WebApp.dll
+E:\ScoreExec Portal\WebApp\bin\Debug\netcoreapp2.1\WebApp.pdb
+E:\ScoreExec Portal\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Data.dll
+E:\ScoreExec Portal\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Domain.dll
+E:\ScoreExec Portal\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Domain.pdb
+E:\ScoreExec Portal\WebApp\bin\Debug\netcoreapp2.1\CricketApp.Data.pdb
+E:\ScoreExec Portal\WebApp\obj\Debug\netcoreapp2.1\WebApp.csprojAssemblyReference.cache
+E:\ScoreExec Portal\WebApp\obj\Debug\netcoreapp2.1\WebApp.csproj.CoreCompileInputs.cache
+E:\ScoreExec Portal\WebApp\obj\Debug\netcoreapp2.1\WebApp.AssemblyInfoInputs.cache
+E:\ScoreExec Portal\WebApp\obj\Debug\netcoreapp2.1\WebApp.AssemblyInfo.cs
+E:\ScoreExec Portal\WebApp\obj\Debug\netcoreapp2.1\WebApp.csproj.CopyComplete
+E:\ScoreExec Portal\WebApp\obj\Debug\netcoreapp2.1\WebApp.dll
+E:\ScoreExec Portal\WebApp\obj\Debug\netcoreapp2.1\WebApp.pdb

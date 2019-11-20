@@ -82,9 +82,9 @@ namespace WebApp
 
             services.Configure<MvcOptions>(options =>
             {
-#if RELEASE
-                options.Filters.Add(new RequireHttpsAttribute());
-#endif
+            //#if RELEASE
+            //            options.Filters.Add(new RequireHttpsAttribute());
+            //#endif
             });
 
             services.AddAutoMapper();
@@ -95,9 +95,10 @@ namespace WebApp
           
             services.AddDbContextPool<CricketContext>(options =>
             {
-                string connectionString = hostingEnvironment.IsDevelopment() ?
-                    Configuration.GetConnectionString("CricketAppConnection") :
-                    Configuration.GetConnectionString("Production");
+                //string connectionString = hostingEnvironment.IsDevelopment() ?
+                //    Configuration.GetConnectionString("Server=LOCALHOST; Database=ScoreExecDb; User=root; Password=Super@samad123;") :
+                //    Configuration.GetConnectionString("Server=LOCALHOST; Database=ScoreExecDb; User=root; Password=Super@samad123;");
+                var connectionString = Configuration["ConnectionStrings:CricketAppConnection"];
                 options
                 .UseMySql(connectionString,
                 mySqlOptions =>
